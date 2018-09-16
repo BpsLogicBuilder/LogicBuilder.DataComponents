@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>LogicBuilder.EntityFrameworkCore.SqlServer</RootNamespace>
+    <PackageId>LogicBuilder.EntityFrameworkCore.SqlServer</PackageId>
+    <PackageVersion>1.0.0-preview01</PackageVersion>
+    <Authors>BlaiseD</Authors>
+    <Description>Abstraction for transferring business model objects to and from data objects for SQL Server.</Description>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageReleaseNotes>First release</PackageReleaseNotes>
+    <PackageTags>crud operations</PackageTags>
+    <Copyright>Copyright © BPS 2017</Copyright>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <RepositoryUrl>https://github.com/BlaiseD/LogicBuilder</RepositoryUrl>
+    <PackageLicenseUrl>https://github.com/BlaiseD/LogicBuilder/blob/master/Licence.MD</PackageLicenseUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="7.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.ExpressionMapping" Version="1.0.2" />
+    <PackageReference Include="LogicBuilder.Data" Version="1.0.0-preview02" />
+    <PackageReference Include="LogicBuilder.Domain" Version="1.0.0-preview01" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>
