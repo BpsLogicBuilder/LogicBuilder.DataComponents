@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  <RootNamespace>LogicBuilder.Kendo.ExpressionExtensions</RootNamespace>
+    <PackageId>LogicBuilder.Kendo.ExpressionExtensions</PackageId>
+    <PackageVersion>1.0.0-preview02</PackageVersion>
+    <Authors>BlaiseD</Authors>
+    <Description>Extentions to return IQueryable expressions from Telerik's DataSourceRequest class.  The expressions can then be executed against an IQueryable.</Description>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageReleaseNotes>First release</PackageReleaseNotes>
+    <PackageTags>logicbuilder kendo</PackageTags>
+    <Copyright>Copyright © BPS 2018</Copyright>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <RepositoryUrl>https://github.com/BlaiseD/LogicBuilder</RepositoryUrl>
+    <PackageLicenseUrl>https://github.com/BlaiseD/LogicBuilder/blob/master/Licence.MD</PackageLicenseUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Telerik.UI.for.AspNet.Core" Version="2018.3.911" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Resources\Exceptions.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Exceptions.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\Exceptions.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Exceptions.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>

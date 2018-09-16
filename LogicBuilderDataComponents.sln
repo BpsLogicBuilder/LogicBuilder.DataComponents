@@ -3,15 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2035
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogicBuilder.EntityFrameworkCore.SqlServer", "LogicBuilder.EntityFrameworkCore.SqlServer\LogicBuilder.EntityFrameworkCore.SqlServer.csproj", "{07241C06-097A-40F3-8174-B3ED0ED8F33E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogicBuilder.EntityFrameworkCore.SqlServer", "LogicBuilder.EntityFrameworkCore.SqlServer\LogicBuilder.EntityFrameworkCore.SqlServer.csproj", "{07241C06-097A-40F3-8174-B3ED0ED8F33E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogicBuilder.Expressions.Utils", "LogicBuilder.Expressions.Utils\LogicBuilder.Expressions.Utils.csproj", "{A3D5094A-A7FF-408B-980E-A82B5B01D148}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogicBuilder.Expressions.EntityFrameworkCore", "LogicBuilder.Expressions.EntityFrameworkCore\LogicBuilder.Expressions.EntityFrameworkCore.csproj", "{09EB2D2D-5E62-43BE-92D4-EEC7DF446063}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogicBuilder.Expressions.EntityFrameworkCore", "LogicBuilder.Expressions.EntityFrameworkCore\LogicBuilder.Expressions.EntityFrameworkCore.csproj", "{09EB2D2D-5E62-43BE-92D4-EEC7DF446063}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogicBuilder.Data", "LogicBuilder.Data\LogicBuilder.Data.csproj", "{A043DA8D-9845-4DD1-8E90-E735FC945338}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogicBuilder.Domain", "LogicBuilder.Domain\LogicBuilder.Domain.csproj", "{C77D5483-0F12-484E-8E74-532D50D5180D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{96A33DAA-746B-41B6-ACF9-74E166C73446}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{EE0AA77E-ACC5-48E9-91BB-CFB43D08D28E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogicBuilder.Kendo.ExpressionExtensions", "LogicBuilder.Kendo.ExpressionExtensions\LogicBuilder.Kendo.ExpressionExtensions.csproj", "{7F514D5A-7F56-499D-AA4D-1D72579C85DC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,9 +45,21 @@ Global
 		{C77D5483-0F12-484E-8E74-532D50D5180D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C77D5483-0F12-484E-8E74-532D50D5180D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C77D5483-0F12-484E-8E74-532D50D5180D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F514D5A-7F56-499D-AA4D-1D72579C85DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F514D5A-7F56-499D-AA4D-1D72579C85DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F514D5A-7F56-499D-AA4D-1D72579C85DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F514D5A-7F56-499D-AA4D-1D72579C85DC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{07241C06-097A-40F3-8174-B3ED0ED8F33E} = {96A33DAA-746B-41B6-ACF9-74E166C73446}
+		{A3D5094A-A7FF-408B-980E-A82B5B01D148} = {96A33DAA-746B-41B6-ACF9-74E166C73446}
+		{09EB2D2D-5E62-43BE-92D4-EEC7DF446063} = {96A33DAA-746B-41B6-ACF9-74E166C73446}
+		{A043DA8D-9845-4DD1-8E90-E735FC945338} = {96A33DAA-746B-41B6-ACF9-74E166C73446}
+		{C77D5483-0F12-484E-8E74-532D50D5180D} = {96A33DAA-746B-41B6-ACF9-74E166C73446}
+		{7F514D5A-7F56-499D-AA4D-1D72579C85DC} = {96A33DAA-746B-41B6-ACF9-74E166C73446}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CFE1F282-4500-44FA-BA40-7840CD503455}
