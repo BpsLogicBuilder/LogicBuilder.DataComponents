@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>LogicBuilder.Domain</RootNamespace>
+    <PackageId>LogicBuilder.Domain</PackageId>
+    <PackageVersion>1.0.0-preview01</PackageVersion>
+    <Authors>BlaiseD</Authors>
+    <Description>Base class for domain objects for SQL Server.</Description>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageReleaseNotes>First release</PackageReleaseNotes>
+    <PackageTags>crud operations</PackageTags>
+    <Copyright>Copyright © BPS 2017</Copyright>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <RepositoryUrl>https://github.com/BlaiseD/LogicBuilder</RepositoryUrl>
+    <PackageLicenseUrl>https://github.com/BlaiseD/LogicBuilder/blob/master/Licence.MD</PackageLicenseUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="PackNuget.bat" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>LogicBuilder.Data</RootNamespace>
+    <PackageId>LogicBuilder.Data</PackageId>
+    <PackageVersion>1.0.0-preview02</PackageVersion>
+    <Authors>BlaiseD</Authors>
+    <Description>Base class for data objects for SQL Server.</Description>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageReleaseNotes>First release</PackageReleaseNotes>
+    <PackageTags>crud operations</PackageTags>
+    <Copyright>Copyright © BPS 2017</Copyright>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <RepositoryUrl>https://github.com/BlaiseD/LogicBuilder</RepositoryUrl>
+    <PackageLicenseUrl>https://github.com/BlaiseD/LogicBuilder/blob/master/Licence.MD</PackageLicenseUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="PackNuget.bat" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.ComponentModel.Annotations" Version="4.5.0" />
+  </ItemGroup>
+
+</Project>

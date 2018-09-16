@@ -20,12 +20,12 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Crud
         }
 
         #region Fields
-        private DbContext context;
-        private DbSet<T> dbSet;
+        private readonly DbContext context;
+        private readonly DbSet<T> dbSet;
         #endregion Fields
 
         #region Properties
-        public DbSet<T> DbSet { get { return this.dbSet; } }
+        //public DbSet<T> DbSet { get { return this.dbSet; } }
         #endregion Properties
 
         #region Methods
@@ -66,12 +66,6 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Crud
                 query = includeProperties.Aggregate(query, (list, next) => query = next(query));
 
             return await Task.Run(() => queryableFunc(query));
-            //return queryableFunc(query);
-            //Type returnType = returnValue.GetType();
-
-            //return typeof(TReturn).GetInterfaces().Any(t => t.GetTypeInfo().IsGenericType && t.GetGenericTypeDefinition() == typeof(IQueryable<>))
-            //    ? await EntityFrameworkQueryableExtensions.ToListAsync(returnValue)
-            //    : returnValue;
         }
 
         /// <summary>
@@ -95,10 +89,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Crud
         /// <param name="t"></param>
         public virtual void InsertGraph(T t)
         {
-            //List<Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<Data.BaseData>> before = context.ChangeTracker.Entries<Data.BaseData>().ToList();
             this.dbSet.Add(t);
-            //List<Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<Data.BaseData>> after = context.ChangeTracker.Entries<Data.BaseData>().ToList();
-            //Dump(after);
         }
 
         private static void Dump(List<Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<BaseData>> entries)
@@ -113,17 +104,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Crud
         /// <param name="t"></param>
         public virtual void Insert(T t)
         {
-            /*When more than one item is being added this blows up with:
-             * The instance of entity type 'T' cannot be tracked because another instance of this type with the same key is already being tracked. When adding new entities, for most key types a unique temporary key value will be created if no key is set (i.e. if the key property is assigned the default value for its type). If you are explicitly setting key values for new entities, ensure they do not collide with existing entities or temporary values generated for other new entities. When attaching existing entities, ensure that only one entity instance with a given key value is attached to the context.
-             */
-            //this.dbSet.Attach(t);
-            //Important to attach first otherwise the statement below behaves like as add (this.dbSet.Add(t);) - NOT TRUE IN EF CORE 1.1
-            //Fortunately this is mo longer true in EF Core and the code below works (it only tracks the root - no child objects will be tracked)
-
-            //List<Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<Data.BaseData>> before = context.ChangeTracker.Entries<Data.BaseData>().ToList();
             this.context.Entry(t).State = EntityState.Added;//Set only the root to Added.
-            //List<Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<Data.BaseData>> after = context.ChangeTracker.Entries<Data.BaseData>().ToList();
-            //Dump(after);
         }
 
         /// <summary>
@@ -144,7 +125,6 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Crud
         /// <param name="t"></param>
         public virtual void DeleteGraph(T t)
         {
-            //List<Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<Data.BaseData>> before = context.ChangeTracker.Entries<Data.BaseData>().ToList();
             this.dbSet.Add(t);
             this.context.SetStates(EntityState.Deleted);
         }
@@ -167,7 +147,6 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Crud
         /// <param name="t"></param>
         public virtual void UpdateGraph(T t)
         {
-            //List<Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<Data.BaseData>> before = context.ChangeTracker.Entries<Data.BaseData>().ToList();
             this.dbSet.Add(t);
             this.context.ApplyStateChanges();
         }
