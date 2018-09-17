@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>LogicBuilder.Expressions.Utils</RootNamespace>
     <PackageId>LogicBuilder.Expressions.Utils</PackageId>
-    <PackageVersion>1.0.0-preview15</PackageVersion>
+    <PackageVersion>1.0.0-preview16</PackageVersion>
     <Authors>BlaiseD</Authors>
     <Description>Package for generating LINQ queries form data.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
@@ -14,7 +14,7 @@
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <FileVersion>1.0.0.0</FileVersion>
     <RepositoryUrl>https://github.com/BlaiseD/LogicBuilder.DataComponents</RepositoryUrl>
-    <PackageLicenseUrl>https://github.com/BlaiseD/LogicBuilder.DataComponents/blob/master/Licence.MD</PackageLicenseUrl>
+    <PackageLicenseUrl>https://github.com/BlaiseD/LogicBuilder.DataComponents/blob/master/LICENSE</PackageLicenseUrl>
   </PropertyGroup>
 
   <ItemGroup>
