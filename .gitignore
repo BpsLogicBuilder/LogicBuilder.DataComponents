@@ -262,3 +262,4 @@ __pycache__/
 
 # Scripts for creating nuget packages
 **/PackNuget.bat
+**/PushNuget.bat
