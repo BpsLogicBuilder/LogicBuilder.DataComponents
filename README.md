@@ -8,7 +8,7 @@ Packages in this repository include abstractions for mapping LINQ expresions and
 To use:
 
 ```c#
-	//Create a context
+    //Create a context
     public class SchoolContext : DbContext
     {
         public SchoolContext(DbContextOptions<SchoolContext> options) : base(options)
@@ -16,11 +16,11 @@ To use:
         }
     }
 
-	//Create Store
-	public interface ISchoolStore : IStore
+    //Create Store
+    public interface ISchoolStore : IStore
     {
     }
-	public class SchoolStore : StoreBase, ISchoolStore
+    public class SchoolStore : StoreBase, ISchoolStore
     {
         public SchoolStore(SchoolContext context)
             : base(context)
@@ -39,8 +39,8 @@ To use:
         }
     }
 
-	//Register Services including AutoMapper profiles.
-	IServiceProvider serviceProvider = new ServiceCollection()
+    //Register Services including AutoMapper profiles.
+    IServiceProvider serviceProvider = new ServiceCollection()
                 .AddDbContext<SchoolContext>
                 (
                     options =>
@@ -68,8 +68,8 @@ To use:
 First implement the context, store, repository and service registrations as decribed earlier for LogicBuilder.EntityFrameworkCore.SqlServer.
 
 ```c#
-		//Use the DataSourceRequest helper to get the DataSourceResult.
-		ISchoolRepository repository = serviceProvider.GetRequiredService<ISchoolRepository>();
+        //Use the DataSourceRequest helper to get the DataSourceResult.
+        ISchoolRepository repository = serviceProvider.GetRequiredService<ISchoolRepository>();
         DataSourceResult result = Task.Run(() => request.GetData<StudentModel, Student>(repository)).Result;
 
 		internal static class Helpers
@@ -87,4 +87,4 @@ First implement the context, store, repository and service registrations as decr
 		}
 ```
 
-Refer to [the test here](https://github.com/BlaiseD/LogicBuilder.DataComponents/tree/master/LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests) for complete examples.
+Refer to [the tests](https://github.com/BlaiseD/LogicBuilder.DataComponents/tree/master/LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests) for complete examples.
