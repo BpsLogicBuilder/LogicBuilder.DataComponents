@@ -4,9 +4,9 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   <RootNamespace>LogicBuilder.Kendo.ExpressionExtensions</RootNamespace>
     <PackageId>LogicBuilder.Kendo.ExpressionExtensions</PackageId>
-    <PackageVersion>1.0.0-preview02</PackageVersion>
+    <PackageVersion>1.0.0-preview03</PackageVersion>
     <Authors>BlaiseD</Authors>
-    <Description>Extentions to return IQueryable expressions from Telerik's DataSourceRequest class.  The expressions can then be executed against an IQueryable.</Description>
+    <Description>Extentions to create IQueryable expressions from Telerik's DataSourceRequest class.  The expressions can then be executed against an IQueryable.  This package depends on Telerik.UI.for.AspNet.Core but has not been created by Telerik/Progress.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageReleaseNotes>First release</PackageReleaseNotes>
     <PackageTags>logicbuilder kendo</PackageTags>
