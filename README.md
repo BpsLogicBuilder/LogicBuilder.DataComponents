@@ -6,9 +6,8 @@ Packages in this repository include abstractions for mapping LINQ expresions and
 * Maps query expressions from business model to data model.
 
 To use:
-
 ```c#
-	//Create a context
+    //Create a context
     public class SchoolContext : DbContext
     {
         public SchoolContext(DbContextOptions<SchoolContext> options) : base(options)
@@ -16,11 +15,11 @@ To use:
         }
     }
 
-	//Create Store
-	public interface ISchoolStore : IStore
+    //Create Store
+    public interface ISchoolStore : IStore
     {
     }
-	public class SchoolStore : StoreBase, ISchoolStore
+    public class SchoolStore : StoreBase, ISchoolStore
     {
         public SchoolStore(SchoolContext context)
             : base(context)
@@ -28,7 +27,7 @@ To use:
         }
     }
 
-	//Create Repository
+    //Create Repository
     public interface ISchoolRepository : IContextRepository
     {
     }
@@ -39,8 +38,8 @@ To use:
         }
     }
 
-	//Register Services including AutoMapper profiles.
-	IServiceProvider serviceProvider = new ServiceCollection()
+    //Register Services including AutoMapper profiles.
+    IServiceProvider serviceProvider = new ServiceCollection()
                 .AddDbContext<SchoolContext>
                 (
                     options =>
@@ -55,36 +54,34 @@ To use:
                 .AddTransient<IMapper>(sp => new Mapper(sp.GetRequiredService<AutoMapper.IConfigurationProvider>(), sp.GetService))
                 .BuildServiceProvider();
 
-	//Call the repository
-	ISchoolRepository repository = serviceProvider.GetRequiredService<ISchoolRepository>();
+    //Call the repository
+    ISchoolRepository repository = serviceProvider.GetRequiredService<ISchoolRepository>();
     ICollection<StudentModel> list = Task.Run(() => repository.GetItemsAsync<StudentModel, Student>()).Result;
 ```
 
 ## LogicBuilder.Kendo.ExpressionExtensions
-Contains extension methods to create IQueryable expressions given an instanse of Telerik's DataSourceRequest class.
-
-To use:
+LogicBuilder.Kendo.ExpressionExtensions depends on Telerik.UI.for.AspNet.Core but has not been created or maintained by Telerik/Progress.  It contains extension methods for creating IQueryable expressions given an instanse of Telerik's DataSourceRequest class.
 
 First implement the context, store, repository and service registrations as decribed earlier for LogicBuilder.EntityFrameworkCore.SqlServer.
 
 ```c#
-		//Use the DataSourceRequest helper to get the DataSourceResult.
-		ISchoolRepository repository = serviceProvider.GetRequiredService<ISchoolRepository>();
-        DataSourceResult result = Task.Run(() => request.GetData<StudentModel, Student>(repository)).Result;
+    //Use the DataSourceRequest helper to get the DataSourceResult.
+    ISchoolRepository repository = serviceProvider.GetRequiredService<ISchoolRepository>();
+    DataSourceResult result = Task.Run(() => request.GetData<StudentModel, Student>(repository)).Result;
 
-		internal static class Helpers
-		{
-			public static async Task<DataSourceResult> GetData<TModel, TData>(this DataSourceRequest request, IContextRepository contextRepository, IEnumerable<string> includes = null)
+    internal static class Helpers
+    {
+        public static async Task<DataSourceResult> GetData<TModel, TData>(this DataSourceRequest request, IContextRepository contextRepository, IEnumerable<string> includes = null)
 				where TModel : BaseModelClass
 				where TData : BaseDataClass
-			{
-				return await request.GetDataSourceResult<TModel, TData>
-				(
-					contextRepository,
-					includes.BuildIncludesExpressionCollection<TModel>()
-				);
-			}
-		}
+        {
+            return await request.GetDataSourceResult<TModel, TData>
+            (
+		contextRepository,
+		includes.BuildIncludesExpressionCollection<TModel>()
+            );
+        }
+    }
 ```
 
-Refer to [the test here](https://github.com/BlaiseD/LogicBuilder.DataComponents/tree/master/LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests) for complete examples.
+Refer to [the tests](https://github.com/BlaiseD/LogicBuilder.DataComponents/tree/master/LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests) for complete examples.
