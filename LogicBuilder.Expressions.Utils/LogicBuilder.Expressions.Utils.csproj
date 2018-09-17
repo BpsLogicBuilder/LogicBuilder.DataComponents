@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>LogicBuilder.Expressions.Utils</RootNamespace>
     <PackageId>LogicBuilder.Expressions.Utils</PackageId>
-    <PackageVersion>1.0.0-preview14</PackageVersion>
+    <PackageVersion>1.0.0-preview15</PackageVersion>
     <Authors>BlaiseD</Authors>
     <Description>Package for generating LINQ queries form data.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
@@ -13,12 +13,11 @@
     <Copyright>Copyright © BPS 2018</Copyright>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <FileVersion>1.0.0.0</FileVersion>
-    <RepositoryUrl>https://github.com/BlaiseD/LogicBuilder</RepositoryUrl>
-    <PackageLicenseUrl>https://github.com/BlaiseD/LogicBuilder/blob/master/Licence.MD</PackageLicenseUrl>
+    <RepositoryUrl>https://github.com/BlaiseD/LogicBuilder.DataComponents</RepositoryUrl>
+    <PackageLicenseUrl>https://github.com/BlaiseD/LogicBuilder.DataComponents/blob/master/Licence.MD</PackageLicenseUrl>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="LogicBuilder.Attributes" Version="1.0.0-preview04" />
     <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
     <PackageReference Include="System.Linq.Dynamic.Core" Version="1.0.8.11" />
   </ItemGroup>

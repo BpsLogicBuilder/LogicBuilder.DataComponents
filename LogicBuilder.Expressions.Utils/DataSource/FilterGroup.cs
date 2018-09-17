@@ -1,5 +1,4 @@
-﻿using LogicBuilder.Attributes;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace LogicBuilder.Expressions.Utils.DataSource
 {
@@ -7,8 +6,6 @@ namespace LogicBuilder.Expressions.Utils.DataSource
     {
         public FilterGroup
             (
-                [Domain("and, or")]
-                [ParameterEditorControl(ParameterControlType.DropDown)]
                 string Logic, 
                 IEnumerable<Filter> Filters, 
                 IEnumerable<FilterGroup> FilterGroups

@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>LogicBuilder.Domain</RootNamespace>
     <PackageId>LogicBuilder.Domain</PackageId>
-    <PackageVersion>1.0.0-preview03</PackageVersion>
+    <PackageVersion>1.0.0-preview04</PackageVersion>
     <Authors>BlaiseD</Authors>
     <Description>Base class for domain objects.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
@@ -13,8 +13,8 @@
     <Copyright>Copyright © BPS 2017</Copyright>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <FileVersion>1.0.0.0</FileVersion>
-    <RepositoryUrl>https://github.com/BlaiseD/LogicBuilder</RepositoryUrl>
-    <PackageLicenseUrl>https://github.com/BlaiseD/LogicBuilder/blob/master/Licence.MD</PackageLicenseUrl>
+    <RepositoryUrl>https://github.com/BlaiseD/LogicBuilder.DataComponents</RepositoryUrl>
+    <PackageLicenseUrl>https://github.com/BlaiseD/LogicBuilder.DataComponents/blob/master/Licence.MD</PackageLicenseUrl>
   </PropertyGroup>
 
   <ItemGroup>

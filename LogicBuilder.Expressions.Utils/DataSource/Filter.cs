@@ -1,5 +1,4 @@
-﻿using LogicBuilder.Attributes;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace LogicBuilder.Expressions.Utils.DataSource
 {
@@ -7,13 +6,7 @@ namespace LogicBuilder.Expressions.Utils.DataSource
     {
         public Filter
             (
-                [ParameterEditorControl(ParameterControlType.ParameterSourcedPropertyInput)]
-                [NameValue(AttributeNames.PROPERTYSOURCEPARAMETER, "ValueSourceType")]
-                [Comments("Update ValueSourceType with System.Type's fullName property.")]
                 string Field,
-
-                [Domain("eq, neq, lt, lte, gt, gte, contains, doesnotcontain, startswith, endswith, isnotempty, isempty, isnotnull, isnull")]
-                [ParameterEditorControl(ParameterControlType.DropDown)]
                 string Oper,
                 string Value = null,
                 string ValueSourceMember = null,
