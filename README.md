@@ -84,4 +84,4 @@ First implement the context, store, repository and service registrations as decr
     }
 ```
 
-Refer to [the tests](https://github.com/BlaiseD/LogicBuilder.DataComponents/tree/master/LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests) for complete examples.
+Refer to [the data request tests](https://github.com/BlaiseD/LogicBuilder.DataComponents/blob/master/LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests/DataRequestTests.cs) for complete examples.
