@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>LogicBuilder.Expressions.EntityFrameworkCore</RootNamespace>
     <PackageId>LogicBuilder.Expressions.EntityFrameworkCore</PackageId>
-    <PackageVersion>1.0.0-preview05</PackageVersion>
+    <PackageVersion>1.0.0-preview06</PackageVersion>
     <Authors>BlaiseD</Authors>
     <Description>Package for generating LINQ queries specific to EF Core form data.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
@@ -19,7 +19,7 @@
 
   <ItemGroup>
     <PackageReference Include="LogicBuilder.Expressions.Utils" Version="1.0.0-preview16" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="[2.0.1,2.0.3]" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.0.3" />
   </ItemGroup>
 
 </Project>

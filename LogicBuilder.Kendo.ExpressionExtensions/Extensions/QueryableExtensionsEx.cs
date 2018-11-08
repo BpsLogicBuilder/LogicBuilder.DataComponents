@@ -36,7 +36,7 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.Extensions
 
             if (filters.Any())
                 ex = ex.Where(filters);
-
+            
             ex = ex.Aggregate(aggregates.SelectMany(a => a.Aggregates));
             ex = Expression.Call(typeof(Queryable), "FirstOrDefault", new Type[] { typeof(AggregateFunctionsGroup) }, ex);
             return Expression.Lambda<Func<IQueryable<TModel>, AggregateFunctionsGroup>>(ex, param);
@@ -268,8 +268,24 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.Extensions
         /// <returns></returns>
         public static MethodCallExpression GroupBy(this Expression parentExpression, LambdaExpression keySelector)
         {
-            return parentExpression.CallQueryableMethod("GroupBy", keySelector);
+            return parentExpression.CallQueryableMethod("GroupBy", keySelector).ToList().AsQueryable();
         }
+
+        /// <summary>
+        /// To List
+        /// </summary>
+        /// <param name="parentExpression"></param>
+        /// <returns></returns>
+        public static MethodCallExpression ToList(this Expression parentExpression) 
+            => Expression.Call(typeof(Enumerable), "ToList", new Type[] { parentExpression.GetUnderlyingElementType() }, parentExpression);
+
+        /// <summary>
+        /// As Queryable
+        /// </summary>
+        /// <param name="parentExpression"></param>
+        /// <returns></returns>
+        public static MethodCallExpression AsQueryable(this Expression parentExpression) 
+            => Expression.Call(typeof(Queryable), "AsQueryable", new Type[] { parentExpression.GetUnderlyingElementType() }, parentExpression);
 
         /// <summary>
         /// Order By

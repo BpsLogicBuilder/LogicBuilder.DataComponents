@@ -135,7 +135,7 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests
                     Sort = null,
                     PageSize = 5
                 },
-                Includes = null,
+                Includes = new string[] { "administratorName" },
                 Selects = null,
                 Distinct = false
             };

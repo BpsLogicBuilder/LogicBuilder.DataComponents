@@ -123,10 +123,10 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests
             {
                 Data = await contextRepository.QueryAsync<TModel, TData, IEnumerable<TModel>, IEnumerable<TData>>(ungroupedExp, includeProperties),
                 AggregateResults = getAggregates
-                                    ? (await contextRepository.QueryAsync<TModel, TData, AggregateFunctionsGroup, AggregateFunctionsGroup, AggregateFunctionsGroupModel<TModel>>(aggregatesExp))
+                                    ? (await contextRepository.QueryAsync<TModel, TData, AggregateFunctionsGroup, AggregateFunctionsGroup, AggregateFunctionsGroupModel<TModel>>(aggregatesExp, includeProperties))
                                                                 ?.GetAggregateResults(request.Aggregates.SelectMany(a => a.Aggregates))
                                     : null,
-                Total = await contextRepository.QueryAsync<TModel, TData, int, int>(totalExp)
+                Total = await contextRepository.QueryAsync<TModel, TData, int, int>(totalExp, includeProperties)
             };
         }
 
@@ -142,10 +142,10 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests
             {
                 Data = await contextRepository.QueryAsync<TModel, TData, IEnumerable<AggregateFunctionsGroup>, IEnumerable<AggregateFunctionsGroup>, IEnumerable<AggregateFunctionsGroupModel<TModel>>>(groupedExp, includeProperties),
                 AggregateResults = getAggregates
-                                    ? (await contextRepository.QueryAsync<TModel, TData, AggregateFunctionsGroup, AggregateFunctionsGroup, AggregateFunctionsGroupModel<TModel>>(aggregatesExp))
+                                    ? (await contextRepository.QueryAsync<TModel, TData, AggregateFunctionsGroup, AggregateFunctionsGroup, AggregateFunctionsGroupModel<TModel>>(aggregatesExp, includeProperties))
                                                                 ?.GetAggregateResults(request.Aggregates.SelectMany(a => a.Aggregates))
                                     : null,
-                Total = await contextRepository.QueryAsync<TModel, TData, int, int>(totalExp)
+                Total = await contextRepository.QueryAsync<TModel, TData, int, int>(totalExp, includeProperties)
             };
         }
     }

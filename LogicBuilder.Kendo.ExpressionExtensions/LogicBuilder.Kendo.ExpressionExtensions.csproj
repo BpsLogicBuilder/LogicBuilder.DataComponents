@@ -4,11 +4,11 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   <RootNamespace>LogicBuilder.Kendo.ExpressionExtensions</RootNamespace>
     <PackageId>LogicBuilder.Kendo.ExpressionExtensions</PackageId>
-    <PackageVersion>1.0.0-preview06</PackageVersion>
+    <PackageVersion>1.0.0-preview07</PackageVersion>
     <Authors>BlaiseD</Authors>
     <Description>Extensions to create IQueryable expressions from Telerik's DataSourceRequest class.  The expressions can then be executed against an IQueryable.  This package depends on Telerik.UI.for.AspNet.Core but has not been created by Telerik/Progress.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>First release</PackageReleaseNotes>
+    <PackageReleaseNotes>Updates to support Microsoft.EntityFrameworkCore.SqlServer version 2.1. Workaround for (Must be reducible node System.ArgumentException upgrading to EF Core 2.1.1 #12560)</PackageReleaseNotes>
     <PackageTags>efcore kendo</PackageTags>
     <Copyright>Copyright © BPS 2018</Copyright>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
