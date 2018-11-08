@@ -60,7 +60,7 @@ To use:
 ```
 
 ## LogicBuilder.Kendo.ExpressionExtensions
-LogicBuilder.Kendo.ExpressionExtensions depends on Telerik.UI.for.AspNet.Core but has not been created or maintained by Telerik/Progress.  It contains extension methods for creating IQueryable expressions given an instanse of Telerik's DataSourceRequest class.
+LogicBuilder.Kendo.ExpressionExtensions depends on Telerik.UI.for.AspNet.Core but has not been created or maintained by Telerik/Progress.  It contains extension methods for creating IQueryable expressions given an instance of Telerik's DataSourceRequest class.
 
 First implement the context, store, repository and service registrations as decribed earlier for LogicBuilder.EntityFrameworkCore.SqlServer.
 
