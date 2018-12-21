@@ -4,24 +4,24 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>LogicBuilder.EntityFrameworkCore.SqlServer</RootNamespace>
     <PackageId>LogicBuilder.EntityFrameworkCore.SqlServer</PackageId>
-    <PackageVersion>1.0.0-preview06</PackageVersion>
+    <PackageVersion>1.0.0</PackageVersion>
     <Authors>BlaiseD</Authors>
-    <Description>Abstraction for transferring business model objects to and from data objects for SQL Server.</Description>
+    <Description>Abstraction for CRUD operations using EF Core including object mappings between data and DTOs.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>First release</PackageReleaseNotes>
+    <PackageReleaseNotes>Given an EF Core DBContext, LogicBuilder.EntityFrameworkCore.SqlServer uses AutoMapper configurations to support CRUD operations using the DTO objects. It supports the data stack for https://github.com/BlaiseD/LogicBuilder.Rules </PackageReleaseNotes>
     <PackageTags>crud operations efcore</PackageTags>
     <Copyright>Copyright © BPS 2017</Copyright>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <FileVersion>1.0.0.0</FileVersion>
     <RepositoryUrl>https://github.com/BlaiseD/LogicBuilder.DataComponents</RepositoryUrl>
-    <PackageLicenseUrl>https://github.com/BlaiseD/LogicBuilder.DataComponents/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageLicense>https://github.com/BlaiseD/LogicBuilder.DataComponents/blob/master/LICENSE</PackageLicense>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="7.0.1" />
     <PackageReference Include="AutoMapper.Extensions.ExpressionMapping" Version="1.0.2" />
-    <PackageReference Include="LogicBuilder.Data" Version="1.0.0-preview04" />
-    <PackageReference Include="LogicBuilder.Domain" Version="1.0.0-preview05" />
+    <PackageReference Include="LogicBuilder.Data" Version="1.0.0" />
+    <PackageReference Include="LogicBuilder.Domain" Version="1.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.0.3" />
   </ItemGroup>
 

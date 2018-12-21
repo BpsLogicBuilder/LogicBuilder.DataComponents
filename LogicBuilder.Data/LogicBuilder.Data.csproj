@@ -4,17 +4,17 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>LogicBuilder.Data</RootNamespace>
     <PackageId>LogicBuilder.Data</PackageId>
-    <PackageVersion>1.0.0-preview04</PackageVersion>
+    <PackageVersion>1.0.0</PackageVersion>
     <Authors>BlaiseD</Authors>
     <Description>Base class for data objects for SQL Server.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>First release</PackageReleaseNotes>
+    <PackageReleaseNotes>LogicBuilder.Data includes the base class for all Ef (or other ORM) objects and supports the data stack for https://github.com/BlaiseD/LogicBuilder.Rules </PackageReleaseNotes>
     <PackageTags>crud operations</PackageTags>
     <Copyright>Copyright © BPS 2017</Copyright>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <FileVersion>1.0.0.0</FileVersion>
     <RepositoryUrl>https://github.com/BlaiseD/LogicBuilder.DataComponents</RepositoryUrl>
-    <PackageLicenseUrl>https://github.com/BlaiseD/LogicBuilder.DataComponents/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageLicense>https://github.com/BlaiseD/LogicBuilder.DataComponents/blob/master/LICENSE</PackageLicense>
   </PropertyGroup>
 
   <ItemGroup>

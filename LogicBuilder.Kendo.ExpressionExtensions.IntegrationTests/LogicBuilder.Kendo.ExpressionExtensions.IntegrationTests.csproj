@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="LogicBuilder.EntityFrameworkCore.SqlServer" Version="1.0.0-preview06" />
-    <PackageReference Include="LogicBuilder.Expressions.EntityFrameworkCore" Version="1.0.0-preview06" />
+    <PackageReference Include="LogicBuilder.EntityFrameworkCore.SqlServer" Version="1.0.0" />
+    <PackageReference Include="LogicBuilder.Expressions.EntityFrameworkCore" Version="1.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="2.1.4" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
     <PackageReference Include="xunit" Version="2.4.1" />
