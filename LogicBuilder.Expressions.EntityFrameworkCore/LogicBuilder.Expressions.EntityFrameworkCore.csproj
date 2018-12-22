@@ -6,15 +6,18 @@
     <PackageId>LogicBuilder.Expressions.EntityFrameworkCore</PackageId>
     <PackageVersion>1.0.0</PackageVersion>
     <Authors>BlaiseD</Authors>
-    <Description>Package for generating LINQ queries specific to EF Core form data.</Description>
+    <Description>Augments LogicBuilder.Expressions.Utils with LINQ queries specific to EF Core.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>Supports LogicBuilder.Expressions.Utils with LINQ queries specific to EF Core.</PackageReleaseNotes>
+    <PackageReleaseNotes>First Release.</PackageReleaseNotes>
     <PackageTags>linq expressions efcore</PackageTags>
     <Copyright>Copyright © BPS 2018</Copyright>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <FileVersion>1.0.0.0</FileVersion>
     <RepositoryUrl>https://github.com/BlaiseD/LogicBuilder.DataComponents</RepositoryUrl>
     <PackageLicense>https://github.com/BlaiseD/LogicBuilder.DataComponents/blob/master/LICENSE</PackageLicense>
+    <PackageProjectUrl>https://github.com/BlaiseD/LogicBuilder</PackageProjectUrl>
+    <AssemblyOriginatorKeyFile>..\LogicBuilder.Rules.snk</AssemblyOriginatorKeyFile>
+    <SignAssembly>true</SignAssembly>
   </PropertyGroup>
 
   <ItemGroup>

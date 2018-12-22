@@ -6,15 +6,18 @@
     <PackageId>LogicBuilder.Domain</PackageId>
     <PackageVersion>1.0.0</PackageVersion>
     <Authors>BlaiseD</Authors>
-    <Description>Base class for domain objects.</Description>
+    <Description>LogicBuilder.Domain includes the base class for all DTOs in the data stack;</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>LogicBuilder.Domain includes the base class for all DTOs and supports the data stack for https://github.com/BlaiseD/LogicBuilder.Rules </PackageReleaseNotes>
+    <PackageReleaseNotes>First Release.</PackageReleaseNotes>
     <PackageTags>crud operations logic-builder</PackageTags>
     <Copyright>Copyright © BPS 2017</Copyright>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <FileVersion>1.0.0.0</FileVersion>
     <RepositoryUrl>https://github.com/BlaiseD/LogicBuilder.DataComponents</RepositoryUrl>
     <PackageLicense>https://github.com/BlaiseD/LogicBuilder.DataComponents/blob/master/LICENSE</PackageLicense>
+    <PackageProjectUrl>https://github.com/BlaiseD/LogicBuilder</PackageProjectUrl>
+    <AssemblyOriginatorKeyFile>..\LogicBuilder.Rules.snk</AssemblyOriginatorKeyFile>
+    <SignAssembly>true</SignAssembly>
   </PropertyGroup>
 
   <ItemGroup>

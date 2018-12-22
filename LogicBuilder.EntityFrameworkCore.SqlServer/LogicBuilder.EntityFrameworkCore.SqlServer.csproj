@@ -6,15 +6,18 @@
     <PackageId>LogicBuilder.EntityFrameworkCore.SqlServer</PackageId>
     <PackageVersion>1.0.0</PackageVersion>
     <Authors>BlaiseD</Authors>
-    <Description>Abstraction for CRUD operations using EF Core including object mappings between data and DTOs.</Description>
+    <Description>Given an EF Core DBContext, LogicBuilder.EntityFrameworkCore.SqlServer uses AutoMapper configurations to support CRUD operations using the DTO objects.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>Given an EF Core DBContext, LogicBuilder.EntityFrameworkCore.SqlServer uses AutoMapper configurations to support CRUD operations using the DTO objects. It supports the data stack for https://github.com/BlaiseD/LogicBuilder.Rules </PackageReleaseNotes>
+    <PackageReleaseNotes>First Release.</PackageReleaseNotes>
     <PackageTags>crud operations efcore</PackageTags>
     <Copyright>Copyright © BPS 2017</Copyright>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <FileVersion>1.0.0.0</FileVersion>
     <RepositoryUrl>https://github.com/BlaiseD/LogicBuilder.DataComponents</RepositoryUrl>
     <PackageLicense>https://github.com/BlaiseD/LogicBuilder.DataComponents/blob/master/LICENSE</PackageLicense>
+    <PackageProjectUrl>https://github.com/BlaiseD/LogicBuilder</PackageProjectUrl>
+    <AssemblyOriginatorKeyFile>..\LogicBuilder.Rules.snk</AssemblyOriginatorKeyFile>
+    <SignAssembly>true</SignAssembly>
   </PropertyGroup>
 
   <ItemGroup>
