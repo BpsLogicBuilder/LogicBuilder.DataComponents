@@ -1,4 +1,5 @@
 ﻿using LogicBuilder.Data;
+using LogicBuilder.Expressions.Utils.Strutures;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 using System;
@@ -21,11 +22,15 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Crud.DataStores
         #endregion Fields
 
         #region Methods
-        public async Task<ICollection<T>> GetAsync<T>(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IQueryable<T>> queryFunc = null, ICollection<Func<IQueryable<T>, IIncludableQueryable<T, object>>> includeProperties = null) where T : BaseData
+        public async Task<ICollection<T>> GetAsync<T>(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IQueryable<T>> queryFunc = null, ICollection<Func<IQueryable<T>, IIncludableQueryable<T, object>>> includeProperties = null, ICollection<FilteredIncludeExpression> filteredIncludes = null) where T : BaseData
         {
-            return await _unitOfWork.GetRepository<T>().GetAsync(filter,
-                    queryFunc,
-                    includeProperties);
+            return await _unitOfWork.GetRepository<T>().GetAsync
+            (
+                filter,
+                queryFunc,
+                includeProperties,
+                filteredIncludes
+            );
         }
 
         public async Task<int> CountAsync<T>(Expression<Func<T, bool>> filter = null) where T : BaseData

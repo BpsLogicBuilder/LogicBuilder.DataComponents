@@ -2,6 +2,7 @@
 using LogicBuilder.Expressions.Utils.Strutures;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -36,9 +37,9 @@ namespace LogicBuilder.Expressions.Utils
         /// <param name="sorts"></param>
         /// <param name="parameterName"></param>
         /// <returns></returns>
-        public static MethodCallExpression GetOrderBy<TSource>(this Expression expression, SortCollection sorts, string parameterName = "g")
+        public static MethodCallExpression GetOrderBy<TSource>(this Expression expression, SortCollection sorts)
         {
-            MethodCallExpression resultExp = sorts.SortDescriptions.Aggregate((MethodCallExpression)null, (mce, description) =>
+            MethodCallExpression resultExp = sorts.SortDescriptions.Aggregate(null, (MethodCallExpression mce, SortDescription description) =>
             {
                 LambdaExpression selectorExpression = description.PropertyName.GetTypedSelector<TSource>();
                 MemberInfo orderByPropertyInfo = typeof(TSource).GetMemberInfoFromFullName(description.PropertyName);
@@ -90,7 +91,7 @@ namespace LogicBuilder.Expressions.Utils
         /// <param name="groupByProperty"></param>
         /// <param name="parameterName"></param>
         /// <returns></returns>
-        public static MethodCallExpression GetGroupBy<TSource>(this Expression expression, string groupByProperty, string parameterName = "g")
+        public static MethodCallExpression GetGroupBy<TSource>(this Expression expression, string groupByProperty)
         {
             LambdaExpression selectorExpression = groupByProperty.GetObjectSelector<TSource>();
             Type[] genericArgumentsForMethod = new Type[] { typeof(TSource), typeof(object) };
@@ -123,7 +124,7 @@ namespace LogicBuilder.Expressions.Utils
         /// <param name="filterGroup"></param>
         /// <param name="parameterName"></param>
         /// <returns></returns>
-        public static MethodCallExpression GetWhere<TSource>(this Expression expression, DataSource.FilterGroup filterGroup, string parameterName = "g") where TSource : class
+        public static MethodCallExpression GetWhere<TSource>(this Expression expression, DataSource.FilterGroup filterGroup) where TSource : class
         {
             LambdaExpression filterExpression = filterGroup.GetFilterExpression<TSource>();
             Type[] genericArgumentsForMethod = new Type[] { typeof(TSource) };
@@ -156,7 +157,7 @@ namespace LogicBuilder.Expressions.Utils
         /// <param name="filter"></param>
         /// <param name="parameterName"></param>
         /// <returns></returns>
-        public static MethodCallExpression GetWhere<TSource>(this Expression expression, DataSource.Filter filter, string parameterName = "g") where TSource : class
+        public static MethodCallExpression GetWhere<TSource>(this Expression expression, DataSource.Filter filter) where TSource : class
         {
             LambdaExpression filterExpression = filter.GetFilterExpression<TSource>();
             Type[] genericArgumentsForMethod = new Type[] { typeof(TSource) };
@@ -442,5 +443,94 @@ namespace LogicBuilder.Expressions.Utils
 
             return Expression.Call(typeof(Queryable), "Select", genericArgumentsForSelectMethod, expression, selectorExpression);
         }
+
+        /// <summary>
+        /// Creates a list of navigation expressions from the list of period delimited navigation properties.
+        /// </summary>
+        /// <typeparam name="TSource"></typeparam>
+        /// <param name="includes"></param>
+        /// <returns></returns>
+        public static IEnumerable<Expression<Func<TSource, object>>> BuildIncludes<TSource>(this IEnumerable<string> includes)
+            where TSource : class
+            => includes.Select(include => BuildSelectorExpression<TSource>(include)).ToList();
+
+        /// <summary>
+        /// Build Selector Expression
+        /// </summary>
+        /// <typeparam name="TSource"></typeparam>
+        /// <param name="fullName"></param>
+        /// <param name="parameterName"></param>
+        /// <returns></returns>
+        public static Expression<Func<TSource, object>> BuildSelectorExpression<TSource>(string fullName, string parameterName = "i")
+            => (Expression<Func<TSource, object>>)BuildSelectorExpression(typeof(TSource), fullName, parameterName);
+
+        /// <summary>
+        /// Build Selector Expression
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="fullName"></param>
+        /// <param name="parameterName"></param>
+        /// <returns></returns>
+        public static LambdaExpression BuildSelectorExpression(Type type, string fullName, string parameterName = "i")
+        {
+            ParameterExpression param = Expression.Parameter(type, parameterName);
+            string[] parts = fullName.Split(new char[] { '.' }, StringSplitOptions.RemoveEmptyEntries);
+            Type parentType = type;
+            Expression parent = param;
+
+            for (int i = 0; i < parts.Length; i++)
+            {
+                if (parentType.IsList())
+                {
+                    parent = GetSelectExpression(parts.Skip(i), parent, parentType.GetUnderlyingElementType(), parameterName);//parentType is the underlying type of the member since it is an IEnumerable<T>
+                    return Expression.Lambda
+                    (
+                        typeof(Func<,>).MakeGenericType(new[] { type, typeof(object) }),
+                        parent,
+                        param
+                    );
+                }
+                else
+                {
+                    MemberInfo mInfo = parentType.GetMemberInfo(parts[i]);
+                    parent = Expression.MakeMemberAccess(parent, mInfo);
+
+                    parentType = mInfo.GetMemberType();
+                }
+            }
+
+            if (parent.Type.IsValueType)//Convert value type expressions to object expressions otherwise
+                parent = Expression.Convert(parent, typeof(object));//Expression.Lambda below will throw an exception for value types
+
+            return Expression.Lambda
+            (
+                typeof(Func<,>).MakeGenericType(new[] { type, typeof(object) }),
+                parent,
+                param
+            );
+        }
+
+        private static string ChildParameterName(this string currentParameterName)
+        {
+            string lastChar = currentParameterName.Substring(currentParameterName.Length - 1);
+            if (short.TryParse(lastChar, out short lastCharShort))
+            {
+                return string.Concat(currentParameterName.Substring(0, currentParameterName.Length - 1), (lastCharShort++).ToString(CultureInfo.CurrentCulture));
+            }
+            else
+            {
+                return currentParameterName += "0";
+            }
+        }
+
+        private static Expression GetSelectExpression(IEnumerable<string> parts, Expression parent, Type underlyingType, string parameterName)//underlying type because paranet is a collection
+            => Expression.Call
+            (
+                typeof(Enumerable),//This is an Enumerable (not Queryable) select.  We are selecting includes for a member who is a collection
+                "Select",
+                new Type[] { underlyingType, typeof(object) },
+                parent,
+                BuildSelectorExpression(underlyingType, string.Join(".", parts), parameterName.ChildParameterName())//Join the remaining parts to create a full name
+            );
     }
 }

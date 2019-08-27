@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
+using AutoMapper.Extensions.ExpressionMapping;
 using Contoso.Contexts;
 using Contoso.Data.Entities;
 using Contoso.Domain.Entities;
 using Contoso.Repositories;
+using LogicBuilder.Expressions.Utils;
+using LogicBuilder.Expressions.Utils.Strutures;
 using LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests.AutoMapperProfiles;
 using LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests.Data;
 using Microsoft.EntityFrameworkCore;
@@ -39,11 +42,22 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests
                     {
                         options.UseInMemoryDatabase("ContosoUniVersity");
                         options.UseInternalServiceProvider(new ServiceCollection().AddEntityFrameworkInMemoryDatabase().BuildServiceProvider());
-                    }
+                    },
+                    ServiceLifetime.Transient
                 )
                 .AddTransient<ISchoolStore, SchoolStore>()
                 .AddTransient<ISchoolRepository, SchoolRepository>()
-                .AddSingleton<AutoMapper.IConfigurationProvider>(new MapperConfiguration(cfg => cfg.AddProfiles(typeof(SchoolProfile).GetTypeInfo().Assembly)))
+                .AddSingleton<AutoMapper.IConfigurationProvider>
+                (
+                    new MapperConfiguration
+                    (
+                        cfg => 
+                        {
+                            cfg.AddExpressionMapping();
+                            cfg.AddMaps(typeof(SchoolProfile).GetTypeInfo().Assembly);
+                        }
+                    )
+                )
                 .AddTransient<IMapper>(sp => new Mapper(sp.GetRequiredService<AutoMapper.IConfigurationProvider>(), sp.GetService))
                 .BuildServiceProvider();
 
@@ -66,21 +80,203 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests
         }
 
         [Fact]
-        public void Get_students_with_no_includes_inlude_navigation_property()
+        public void Get_students_inlude_navigation_property()
         {
             ISchoolRepository repository = serviceProvider.GetRequiredService<ISchoolRepository>();
-            ICollection<StudentModel> list = Task.Run(() => repository.GetItemsAsync<StudentModel, Student>(s => s.Enrollments.Count > 0, null,
+            ICollection<StudentModel> list = Task.Run
+            (
+                () => repository.GetItemsAsync<StudentModel, Student>
+                (
+                    s => s.Enrollments.Count > 0, null,
                     new Expression<Func<IQueryable<StudentModel>, IIncludableQueryable<StudentModel, object>>>[]
                     {
                         a => a.Include(x => x.Enrollments)
-                    })).Result;
+                    }
+                )
+            ).Result;
 
             Assert.True(list.First().Enrollments.Count > 0);
             Assert.Null(list.First().Enrollments.First().CourseTitle);
         }
 
         [Fact]
-        public void Get_students_with_no_includes_inlude_navigation_property_of_navigation_property()
+        public void Get_students_with_filtered_inlude_no_filter()
+        {
+            ISchoolRepository repository = serviceProvider.GetRequiredService<ISchoolRepository>();
+            ICollection<StudentModel> list = Task.Run
+            (
+                () => repository.GetItemsAsync<StudentModel, Student>
+                (
+                    s => s.Enrollments.Count > 0, null, null,
+                    new FilteredIncludeExpression[]
+                    {
+                        new FilteredIncludeExpression
+                        {
+                            Include = LinqHelpers.ToSelector<StudentModel, ICollection<EnrollmentModel>>(i => i.Enrollments)
+                        }
+                    }
+                )
+            ).Result;
+
+            Assert.True(list.First().Enrollments.Count > 0);
+            Assert.Null(list.First().Enrollments.First().CourseTitle);
+        }
+
+        [Fact]
+        public void Get_students_with_filtered_inlude_with_filter()
+        {
+            ISchoolRepository repository = serviceProvider.GetRequiredService<ISchoolRepository>();
+            ICollection<StudentModel> list = Task.Run
+            (
+                () => repository.GetItemsAsync<StudentModel, Student>
+                (
+                    s => s.Enrollments.Count > 0, null, null,
+                    new FilteredIncludeExpression[]
+                    {
+                        new FilteredIncludeExpression
+                        {
+                            Include = LinqHelpers.ToSelector<StudentModel, ICollection<EnrollmentModel>>(i => i.Enrollments),
+                            Filter = LinqHelpers.ToFilter<EnrollmentModel>(e => e.EnrollmentID == -1)
+                        }
+                    }
+                )
+            ).Result;
+
+            Assert.True(list.First().Enrollments.Count == 0);
+        }
+
+        [Fact]
+        public void Get_departments_with_filtered_inlude_no_filter()
+        {
+            ISchoolRepository repository = serviceProvider.GetRequiredService<ISchoolRepository>();
+            ICollection<DepartmentModel> list = Task.Run
+            (
+                () => repository.GetItemsAsync<DepartmentModel, Department>
+                (
+                    d => d.Courses.Count > 0, null, null,
+                    new FilteredIncludeExpression[]
+                    {
+                        new FilteredIncludeExpression
+                        {
+                            Include = LinqHelpers.ToSelector<DepartmentModel, ICollection<CourseModel>>(i => i.Courses)
+                        }
+                    }
+                )
+            ).Result;
+
+            Assert.True(list.First().Courses.Count > 0);
+            Assert.True(list.First().Courses.First().Assignments.Count == 0);
+        }
+
+        [Fact]
+        public void Get_departments_with_filtered_inlude_with_child_include_no_filters()
+        {
+            ISchoolRepository repository = serviceProvider.GetRequiredService<ISchoolRepository>();
+            ICollection<DepartmentModel> list = Task.Run
+            (
+                () => repository.GetItemsAsync<DepartmentModel, Department>
+                (
+                    d => d.Courses.Count > 0, null, null,
+                    new FilteredIncludeExpression[]
+                    {
+                        new FilteredIncludeExpression
+                        {
+                            Include = LinqHelpers.ToSelector<DepartmentModel, ICollection<CourseModel>>(i => i.Courses),
+                            FilteredIncludes = new FilteredIncludeExpression[]
+                            {
+                                new FilteredIncludeExpression
+                                {
+                                    Include = LinqHelpers.ToSelector<CourseModel, ICollection<CourseAssignmentModel>>(i => i.Assignments)
+                                }
+                            }
+                        }
+                    }
+                )
+            ).Result;
+
+            Assert.True(list.First().Courses.Count > 0);
+            Assert.True(list.First().Courses.First().Assignments.Count > 0);
+        }
+
+        [Fact]
+        public void Get_departments_with_filtered_inlude_with_filter_on_child_include()
+        {
+            ISchoolRepository repository = serviceProvider.GetRequiredService<ISchoolRepository>();
+            ICollection<DepartmentModel> list = Task.Run
+            (
+                () => repository.GetItemsAsync<DepartmentModel, Department>
+                (
+                    d => d.Courses.Count > 0, null, null,
+                    new FilteredIncludeExpression[]
+                    {
+                        new FilteredIncludeExpression
+                        {
+                            Include = LinqHelpers.ToSelector<DepartmentModel, ICollection<CourseModel>>(i => i.Courses),
+                            FilteredIncludes = new FilteredIncludeExpression[]
+                            {
+                                new FilteredIncludeExpression
+                                {
+                                    Include = LinqHelpers.ToSelector<CourseModel, ICollection<CourseAssignmentModel>>(i => i.Assignments),
+                                    Filter = LinqHelpers.ToFilter<CourseAssignmentModel>(e => e.CourseID == -1)
+                                }
+                            }
+                        }
+                    }
+                )
+            ).Result;
+
+            Assert.True(list.First().Courses.Count > 0);
+            Assert.True(list.First().Courses.First().Assignments.Count == 0);
+        }
+
+        [Fact]
+        public void Get_instuctors_with_filtered_inlude_conditionally_select_reference_with_valid_condition()
+        {
+            ISchoolRepository repository = serviceProvider.GetRequiredService<ISchoolRepository>();
+            ICollection<InstructorModel> list = Task.Run
+            (
+                () => repository.GetItemsAsync<InstructorModel, Instructor>
+                (
+                    i => i.OfficeAssignment != null, null, null,
+                    new FilteredIncludeExpression[]
+                    {
+                        new FilteredIncludeExpression
+                        {
+                            Include = LinqHelpers.ToSelector<InstructorModel, OfficeAssignmentModel>(i => i.OfficeAssignment),
+                            Filter = LinqHelpers.ToFilter<OfficeAssignmentModel>(oa => !oa.Location.StartsWith("*"))
+                        }
+                    }
+                )
+            ).Result;
+
+            Assert.NotNull(list.First().OfficeAssignment);
+        }
+
+        [Fact]
+        public void Get_instuctors_with_filtered_inlude_conditionally_select_reference_with_invalid_condition()
+        {
+            ISchoolRepository repository = serviceProvider.GetRequiredService<ISchoolRepository>();
+            ICollection<InstructorModel> list = Task.Run
+            (
+                () => repository.GetItemsAsync<InstructorModel, Instructor>
+                (
+                    i => i.OfficeAssignment != null, null, null,
+                    new FilteredIncludeExpression[]
+                    {
+                        new FilteredIncludeExpression
+                        {
+                            Include = LinqHelpers.ToSelector<InstructorModel, OfficeAssignmentModel>(i => i.OfficeAssignment),
+                            Filter = LinqHelpers.ToFilter<OfficeAssignmentModel>(oa => oa.Location.StartsWith("*"))
+                        }
+                    }
+                )
+            ).Result;
+
+            Assert.Null(list.First().OfficeAssignment);
+        }
+
+        [Fact]
+        public void Get_students_inlude_navigation_property_of_navigation_property()
         {
             ISchoolRepository repository = serviceProvider.GetRequiredService<ISchoolRepository>();
             ICollection<StudentModel> list = Task.Run(() => repository.GetItemsAsync<StudentModel, Student>(s => s.Enrollments.Count() > 0, q => q.OrderBy(s => s.FirstName),

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LogicBuilder.Expressions.Utils.DataSource;
+using LogicBuilder.Expressions.Utils.Strutures;
+using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -83,6 +85,47 @@ namespace LogicBuilder.Expressions.Utils
             string[] parts = propertyFullName.Split('.');
             Expression parent = parts.Aggregate((Expression)param, (p, next) => Expression.MakeMemberAccess(p, p.Type.GetMemberInfo(next)));
             return (MemberExpression)parent;
+        }
+
+        /// <summary>
+        /// ToS elector
+        /// </summary>
+        /// <typeparam name="TProperty"></typeparam>
+        /// <typeparam name="TReturn"></typeparam>
+        /// <param name="include"></param>
+        /// <returns></returns>
+        public static Expression<Func<TSource, TReturn>> ToSelector<TSource, TReturn>(Expression<Func<TSource, TReturn>> include)
+            => include;
+
+        /// <summary>
+        /// To Filter
+        /// </summary>
+        /// <typeparam name="TProperty"></typeparam>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        public static Expression<Func<TSource, bool>> ToFilter<TSource>(Expression<Func<TSource, bool>> filter)
+            => filter;
+
+        /// <summary>
+        /// To Expression
+        /// </summary>
+        /// <typeparam name="TDelegate"></typeparam>
+        /// <param name="expression"></param>
+        /// <returns></returns>
+        public static Expression<TDelegate> ToExpression<TDelegate>(Expression<TDelegate> expression)
+            => expression;
+
+        public static FilteredIncludeExpression BuildFilteredIncludeExpression(this FilteredInclude filteredInclude, Type type)
+        {
+            LambdaExpression include = QueryExtensions.BuildSelectorExpression(type, filteredInclude.Include);
+
+            Type propertyType = (include.Body as MemberExpression).GetMemberType().GetCurrentType();
+            return new FilteredIncludeExpression
+            {
+                Include = include,
+                Filter = filteredInclude.FilterGroup.GetFilterExpression(propertyType),
+                FilteredIncludes = filteredInclude.FilteredIncludes?.Select(fi => fi.BuildFilteredIncludeExpression(propertyType)).ToList()
+            };
         }
     }
 }

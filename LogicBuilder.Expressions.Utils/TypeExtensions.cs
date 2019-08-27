@@ -27,31 +27,6 @@ namespace LogicBuilder.Expressions.Utils
             return GetMemberInfoFromFullName(type.GetMemberInfo(propertyName).GetMemberType(), childFullName);
         }
 
-        ///// <summary>
-        ///// Returns the property info given the name of an immediate child property.
-        ///// </summary>
-        ///// <param name="type"></param>
-        ///// <param name="propertyName"></param>
-        ///// <returns></returns>
-        //public static MemberInfo FindProperty(this Type type, string propertyName)
-        //{
-
-        //    PropertyInfo propertyInfo = type.GetProperty(propertyName);
-        //    if (propertyInfo == null)
-        //        propertyInfo = type.GetProperty(propertyName.ToPascalCase());
-
-        //    if (propertyInfo == null)
-        //        propertyInfo = type.GetProperty(propertyName.ToCamelCase());
-
-        //    if (propertyInfo == null)
-        //        propertyInfo = type.GetProperties().SingleOrDefault(p => p.Name.ToLowerInvariant() == propertyName.ToLowerInvariant());
-
-        //    if (propertyInfo == null)
-        //        throw new ArgumentException(string.Format(Resources.invalidPropertyFormat, propertyName, type.FullName));
-
-        //    return propertyInfo;
-        //}
-
         /// <summary>
         /// Returns MemberInfo given the parent type and member name.
         /// </summary>
@@ -89,9 +64,20 @@ namespace LogicBuilder.Expressions.Utils
             }
         }
 
-        internal static Type GetUnderlyingElementType(this Type type)
+        /// <summary>
+        /// Returns the System.Type for member expressions member.
+        /// </summary>
+        /// <param name="me"></param>
+        /// <returns></returns>
+        public static Type GetMemberType(this MemberExpression me)
+            => me.Member.GetMemberType();
+
+        public static Type GetUnderlyingElementType(this Type type)
         {
             TypeInfo tInfo = type.GetTypeInfo();
+            if (tInfo.IsArray)
+                return tInfo.GetElementType();
+
             Type[] genericArguments;
             if (!tInfo.IsGenericType || (genericArguments = tInfo.GetGenericArguments()).Length != 1)
                 throw new ArgumentException("type");
@@ -99,14 +85,36 @@ namespace LogicBuilder.Expressions.Utils
             return genericArguments[0];
         }
 
-        internal static Type GetUnderlyingElementType(this Expression expression)
+        public static Type GetUnderlyingElementType(this Expression expression)
         {
             TypeInfo tInfo = expression.Type.GetTypeInfo();
+            if (tInfo.IsArray)
+                return tInfo.GetElementType();
+
             Type[] genericArguments;
             if (!tInfo.IsGenericType || (genericArguments = tInfo.GetGenericArguments()).Length != 1)
                 throw new ArgumentException("type");
 
             return genericArguments[0];
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static bool IsList(this Type type)
+            => type.IsArray || (type.IsGenericType && typeof(System.Collections.IEnumerable).IsAssignableFrom(type));
+
+        /// <summary>
+        /// Get the member type or its the underlying element type if it is a list
+        /// </summary>
+        /// <param name="memberType"></param>
+        /// <returns></returns>
+        public static Type GetCurrentType(this Type memberType)
+            //when the member is an IEnumberable<T> we really need T.
+            => memberType.IsList()
+                ? memberType.GetUnderlyingElementType()
+                : memberType;
     }
 }

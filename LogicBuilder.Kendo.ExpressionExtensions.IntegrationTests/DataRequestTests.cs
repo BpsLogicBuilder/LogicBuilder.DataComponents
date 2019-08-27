@@ -1,10 +1,13 @@
 ﻿using AutoMapper;
+using AutoMapper.Extensions.ExpressionMapping;
 using Contoso.Contexts;
 using Contoso.Data.Entities;
 using Contoso.Domain.Entities;
 using Contoso.Repositories;
 using Kendo.Mvc.UI;
-using LogicBuilder.Expressions.EntityFrameworkCore;
+using LogicBuilder.Expressions.Utils;
+using LogicBuilder.Expressions.Utils.DataSource;
+using LogicBuilder.Expressions.Utils.Strutures;
 using LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests.AutoMapperProfiles;
 using LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests.Data;
 using LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests.Models;
@@ -14,7 +17,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -225,28 +227,138 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests
 
             Assert.Equal("Roger Zheng", result.First().fullName);
         }
+
+        [Fact]
+        public void Get_students_with_filtered_inlude_no_filter_kendo_filter()
+        {
+            ISchoolRepository repository = serviceProvider.GetRequiredService<ISchoolRepository>();
+            ICollection<StudentModel> list = Task.Run
+            (
+                () => repository.GetItemsAsync<StudentModel, Student>
+                (
+                    s => s.Enrollments.Count > 0, null, null,
+                    new FilteredInclude[]
+                    {
+                        new FilteredInclude
+                        {
+                            Include = "enrollments"
+                        }
+                    }.Select(fi => fi.GetFilteredIncludeExpression(typeof(StudentModel)))
+                        .ToArray()
+                )
+            ).Result;
+
+            Assert.True(list.First().Enrollments.Count > 0);
+            Assert.Null(list.First().Enrollments.First().CourseTitle);
+        }
+
+        [Fact]
+        public void Get_students_with_filtered_inlude_with_filter_kendo_filter()
+        {
+            ISchoolRepository repository = serviceProvider.GetRequiredService<ISchoolRepository>();
+            ICollection<StudentModel> list = Task.Run
+            (
+                () => repository.GetItemsAsync<StudentModel, Student>
+                (
+                    s => s.Enrollments.Count > 0, null, null,
+                    new FilteredInclude[]
+                    {
+                        new FilteredInclude
+                        {
+                            Include = "enrollments",
+                            Filter = "enrollmentID~eq~-1"
+                        }
+                    }.Select(fi => fi.GetFilteredIncludeExpression(typeof(StudentModel)))
+                        .ToArray()
+                )
+            ).Result;
+
+            Assert.False(list.First().Enrollments.Any());
+        }
+
+        [Fact]
+        public void Get_students_with_filtered_inlude_no_filter_logicBuilder_filter()
+        {
+            ISchoolRepository repository = serviceProvider.GetRequiredService<ISchoolRepository>();
+            ICollection<StudentModel> list = Task.Run
+            (
+                () => repository.GetItemsAsync<StudentModel, Student>
+                (
+                    s => s.Enrollments.Count > 0, null, null,
+                    new FilteredInclude[]
+                    {
+                        new FilteredInclude
+                        {
+                            Include = "enrollments"
+                        }
+                    }.Select(fi => fi.BuildFilteredIncludeExpression((typeof(StudentModel))))
+                        .ToArray()
+                )
+            ).Result;
+
+            Assert.True(list.First().Enrollments.Count > 0);
+            Assert.Null(list.First().Enrollments.First().CourseTitle);
+        }
+
+        [Fact]
+        public void Get_students_with_filtered_inlude_with_filter_logicBuilder_filter()
+        {
+            ISchoolRepository repository = serviceProvider.GetRequiredService<ISchoolRepository>();
+            ICollection<StudentModel> list = Task.Run
+            (
+                () => repository.GetItemsAsync<StudentModel, Student>
+                (
+                    s => s.Enrollments.Count > 0, null, null,
+                    new FilteredInclude[]
+                    {
+                        new FilteredInclude
+                        {
+                            Include = "enrollments",
+                            FilterGroup = new FilterGroup
+                            {
+                                Logic = "and",
+                                Filters = new List<Filter>
+                                {
+                                    new Filter
+                                    {
+                                        Field = "enrollmentID",
+                                        Operator = "eq",
+                                        Value = -1
+                                    }
+                                }
+                            }
+                        }
+                    }.Select(fi => fi.BuildFilteredIncludeExpression((typeof(StudentModel))))
+                        .ToArray()
+                )
+            ).Result;
+
+            Assert.False(list.First().Enrollments.Any());
+        }
         #endregion Tests
 
         #region Methods
         private void Initialize()
         {
             serviceProvider = new ServiceCollection()
-                .AddDbContext<SchoolContext>
-                (
-                    options =>
-                    {
-                        options.UseInMemoryDatabase("ContosoUniVersity");
-                        options.UseInternalServiceProvider(new ServiceCollection().AddEntityFrameworkInMemoryDatabase().BuildServiceProvider());
-                    }
-                )
+                 .AddDbContext<SchoolContext>
+                 (
+                     options =>
+                     {
+                         options.UseInMemoryDatabase("ContosoUniVersity");
+                         options.UseInternalServiceProvider(new ServiceCollection().AddEntityFrameworkInMemoryDatabase().BuildServiceProvider());
+                     },
+                    ServiceLifetime.Transient
+                 )
                 .AddTransient<ISchoolStore, SchoolStore>()
                 .AddTransient<ISchoolRepository, SchoolRepository>()
                 .AddSingleton<AutoMapper.IConfigurationProvider>
                 (
                     new MapperConfiguration(cfg =>
                     {
-                        cfg.AddProfiles(typeof(SchoolProfile).GetTypeInfo().Assembly);
-                        cfg.AddProfiles(typeof(GroupingProfile).GetTypeInfo().Assembly);
+                        cfg.AddExpressionMapping();
+                        cfg.AddMaps(typeof(SchoolProfile).GetTypeInfo().Assembly);
+                        cfg.AddMaps(typeof(GroupingProfile).GetTypeInfo().Assembly);
                     })
                 )
                 .AddTransient<IMapper>(sp => new Mapper(sp.GetRequiredService<AutoMapper.IConfigurationProvider>(), sp.GetService))

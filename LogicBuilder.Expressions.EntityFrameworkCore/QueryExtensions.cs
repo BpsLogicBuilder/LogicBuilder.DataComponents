@@ -45,13 +45,13 @@ namespace LogicBuilder.Expressions.EntityFrameworkCore
         /// <param name="includes"></param>
         /// <param name="parameterName"></param>
         /// <returns></returns>
-        public static MethodCallExpression GetInclude<TSource>(this Expression expression, string include, string parameterName = "i")
+        public static MethodCallExpression GetInclude<TSource>(this Expression expression, string include)
         {
             if (string.IsNullOrEmpty(include)) return null;
             ICollection<string> includes = include.Split(new char[] { '.' }, StringSplitOptions.RemoveEmptyEntries);
             Type parentType = typeof(TSource);
 
-            return includes.Aggregate((MethodCallExpression)null, (mce, next) =>
+            return includes.Aggregate(null, (MethodCallExpression mce, string next) =>
             {
                 LambdaExpression selectorExpression = next.GetTypedSelector(parentType);
                 MemberInfo mInfo = parentType.GetMemberInfo(next);
@@ -62,16 +62,10 @@ namespace LogicBuilder.Expressions.EntityFrameworkCore
                         //The ThenInclude espression takes two arguments.  The resulting method call expression from Include and the lambda expression for the property selector
                         : Expression.Call(typeof(EntityFrameworkQueryableExtensions), "ThenInclude", new Type[] { typeof(TSource), parentType, mInfo.GetMemberType() }, mce, selectorExpression);
 
-                parentType = GetCurrentType(mInfo.GetMemberType());//new previous property to include members from.
+                parentType = mInfo.GetMemberType().GetCurrentType();//new previous property to include members from.
 
                 return mce;
             });
         }
-
-        private static Type GetCurrentType(Type memberType)
-            //when the member is an IEnumberable<T> we really need T.
-            => memberType.IsGenericType && typeof(System.Collections.IEnumerable).IsAssignableFrom(memberType)
-                ? memberType.GetTypeInfo().GenericTypeArguments[0]
-                : memberType;
     }
 }

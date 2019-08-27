@@ -2,19 +2,24 @@
 using Contoso.Domain;
 using Kendo.Mvc;
 using Kendo.Mvc.Infrastructure;
+using Kendo.Mvc.Infrastructure.Implementation.Expressions;
 using Kendo.Mvc.UI;
 using LogicBuilder.Data;
 using LogicBuilder.Domain;
+using LogicBuilder.EntityFrameworkCore.SqlServer;
 using LogicBuilder.EntityFrameworkCore.SqlServer.Repositories;
 using LogicBuilder.Expressions.EntityFrameworkCore;
 using LogicBuilder.Expressions.Utils;
+using LogicBuilder.Expressions.Utils.Strutures;
 using LogicBuilder.Kendo.ExpressionExtensions.Extensions;
 using LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests.Models;
 using Microsoft.EntityFrameworkCore.Query;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -147,6 +152,31 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests
                                     : null,
                 Total = await contextRepository.QueryAsync<TModel, TData, int, int>(totalExp, includeProperties)
             };
+        }
+
+        public static FilteredIncludeExpression GetFilteredIncludeExpression(this FilteredInclude filteredInclude, Type type)
+        {
+           LambdaExpression include = LogicBuilder.Expressions.Utils.QueryExtensions.BuildSelectorExpression(type, filteredInclude.Include);
+
+            Type propertyType = (include.Body as MemberExpression).GetMemberType().GetCurrentType();
+            return new FilteredIncludeExpression
+            {
+                Include = include,
+                Filter = filteredInclude.Filter.GetFilter(propertyType),
+                FilteredIncludes = filteredInclude.FilteredIncludes?.Select(fi => fi.GetFilteredIncludeExpression(propertyType)).ToList()
+            };
+        }
+
+        private static LambdaExpression GetFilter(this string filter, Type type, string parameterName = "i")
+        {
+            if (string.IsNullOrEmpty(filter))
+                return null;
+
+            var parameterExpression = Expression.Parameter(type, parameterName);
+
+            var expressionBuilder = new FilterDescriptorCollectionExpressionBuilder(parameterExpression, FilterDescriptorFactory.Create(filter));
+            expressionBuilder.Options.LiftMemberAccessToNull = false;
+            return expressionBuilder.CreateFilterExpression();
         }
     }
 }

@@ -12,7 +12,7 @@ namespace LogicBuilder.Expressions.Utils
 
             string str = char.ToUpperInvariant(s[0]).ToString();
             if (s.Length > 1)
-                str = str + s.Substring(1);
+                str += s.Substring(1);
 
             return str;
         }

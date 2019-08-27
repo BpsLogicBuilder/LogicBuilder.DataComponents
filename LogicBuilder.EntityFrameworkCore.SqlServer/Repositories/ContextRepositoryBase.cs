@@ -2,6 +2,7 @@
 using LogicBuilder.Data;
 using LogicBuilder.Domain;
 using LogicBuilder.EntityFrameworkCore.SqlServer.Crud.DataStores;
+using LogicBuilder.Expressions.Utils.Strutures;
 using Microsoft.EntityFrameworkCore.Query;
 using System;
 using System.Collections.Generic;
@@ -20,20 +21,23 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Repositories
         }
 
         #region Fields
-        private IStore _store;
-        private IMapper _mapper;
+        private readonly IStore _store;
+        private readonly IMapper _mapper;
         #endregion Fields
 
         #region Methods
-        public async Task<ICollection<TModel>> GetItemsAsync<TModel, TData>(Expression<Func<TModel, bool>> filter = null, Expression<Func<IQueryable<TModel>, IQueryable<TModel>>> queryFunc = null, ICollection<Expression<Func<IQueryable<TModel>, IIncludableQueryable<TModel, object>>>> includeProperties = null)
+        public async Task<ICollection<TModel>> GetItemsAsync<TModel, TData>(Expression<Func<TModel, bool>> filter = null, Expression<Func<IQueryable<TModel>, IQueryable<TModel>>> queryFunc = null, ICollection<Expression<Func<IQueryable<TModel>, IIncludableQueryable<TModel, object>>>> includeProperties = null, ICollection<FilteredIncludeExpression> filteredIncludes = null)
             where TModel : BaseModel
             where TData : BaseData
         {
-            return await _store.GetItemsAsync<TModel, TData>(
+            return await _store.GetItemsAsync<TModel, TData>
+            (
                 _mapper,
                 filter,
                 queryFunc,
-                includeProperties);
+                includeProperties,
+                filteredIncludes
+            );
         }
 
         public async Task<int> CountAsync<TModel, TData>(Expression<Func<TModel, bool>> filter = null)

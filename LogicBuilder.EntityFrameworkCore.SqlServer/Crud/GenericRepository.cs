@@ -1,4 +1,5 @@
 ﻿using LogicBuilder.Data;
+using LogicBuilder.Expressions.Utils.Strutures;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 using System;
@@ -38,8 +39,11 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Crud
         /// <param name="orderBy"></param>
         /// <param name="includeProperties"></param>
         /// <returns></returns>
-        public virtual async Task<ICollection<T>> GetAsync(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IQueryable<T>> queryableFunc = null, ICollection<Func<IQueryable<T>, IIncludableQueryable<T, object>>> includeProperties = null)
-        {//public virtual ICollection<T> Get(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IQueryable<T>> queryableFunc = null, ICollection<Expression<Func<T, object>>> includeProperties = null)
+        public virtual async Task<ICollection<T>> GetAsync(Expression<Func<T, bool>> filter = null,
+            Func<IQueryable<T>, IQueryable<T>> queryableFunc = null,
+            ICollection<Func<IQueryable<T>, IIncludableQueryable<T, object>>> includeProperties = null,
+            ICollection<FilteredIncludeExpression> filteredIncludes = null)
+        {
             IQueryable<T> query = this.dbSet;
 
             if (filter != null)
@@ -47,9 +51,18 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Crud
 
             if (includeProperties != null)
                 query = includeProperties.Aggregate(query, (list, next) => query = next(query));
-            //query = includeProperties.Aggregate(query, (q, inc) => q.Include(inc));
 
-            return queryableFunc != null ? await queryableFunc(query).ToListAsync() : await query.ToListAsync();
+            return LoadFilteredIncludes(queryableFunc != null ? await queryableFunc(query).ToListAsync() : await query.ToListAsync());
+
+            ICollection<T> LoadFilteredIncludes(List<T> list)
+            {
+                if (filteredIncludes == null)
+                    return list;
+
+                FilteredIncludesHelper.DoExplicitLoading(this.context, list, filteredIncludes);
+                return list;
+            }
+
         }
 
         /// <summary>
@@ -92,11 +105,11 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Crud
             this.dbSet.Add(t);
         }
 
-        private static void Dump(List<Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<BaseData>> entries)
-        {
-            foreach (Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<BaseData> entry in entries)
-                System.Diagnostics.Debug.WriteLine("Type: {0}, State: {1}.", entry.Entity.GetType().Name, entry.State.ToString());
-        }
+        //private static void Dump(List<Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<BaseData>> entries)
+        //{
+        //    foreach (Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<BaseData> entry in entries)
+        //        System.Diagnostics.Debug.WriteLine("Type: {0}, State: {1}.", entry.Entity.GetType().Name, entry.State.ToString());
+        //}
 
         /// <summary>
         /// Inserts only the root object - even if there are child objects attached.

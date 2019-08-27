@@ -227,6 +227,18 @@ namespace LogicBuilder.Expressions.Utils.DataSource
                 values.ToArray()) as Expression<Func<T, bool>>;
         }
 
+        public static LambdaExpression GetFilterExpression(this FilterGroup filterGroup, Type type, string parameterName = "f") 
+            => (LambdaExpression)"_GetFilterExpression"
+            .GetMethod()
+            .MakeGenericMethod(type)
+            .Invoke(null, new object[] { filterGroup, parameterName });
+
+        private static MethodInfo GetMethod(this string methodName)
+           => typeof(FiltersHelper).GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Static);
+
+        private static Expression<Func<T, bool>> _GetFilterExpression<T>(this FilterGroup filterGroup, string parameterName = "f") where T : class
+            => filterGroup.GetFilterExpression<T>(parameterName);
+
         /// <summary>
         /// Creates a filter expression from a filter group
         /// </summary>
@@ -250,13 +262,14 @@ namespace LogicBuilder.Expressions.Utils.DataSource
                 return f.Value;
             }).ToList();
 
-            string expression = filterGroup.ToExpression<T>(filters, parameterName, values, false);
-
-            return System.Linq.Dynamic.Core.DynamicExpressionParser.ParseLambda(false,
+            return System.Linq.Dynamic.Core.DynamicExpressionParser.ParseLambda
+            (
+                false,
                 new ParameterExpression[] { Expression.Parameter(typeof(T), parameterName) },
                 typeof(bool),
-                expression,
-                values.ToArray()) as Expression<Func<T, bool>>;
+                filterGroup.ToExpression<T>(filters, parameterName, values, false),
+                values.ToArray()
+            ) as Expression<Func<T, bool>>;
         }
     }
 }

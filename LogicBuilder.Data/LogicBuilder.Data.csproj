@@ -4,25 +4,21 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>LogicBuilder.Data</RootNamespace>
     <PackageId>LogicBuilder.Data</PackageId>
-    <PackageVersion>1.0.0</PackageVersion>
+    <PackageVersion>2.0.0</PackageVersion>
     <Authors>BlaiseD</Authors>
     <Description>LogicBuilder.Data includes the base class for all data objects in the applications data stack.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>First Release.</PackageReleaseNotes>
+    <PackageReleaseNotes>Updates to support filtered includes (expansions).</PackageReleaseNotes>
     <PackageTags>crud operations</PackageTags>
     <Copyright>Copyright © BPS 2017</Copyright>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
-    <FileVersion>1.0.0.0</FileVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <FileVersion>2.0.0.0</FileVersion>
     <RepositoryUrl>https://github.com/BlaiseD/LogicBuilder.DataComponents</RepositoryUrl>
-    <PackageLicense>https://github.com/BlaiseD/LogicBuilder.DataComponents/blob/master/LICENSE</PackageLicense>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/BlaiseD/LogicBuilder</PackageProjectUrl>
     <AssemblyOriginatorKeyFile>..\LogicBuilder.Rules.snk</AssemblyOriginatorKeyFile>
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Remove="PackNuget.bat" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.5.0" />

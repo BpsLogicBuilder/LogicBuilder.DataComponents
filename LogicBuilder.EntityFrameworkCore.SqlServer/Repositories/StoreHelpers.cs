@@ -3,6 +3,7 @@ using AutoMapper.Extensions.ExpressionMapping;
 using LogicBuilder.Data;
 using LogicBuilder.Domain;
 using LogicBuilder.EntityFrameworkCore.SqlServer.Crud.DataStores;
+using LogicBuilder.Expressions.Utils.Strutures;
 using Microsoft.EntityFrameworkCore.Query;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,8 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Repositories
         internal static async Task<ICollection<TModel>> GetItemsAsync<TModel, TData>(this IStore store, IMapper mapper,
             Expression<Func<TModel, bool>> filter = null,
             Expression<Func<IQueryable<TModel>, IQueryable<TModel>>> queryFunc = null,
-            ICollection<Expression<Func<IQueryable<TModel>, IIncludableQueryable<TModel, object>>>> includeProperties = null)
+            ICollection<Expression<Func<IQueryable<TModel>, IIncludableQueryable<TModel, object>>>> includeProperties = null,
+            ICollection<FilteredIncludeExpression> filteredIncludes = null)
             where TModel : BaseModel
             where TData : BaseData
         {
@@ -27,9 +29,13 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Repositories
             ICollection<Expression<Func<IQueryable<TData>, IIncludableQueryable<TData, object>>>> includes = mapper.MapIncludesList<Expression<Func<IQueryable<TData>, IIncludableQueryable<TData, object>>>>(includeProperties);
 
             //Call the store
-            ICollection<TData> list = await store.GetAsync(f,
+            ICollection<TData> list = await store.GetAsync
+            (
+                f,
                 mappedQueryFunc?.Compile(),
-                includes?.Select(i => i.Compile()).ToList());
+                includes?.Select(i => i.Compile()).ToList(),
+                filteredIncludes.MapFilteredIncludes<TModel, TData>(mapper)
+            );
 
             //Map and return the data
             return mapper.Map<IEnumerable<TData>, IEnumerable<TModel>>(list).ToList();
@@ -69,7 +75,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Repositories
             return typeof(TReturn) == typeof(TDataReturn) ? (TReturn)(object)result : mapper.Map<TDataReturn, TReturn>(result);
         }
 
-        internal static async Task<int> CountAsync<TModel, TData>(this IStore store, IMapper mapper, Expression<Func<TModel, bool>> filter = null, IDictionary<Type, Type> typeMappings = null)
+        internal static async Task<int> CountAsync<TModel, TData>(this IStore store, IMapper mapper, Expression<Func<TModel, bool>> filter = null)
             where TModel : BaseModel
             where TData : BaseData
         {
@@ -116,7 +122,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Repositories
             //mapper.Map<IEnumerable<TData>, IEnumerable<TModel>>(items, entities).ToList();
         }
 
-        internal static async Task<bool> DeleteAsync<TModel, TData>(this IStore store, IMapper mapper, Expression<Func<TModel, bool>> filter = null, IDictionary<Type, Type> typeMappings = null)
+        internal static async Task<bool> DeleteAsync<TModel, TData>(this IStore store, IMapper mapper, Expression<Func<TModel, bool>> filter = null)
             where TModel : BaseModel
             where TData : BaseData
         {
