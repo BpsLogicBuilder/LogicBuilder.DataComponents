@@ -7,7 +7,7 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.Grouping
 {
     internal abstract class GroupDescriptorExpressionBuilderBaseEx : ExpressionBuilderBase
     {
-        private Expression queryable;
+        protected Expression queryable;
 
         protected GroupDescriptorExpressionBuilderBaseEx(Expression parentExpression) : base(parentExpression.GetUnderlyingElementType())
         {
@@ -26,7 +26,7 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.Grouping
             }
         }
 
-        public MethodCallExpression CreateExpression()
+        public virtual MethodCallExpression CreateExpression()
         {
             return
                 queryable.

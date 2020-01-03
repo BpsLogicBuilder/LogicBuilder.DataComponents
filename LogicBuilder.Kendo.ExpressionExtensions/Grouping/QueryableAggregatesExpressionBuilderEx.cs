@@ -1,5 +1,6 @@
 ﻿using Kendo.Mvc;
 using Kendo.Mvc.Extensions;
+using LogicBuilder.Kendo.ExpressionExtensions.Extensions;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
@@ -23,6 +24,16 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.Grouping
         protected override LambdaExpression CreateGroupByExpression()
         {
             return Expression.Lambda(Expression.Constant(1), this.ParameterExpression);
+        }
+
+        public override MethodCallExpression CreateExpression()
+        {
+            return
+                queryable.
+                    GroupBy(this.CreateGroupByExpression(), evaluateGroupByOnClient: false).
+                    OrderBy(this.CreateOrderByExpression(), SortDirection).
+                    Select(this.CreateSelectExpression());
+
         }
 
         protected override IEnumerable<MemberBinding> CreateMemberBindings()

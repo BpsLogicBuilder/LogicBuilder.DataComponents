@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogicBuilder.Kendo.Expressi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests", "LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests\LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests.csproj", "{2AB1465E-6F0C-41E9-951C-B6AC49B76623}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogicBuilder.Structures", "LogicBuilder.Structures\LogicBuilder.Structures.csproj", "{1539ED6D-868C-4BDA-9828-F8AE63A56944}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogicBuilder.Structures", "LogicBuilder.Structures\LogicBuilder.Structures.csproj", "{1539ED6D-868C-4BDA-9828-F8AE63A56944}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

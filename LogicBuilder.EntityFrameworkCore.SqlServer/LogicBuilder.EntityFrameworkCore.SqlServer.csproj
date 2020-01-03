@@ -4,15 +4,15 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>LogicBuilder.EntityFrameworkCore.SqlServer</RootNamespace>
     <PackageId>LogicBuilder.EntityFrameworkCore.SqlServer</PackageId>
-    <PackageVersion>2.0.0</PackageVersion>
+    <PackageVersion>3.0.0</PackageVersion>
     <Authors>BlaiseD</Authors>
     <Description>Given an EF Core DBContext, LogicBuilder.EntityFrameworkCore.SqlServer uses AutoMapper configurations to support CRUD operations using the DTO objects.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>Updates to support filtered includes (expansions).</PackageReleaseNotes>
+    <PackageReleaseNotes>Updates to support EF Core 3.0.</PackageReleaseNotes>
     <PackageTags>crud operations efcore</PackageTags>
     <Copyright>Copyright © BPS 2017</Copyright>
-    <AssemblyVersion>2.0.0.0</AssemblyVersion>
-    <FileVersion>2.0.0.0</FileVersion>
+    <AssemblyVersion>3.0.0.0</AssemblyVersion>
+    <FileVersion>3.0.0.0</FileVersion>
     <RepositoryUrl>https://github.com/BlaiseD/LogicBuilder.DataComponents</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/BlaiseD/LogicBuilder</PackageProjectUrl>
@@ -21,11 +21,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper.Extensions.ExpressionMapping" Version="3.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.ExpressionMapping" Version="3.0.5" />
     <PackageReference Include="LogicBuilder.Data" Version="2.0.0" />
     <PackageReference Include="LogicBuilder.Domain" Version="2.0.0" />
     <PackageReference Include="LogicBuilder.Expressions.Utils" Version="2.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.0" />
   </ItemGroup>
 
   <ItemGroup>

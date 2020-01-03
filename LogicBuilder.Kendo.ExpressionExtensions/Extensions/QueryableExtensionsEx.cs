@@ -266,9 +266,11 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.Extensions
         /// <param name="parentExpression"></param>
         /// <param name="keySelector"></param>
         /// <returns></returns>
-        public static MethodCallExpression GroupBy(this Expression parentExpression, LambdaExpression keySelector)
+        public static MethodCallExpression GroupBy(this Expression parentExpression, LambdaExpression keySelector, bool evaluateGroupByOnClient = true)
         {
-            return parentExpression.CallQueryableMethod("GroupBy", keySelector).ToList().AsQueryable();
+            return evaluateGroupByOnClient 
+                ? parentExpression.ToList().AsQueryable().CallQueryableMethod("GroupBy", keySelector)
+                : parentExpression.CallQueryableMethod("GroupBy", keySelector);
         }
 
         /// <summary>
