@@ -4,15 +4,12 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   <RootNamespace>LogicBuilder.Kendo.ExpressionExtensions</RootNamespace>
     <PackageId>LogicBuilder.Kendo.ExpressionExtensions</PackageId>
-    <PackageVersion>3.0.0</PackageVersion>
     <Authors>BlaiseD</Authors>
     <Description>Extensions to create IQueryable expressions from Telerik's DataSourceRequest class.  The expressions can then be executed against an IQueryable.  This package depends on Telerik.UI.for.AspNet.Core but has not been created by Telerik/Progress.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>Updates to support EF Core 3.0.</PackageReleaseNotes>
+    <PackageReleaseNotes>Updates to support AutoMapper v10.</PackageReleaseNotes>
     <PackageTags>efcore kendo</PackageTags>
     <Copyright>Copyright © BPS 2018</Copyright>
-    <AssemblyVersion>3.0.0.0</AssemblyVersion>
-    <FileVersion>3.0.0.0</FileVersion>
     <RepositoryUrl>https://github.com/BlaiseD/LogicBuilder.DataComponents</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/BlaiseD/LogicBuilder</PackageProjectUrl>

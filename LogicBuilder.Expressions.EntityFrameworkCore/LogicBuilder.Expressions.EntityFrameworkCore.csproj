@@ -4,15 +4,12 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>LogicBuilder.Expressions.EntityFrameworkCore</RootNamespace>
     <PackageId>LogicBuilder.Expressions.EntityFrameworkCore</PackageId>
-    <PackageVersion>3.0.0</PackageVersion>
     <Authors>BlaiseD</Authors>
     <Description>Augments LogicBuilder.Expressions.Utils with LINQ queries specific to EF Core.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>Updates to support EF Core 3.0.</PackageReleaseNotes>
+    <PackageReleaseNotes>Updates to support AutoMapper v10.</PackageReleaseNotes>
     <PackageTags>linq expressions efcore</PackageTags>
     <Copyright>Copyright © BPS 2018</Copyright>
-    <AssemblyVersion>3.0.0.0</AssemblyVersion>
-    <FileVersion>3.0.0.0</FileVersion>
     <RepositoryUrl>https://github.com/BlaiseD/LogicBuilder.DataComponents</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/BlaiseD/LogicBuilder</PackageProjectUrl>
@@ -21,7 +18,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="LogicBuilder.Expressions.Utils" Version="2.0.0" />
+    <PackageReference Include="LogicBuilder.Expressions.Utils" Version="4.0.0-preview01" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.0" />
   </ItemGroup>
 

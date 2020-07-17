@@ -1,0 +1,77 @@
+name: Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.101
+        source-url: https://nuget.pkg.github.com/blaised/index.json
+      env:
+        NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Add Telerik Nuget source
+      run: dotnet nuget add source https://nuget.telerik.com/nuget -n telerik -u ${{ secrets.TELERIK_USERNAME }} -p ${{ secrets.TELERIK_PASSWORD }}
+
+    - run: echo '::set-env name=VERSION_NUMBER::4.0.0-preview01'
+    - run: echo '::set-env name=NUGET_URL::https://api.nuget.org/v3/index.json'
+    - run: echo '::set-env name=NUGET_API_KEY::${{ secrets.NUGET_API_KEY }}'
+
+    - run: echo '::set-env name=PROJECT_NAME::LogicBuilder.Data'
+    - run: echo '::set-env name=PROJECT_PATH::.\${{ env.PROJECT_NAME }}\${{ env.PROJECT_NAME }}.csproj'
+    - run: echo '::set-env name=NUGET_PACKAGE_PATH::.\artifacts\${{ env.PROJECT_NAME }}.${{ env.VERSION_NUMBER }}.nupkg'
+    - run: dotnet build $Env:PROJECT_PATH --configuration Release
+    - run: dotnet pack $Env:PROJECT_PATH -c Release -o .\artifacts --no-build
+    - run: dotnet nuget push $Env:NUGET_PACKAGE_PATH --skip-duplicate --source $Env:NUGET_URL --api-key $Env:NUGET_API_KEY
+
+    - run: echo '::set-env name=PROJECT_NAME::LogicBuilder.Domain'
+    - run: echo '::set-env name=PROJECT_PATH::.\${{ env.PROJECT_NAME }}\${{ env.PROJECT_NAME }}.csproj'
+    - run: echo '::set-env name=NUGET_PACKAGE_PATH::.\artifacts\${{ env.PROJECT_NAME }}.${{ env.VERSION_NUMBER }}.nupkg'
+    - run: dotnet build $Env:PROJECT_PATH --configuration Release
+    - run: dotnet pack $Env:PROJECT_PATH -c Release -o .\artifacts --no-build
+    - run: dotnet nuget push $Env:NUGET_PACKAGE_PATH --skip-duplicate --source $Env:NUGET_URL --api-key $Env:NUGET_API_KEY
+
+    - run: echo '::set-env name=PROJECT_NAME::LogicBuilder.Structures'
+    - run: echo '::set-env name=PROJECT_PATH::.\${{ env.PROJECT_NAME }}\${{ env.PROJECT_NAME }}.csproj'
+    - run: echo '::set-env name=NUGET_PACKAGE_PATH::.\artifacts\${{ env.PROJECT_NAME }}.${{ env.VERSION_NUMBER }}.nupkg'
+    - run: dotnet build $Env:PROJECT_PATH --configuration Release
+    - run: dotnet pack $Env:PROJECT_PATH -c Release -o .\artifacts --no-build
+    - run: dotnet nuget push $Env:NUGET_PACKAGE_PATH --skip-duplicate --source $Env:NUGET_URL --api-key $Env:NUGET_API_KEY
+
+    - run: echo '::set-env name=PROJECT_NAME::LogicBuilder.Kendo.ExpressionExtensions'
+    - run: echo '::set-env name=PROJECT_PATH::.\${{ env.PROJECT_NAME }}\${{ env.PROJECT_NAME }}.csproj'
+    - run: echo '::set-env name=NUGET_PACKAGE_PATH::.\artifacts\${{ env.PROJECT_NAME }}.${{ env.VERSION_NUMBER }}.nupkg'
+    - run: dotnet build $Env:PROJECT_PATH --configuration Release
+    - run: dotnet pack $Env:PROJECT_PATH -c Release -o .\artifacts --no-build
+    - run: dotnet nuget push $Env:NUGET_PACKAGE_PATH --skip-duplicate --source $Env:NUGET_URL --api-key $Env:NUGET_API_KEY
+
+    - run: echo '::set-env name=PROJECT_NAME::LogicBuilder.Expressions.Utils'
+    - run: echo '::set-env name=PROJECT_PATH::.\${{ env.PROJECT_NAME }}\${{ env.PROJECT_NAME }}.csproj'
+    - run: echo '::set-env name=NUGET_PACKAGE_PATH::.\artifacts\${{ env.PROJECT_NAME }}.${{ env.VERSION_NUMBER }}.nupkg'
+    - run: dotnet build $Env:PROJECT_PATH --configuration Release
+    - run: dotnet pack $Env:PROJECT_PATH -c Release -o .\artifacts --no-build
+    - run: dotnet nuget push $Env:NUGET_PACKAGE_PATH --skip-duplicate --source $Env:NUGET_URL --api-key $Env:NUGET_API_KEY
+
+    - name: Build
+      run: dotnet build --configuration Release
+
+    - name: Test
+      run: dotnet test --no-restore --verbosity normal
+
+    - run: dotnet pack .\LogicBuilder.Expressions.EntityFrameworkCore\LogicBuilder.Expressions.EntityFrameworkCore.csproj -c Release -o .\artifacts --no-build
+    - run: dotnet pack .\LogicBuilder.EntityFrameworkCore.SqlServer\LogicBuilder.EntityFrameworkCore.SqlServer.csproj -c Release -o .\artifacts --no-build
+
+    - run: echo '::set-env name=EFCoreUtils::.\artifacts\LogicBuilder.Expressions.EntityFrameworkCore.${{ env.VERSION_NUMBER }}.nupkg'
+    - run: echo '::set-env name=EFCoreSqlServer::.\artifacts\LogicBuilder.EntityFrameworkCore.SqlServer.${{ env.VERSION_NUMBER }}.nupkg'
+
+    - run: dotnet nuget push $Env:EFCoreUtils --skip-duplicate --source $Env:NUGET_URL --api-key $Env:NUGET_API_KEY
+    - run: dotnet nuget push $Env:EFCoreSqlServer --skip-duplicate --source $Env:NUGET_URL --api-key $Env:NUGET_API_KEY
