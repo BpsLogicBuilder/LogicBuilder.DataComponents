@@ -18,7 +18,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="LogicBuilder.Expressions.Utils" Version="4.0.0-preview01" />
+    <PackageReference Include="LogicBuilder.Expressions.Utils" Version="4.0.0-preview02" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.0" />
   </ItemGroup>
 
