@@ -26,7 +26,7 @@ jobs:
 
     - name: Set Variables
       run: |
-        echo '::set-env name=VERSION_NUMBER::4.0.0-preview02'
+        echo '::set-env name=VERSION_NUMBER::4.0.0'
         echo '::set-env name=REPO::${{ github.repository }}'
         echo '::set-env name=REPO_OWNER::${{ github.repository_owner }}'
 
