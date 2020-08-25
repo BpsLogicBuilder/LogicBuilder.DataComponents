@@ -1,5 +1,7 @@
 ﻿using LogicBuilder.Expressions.Utils.Properties;
+using Microsoft.OData.Edm;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -8,12 +10,6 @@ namespace LogicBuilder.Expressions.Utils
 {
     public static class TypeExtensions
     {
-        /// <summary>
-        /// Returns the property info for a type given the full property name (supports granchild properties)
-        /// </summary>
-        /// <param name="type"></param>
-        /// <param name="propertyFullName"></param>
-        /// <returns></returns>
         public static MemberInfo GetMemberInfoFromFullName(this Type type, string propertyFullName)
         {
             if (propertyFullName.IndexOf('.') < 0)
@@ -27,12 +23,6 @@ namespace LogicBuilder.Expressions.Utils
             return GetMemberInfoFromFullName(type.GetMemberInfo(propertyName).GetMemberType(), childFullName);
         }
 
-        /// <summary>
-        /// Returns MemberInfo given the parent type and member name.
-        /// </summary>
-        /// <param name="parentType"></param>
-        /// <param name="memberName"></param>
-        /// <returns></returns>
         public static MemberInfo GetMemberInfo(this Type parentType, string memberName)
         {
             MemberInfo mInfo = parentType.GetMember(memberName, BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy | BindingFlags.IgnoreCase).FirstOrDefault();
@@ -42,11 +32,6 @@ namespace LogicBuilder.Expressions.Utils
             return mInfo;
         }
 
-        /// <summary>
-        /// Returns the System.Type for memberInfo
-        /// </summary>
-        /// <param name="memberInfo"></param>
-        /// <returns></returns>
         public static Type GetMemberType(this MemberInfo memberInfo)
         {
             switch (memberInfo)
@@ -64,13 +49,87 @@ namespace LogicBuilder.Expressions.Utils
             }
         }
 
-        /// <summary>
-        /// Returns the System.Type for member expressions member.
-        /// </summary>
-        /// <param name="me"></param>
-        /// <returns></returns>
+        public static bool IsLiteralType(this Type type)
+        {
+            if (type.IsNullableType())
+                type = Nullable.GetUnderlyingType(type);
+
+            return LiteralTypes.Contains(type) || typeof(Enum).IsAssignableFrom(type);
+        }
+
+        private static HashSet<Type> LiteralTypes => new HashSet<Type>(_literalTypes);
+
+        private static Type[] _literalTypes => new Type[] {
+                typeof(bool),
+                typeof(DateTime),
+                typeof(DateTimeOffset),
+                typeof(Date),
+                typeof(TimeSpan),
+                typeof(TimeOfDay),
+                typeof(Guid),
+                typeof(decimal),
+                typeof(byte),
+                typeof(short),
+                typeof(int),
+                typeof(long),
+                typeof(float),
+                typeof(double),
+                typeof(char),
+                typeof(sbyte),
+                typeof(ushort),
+                typeof(uint),
+                typeof(ulong),
+                typeof(string)
+            };
+
         public static Type GetMemberType(this MemberExpression me)
             => me.Member.GetMemberType();
+
+        public static bool IsNullableType(this Type type)
+            => type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
+
+        public static bool TryParseEnum(this string toParse, Type enumType, out object result)
+        {
+            if (!typeof(Enum).IsAssignableFrom(enumType))
+                throw new ArgumentException(nameof(enumType));
+
+            MethodInfo method = GetMethod();
+            Type underlyingType = Nullable.GetUnderlyingType(enumType) ?? enumType;
+
+            if (method == null)
+            {
+                result = GetResult();
+                return false;
+            }
+
+            object[] args = new object[] { toParse, null };
+            bool success = (bool)method.MakeGenericMethod(underlyingType).Invoke(null, args);
+            result = success ? args[1] : GetResult();
+
+            return success;
+
+            object GetResult()
+                => enumType.IsValueType && !enumType.IsNullableType() ? Activator.CreateInstance(underlyingType) : null;
+
+            static MethodInfo GetMethod()
+                => typeof(Enum).GetMethods().SingleOrDefault(s => s.Name == "TryParse" && s.GetParameters().Length == 2);
+        }
+
+        public static Type ToNullableUnderlyingType(this Type type)
+        {
+            if (type.IsNullableType())
+                type = Nullable.GetUnderlyingType(type);
+
+            return type;
+        }
+
+        public static Type ToNullable(this Type type)
+        {
+            if (type.IsNullableType() || !type.IsValueType)
+                return type;
+
+            return typeof(Nullable<>).MakeGenericType(type);
+        }
 
         public static Type GetUnderlyingElementType(this Type type)
         {
@@ -86,31 +145,14 @@ namespace LogicBuilder.Expressions.Utils
         }
 
         public static Type GetUnderlyingElementType(this Expression expression)
-        {
-            TypeInfo tInfo = expression.Type.GetTypeInfo();
-            if (tInfo.IsArray)
-                return tInfo.GetElementType();
+            => expression.Type.GetUnderlyingElementType();
 
-            Type[] genericArguments;
-            if (!tInfo.IsGenericType || (genericArguments = tInfo.GetGenericArguments()).Length != 1)
-                throw new ArgumentException("type");
-
-            return genericArguments[0];
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="type"></param>
-        /// <returns></returns>
         public static bool IsList(this Type type)
             => type.IsArray || (type.IsGenericType && typeof(System.Collections.IEnumerable).IsAssignableFrom(type));
 
-        /// <summary>
-        /// Get the member type or its the underlying element type if it is a list
-        /// </summary>
-        /// <param name="memberType"></param>
-        /// <returns></returns>
+        public static bool IsIQueryable(this Type type)
+            => type.IsGenericType && typeof(IQueryable).IsAssignableFrom(type);
+
         public static Type GetCurrentType(this Type memberType)
             //when the member is an IEnumberable<T> we really need T.
             => memberType.IsList()
