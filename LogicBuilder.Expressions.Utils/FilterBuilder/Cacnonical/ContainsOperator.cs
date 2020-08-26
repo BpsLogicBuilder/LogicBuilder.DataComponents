@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace LogicBuilder.Expressions.Utils.FilterBuilder.Cacnonical
 {
     public class ContainsOperator : FilterPart
     {
-        public ContainsOperator(IDictionary<string, ParameterExpression> parameters, FilterPart left, FilterPart right) : base(parameters)
+        public ContainsOperator(FilterPart left, FilterPart right)
         {
             Left = left;
             Right = right;

@@ -8,7 +8,7 @@ namespace LogicBuilder.Expressions.Utils.FilterBuilder.Operand
 {
     public class CollectionConstantOperand : FilterPart
     {
-        public CollectionConstantOperand(IDictionary<string, ParameterExpression> parameters, Type elementType, ICollection<object> constantValues) : base(parameters)
+        public CollectionConstantOperand(Type elementType, ICollection<object> constantValues)
         {
             ElementType = elementType;
             ConstantValues = constantValues;

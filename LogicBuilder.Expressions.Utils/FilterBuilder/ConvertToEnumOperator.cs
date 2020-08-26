@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 
 namespace LogicBuilder.Expressions.Utils.FilterBuilder
 {
     public class ConvertToEnumOperator : FilterPart
     {
-        public ConvertToEnumOperator(IDictionary<string, ParameterExpression> parameters, Type type, object constantValue) : base(parameters)
+        public ConvertToEnumOperator(Type type, object constantValue)
         {
             Type = type;
             ConstantValue = constantValue;

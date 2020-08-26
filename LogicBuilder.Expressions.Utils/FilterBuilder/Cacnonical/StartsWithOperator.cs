@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 
 namespace LogicBuilder.Expressions.Utils.FilterBuilder.Cacnonical
 {
     public class StartsWithOperator : FilterPart
     {
-        public StartsWithOperator(IDictionary<string, ParameterExpression> parameters, FilterPart left, FilterPart right) : base(parameters)
+        public StartsWithOperator(FilterPart left, FilterPart right)
         {
             Left = left;
             Right = right;

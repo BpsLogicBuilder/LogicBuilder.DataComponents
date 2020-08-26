@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 
 namespace LogicBuilder.Expressions.Utils.FilterBuilder.Cacnonical
 {
     public class ConcatOperator : FilterPart
     {
-        public ConcatOperator(IDictionary<string, ParameterExpression> parameters, FilterPart left, FilterPart right) : base(parameters)
+        public ConcatOperator(FilterPart left, FilterPart right)
         {
             Left = left;
             Right = right;

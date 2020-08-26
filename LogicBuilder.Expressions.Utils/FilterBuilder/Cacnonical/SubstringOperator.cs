@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 
 namespace LogicBuilder.Expressions.Utils.FilterBuilder.Cacnonical
 {
     public class SubstringOperator : FilterPart
     {
-        public SubstringOperator(IDictionary<string, ParameterExpression> parameters, FilterPart left, params FilterPart[] args) : base(parameters)
+        public SubstringOperator(FilterPart left, params FilterPart[] args)
         {
             Left = left;
             Args = args;

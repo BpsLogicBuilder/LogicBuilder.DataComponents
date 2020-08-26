@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace LogicBuilder.Expressions.Utils.FilterBuilder.Cacnonical
 {
     public class IndexOfOperator : FilterPart
     {
-        public IndexOfOperator(IDictionary<string, ParameterExpression> parameters, FilterPart left, FilterPart right) : base(parameters)
+        public IndexOfOperator(FilterPart left, FilterPart right)
         {
             Left = left;
             Right = right;

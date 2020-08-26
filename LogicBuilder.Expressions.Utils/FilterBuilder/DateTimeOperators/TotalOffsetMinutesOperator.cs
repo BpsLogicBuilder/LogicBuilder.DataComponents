@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace LogicBuilder.Expressions.Utils.FilterBuilder.DateTimeOperators
 {
     public class TotalOffsetMinutesOperator : FilterPart
     {
-        public TotalOffsetMinutesOperator(IDictionary<string, ParameterExpression> parameters, FilterPart operand) : base(parameters)
+        public TotalOffsetMinutesOperator(FilterPart operand)
         {
             Operand = operand;
         }

@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 
 namespace LogicBuilder.Expressions.Utils.FilterBuilder.Logical
 {
     public class HasOperator : FilterPart
     {
-        public HasOperator(IDictionary<string, ParameterExpression> parameters, FilterPart left, FilterPart right) : base(parameters)
+        public HasOperator(FilterPart left, FilterPart right)
         {
             Left = left;
             Right = right;

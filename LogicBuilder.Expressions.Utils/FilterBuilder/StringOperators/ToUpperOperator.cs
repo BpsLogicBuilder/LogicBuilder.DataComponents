@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace LogicBuilder.Expressions.Utils.FilterBuilder.StringOperators
 {
     public class ToUpperOperator : FilterPart
     {
-        public ToUpperOperator(IDictionary<string, ParameterExpression> parameters, FilterPart operand) : base(parameters)
+        public ToUpperOperator(FilterPart operand)
         {
             Operand = operand;
         }

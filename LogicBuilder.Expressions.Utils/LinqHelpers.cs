@@ -85,27 +85,27 @@ namespace LogicBuilder.Expressions.Utils
             };
         }
 
-        public static Expression<Func<T, bool>> GetFilter<T>(this FilterFunctionGroup functionGroup, string parameterName = "f")
-            => (Expression<Func<T, bool>>)functionGroup.GetFilter(parameterName);
+        public static Expression<Func<T, bool>> GetFilter<T>(this FilterFunctionGroup functionGroup, ParameterExpression parameter)
+            => (Expression<Func<T, bool>>)functionGroup.GetFilter(parameter);
 
-        public static LambdaExpression GetFilter(this FilterFunctionGroup functionGroup, string parameterName = "f")
+        public static LambdaExpression GetFilter(this FilterFunctionGroup functionGroup, ParameterExpression parameter)
             => Expression.Lambda
             (
-                typeof(Func<,>).MakeGenericType(functionGroup.Parameters[parameterName].Type, typeof(bool)),
+                typeof(Func<,>).MakeGenericType(parameter.Type, typeof(bool)),
                 functionGroup.Build(),
-                functionGroup.Parameters[parameterName]
+                parameter
             );
 
-        public static Expression<Func<T, bool>> GetFilter<T>(this FilterPart filterPart, string parameterName = "f")
-            => (Expression<Func<T, bool>>)filterPart.GetFilter(parameterName);
+        public static Expression<Func<T, bool>> GetFilter<T>(this FilterPart filterPart, ParameterExpression parameter)
+            => (Expression<Func<T, bool>>)filterPart.GetFilter(parameter);
 
-        public static LambdaExpression GetFilter(this FilterPart filterPart, string parameterName = "f")
+        public static LambdaExpression GetFilter(this FilterPart filterPart, ParameterExpression parameter)
         {
             return Expression.Lambda
             (
-                typeof(Func<,>).MakeGenericType(filterPart.Parameters[parameterName].Type, typeof(bool)),
+                typeof(Func<,>).MakeGenericType(parameter.Type, typeof(bool)),
                 ConvertBody(filterPart.Build()),
-                filterPart.Parameters[parameterName]
+                parameter
             );
 
             static Expression ConvertBody(Expression body)

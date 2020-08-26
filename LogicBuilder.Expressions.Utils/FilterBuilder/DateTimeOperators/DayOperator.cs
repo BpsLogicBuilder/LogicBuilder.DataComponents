@@ -1,13 +1,10 @@
-﻿using Microsoft.OData.Edm;
-using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 
 namespace LogicBuilder.Expressions.Utils.FilterBuilder.DateTimeOperators
 {
     public class DayOperator : FilterPart
     {
-        public DayOperator(IDictionary<string, ParameterExpression> parameters, FilterPart operand) : base(parameters)
+        public DayOperator(FilterPart operand)
         {
             Operand = operand;
         }

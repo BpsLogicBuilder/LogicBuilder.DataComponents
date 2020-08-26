@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 
 namespace LogicBuilder.Expressions.Utils.FilterBuilder.StringOperators
 {
     public class ConvertToStringOperator : FilterPart
     {
-        public ConvertToStringOperator(IDictionary<string, ParameterExpression> parameters, FilterPart sourceOperand) : base(parameters)
+        public ConvertToStringOperator(FilterPart sourceOperand)
         {
             SourceOperand = sourceOperand;
         }

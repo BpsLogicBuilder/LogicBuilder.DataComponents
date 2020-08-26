@@ -1,18 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 
 namespace LogicBuilder.Expressions.Utils.FilterBuilder
 {
     public class ParameterOperator : FilterPart
     {
-        public ParameterOperator(IDictionary<string, ParameterExpression> parameters, string parameterName) : base(parameters)
+        public ParameterOperator(IDictionary<string, ParameterExpression> parameters, string parameterName)
         {
             ParameterName = parameterName;
+            Parameters = parameters;
         }
 
-        public string ParameterName { get; set; }
+        public IDictionary<string, ParameterExpression> Parameters { get; }
+        public string ParameterName { get; }
 
         public override Expression Build() => Parameters[ParameterName];
     }

@@ -1,13 +1,12 @@
 ﻿using Microsoft.OData.Edm;
 using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace LogicBuilder.Expressions.Utils.FilterBuilder.DateTimeOperators
 {
     public class ConvertToNumericTime : FilterPart
     {
-        public ConvertToNumericTime(IDictionary<string, ParameterExpression> parameters, FilterPart sourceOperand) : base(parameters)
+        public ConvertToNumericTime(FilterPart sourceOperand)
         {
             SourceOperand = sourceOperand;
         }

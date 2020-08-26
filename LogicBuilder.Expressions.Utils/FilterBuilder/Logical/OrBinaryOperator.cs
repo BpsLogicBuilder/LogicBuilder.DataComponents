@@ -1,11 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq.Expressions;
-
-namespace LogicBuilder.Expressions.Utils.FilterBuilder.Logical
+﻿namespace LogicBuilder.Expressions.Utils.FilterBuilder.Logical
 {
     public class OrBinaryOperator : BinaryOperator
     {
-        public OrBinaryOperator(IDictionary<string, ParameterExpression> parameters, FilterPart left, FilterPart right) : base(parameters, left, right)
+        public OrBinaryOperator(FilterPart left, FilterPart right) : base(left, right)
         {
         }
 

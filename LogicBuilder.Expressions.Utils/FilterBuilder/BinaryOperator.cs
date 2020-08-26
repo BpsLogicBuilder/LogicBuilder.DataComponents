@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 
 namespace LogicBuilder.Expressions.Utils.FilterBuilder
 {
     abstract public class BinaryOperator : FilterPart
     {
-        public BinaryOperator(IDictionary<string, ParameterExpression> parameters, FilterPart left, FilterPart right) : base(parameters)
+        public BinaryOperator(FilterPart left, FilterPart right)
         {
             Left = left;
             Right = right;

@@ -7,7 +7,7 @@ namespace LogicBuilder.Expressions.Utils.FilterBuilder
 {
     public class CustomMethodOperator : FilterPart
     {
-        public CustomMethodOperator(IDictionary<string, ParameterExpression> parameters, MethodInfo methodInfo, FilterPart[] args) : base(parameters)
+        public CustomMethodOperator(MethodInfo methodInfo, FilterPart[] args)
         {
             MethodInfo = methodInfo;
             Args = args;

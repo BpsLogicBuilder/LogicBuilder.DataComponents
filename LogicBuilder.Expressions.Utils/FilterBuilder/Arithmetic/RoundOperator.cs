@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 
 namespace LogicBuilder.Expressions.Utils.FilterBuilder.Arithmetic
 {
     public class RoundOperator : FilterPart
     {
-        public RoundOperator(IDictionary<string, ParameterExpression> parameters, FilterPart operand) : base(parameters)
+        public RoundOperator(FilterPart operand)
         {
             Operand = operand;
         }

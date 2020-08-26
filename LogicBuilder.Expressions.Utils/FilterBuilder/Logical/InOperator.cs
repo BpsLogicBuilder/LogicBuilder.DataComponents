@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 
 namespace LogicBuilder.Expressions.Utils.FilterBuilder.Logical
 {
     public class InOperator : FilterPart
     {
-        public InOperator(IDictionary<string, ParameterExpression> parameters, FilterPart itemToFind, FilterPart listToSearch) : base(parameters)
+        public InOperator(FilterPart itemToFind, FilterPart listToSearch)
         {
             ItemToFind = itemToFind;
             ListToSearch = listToSearch;

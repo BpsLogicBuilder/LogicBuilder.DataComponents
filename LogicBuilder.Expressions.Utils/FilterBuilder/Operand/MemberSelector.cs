@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Text;
+﻿using System.Linq.Expressions;
 
 namespace LogicBuilder.Expressions.Utils.FilterBuilder.Operand
 {
     public class MemberSelector : FilterPart
     {
-        public MemberSelector(IDictionary<string, ParameterExpression> parameters, string memberFullName, FilterPart sourceOperand) : base(parameters)
+        public MemberSelector(string memberFullName, FilterPart sourceOperand)
         {
             MemberFullName = memberFullName;
             SourceOperand = sourceOperand;

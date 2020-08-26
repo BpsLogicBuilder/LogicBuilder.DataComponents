@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace LogicBuilder.Expressions.Utils.FilterBuilder.StringOperators
 {
     public class TolowerOperator : FilterPart
     {
-        public TolowerOperator(IDictionary<string, ParameterExpression> parameters, FilterPart operand) : base(parameters)
+        public TolowerOperator(FilterPart operand)
         {
             Operand = operand;
         }

@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace LogicBuilder.Expressions.Utils.FilterBuilder
 {
     public class ConvertToNullableUnderlyingValueOperator : FilterPart
     {
-        public ConvertToNullableUnderlyingValueOperator(IDictionary<string, ParameterExpression> parameters, FilterPart sourceOperand) : base(parameters)
+        public ConvertToNullableUnderlyingValueOperator(FilterPart sourceOperand)
         {
             SourceOperand = sourceOperand;
         }

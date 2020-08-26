@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 
 namespace LogicBuilder.Expressions.Utils.FilterBuilder.Conversions
 {
     public class CollectionCastOperator : FilterPart
     {
-        public CollectionCastOperator(IDictionary<string, ParameterExpression> parameters, FilterPart operand, Type type) : base(parameters)
+        public CollectionCastOperator(FilterPart operand, Type type)
         {
             Operand = operand;
             Type = type;

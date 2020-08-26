@@ -1,11 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq.Expressions;
-
-namespace LogicBuilder.Expressions.Utils.FilterBuilder.Arithmetic
+﻿namespace LogicBuilder.Expressions.Utils.FilterBuilder.Arithmetic
 {
     public class DivideBinaryOperator : BinaryOperator
     {
-        public DivideBinaryOperator(IDictionary<string, ParameterExpression> parameters, FilterPart left, FilterPart right) : base(parameters, left, right)
+        public DivideBinaryOperator(FilterPart left, FilterPart right) : base(left, right)
         {
         }
 

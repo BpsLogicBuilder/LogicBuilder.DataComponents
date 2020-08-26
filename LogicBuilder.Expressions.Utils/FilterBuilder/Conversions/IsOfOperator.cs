@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 
 namespace LogicBuilder.Expressions.Utils.FilterBuilder.Conversions
 {
     public class IsOfOperator : FilterPart
     {
-        public IsOfOperator(IDictionary<string, ParameterExpression> parameters, FilterPart operand, System.Type type) : base(parameters)
+        public IsOfOperator(FilterPart operand, System.Type type)
         {
             Operand = operand;
             Type = type;

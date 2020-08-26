@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 
 namespace LogicBuilder.Expressions.Utils.FilterBuilder.Lambda
 {
     public class AllOperator : FilterPart
     {
-        public AllOperator(IDictionary<string, ParameterExpression> parameters, FilterPart operand, FilterPart filter)
-            : base(parameters)
+        public AllOperator(FilterPart operand, FilterPart filter)
         {
             Operand = operand;
             Filter = filter;
         }
 
-        public AllOperator(IDictionary<string, ParameterExpression> parameters, FilterPart operand) : base(parameters)
+        public AllOperator(FilterPart operand)
         {
             Operand = operand;
         }

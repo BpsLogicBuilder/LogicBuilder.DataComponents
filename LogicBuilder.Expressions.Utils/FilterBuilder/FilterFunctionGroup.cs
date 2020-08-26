@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 
 namespace LogicBuilder.Expressions.Utils.FilterBuilder
 {
@@ -17,7 +16,7 @@ namespace LogicBuilder.Expressions.Utils.FilterBuilder
             [GroupOperatorType.or] = Expression.Or
         };
 
-        public FilterFunctionGroup(IDictionary<string, ParameterExpression> parameters) : base(parameters)
+        public FilterFunctionGroup()
         {
         }
 

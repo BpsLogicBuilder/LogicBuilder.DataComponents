@@ -6,18 +6,20 @@ namespace LogicBuilder.Expressions.Utils.FilterBuilder.Lambda
 {
     public class LambdaOperator : FilterPart
     {
-        public LambdaOperator(IDictionary<string, ParameterExpression> parameters, FilterPart selector, Type selectorType, Type sourceElementType, string parameterName) : base(parameters)
+        public LambdaOperator(IDictionary<string, ParameterExpression> parameters, FilterPart selector, Type selectorType, Type sourceElementType, string parameterName)
         {
             Selector = selector;
             SelectorType = selectorType;
             SourceElementType = sourceElementType;
             ParameterName = parameterName;
+            Parameters = parameters;
         }
 
         public FilterPart Selector { get; }
         public Type SelectorType { get; }
         public Type SourceElementType { get; }
         public string ParameterName { get; }
+        public IDictionary<string, ParameterExpression> Parameters { get; }
 
         public override Expression Build() => Build1();
 

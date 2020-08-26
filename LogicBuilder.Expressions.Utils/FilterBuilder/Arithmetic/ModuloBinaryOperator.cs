@@ -1,11 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq.Expressions;
-
-namespace LogicBuilder.Expressions.Utils.FilterBuilder.Arithmetic
+﻿namespace LogicBuilder.Expressions.Utils.FilterBuilder.Arithmetic
 {
     public class ModuloBinaryOperator : BinaryOperator
     {
-        public ModuloBinaryOperator(IDictionary<string, ParameterExpression> parameters, FilterPart left, FilterPart right) : base(parameters, left, right)
+        public ModuloBinaryOperator(FilterPart left, FilterPart right) : base(left, right)
         {
         }
 

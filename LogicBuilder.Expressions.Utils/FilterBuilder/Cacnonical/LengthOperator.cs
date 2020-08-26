@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 
 namespace LogicBuilder.Expressions.Utils.FilterBuilder.Cacnonical
 {
     public class LengthOperator : FilterPart
     {
-        public LengthOperator(IDictionary<string, ParameterExpression> parameters, FilterPart operand) : base(parameters)
+        public LengthOperator(FilterPart operand)
         {
             Operand = operand;
         }

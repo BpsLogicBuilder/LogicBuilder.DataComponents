@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 
 namespace LogicBuilder.Expressions.Utils.FilterBuilder.StringOperators
 {
     public class ConvertCharArrayToStringOperator : FilterPart
     {
-        public ConvertCharArrayToStringOperator(IDictionary<string, ParameterExpression> parameters, FilterPart sourceOperand) : base(parameters)
+        public ConvertCharArrayToStringOperator(FilterPart sourceOperand)
         {
             SourceOperand = sourceOperand;
         }
