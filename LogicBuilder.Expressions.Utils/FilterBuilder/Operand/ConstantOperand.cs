@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 
 namespace LogicBuilder.Expressions.Utils.FilterBuilder.Operand
 {
-    public class ConstantOperand : FilterPart
+    public class ConstantOperand : IExpressionPart
     {
         public ConstantOperand(Type type, object constantValue)
         {
@@ -19,7 +19,7 @@ namespace LogicBuilder.Expressions.Utils.FilterBuilder.Operand
         public Type Type { get;  }
         public object ConstantValue { get; }
 
-        public override Expression Build() 
+        public Expression Build() 
             => Type == null ? Expression.Constant(ConstantValue) : Expression.Constant(ConstantValue, Type);
     }
 }

@@ -2,16 +2,16 @@
 
 namespace LogicBuilder.Expressions.Utils.FilterBuilder.Logical
 {
-    public class NotOperator : FilterPart
+    public class NotOperator : IExpressionPart
     {
-        public NotOperator(FilterPart operand)
+        public NotOperator(IExpressionPart operand)
         {
             this.Operand = operand;
         }
 
-        public FilterPart Operand { get; private set; }
+        public IExpressionPart Operand { get; private set; }
 
-        public override Expression Build() 
+        public Expression Build() 
             => Expression.Not(this.Operand.Build());
     }
 }

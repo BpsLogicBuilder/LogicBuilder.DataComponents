@@ -5,18 +5,18 @@ using System.Reflection;
 
 namespace LogicBuilder.Expressions.Utils.FilterBuilder
 {
-    public class CustomMethodOperator : FilterPart
+    public class CustomMethodOperator : IExpressionPart
     {
-        public CustomMethodOperator(MethodInfo methodInfo, FilterPart[] args)
+        public CustomMethodOperator(MethodInfo methodInfo, IExpressionPart[] args)
         {
             MethodInfo = methodInfo;
             Args = args;
         }
 
         public MethodInfo MethodInfo { get; }
-        public FilterPart[] Args { get; }
+        public IExpressionPart[] Args { get; }
 
-        public override Expression Build() => Build(Args.Select(arg => arg.Build()));
+        public Expression Build() => Build(Args.Select(arg => arg.Build()));
 
         private Expression Build(IEnumerable<Expression> arguments) 
             => MethodInfo.IsStatic

@@ -3,18 +3,18 @@ using System.Linq.Expressions;
 
 namespace LogicBuilder.Expressions.Utils.FilterBuilder.Operand
 {
-    public class ConvertOperand : FilterPart
+    public class ConvertOperand : IExpressionPart
     {
-        public ConvertOperand(Type type, FilterPart sourceOperand)
+        public ConvertOperand(Type type, IExpressionPart sourceOperand)
         {
             Type = type;
             SourceOperand = sourceOperand;
         }
 
         public Type Type { get; }
-        public FilterPart SourceOperand { get; }
+        public IExpressionPart SourceOperand { get; }
 
-        public override Expression Build()
+        public Expression Build()
         {
             try
             {

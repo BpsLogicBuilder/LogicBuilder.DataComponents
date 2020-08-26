@@ -2,16 +2,16 @@
 
 namespace LogicBuilder.Expressions.Utils.FilterBuilder.DateTimeOperators
 {
-    public class DateOperator : FilterPart
+    public class DateOperator : IExpressionPart
     {
-        public DateOperator(FilterPart operand)
+        public DateOperator(IExpressionPart operand)
         {
             Operand = operand;
         }
 
-        public FilterPart Operand { get; private set; }
+        public IExpressionPart Operand { get; private set; }
 
-        public override Expression Build() => Build(Operand.Build());
+        public Expression Build() => Build(Operand.Build());
 
         private Expression Build(Expression operandExpression) 
             => operandExpression.MakeDateSelector();

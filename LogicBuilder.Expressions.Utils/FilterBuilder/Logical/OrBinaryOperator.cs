@@ -2,7 +2,7 @@
 {
     public class OrBinaryOperator : BinaryOperator
     {
-        public OrBinaryOperator(FilterPart left, FilterPart right) : base(left, right)
+        public OrBinaryOperator(IExpressionPart left, IExpressionPart right) : base(left, right)
         {
         }
 

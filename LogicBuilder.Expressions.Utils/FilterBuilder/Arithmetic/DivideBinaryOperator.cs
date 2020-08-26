@@ -2,7 +2,7 @@
 {
     public class DivideBinaryOperator : BinaryOperator
     {
-        public DivideBinaryOperator(FilterPart left, FilterPart right) : base(left, right)
+        public DivideBinaryOperator(IExpressionPart left, IExpressionPart right) : base(left, right)
         {
         }
 

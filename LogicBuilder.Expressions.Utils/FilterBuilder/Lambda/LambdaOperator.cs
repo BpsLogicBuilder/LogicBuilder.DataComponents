@@ -4,9 +4,9 @@ using System.Linq.Expressions;
 
 namespace LogicBuilder.Expressions.Utils.FilterBuilder.Lambda
 {
-    public class LambdaOperator : FilterPart
+    public class LambdaOperator : IExpressionPart
     {
-        public LambdaOperator(IDictionary<string, ParameterExpression> parameters, FilterPart selector, Type selectorType, Type sourceElementType, string parameterName)
+        public LambdaOperator(IDictionary<string, ParameterExpression> parameters, IExpressionPart selector, Type selectorType, Type sourceElementType, string parameterName)
         {
             Selector = selector;
             SelectorType = selectorType;
@@ -15,13 +15,13 @@ namespace LogicBuilder.Expressions.Utils.FilterBuilder.Lambda
             Parameters = parameters;
         }
 
-        public FilterPart Selector { get; }
+        public IExpressionPart Selector { get; }
         public Type SelectorType { get; }
         public Type SourceElementType { get; }
         public string ParameterName { get; }
         public IDictionary<string, ParameterExpression> Parameters { get; }
 
-        public override Expression Build() => Build1();
+        public Expression Build() => Build1();
 
         private Expression Build1()
         {

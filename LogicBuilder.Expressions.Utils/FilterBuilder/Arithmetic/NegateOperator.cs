@@ -2,16 +2,16 @@
 
 namespace LogicBuilder.Expressions.Utils.FilterBuilder.Arithmetic
 {
-    public class NegateOperator : FilterPart
+    public class NegateOperator : IExpressionPart
     {
-        public NegateOperator(FilterPart operand)
+        public NegateOperator(IExpressionPart operand)
         {
             this.Operand = operand;
         }
 
-        public FilterPart Operand { get; private set; }
+        public IExpressionPart Operand { get; private set; }
 
-        public override Expression Build()
+        public Expression Build()
             => Expression.Negate(this.Operand.Build());
     }
 }

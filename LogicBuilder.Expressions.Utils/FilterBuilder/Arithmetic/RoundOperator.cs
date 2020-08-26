@@ -2,16 +2,16 @@
 
 namespace LogicBuilder.Expressions.Utils.FilterBuilder.Arithmetic
 {
-    public class RoundOperator : FilterPart
+    public class RoundOperator : IExpressionPart
     {
-        public RoundOperator(FilterPart operand)
+        public RoundOperator(IExpressionPart operand)
         {
             Operand = operand;
         }
 
-        public FilterPart Operand { get; private set; }
+        public IExpressionPart Operand { get; private set; }
 
-        public override Expression Build() => Build(Operand.Build());
+        public Expression Build() => Build(Operand.Build());
 
         private Expression Build(Expression operandExpression) => operandExpression.GetRoundCall();
     }

@@ -2,12 +2,12 @@
 
 namespace LogicBuilder.Expressions.Utils.FilterBuilder.DateTimeOperators
 {
-    public class MaxDateTimeOperator : FilterPart
+    public class MaxDateTimeOperator : IExpressionPart
     {
         public MaxDateTimeOperator()
         {
         }
 
-        public override Expression Build() => LinqHelpers.GetMaxDateTimOffsetField();
+        public Expression Build() => LinqHelpers.GetMaxDateTimOffsetField();
     }
 }

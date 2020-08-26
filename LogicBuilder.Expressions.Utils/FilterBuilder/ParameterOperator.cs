@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 
 namespace LogicBuilder.Expressions.Utils.FilterBuilder
 {
-    public class ParameterOperator : FilterPart
+    public class ParameterOperator : IExpressionPart
     {
         public ParameterOperator(IDictionary<string, ParameterExpression> parameters, string parameterName)
         {
@@ -14,6 +14,6 @@ namespace LogicBuilder.Expressions.Utils.FilterBuilder
         public IDictionary<string, ParameterExpression> Parameters { get; }
         public string ParameterName { get; }
 
-        public override Expression Build() => Parameters[ParameterName];
+        public Expression Build() => Parameters[ParameterName];
     }
 }

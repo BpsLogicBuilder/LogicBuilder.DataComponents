@@ -2,7 +2,7 @@
 {
     public class SubtractBinaryOperator : BinaryOperator
     {
-        public SubtractBinaryOperator(FilterPart left, FilterPart right) : base(left, right)
+        public SubtractBinaryOperator(IExpressionPart left, IExpressionPart right) : base(left, right)
         {
         }
 

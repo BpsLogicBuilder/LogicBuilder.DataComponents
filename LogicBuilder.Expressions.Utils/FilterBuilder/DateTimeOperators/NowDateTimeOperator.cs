@@ -2,12 +2,12 @@
 
 namespace LogicBuilder.Expressions.Utils.FilterBuilder.DateTimeOperators
 {
-    public class NowDateTimeOperator : FilterPart
+    public class NowDateTimeOperator : IExpressionPart
     {
         public NowDateTimeOperator()
         {
         }
 
-        public override Expression Build() => LinqHelpers.GetNowDateTimOffsetProperty();
+        public Expression Build() => LinqHelpers.GetNowDateTimOffsetProperty();
     }
 }

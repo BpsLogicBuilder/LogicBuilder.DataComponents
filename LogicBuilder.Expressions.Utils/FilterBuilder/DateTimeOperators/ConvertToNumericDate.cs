@@ -4,16 +4,16 @@ using System.Linq.Expressions;
 
 namespace LogicBuilder.Expressions.Utils.FilterBuilder.DateTimeOperators
 {
-    public class ConvertToNumericDate : FilterPart
+    public class ConvertToNumericDate : IExpressionPart
     {
-        public ConvertToNumericDate(FilterPart sourceOperand)
+        public ConvertToNumericDate(IExpressionPart sourceOperand)
         {
             SourceOperand = sourceOperand;
         }
 
-        public FilterPart SourceOperand { get; }
+        public IExpressionPart SourceOperand { get; }
 
-        public override Expression Build() => Build(SourceOperand.Build());
+        public Expression Build() => Build(SourceOperand.Build());
 
         private Expression Build(Expression operandExpression)
         {

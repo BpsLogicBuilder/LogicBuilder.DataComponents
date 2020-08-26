@@ -2,7 +2,7 @@
 {
     public class LessThanBinaryOperator : BinaryOperator
     {
-        public LessThanBinaryOperator(FilterPart left, FilterPart right) : base(left, right)
+        public LessThanBinaryOperator(IExpressionPart left, IExpressionPart right) : base(left, right)
         {
         }
 

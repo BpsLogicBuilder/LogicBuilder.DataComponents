@@ -96,10 +96,10 @@ namespace LogicBuilder.Expressions.Utils
                 parameter
             );
 
-        public static Expression<Func<T, bool>> GetFilter<T>(this FilterPart filterPart, ParameterExpression parameter)
+        public static Expression<Func<T, bool>> GetFilter<T>(this IExpressionPart filterPart, ParameterExpression parameter)
             => (Expression<Func<T, bool>>)filterPart.GetFilter(parameter);
 
-        public static LambdaExpression GetFilter(this FilterPart filterPart, ParameterExpression parameter)
+        public static LambdaExpression GetFilter(this IExpressionPart filterPart, ParameterExpression parameter)
         {
             return Expression.Lambda
             (

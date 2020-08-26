@@ -2,8 +2,8 @@
 
 namespace LogicBuilder.Expressions.Utils.FilterBuilder
 {
-    abstract public class FilterPart
+    public interface IExpressionPart
     {
-        abstract public Expression Build();
+        Expression Build();
     }
 }

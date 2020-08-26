@@ -3,16 +3,16 @@ using System.Linq.Expressions;
 
 namespace LogicBuilder.Expressions.Utils.FilterBuilder.StringOperators
 {
-    public class ConvertToStringOperator : FilterPart
+    public class ConvertToStringOperator : IExpressionPart
     {
-        public ConvertToStringOperator(FilterPart sourceOperand)
+        public ConvertToStringOperator(IExpressionPart sourceOperand)
         {
             SourceOperand = sourceOperand;
         }
 
-        public FilterPart SourceOperand { get; }
+        public IExpressionPart SourceOperand { get; }
 
-        public override Expression Build() => Build(SourceOperand.Build());
+        public Expression Build() => Build(SourceOperand.Build());
 
         private Expression Build(Expression operandExpression)
         {

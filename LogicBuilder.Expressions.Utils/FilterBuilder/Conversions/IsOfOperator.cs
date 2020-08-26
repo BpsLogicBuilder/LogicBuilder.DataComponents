@@ -2,18 +2,18 @@
 
 namespace LogicBuilder.Expressions.Utils.FilterBuilder.Conversions
 {
-    public class IsOfOperator : FilterPart
+    public class IsOfOperator : IExpressionPart
     {
-        public IsOfOperator(FilterPart operand, System.Type type)
+        public IsOfOperator(IExpressionPart operand, System.Type type)
         {
             Operand = operand;
             Type = type;
         }
 
-        public FilterPart Operand { get; private set; }
+        public IExpressionPart Operand { get; private set; }
         public System.Type Type { get; private set; }
 
-        public override Expression Build() => Build(Operand.Build());
+        public Expression Build() => Build(Operand.Build());
 
         private Expression Build(Expression operandExpression)
             => Expression.Condition

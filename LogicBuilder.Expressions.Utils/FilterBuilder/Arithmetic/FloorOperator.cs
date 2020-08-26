@@ -2,16 +2,16 @@
 
 namespace LogicBuilder.Expressions.Utils.FilterBuilder.Arithmetic
 {
-    public class FloorOperator : FilterPart
+    public class FloorOperator : IExpressionPart
     {
-        public FloorOperator(FilterPart operand)
+        public FloorOperator(IExpressionPart operand)
         {
             Operand = operand;
         }
 
-        public FilterPart Operand { get; private set; }
+        public IExpressionPart Operand { get; private set; }
 
-        public override Expression Build() => Build(Operand.Build());
+        public Expression Build() => Build(Operand.Build());
 
         private Expression Build(Expression operandExpression) => operandExpression.GetFloorCall();
     }

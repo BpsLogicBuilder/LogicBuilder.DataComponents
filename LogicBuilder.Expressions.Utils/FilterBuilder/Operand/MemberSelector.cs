@@ -2,19 +2,19 @@
 
 namespace LogicBuilder.Expressions.Utils.FilterBuilder.Operand
 {
-    public class MemberSelector : FilterPart
+    public class MemberSelector : IExpressionPart
     {
-        public MemberSelector(string memberFullName, FilterPart sourceOperand)
+        public MemberSelector(string memberFullName, IExpressionPart sourceOperand)
         {
             MemberFullName = memberFullName;
             SourceOperand = sourceOperand;
         }
 
         public string MemberFullName { get; set; }
-        public FilterPart SourceOperand { get; set; }
+        public IExpressionPart SourceOperand { get; set; }
         public string ParameterName { get; set; }
 
-        public override Expression Build() 
+        public Expression Build() 
             => SourceOperand.Build().MakeSelector(MemberFullName);
     }
 }

@@ -2,18 +2,18 @@
 
 namespace LogicBuilder.Expressions.Utils.FilterBuilder.Logical
 {
-    public class InOperator : FilterPart
+    public class InOperator : IExpressionPart
     {
-        public InOperator(FilterPart itemToFind, FilterPart listToSearch)
+        public InOperator(IExpressionPart itemToFind, IExpressionPart listToSearch)
         {
             ItemToFind = itemToFind;
             ListToSearch = listToSearch;
         }
 
-        public FilterPart ItemToFind { get; private set; }
-        public FilterPart ListToSearch { get; private set; }
+        public IExpressionPart ItemToFind { get; private set; }
+        public IExpressionPart ListToSearch { get; private set; }
 
-        public override Expression Build()
+        public Expression Build()
             => ListToSearch.Build().GetEnumerableContainsCall(ItemToFind.Build());
     }
 }

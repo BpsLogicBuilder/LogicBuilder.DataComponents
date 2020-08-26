@@ -2,19 +2,19 @@
 
 namespace LogicBuilder.Expressions.Utils.FilterBuilder
 {
-    abstract public class BinaryOperator : FilterPart
+    abstract public class BinaryOperator : IExpressionPart
     {
-        public BinaryOperator(FilterPart left, FilterPart right)
+        public BinaryOperator(IExpressionPart left, IExpressionPart right)
         {
             Left = left;
             Right = right;
         }
 
         public abstract FilterFunction Operator { get; }
-        public FilterPart Left { get; }
-        public FilterPart Right { get; }
+        public IExpressionPart Left { get; }
+        public IExpressionPart Right { get; }
 
-        public override Expression Build()
+        public Expression Build()
         {
             var left = Left.Build();
             var right = Right.Build();

@@ -4,7 +4,7 @@ namespace LogicBuilder.Expressions.Utils.FilterBuilder.Logical
 {
     public class EqualsBinaryOperator : BinaryOperator
     {
-        public EqualsBinaryOperator(FilterPart left, FilterPart right) : base(left, right)
+        public EqualsBinaryOperator(IExpressionPart left, IExpressionPart right) : base(left, right)
         {
         }
 

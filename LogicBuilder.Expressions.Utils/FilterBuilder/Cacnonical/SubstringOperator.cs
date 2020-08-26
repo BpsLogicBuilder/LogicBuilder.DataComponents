@@ -4,18 +4,18 @@ using System.Linq.Expressions;
 
 namespace LogicBuilder.Expressions.Utils.FilterBuilder.Cacnonical
 {
-    public class SubstringOperator : FilterPart
+    public class SubstringOperator : IExpressionPart
     {
-        public SubstringOperator(FilterPart left, params FilterPart[] args)
+        public SubstringOperator(IExpressionPart left, params IExpressionPart[] args)
         {
             Left = left;
             Args = args;
         }
 
-        public FilterPart Left { get; private set; }
-        public FilterPart[] Args { get; private set; }
+        public IExpressionPart Left { get; private set; }
+        public IExpressionPart[] Args { get; private set; }
 
-        public override Expression Build() => Build(Left.Build());
+        public Expression Build() => Build(Left.Build());
 
         private Expression Build(Expression leftExpression)
         {

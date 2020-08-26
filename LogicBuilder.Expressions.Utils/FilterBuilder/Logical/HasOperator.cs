@@ -3,18 +3,18 @@ using System.Linq.Expressions;
 
 namespace LogicBuilder.Expressions.Utils.FilterBuilder.Logical
 {
-    public class HasOperator : FilterPart
+    public class HasOperator : IExpressionPart
     {
-        public HasOperator(FilterPart left, FilterPart right)
+        public HasOperator(IExpressionPart left, IExpressionPart right)
         {
             Left = left;
             Right = right;
         }
 
-        public FilterPart Left { get; private set; }
-        public FilterPart Right { get; private set; }
+        public IExpressionPart Left { get; private set; }
+        public IExpressionPart Right { get; private set; }
 
-        public override Expression Build()
+        public Expression Build()
         {
             var left = Left.Build();
             

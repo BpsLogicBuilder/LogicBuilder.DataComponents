@@ -2,23 +2,23 @@
 
 namespace LogicBuilder.Expressions.Utils.FilterBuilder.Lambda
 {
-    public class AllOperator : FilterPart
+    public class AllOperator : IExpressionPart
     {
-        public AllOperator(FilterPart operand, FilterPart filter)
+        public AllOperator(IExpressionPart operand, IExpressionPart filter)
         {
             Operand = operand;
             Filter = filter;
         }
 
-        public AllOperator(FilterPart operand)
+        public AllOperator(IExpressionPart operand)
         {
             Operand = operand;
         }
 
-        public FilterPart Operand { get; }
-        public FilterPart Filter { get; }
+        public IExpressionPart Operand { get; }
+        public IExpressionPart Filter { get; }
 
-        public override Expression Build() => Build(Operand.Build());
+        public Expression Build() => Build(Operand.Build());
 
         private Expression Build(Expression operandExpression)
             => operandExpression.Type.IsIQueryable()

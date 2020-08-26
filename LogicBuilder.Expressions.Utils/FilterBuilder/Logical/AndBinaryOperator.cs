@@ -2,7 +2,7 @@
 {
     public class AndBinaryOperator : BinaryOperator
     {
-        public AndBinaryOperator(FilterPart left, FilterPart right) : base(left, right)
+        public AndBinaryOperator(IExpressionPart left, IExpressionPart right) : base(left, right)
         {
         }
 

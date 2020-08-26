@@ -2,12 +2,12 @@
 
 namespace LogicBuilder.Expressions.Utils.FilterBuilder.DateTimeOperators
 {
-    public class MinDateTimeOperator : FilterPart
+    public class MinDateTimeOperator : IExpressionPart
     {
         public MinDateTimeOperator()
         {
         }
 
-        public override Expression Build() => LinqHelpers.GetMinDateTimOffsetField();
+        public Expression Build() => LinqHelpers.GetMinDateTimOffsetField();
     }
 }

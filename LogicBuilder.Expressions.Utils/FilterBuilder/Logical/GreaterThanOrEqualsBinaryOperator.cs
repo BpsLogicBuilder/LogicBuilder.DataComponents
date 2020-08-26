@@ -2,7 +2,7 @@
 {
     public class GreaterThanOrEqualsBinaryOperator : BinaryOperator
     {
-        public GreaterThanOrEqualsBinaryOperator(FilterPart left, FilterPart right) : base(left, right)
+        public GreaterThanOrEqualsBinaryOperator(IExpressionPart left, IExpressionPart right) : base(left, right)
         {
         }
 

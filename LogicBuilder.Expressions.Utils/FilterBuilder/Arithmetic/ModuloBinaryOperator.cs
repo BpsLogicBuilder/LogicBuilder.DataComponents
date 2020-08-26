@@ -2,7 +2,7 @@
 {
     public class ModuloBinaryOperator : BinaryOperator
     {
-        public ModuloBinaryOperator(FilterPart left, FilterPart right) : base(left, right)
+        public ModuloBinaryOperator(IExpressionPart left, IExpressionPart right) : base(left, right)
         {
         }
 

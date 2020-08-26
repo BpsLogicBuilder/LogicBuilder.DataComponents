@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace LogicBuilder.Expressions.Utils.FilterBuilder.Operand
 {
-    public class CollectionConstantOperand : FilterPart
+    public class CollectionConstantOperand : IExpressionPart
     {
         public CollectionConstantOperand(Type elementType, ICollection<object> constantValues)
         {
@@ -17,7 +17,7 @@ namespace LogicBuilder.Expressions.Utils.FilterBuilder.Operand
         public Type ElementType { get; }
         public ICollection<object> ConstantValues { get; }
 
-        public override Expression Build()
+        public Expression Build()
         {
             Type listType = typeof(List<>).MakeGenericType(ElementType);
             IList items = Activator.CreateInstance(listType) as IList;

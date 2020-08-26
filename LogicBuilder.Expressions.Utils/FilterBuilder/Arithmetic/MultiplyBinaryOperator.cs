@@ -2,7 +2,7 @@
 {
     public class MultiplyBinaryOperator : BinaryOperator
     {
-        public MultiplyBinaryOperator(FilterPart left, FilterPart right) : base(left, right)
+        public MultiplyBinaryOperator(IExpressionPart left, IExpressionPart right) : base(left, right)
         {
         }
 
