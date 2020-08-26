@@ -315,6 +315,24 @@ namespace LogicBuilder.Expressions.Utils
                 operand
             );
 
+        public static MethodCallExpression GetAnyCall(this Expression expression, params Expression[] args)
+            => Expression.Call
+            (
+                expression.Type.IsIQueryable() ? typeof(Queryable) : typeof(Enumerable),
+                "Any",
+                new Type[] { expression.GetUnderlyingElementType() },
+                new Expression[] { expression }.Concat(args).ToArray()
+            );
+
+        public static MethodCallExpression GetAllCall(this Expression expression, params Expression[] args)
+            => Expression.Call
+            (
+                expression.Type.IsIQueryable() ? typeof(Queryable) : typeof(Enumerable),
+                "All",
+                new Type[] { expression.GetUnderlyingElementType() },
+                new Expression[] { expression }.Concat(args).ToArray()
+            );
+
         public static MethodCallExpression GetAnyEnumerableCall(this Expression expression, params Expression[] args)
             => Expression.Call
             (
