@@ -117,6 +117,19 @@ namespace LogicBuilder.Expressions.Utils
             }
         }
 
+        public static Expression<Func<T, TResult>> GetExpression<T, TResult>(this IExpressionPart filterPart, ParameterExpression parameter)
+            => (Expression<Func<T, TResult>>)filterPart.GetExpression<TResult>(parameter);
+
+        public static LambdaExpression GetExpression<TResult>(this IExpressionPart filterPart, ParameterExpression parameter)
+        {
+            return Expression.Lambda
+            (
+                typeof(Func<,>).MakeGenericType(parameter.Type, typeof(TResult)),
+                filterPart.Build(),
+                parameter
+            );
+        }
+
         public static Expression MakeValueSelectorAccessIfNullable(this Expression expression)
         {
             if (!expression.Type.IsNullableType())
@@ -333,6 +346,15 @@ namespace LogicBuilder.Expressions.Utils
                 new Expression[] { expression }.Concat(args).ToArray()
             );
 
+        public static MethodCallExpression GetWhereCall(this Expression expression, params Expression[] args)
+            => Expression.Call
+            (
+                expression.Type.IsIQueryable() ? typeof(Queryable) : typeof(Enumerable),
+                "Where",
+                new Type[] { expression.GetUnderlyingElementType() },
+                new Expression[] { expression }.Concat(args).ToArray()
+            );
+
         public static MethodCallExpression GetAnyEnumerableCall(this Expression expression, params Expression[] args)
             => Expression.Call
             (
@@ -369,6 +391,62 @@ namespace LogicBuilder.Expressions.Utils
                 new Expression[] { expression }.Concat(args).ToArray()
             );
 
+        public static MethodCallExpression GetSkipCall(this Expression expression, int skip)
+            => Expression.Call
+            (
+                expression.Type.IsIQueryable() ? typeof(Queryable) : typeof(Enumerable),
+                "Skip",
+                new[] { expression.GetUnderlyingElementType() },
+                expression,
+                Expression.Constant(skip)
+            );
+
+        public static MethodCallExpression GetTakeCall(this Expression expression, int take)
+            => Expression.Call
+            (
+                expression.Type.IsIQueryable() ? typeof(Queryable) : typeof(Enumerable),
+                "Take",
+                new[] { expression.GetUnderlyingElementType() },
+                expression,
+                Expression.Constant(take)
+            );
+
+        public static MethodCallExpression GetOrderByCall(this Expression expression, LambdaExpression selector, ListSortDirection sortDirection)
+        {
+            return GetCall(expression.GetUnderlyingElementType());
+            MethodCallExpression GetCall(Type sourceType)
+                => Expression.Call
+                (
+                    expression.Type.IsIQueryable() ? typeof(Queryable) : typeof(Enumerable),
+                    sortDirection == ListSortDirection.Ascending ? "OrderBy" : "OrderByDescending",
+                    new Type[]
+                    {
+                        sourceType,
+                        selector.ReturnType
+                    },
+                    expression,
+                    selector
+                );
+        }
+
+        public static MethodCallExpression GetThenByCall(this Expression expression, LambdaExpression selector, ListSortDirection sortDirection)
+        {
+            return GetCall(expression.GetUnderlyingElementType());
+            MethodCallExpression GetCall(Type sourceType)
+                => Expression.Call
+                (
+                    expression.Type.IsIQueryable() ? typeof(Queryable) : typeof(Enumerable),
+                    sortDirection == ListSortDirection.Ascending ? "ThenBy" : "ThenByDescending",
+                    new Type[]
+                    {
+                        sourceType,
+                        selector.ReturnType
+                    },
+                    expression,
+                    selector
+                );
+        }
+
         public static MethodCallExpression GetOfTypeEnumerableCall(this Expression expression, Type elementType)
            => Expression.Call
            (
@@ -389,6 +467,9 @@ namespace LogicBuilder.Expressions.Utils
 
         public static Expression GetStringConcatCall(Expression left, Expression right)
             => Expression.Call(StringConcatMethodInfo, left, right);
+
+        public static Expression GetStringCompareCall(Expression left, Expression right)
+            => Expression.Call(StringCompareMethodInfo, left, right);
 
         public static Expression GetHasFlagCall(this Expression instance, Expression operand)
             => Expression.Call(instance, EnumHasFlagMethodInfo, operand);
@@ -424,6 +505,20 @@ namespace LogicBuilder.Expressions.Utils
         public static Expression GetObjectToStringCall(this Expression instance)
             => Expression.Call(instance, ToStringMethodInfo);
 
+        public static Expression GetGuidCopareCall(Expression first, Expression second)
+           => Expression.Call(GuidCompareMethodInfo, first, second);
+
+        public static int CompareGuids(Guid? firstValue, Guid? secondValue)
+        {
+            if (firstValue.HasValue)
+                return firstValue.Value.CompareTo(secondValue);
+
+            if (secondValue.HasValue)
+                return (-1) * secondValue.Value.CompareTo(firstValue);
+
+            return 0;
+        }
+
         public static Expression GetMaxDateTimOffsetField()
             => Expression.MakeMemberAccess(null, DateTimeMaxMemberInfo);
 
@@ -432,6 +527,15 @@ namespace LogicBuilder.Expressions.Utils
 
         public static Expression GetNowDateTimOffsetProperty()
             => Expression.MakeMemberAccess(null, DateTimeUtcNowMemberInfo);
+
+        public static MethodCallExpression GetAverageMethodCall(this Expression expression, params Expression[] args)
+           => Expression.Call
+            (
+                expression.Type.IsIQueryable() ? typeof(Queryable) : typeof(Enumerable),
+                "Average",
+                new Type[] { expression.GetUnderlyingElementType() },
+                new Expression[] { expression }.Concat(args).ToArray()
+            );
 
         public static Expression GetCeilingCall(this Expression operandExpression)
         {
@@ -511,6 +615,8 @@ namespace LogicBuilder.Expressions.Utils
             => !ByteArraysEqual(left, right);
 
         internal static readonly MethodInfo EnumHasFlagMethodInfo = typeof(Enum).GetMethod("HasFlag", new[] { typeof(Enum) });
+        internal static readonly MethodInfo GuidCompareMethodInfo = typeof(LinqHelpers).GetMethod("CompareGuids", new[] { typeof(Guid?), typeof(Guid?) });
+        internal static readonly MethodInfo StringCompareMethodInfo = typeof(string).GetMethod("Compare", new[] { typeof(string), typeof(string) });
         internal static readonly MethodInfo StringContainsMethodInfo = typeof(string).GetMethod("Contains", new[] { typeof(string) });
         internal static readonly MethodInfo StringConcatMethodInfo = typeof(string).GetMethod("Concat", new[] { typeof(string), typeof(string) });
         internal static readonly MethodInfo StringStartsWithMethodInfo = typeof(string).GetMethod("StartsWith", new[] { typeof(string) });

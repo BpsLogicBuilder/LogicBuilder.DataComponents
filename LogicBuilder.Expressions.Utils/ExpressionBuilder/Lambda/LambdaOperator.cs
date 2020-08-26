@@ -21,9 +21,7 @@ namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Lambda
         public string ParameterName { get; }
         public IDictionary<string, ParameterExpression> Parameters { get; }
 
-        public Expression Build() => Build1();
-
-        private Expression Build1()
+        public Expression Build()
         {
             if (!this.Parameters.ContainsKey(ParameterName))
             {
@@ -41,7 +39,7 @@ namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Lambda
                     new Type[]
                     {
                         this.Parameters[ParameterName].Type,
-                        typeof(bool)
+                        SelectorType
                     }
                 ),
                 ConvertBody(Selector.Build()),
