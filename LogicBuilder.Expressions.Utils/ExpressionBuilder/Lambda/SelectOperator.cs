@@ -1,30 +1,31 @@
-﻿using LogicBuilder.Expressions.Utils.Strutures;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
+using System.Text;
 
 namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Lambda
 {
-    public class ThenByOperator : IExpressionPart
+    public class SelectOperator : IExpressionPart
     {
-        public ThenByOperator(IDictionary<string, ParameterExpression> parameters, IExpressionPart sourceOperand, IExpressionPart selectorBody, ListSortDirection sortDirection, string selectorParameterName)
+        public SelectOperator(IDictionary<string, ParameterExpression> parameters, IExpressionPart sourceOperand, IExpressionPart selectorBody, string selectorParameterName)
         {
             SourceOperand = sourceOperand;
             SelectorBody = selectorBody;
-            SortDirection = sortDirection;
             SelectorParameterName = selectorParameterName;
             Parameters = parameters;
         }
 
         public IExpressionPart SourceOperand { get; }
         public IExpressionPart SelectorBody { get; }
-        public ListSortDirection SortDirection { get; }
         public string SelectorParameterName { get; }
         public IDictionary<string, ParameterExpression> Parameters { get; }
 
         public Expression Build() => Build(SourceOperand.Build());
 
         private Expression Build(Expression operandExpression)
-            => operandExpression.GetThenByCall
+        {
+            return operandExpression.GetSelectCall
             (
                 (LambdaExpression)new LambdaOperator
                 (
@@ -32,8 +33,8 @@ namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Lambda
                     SelectorBody,
                     operandExpression.GetUnderlyingElementType(),
                     SelectorParameterName
-                ).Build(), 
-                SortDirection
+                ).Build()
             );
+        }
     }
 }

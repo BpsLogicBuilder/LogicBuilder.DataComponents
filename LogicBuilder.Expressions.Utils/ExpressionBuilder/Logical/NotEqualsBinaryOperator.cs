@@ -6,28 +6,11 @@ namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Logical
     {
         public NotEqualsBinaryOperator(IExpressionPart left, IExpressionPart right) : base(left, right)
         {
+            BinaryOperatorHandler = new NotEqualsBinaryOperatorHandler(Left, Right, Operator);
         }
+
+        protected override BinaryOperatorHandler BinaryOperatorHandler { get; }
 
         public override FilterFunction Operator => FilterFunction.ne;
-
-        protected override Expression Build(Expression left, Expression right)
-        {
-            if (left.Type == typeof(byte[]) || right.Type == typeof(byte[]))
-            {
-                left = left.SetNullType(typeof(byte[]));
-                right = right.SetNullType(typeof(byte[]));
-
-                return Expression.MakeBinary
-                (
-                    Constants.BinaryOperatorExpressionType[Operator],
-                    left,
-                    right,
-                    false,
-                    LinqHelpers.ByteArraysNotEqualMethodInfo
-                );
-            }
-
-            return base.Build(left, right);
-        }
     }
 }

@@ -196,13 +196,46 @@ namespace LogicBuilder.Expressions.Utils
 
         public static MethodCallExpression GetSelectNew<TSource>(this Expression expression, ICollection<string> propertyFullNames, string parameterName = "a") where TSource : class
         {
+            ParameterExpression selectorParameter = Expression.Parameter(typeof(TSource), parameterName);
+
+            return GetSelectNew<TSource>
+            (
+                expression,
+                selectorParameter,
+                GetMemberDetails<TSource>(propertyFullNames, selectorParameter)
+            );
+        }
+
+        public static MethodCallExpression GetSelectNew<TSource>(this Expression expression, ParameterExpression selectorParameter, List<MemberDetails> memberDetails) where TSource : class
+        {
             return expression.GetSelectMethodExpression<TSource>
-                (
-                    //gets the flattened name for the anonymous type if necessary
-                    GetMemberDetails<TSource>(propertyFullNames),
-                    //Parameter for the selector 
-                    Expression.Parameter(typeof(TSource), parameterName)
-                );
+            (
+                memberDetails,
+                selectorParameter,
+                AnonymousTypeFactory.CreateAnonymousType(memberDetails)
+            );
+        }
+
+        public static MethodCallExpression GetSelectNew(this Expression expression, Type sourceType, ParameterExpression selectorParameter, List<MemberDetails> memberDetails)
+        {
+            return expression.GetSelectMethodExpression
+            (
+                sourceType,
+                memberDetails,
+                selectorParameter,
+                AnonymousTypeFactory.CreateAnonymousType(memberDetails)
+            );
+        }
+
+        public static MethodCallExpression GetSelectNew(this Expression expression, Type sourceType, ParameterExpression selectorParameter, List<MemberDetails> memberDetails, Type newType)
+        {
+            return expression.GetSelectMethodExpression
+            (
+                sourceType,
+                memberDetails,
+                selectorParameter,
+                newType
+            );
         }
 
         /// <summary>
@@ -262,50 +295,50 @@ namespace LogicBuilder.Expressions.Utils
 
         public static MethodCallExpression GetSelectNew<TSource>(this Expression expression, IDictionary<string, string> propertyFullNames, string parameterName = "a") where TSource : class
         {
-            return expression.GetSelectMethodExpression<TSource>
-                (
-                    GetMemberDetails<TSource>(propertyFullNames),
-                    Expression.Parameter(typeof(TSource), parameterName)//Parameter for the selector 
-                );
+            ParameterExpression selectorParameter = Expression.Parameter(typeof(TSource), parameterName);
+
+            return GetSelectNew<TSource>
+            (
+                expression,
+                selectorParameter,
+                GetMemberDetails<TSource>(propertyFullNames, selectorParameter)
+            );
         }
 
-        private static MethodCallExpression GetSelectMethodExpression<TSource>(this Expression expression, List<MemberDetails> memberDetails, ParameterExpression param)
+        private static MethodCallExpression GetSelectMethodExpression<TSource>(this Expression expression, List<MemberDetails> memberDetails, ParameterExpression param, Type newType)
+            => expression.GetSelectMethodExpression(typeof(TSource), memberDetails, param, newType);
+
+        private static MethodCallExpression GetSelectMethodExpression(this Expression expression, Type sourceType, List<MemberDetails> memberDetails, ParameterExpression param, Type newType)
         {
-            //anonymous type
-            Type anonymousType = CreateAnonymousType(memberDetails);
-
-            //Bind anonymous type's member to TSource's selector.
-            IEnumerable<MemberBinding> bindings = memberDetails.Select
-            (
-                nameType => Expression.Bind
-                (
-                    //PropertyInfo for the anonymous type's member
-                    anonymousType.GetMemberInfoFromFullName(nameType.MemberName),
-                    //Selector expression for the TSource member
-                    nameType.SourceFullName.Split('.').Aggregate((Expression)param, (p, n) => Expression.MakeMemberAccess(p, p.Type.GetMemberInfo(n)))
-                )
-            );
-
             //Func<TSource, anonymous> s => new AnonymousType { Member = s.Member }
             LambdaExpression selectorExpression = Expression.Lambda
             (
-                typeof(Func<,>).MakeGenericType(new Type[] { typeof(TSource), anonymousType }),
-                Expression.MemberInit(Expression.New(anonymousType), bindings),
+                typeof(Func<,>).MakeGenericType(new Type[] { sourceType, newType }),
+                GetInitExpression(memberDetails, newType),
                 param
             );
 
             //IQueryable<anonymousType> Select<TSource, anonymousType>(this IQueryable<TSource> source, Expression<Func<TSource, anonymousType>> selector);
-            return Expression.Call(typeof(Queryable), "Select", new Type[] { typeof(TSource), anonymousType }, expression, selectorExpression);
+            return Expression.Call(typeof(Queryable), "Select", new Type[] { sourceType, newType }, expression, selectorExpression);
         }
 
-        private class MemberDetails
+        private static Expression GetInitExpression(List<MemberDetails> memberDetails, Type sourceType)
         {
-            public string SourceFullName { get; set; }
-            public string MemberName { get; set; }
-            public Type Type { get; set; }
+            //Bind anonymous type's member to TSource's selector.
+            IEnumerable<MemberBinding> bindings = memberDetails.Select
+            (
+                nameType =>
+                {
+                    Type memberType = sourceType.GetProperty(nameType.MemberName).PropertyType;
+                    Type selectorType = nameType.Selector.Type;
+                    return Expression.Bind(sourceType.GetProperty(nameType.MemberName), nameType.Selector);
+                }
+            );
+
+            return Expression.MemberInit(Expression.New(sourceType), bindings);
         }
 
-        private static List<MemberDetails> GetMemberDetails<TSource>(IDictionary<string, string> propertyFullNames)
+        private static List<MemberDetails> GetMemberDetails<TSource>(IDictionary<string, string> propertyFullNames, ParameterExpression selectorParameter)
             => propertyFullNames.Aggregate(new List<MemberDetails>(), (list, next) =>
             {
                 Type t = typeof(TSource);
@@ -319,14 +352,21 @@ namespace LogicBuilder.Expressions.Utils
 
                 list.Add(new MemberDetails
                 {
-                    SourceFullName = string.Join(".", fullNameList),
+                    Selector = fullNameList.Aggregate
+                    (
+                        (Expression)selectorParameter, (param, n) => Expression.MakeMemberAccess
+                        (
+                            param,
+                            param.Type.GetMemberInfo(n)
+                        )
+                    ),
                     MemberName = next.Key,
                     Type = t
                 });
                 return list;
             });
 
-        private static List<MemberDetails> GetMemberDetails<TSource>(ICollection<string> propertyFullNames)
+        private static List<MemberDetails> GetMemberDetails<TSource>(ICollection<string> propertyFullNames, ParameterExpression selectorParameter)
             => propertyFullNames.Aggregate(new List<MemberDetails>(), (list, next) =>
             {
                 Type t = typeof(TSource);
@@ -340,48 +380,19 @@ namespace LogicBuilder.Expressions.Utils
 
                 list.Add(new MemberDetails
                 {
-                    SourceFullName = string.Join(".", fullNameList),
+                    Selector = fullNameList.Aggregate
+                    (
+                        (Expression)selectorParameter, (param, n) => Expression.MakeMemberAccess
+                        (
+                            param,
+                            param.Type.GetMemberInfo(n)
+                        )
+                    ),
                     MemberName = string.Join("", fullNameList),
                     Type = t
                 });
                 return list;
             });
-
-        private static Type CreateAnonymousType(IEnumerable<MemberDetails> memberDetails)
-        {
-            AssemblyName dynamicAssemblyName = new AssemblyName("TempAssembly");
-            AssemblyBuilder dynamicAssembly = AssemblyBuilder.DefineDynamicAssembly(dynamicAssemblyName, AssemblyBuilderAccess.Run);
-            ModuleBuilder dynamicModule = dynamicAssembly.DefineDynamicModule("TempAssembly");
-            TypeBuilder typeBuilder = dynamicModule.DefineType("AnonymousType", TypeAttributes.Public);
-            MethodAttributes getSetAttr = MethodAttributes.Public | MethodAttributes.SpecialName | MethodAttributes.HideBySig;
-
-            var builders = memberDetails.Select(info => new
-            {
-                FieldBuilder = typeBuilder.DefineField(string.Concat("_", info.MemberName), info.Type, FieldAttributes.Private),
-                PropertyBuilder = typeBuilder.DefineProperty(info.MemberName, PropertyAttributes.HasDefault, info.Type, null),
-                GetMethodBuilder = typeBuilder.DefineMethod(string.Concat("get_", info.MemberName), getSetAttr, info.Type, Type.EmptyTypes),
-                SetMethodBuilder = typeBuilder.DefineMethod(string.Concat("set_", info.MemberName), getSetAttr, null, new Type[] { info.Type })
-            });
-
-            builders.ToList().ForEach(builder =>
-            {
-                ILGenerator getMethodIL = builder.GetMethodBuilder.GetILGenerator();
-                getMethodIL.Emit(OpCodes.Ldarg_0);
-                getMethodIL.Emit(OpCodes.Ldfld, builder.FieldBuilder);
-                getMethodIL.Emit(OpCodes.Ret);
-
-                ILGenerator setMethodIL = builder.SetMethodBuilder.GetILGenerator();
-                setMethodIL.Emit(OpCodes.Ldarg_0);
-                setMethodIL.Emit(OpCodes.Ldarg_1);
-                setMethodIL.Emit(OpCodes.Stfld, builder.FieldBuilder);
-                setMethodIL.Emit(OpCodes.Ret);
-
-                builder.PropertyBuilder.SetGetMethod(builder.GetMethodBuilder);
-                builder.PropertyBuilder.SetSetMethod(builder.SetMethodBuilder);
-            });
-
-            return typeBuilder.CreateTypeInfo().AsType();
-        }
 
         /// <summary>
         /// Create a dictionary select from a list of properties in lieu of select new anonymous type.   New requires IL code.
@@ -532,5 +543,70 @@ namespace LogicBuilder.Expressions.Utils
                 parent,
                 BuildSelectorExpression(underlyingType, string.Join(".", parts), parameterName.ChildParameterName())//Join the remaining parts to create a full name
             );
+    }
+
+    public class MemberDetails
+    {
+        public Expression Selector { get; set; }
+        public string MemberName { get; set; }
+        public Type Type { get; set; }
+    }
+
+    public static class AnonymousTypeFactory
+    {
+        private static int classCount;
+
+        public static Type CreateAnonymousType(IEnumerable<MemberDetails> memberDetails)
+            => CreateAnonymousType(memberDetails.ToDictionary(key => key.MemberName, element => element.Type));
+
+        public static Type CreateAnonymousType(IEnumerable<MemberInfo> memberDetails) 
+            => CreateAnonymousType(memberDetails.ToDictionary(key => key.Name, element => element.GetMemberType()));
+
+        public static Type CreateAnonymousType(IDictionary<string, Type> memberDetails)
+        {
+            AssemblyName dynamicAssemblyName = new AssemblyName("TempAssembly");
+            AssemblyBuilder dynamicAssembly = AssemblyBuilder.DefineDynamicAssembly(dynamicAssemblyName, AssemblyBuilderAccess.Run);
+            ModuleBuilder dynamicModule = dynamicAssembly.DefineDynamicModule("TempAssembly");
+            TypeBuilder typeBuilder = dynamicModule.DefineType(GetAnonymousTypeName(), TypeAttributes.Public);
+            MethodAttributes getSetAttr = MethodAttributes.Public | MethodAttributes.SpecialName | MethodAttributes.HideBySig;
+
+            var builders = memberDetails.Select
+            (
+                info =>
+                {
+                    Type memberType = info.Value;
+                    string memberName = info.Key;
+                    return new
+                    {
+                        FieldBuilder = typeBuilder.DefineField(string.Concat("_", memberName), memberType, FieldAttributes.Private),
+                        PropertyBuilder = typeBuilder.DefineProperty(memberName, PropertyAttributes.HasDefault, memberType, null),
+                        GetMethodBuilder = typeBuilder.DefineMethod(string.Concat("get_", memberName), getSetAttr, memberType, Type.EmptyTypes),
+                        SetMethodBuilder = typeBuilder.DefineMethod(string.Concat("set_", memberName), getSetAttr, null, new Type[] { memberType })
+                    };
+                }
+            );
+
+            builders.ToList().ForEach(builder =>
+            {
+                ILGenerator getMethodIL = builder.GetMethodBuilder.GetILGenerator();
+                getMethodIL.Emit(OpCodes.Ldarg_0);
+                getMethodIL.Emit(OpCodes.Ldfld, builder.FieldBuilder);
+                getMethodIL.Emit(OpCodes.Ret);
+
+                ILGenerator setMethodIL = builder.SetMethodBuilder.GetILGenerator();
+                setMethodIL.Emit(OpCodes.Ldarg_0);
+                setMethodIL.Emit(OpCodes.Ldarg_1);
+                setMethodIL.Emit(OpCodes.Stfld, builder.FieldBuilder);
+                setMethodIL.Emit(OpCodes.Ret);
+
+                builder.PropertyBuilder.SetGetMethod(builder.GetMethodBuilder);
+                builder.PropertyBuilder.SetSetMethod(builder.SetMethodBuilder);
+            });
+
+            return typeBuilder.CreateTypeInfo().AsType();
+        }
+
+        private static string GetAnonymousTypeName()
+            => $"AnonymousType{++classCount}";
     }
 }

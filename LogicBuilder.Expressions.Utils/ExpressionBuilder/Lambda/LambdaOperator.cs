@@ -6,17 +6,15 @@ namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Lambda
 {
     public class LambdaOperator : IExpressionPart
     {
-        public LambdaOperator(IDictionary<string, ParameterExpression> parameters, IExpressionPart selector, Type selectorType, Type sourceElementType, string parameterName)
+        public LambdaOperator(IDictionary<string, ParameterExpression> parameters, IExpressionPart selector, Type sourceElementType, string parameterName)
         {
             Selector = selector;
-            SelectorType = selectorType;
             SourceElementType = sourceElementType;
             ParameterName = parameterName;
             Parameters = parameters;
         }
 
         public IExpressionPart Selector { get; }
-        public Type SelectorType { get; }
         public Type SourceElementType { get; }
         public string ParameterName { get; }
         public IDictionary<string, ParameterExpression> Parameters { get; }
@@ -32,6 +30,7 @@ namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Lambda
                 );
             }
 
+            var selectorBody = Selector.Build();
             var expression = Expression.Lambda
             (
                 typeof(Func<,>).MakeGenericType
@@ -39,10 +38,10 @@ namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Lambda
                     new Type[]
                     {
                         this.Parameters[ParameterName].Type,
-                        SelectorType
+                        selectorBody.Type
                     }
                 ),
-                ConvertBody(Selector.Build()),
+                selectorBody,
                 this.Parameters[ParameterName]
             );
 
@@ -50,10 +49,5 @@ namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Lambda
 
             return expression;
         }
-
-        private Expression ConvertBody(Expression body)
-            => body.Type != SelectorType
-                ? Expression.Convert(body, SelectorType)
-                : body;
     }
 }

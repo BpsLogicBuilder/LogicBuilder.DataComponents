@@ -3,6 +3,8 @@ using LogicBuilder.Expressions.Utils.ExpressionBuilder;
 using LogicBuilder.Expressions.Utils.Strutures;
 using Microsoft.OData.Edm;
 using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -157,6 +159,66 @@ namespace LogicBuilder.Expressions.Utils
                         ex.Type.GetMemberInfo(next)
                     )
                 );
+
+        public static Expression BuildSelectorExpression(this Expression param, string fullName, string parameterName = "p0")
+        {
+            string[] parts = fullName.Split(new char[] { '.' }, StringSplitOptions.RemoveEmptyEntries);
+            Type parentType = param.Type;
+            Expression parent = param;
+
+            for (int i = 0; i < parts.Length; i++)
+            {
+                if (parentType.IsList())
+                {
+                    return GetSelectExpression(parts.Skip(i), parent, parentType.GetUnderlyingElementType(), parameterName);//parentType is the underlying type of the member since it is an IEnumerable<T>
+                }
+                else
+                {
+                    MemberInfo mInfo = parentType.GetMemberInfo(parts[i]);
+                    parent = Expression.MakeMemberAccess(parent, mInfo);
+
+                    parentType = mInfo.GetMemberType();
+                }
+            }
+
+            return parent;
+        }
+
+        private static Expression GetSelectExpression(IEnumerable<string> parts, Expression parent, Type underlyingType, string parameterName)
+        {
+            ParameterExpression param = Expression.Parameter(underlyingType, parameterName.ChildParameterName());
+            Expression selectorBody = BuildSelectorExpression(param, string.Join(".", parts), param.Name);
+            return Expression.Call
+            (
+                typeof(Enumerable),
+                "Select",
+                new Type[] { underlyingType, selectorBody.Type },
+                parent,
+                Expression.Lambda
+                (
+                    typeof(Func<,>).MakeGenericType(new[] { underlyingType, selectorBody.Type }),
+                    selectorBody,
+                    param
+                )
+            );
+        }
+
+        private static string ChildParameterName(this string currentParameterName)
+        {
+            string lastChar = currentParameterName.Substring(currentParameterName.Length - 1);
+            if (short.TryParse(lastChar, out short lastCharShort))
+            {
+                return string.Concat
+                (
+                    currentParameterName.Substring(0, currentParameterName.Length - 1),
+                    (lastCharShort++).ToString(CultureInfo.CurrentCulture)
+                );
+            }
+            else
+            {
+                return currentParameterName += "0";
+            }
+        }
 
         public static Expression SetNullType(this Expression expression, Type type)
         {
@@ -446,6 +508,48 @@ namespace LogicBuilder.Expressions.Utils
                     selector
                 );
         }
+
+        public static MethodCallExpression GetGroupByCall(this Expression expression, LambdaExpression selectorExpression)
+        {
+            return Expression.Call
+            (
+                expression.Type.IsIQueryable() ? typeof(Queryable) : typeof(Enumerable),
+                "GroupBy",
+                new Type[] { expression.GetUnderlyingElementType(), selectorExpression.ReturnType },
+                expression,
+                selectorExpression
+            );
+        }
+
+        public static Expression GetSelectCall(this Expression expression, LambdaExpression selectorExpression)
+            => Expression.Call
+            (
+                expression.Type.IsIQueryable() ? typeof(Queryable) : typeof(Enumerable),
+                "Select",
+                new Type[] { expression.GetUnderlyingElementType(), selectorExpression.ReturnType },
+                expression,
+                selectorExpression
+            );
+
+        public static Expression GetCountCall(this Expression expression, params Expression[] args)
+        {
+            return Expression.Call
+            (
+                expression.Type.IsIQueryable() ? typeof(Queryable) : typeof(Enumerable),
+                "Count",
+                new Type[] { expression.GetUnderlyingElementType() },
+                new Expression[] { expression }.Concat(args).ToArray()
+            );
+        }
+
+        public static MethodCallExpression GetToListCall(this Expression expression)
+            => Expression.Call
+            (
+                typeof(Enumerable),
+                "ToList",
+                new Type[] { expression.GetUnderlyingElementType() },
+                expression
+            );
 
         public static MethodCallExpression GetOfTypeEnumerableCall(this Expression expression, Type elementType)
            => Expression.Call

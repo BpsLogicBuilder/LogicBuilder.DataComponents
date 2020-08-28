@@ -1,31 +1,50 @@
-﻿using System.Linq.Expressions;
+﻿using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Lambda
 {
     public class AllOperator : IExpressionPart
     {
-        public AllOperator(IExpressionPart operand, IExpressionPart filter)
+        public AllOperator(IDictionary<string, ParameterExpression> parameters, IExpressionPart sourceOperand, IExpressionPart filterBody, string filterParameterName)
         {
-            Operand = operand;
-            Filter = filter;
+            SourceOperand = sourceOperand;
+            FilterBody = filterBody;
+            Parameters = parameters;
+            FilterParameterName = filterParameterName;
         }
 
         public AllOperator(IExpressionPart operand)
         {
-            Operand = operand;
+            SourceOperand = operand;
         }
 
-        public IExpressionPart Operand { get; }
-        public IExpressionPart Filter { get; }
+        public IExpressionPart SourceOperand { get; }
+        public IExpressionPart FilterBody { get; }
+        public IDictionary<string, ParameterExpression> Parameters { get; }
+        public string FilterParameterName { get; }
 
-        public Expression Build() => Build(Operand.Build());
+        public Expression Build() => Build(SourceOperand.Build());
 
         private Expression Build(Expression operandExpression)
             => operandExpression.Type.IsIQueryable()
-                ? operandExpression.GetAllQueryableCall(GetParameters())
-                : operandExpression.GetAllEnumerableCall(GetParameters());
-
-        private Expression[] GetParameters()
-                => Filter == null ? new Expression[0] : new Expression[] { Filter.Build() };
+                ? operandExpression.GetAllQueryableCall(GetParameters(operandExpression))
+                : operandExpression.GetAllEnumerableCall(GetParameters(operandExpression));
+        
+        private Expression[] GetParameters(Expression operandExpression)
+        {
+            if (FilterBody == null)
+                return new Expression[0];
+            
+            return new Expression[] 
+            {
+                new FilterLambdaOperator
+                (
+                    Parameters,
+                    FilterBody,
+                    operandExpression.GetUnderlyingElementType(),
+                    FilterParameterName
+                ).Build()
+            };
+        }
     }
 }

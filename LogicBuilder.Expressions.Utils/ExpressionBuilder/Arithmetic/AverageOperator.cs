@@ -1,13 +1,17 @@
-﻿using System.Linq.Expressions;
+﻿using LogicBuilder.Expressions.Utils.ExpressionBuilder.Lambda;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Arithmetic
 {
     public class AverageOperator : IExpressionPart
     {
-        public AverageOperator(IExpressionPart sourceOperand, IExpressionPart selector)
+        public AverageOperator(IDictionary<string, ParameterExpression> parameters, IExpressionPart sourceOperand, IExpressionPart selectorBody, string selectorParameterName)
         {
             SourceOperand = sourceOperand;
-            Selector = selector;
+            SelectorBody = selectorBody;
+            SelectorParameterName = selectorParameterName;
+            Parameters = parameters;
         }
 
         public AverageOperator(IExpressionPart sourceOperand)
@@ -16,11 +20,30 @@ namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Arithmetic
         }
 
         public IExpressionPart SourceOperand { get; }
-        public IExpressionPart Selector { get; }
+        public IExpressionPart SelectorBody { get; }
+        public string SelectorParameterName { get; }
+        public IDictionary<string, ParameterExpression> Parameters { get; }
 
         public Expression Build() => Build(SourceOperand.Build());
 
         private Expression Build(Expression operandExpression)
-            => operandExpression.GetAverageMethodCall(Selector == null ? new Expression[0] : new Expression[] { (LambdaExpression)Selector.Build() });
+        {
+            if (SelectorBody == null)
+                return operandExpression.GetAverageMethodCall(new Expression[0]);
+
+            return operandExpression.GetAverageMethodCall
+            (
+                new Expression[] 
+                { 
+                    (LambdaExpression)new LambdaOperator
+                    (
+                        Parameters,
+                        SelectorBody,
+                        operandExpression.GetUnderlyingElementType(),
+                        SelectorParameterName
+                    ).Build(),
+                }
+            );
+        }
     }
 }

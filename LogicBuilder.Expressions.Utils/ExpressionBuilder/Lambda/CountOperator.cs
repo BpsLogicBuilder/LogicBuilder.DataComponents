@@ -1,18 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 
 namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Lambda
 {
-    public class WhereOperator : IExpressionPart
+    public class CountOperator : IExpressionPart
     {
-        public WhereOperator(IDictionary<string, ParameterExpression> parameters, IExpressionPart sourceOperand, IExpressionPart filterBody, string filterParameterName)
+        public CountOperator(IDictionary<string, ParameterExpression> parameters, IExpressionPart sourceOperand, IExpressionPart filterBody, string filterParameterName)
         {
             SourceOperand = sourceOperand;
             FilterBody = filterBody;
             Parameters = parameters;
             FilterParameterName = filterParameterName;
+        }
+
+        public CountOperator(IExpressionPart operand)
+        {
+            SourceOperand = operand;
         }
 
         public IExpressionPart SourceOperand { get; }
@@ -22,9 +25,16 @@ namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Lambda
 
         public Expression Build() => Build(SourceOperand.Build());
 
-        private Expression Build(Expression operandExpression) 
-            => operandExpression.GetWhereCall
-            (
+        private Expression Build(Expression operandExpression)
+            => operandExpression.GetCountCall(GetParameters(operandExpression));
+
+        private Expression[] GetParameters(Expression operandExpression)
+        {
+            if (FilterBody == null)
+                return new Expression[0];
+
+            return new Expression[]
+            {
                 new FilterLambdaOperator
                 (
                     Parameters,
@@ -32,6 +42,7 @@ namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Lambda
                     operandExpression.GetUnderlyingElementType(),
                     FilterParameterName
                 ).Build()
-            );
+            };
+        }
     }
 }

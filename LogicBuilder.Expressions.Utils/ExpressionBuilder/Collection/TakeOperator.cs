@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Lambda
+namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Collection
 {
     public class TakeOperator : IExpressionPart
     {
