@@ -14,6 +14,6 @@ namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Lambda
         }
 
         protected override Expression Build(Expression operandExpression)
-            => operandExpression.GetAverageMethodCall(GetParameters(operandExpression));
+            => operandExpression.GetAverageCall(GetParameters(operandExpression));
     }
 }

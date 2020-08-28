@@ -390,6 +390,15 @@ namespace LogicBuilder.Expressions.Utils
                 operand
             );
 
+        public static MethodCallExpression GetFirstOrDefaultCall(this Expression expression, params Expression[] args)
+           => Expression.Call
+            (
+                expression.Type.IsIQueryable() ? typeof(Queryable) : typeof(Enumerable),
+                "FirstOrDefault",
+                new Type[] { expression.GetUnderlyingElementType() },
+                new Expression[] { expression }.Concat(args).ToArray()
+            );
+
         public static MethodCallExpression GetAnyCall(this Expression expression, params Expression[] args)
             => Expression.Call
             (
@@ -516,6 +525,15 @@ namespace LogicBuilder.Expressions.Utils
                 expression
             );
 
+        public static MethodCallExpression GetAsQueryableCall(this Expression expression)
+            => Expression.Call
+            (
+                typeof(Queryable), 
+                "AsQueryable", 
+                new Type[] { expression.GetUnderlyingElementType() }, 
+                expression
+            );
+
         public static MethodCallExpression GetOfTypeEnumerableCall(this Expression expression, Type elementType)
            => Expression.Call
            (
@@ -597,12 +615,53 @@ namespace LogicBuilder.Expressions.Utils
         public static Expression GetNowDateTimOffsetProperty()
             => Expression.MakeMemberAccess(null, DateTimeUtcNowMemberInfo);
 
-        public static MethodCallExpression GetAverageMethodCall(this Expression expression, params Expression[] args)
+        public static MethodCallExpression GetAverageCall(this Expression expression, params Expression[] args)
            => Expression.Call
             (
                 expression.Type.IsIQueryable() ? typeof(Queryable) : typeof(Enumerable),
                 "Average",
-                new Type[] { expression.GetUnderlyingElementType() },
+                args.Length == 0
+                    ? null 
+                    : new Type[] { expression.GetUnderlyingElementType() },
+                new Expression[] { expression }.Concat(args).ToArray()
+            );
+
+        public static MethodCallExpression GetMaxCall(this Expression expression, params Expression[] args)
+        {
+            Type sourceType = expression.GetUnderlyingElementType();
+            return Expression.Call
+            (
+                expression.Type.IsIQueryable() ? typeof(Queryable) : typeof(Enumerable),
+                "Max",
+                args.Length == 0
+                    ? new Type[] { sourceType }
+                    : new Type[] { sourceType, ((LambdaExpression)args[0]).ReturnType },
+                new Expression[] { expression }.Concat(args).ToArray()
+            );
+        }
+
+        public static MethodCallExpression GetMinCall(this Expression expression, params Expression[] args)
+        {
+            Type sourceType = expression.GetUnderlyingElementType();
+            return Expression.Call
+            (
+                expression.Type.IsIQueryable() ? typeof(Queryable) : typeof(Enumerable),
+                "Min",
+                args.Length == 0
+                    ? new Type[] { sourceType }
+                    : new Type[] { sourceType, ((LambdaExpression)args[0]).ReturnType },
+                new Expression[] { expression }.Concat(args).ToArray()
+            );
+        }
+
+        public static MethodCallExpression GetSumCall(this Expression expression, params Expression[] args)
+           => Expression.Call
+            (
+                expression.Type.IsIQueryable() ? typeof(Queryable) : typeof(Enumerable),
+                "Sum",
+                args.Length == 0
+                    ? null
+                    : new Type[] { expression.GetUnderlyingElementType() },
                 new Expression[] { expression }.Concat(args).ToArray()
             );
 

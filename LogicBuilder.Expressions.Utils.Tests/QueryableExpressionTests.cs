@@ -1,6 +1,7 @@
 using Contoso.Data.Entities;
 using LogicBuilder.Expressions.Utils.ExpressionBuilder;
 using LogicBuilder.Expressions.Utils.ExpressionBuilder.Arithmetic;
+using LogicBuilder.Expressions.Utils.ExpressionBuilder.Cacnonical;
 using LogicBuilder.Expressions.Utils.ExpressionBuilder.Collection;
 using LogicBuilder.Expressions.Utils.ExpressionBuilder.Lambda;
 using LogicBuilder.Expressions.Utils.ExpressionBuilder.Logical;
@@ -83,9 +84,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
             {
                 ["q"] = Expression.Parameter(typeof(IQueryable<Department>), "q")
             };
-            //Expression<Func<IQueryable<Department>, IQueryable<IGrouping<int, Department>>>> expression = q => q.GroupBy(g => 1);
-            //{q => q.GroupBy(a => 1).OrderBy(b => b.Key)}
-            //{q => q.GroupBy(a => 1).OrderBy(b => b.Key).Select(c => new AnonymousType1() {Sum_budget = q.Where(d => (d.DepartmentID == q.Count())).ToList()})}
+
             Expression<Func<IQueryable<Department>, IQueryable<object>>> expression1 =
                 q => q.GroupBy(a => 1)
                     .OrderBy(b => b.Key)
@@ -150,6 +149,156 @@ namespace LogicBuilder.Expressions.Utils.Tests
                 "c"
             )
             .GetExpression<IQueryable<Department>, IQueryable<object>>(parameters["q"]);
+
+            Assert.NotNull(expression);
+        }
+
+        [Fact]
+        public void BuildGroupBy_AsQueryable_OrderBy_Select_FirstOrDefault()
+        {
+            IDictionary<string, ParameterExpression> parameters = new Dictionary<string, ParameterExpression>
+            {
+                ["q"] = Expression.Parameter(typeof(IQueryable<Department>), "q")
+            };
+
+            Expression<Func<IQueryable<Department>, object>> expression1 =
+                q => q.GroupBy(item => 1)
+                .AsQueryable()
+                .OrderBy(group => group.Key)
+                .Select
+                (
+                    sel => new
+                    {
+                        Min_administratorName = q.Where(d => (1 == sel.Key)).Min(item => string.Concat(string.Concat(item.Administrator.LastName, "B"), item.Administrator.FirstName)),
+                        Count_name = q.Where(d => (1 == sel.Key)).Count(),
+                        Sum_budget = q.Where(d => (1 == sel.Key)).Sum(item => item.Budget),
+                        Min_budget = q.Where(d => (1 == sel.Key)).Min(item => item.Budget),
+                        Min_startDate = q.Where(d => (1 == sel.Key)).Min(item => item.StartDate)
+                    }
+                )
+                .FirstOrDefault();
+
+            Expression<Func<IQueryable<Department>, object>> expression = new FirstOrDefaultOperator
+            (
+                new SelectOperator
+                (
+                    parameters,
+                    new OrderByOperator
+                    (
+                        parameters,
+                        new AsQueryableOperator
+                        (
+                            new GroupByOperator
+                            (
+                                parameters,
+                                new ParameterOperator(parameters, "q"),
+                                new ConstantOperand(typeof(int), 1),
+                                "item"
+                            )
+                        ),
+                        new MemberSelector("Key", new ParameterOperator(parameters, "group")),
+                        Strutures.ListSortDirection.Ascending,
+                        "group"
+                    ),
+                    new MemberInitOperator
+                    (
+                        new Dictionary<string, IExpressionPart>
+                        {
+                            ["Min_administratorName"] = new MinOperator
+                            (
+                                parameters,
+                                new WhereOperator
+                                (
+                                    parameters,
+                                    new ParameterOperator(parameters, "q"),
+                                    new EqualsBinaryOperator
+                                    (
+                                        new ConstantOperand(typeof(int), 1),
+                                        new MemberSelector("Key", new ParameterOperator(parameters, "sel"))
+                                    ),
+                                    "d"
+                                ),
+                                new ConcatOperator
+                                (
+                                    new ConcatOperator
+                                    (
+                                        new MemberSelector("Administrator.LastName", new ParameterOperator(parameters, "item")), 
+                                        new ConstantOperand(typeof(string), "B")
+                                    ),
+                                    new MemberSelector("Administrator.FirstName", new ParameterOperator(parameters, "item"))
+                                ),
+                                "item"
+                            ),
+                            ["Count_name"] = new CountOperator
+                            (
+                                new WhereOperator
+                                (
+                                    parameters,
+                                    new ParameterOperator(parameters, "q"),
+                                    new EqualsBinaryOperator
+                                    (
+                                        new ConstantOperand(typeof(int), 1),
+                                        new MemberSelector("Key", new ParameterOperator(parameters, "sel"))
+                                    ),
+                                    "d"
+                                )
+                            ),
+                            ["Sum_budget"] = new SumOperator
+                            (
+                                parameters,
+                                new WhereOperator
+                                (
+                                    parameters,
+                                    new ParameterOperator(parameters, "q"),
+                                    new EqualsBinaryOperator
+                                    (
+                                        new ConstantOperand(typeof(int), 1),
+                                        new MemberSelector("Key", new ParameterOperator(parameters, "sel"))
+                                    ),
+                                    "d"
+                                ),
+                                new MemberSelector("Budget", new ParameterOperator(parameters, "item")),
+                                "item"
+                            ),
+                            ["Min_budget"] = new MinOperator
+                            (
+                                parameters,
+                                new WhereOperator
+                                (
+                                    parameters,
+                                    new ParameterOperator(parameters, "q"),
+                                    new EqualsBinaryOperator
+                                    (
+                                        new ConstantOperand(typeof(int), 1),
+                                        new MemberSelector("Key", new ParameterOperator(parameters, "sel"))
+                                    ),
+                                    "d"
+                                ),
+                                new MemberSelector("Budget", new ParameterOperator(parameters, "item")),
+                                "item"
+                            ),
+                            ["Min_startDate"] = new MinOperator
+                            (
+                                parameters,
+                                new WhereOperator
+                                (
+                                    parameters,
+                                    new ParameterOperator(parameters, "q"),
+                                    new EqualsBinaryOperator
+                                    (
+                                        new ConstantOperand(typeof(int), 1),
+                                        new MemberSelector("Key", new ParameterOperator(parameters, "sel"))
+                                    ),
+                                    "d"
+                                ),
+                                new MemberSelector("StartDate", new ParameterOperator(parameters, "item")),
+                                "item"
+                            )
+                        }
+                    ),
+                    "sel"
+                )
+            ).GetExpression<IQueryable<Department>, object>(parameters["q"]);
 
             Assert.NotNull(expression);
         }
