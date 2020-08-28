@@ -4,9 +4,9 @@ using System.Linq.Expressions;
 
 namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Lambda
 {
-    public class LambdaOperator : IExpressionPart
+    public class SelectorLambdaOperatorHelper : IExpressionPart
     {
-        public LambdaOperator(IDictionary<string, ParameterExpression> parameters, IExpressionPart selector, Type sourceElementType, string parameterName)
+        public SelectorLambdaOperatorHelper(IDictionary<string, ParameterExpression> parameters, IExpressionPart selector, Type sourceElementType, string parameterName)
         {
             Selector = selector;
             SourceElementType = sourceElementType;

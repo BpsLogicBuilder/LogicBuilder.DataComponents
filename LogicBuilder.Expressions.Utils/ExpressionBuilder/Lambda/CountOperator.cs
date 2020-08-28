@@ -3,46 +3,17 @@ using System.Linq.Expressions;
 
 namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Lambda
 {
-    public class CountOperator : IExpressionPart
+    public class CountOperator : FilterLambdaOperatorBase, IExpressionPart
     {
-        public CountOperator(IDictionary<string, ParameterExpression> parameters, IExpressionPart sourceOperand, IExpressionPart filterBody, string filterParameterName)
+        public CountOperator(IDictionary<string, ParameterExpression> parameters, IExpressionPart sourceOperand, IExpressionPart filterBody, string filterParameterName) : base(parameters, sourceOperand, filterBody, filterParameterName)
         {
-            SourceOperand = sourceOperand;
-            FilterBody = filterBody;
-            Parameters = parameters;
-            FilterParameterName = filterParameterName;
         }
 
-        public CountOperator(IExpressionPart operand)
+        public CountOperator(IExpressionPart operand) : base(operand)
         {
-            SourceOperand = operand;
         }
 
-        public IExpressionPart SourceOperand { get; }
-        public IExpressionPart FilterBody { get; }
-        public IDictionary<string, ParameterExpression> Parameters { get; }
-        public string FilterParameterName { get; }
-
-        public Expression Build() => Build(SourceOperand.Build());
-
-        private Expression Build(Expression operandExpression)
+        protected override Expression Build(Expression operandExpression)
             => operandExpression.GetCountCall(GetParameters(operandExpression));
-
-        private Expression[] GetParameters(Expression operandExpression)
-        {
-            if (FilterBody == null)
-                return new Expression[0];
-
-            return new Expression[]
-            {
-                new FilterLambdaOperator
-                (
-                    Parameters,
-                    FilterBody,
-                    operandExpression.GetUnderlyingElementType(),
-                    FilterParameterName
-                ).Build()
-            };
-        }
     }
 }

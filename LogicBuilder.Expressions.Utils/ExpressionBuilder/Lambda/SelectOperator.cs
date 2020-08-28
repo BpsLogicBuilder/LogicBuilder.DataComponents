@@ -6,35 +6,13 @@ using System.Text;
 
 namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Lambda
 {
-    public class SelectOperator : IExpressionPart
+    public class SelectOperator : SelectorLambdaOperatorBase, IExpressionPart
     {
-        public SelectOperator(IDictionary<string, ParameterExpression> parameters, IExpressionPart sourceOperand, IExpressionPart selectorBody, string selectorParameterName)
+        public SelectOperator(IDictionary<string, ParameterExpression> parameters, IExpressionPart sourceOperand, IExpressionPart selectorBody, string selectorParameterName) : base(parameters, sourceOperand, selectorBody, selectorParameterName)
         {
-            SourceOperand = sourceOperand;
-            SelectorBody = selectorBody;
-            SelectorParameterName = selectorParameterName;
-            Parameters = parameters;
         }
 
-        public IExpressionPart SourceOperand { get; }
-        public IExpressionPart SelectorBody { get; }
-        public string SelectorParameterName { get; }
-        public IDictionary<string, ParameterExpression> Parameters { get; }
-
-        public Expression Build() => Build(SourceOperand.Build());
-
-        private Expression Build(Expression operandExpression)
-        {
-            return operandExpression.GetSelectCall
-            (
-                (LambdaExpression)new LambdaOperator
-                (
-                    Parameters,
-                    SelectorBody,
-                    operandExpression.GetUnderlyingElementType(),
-                    SelectorParameterName
-                ).Build()
-            );
-        }
+        protected override Expression Build(Expression operandExpression)
+            => operandExpression.GetSelectCall(GetSelector(operandExpression));
     }
 }

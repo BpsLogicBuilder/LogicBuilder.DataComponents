@@ -417,41 +417,6 @@ namespace LogicBuilder.Expressions.Utils
                 new Expression[] { expression }.Concat(args).ToArray()
             );
 
-        public static MethodCallExpression GetAnyEnumerableCall(this Expression expression, params Expression[] args)
-            => Expression.Call
-            (
-                typeof(Enumerable),
-                "Any",
-                new Type[] { expression.GetUnderlyingElementType() },
-                new Expression[] { expression }.Concat(args).ToArray()
-            );
-
-        public static MethodCallExpression GetAllEnumerableCall(this Expression expression, params Expression[] args)
-            => Expression.Call
-            (
-                typeof(Enumerable),
-                "All",
-                new Type[] { expression.GetUnderlyingElementType() },
-                new Expression[] { expression }.Concat(args).ToArray()
-            );
-
-        public static MethodCallExpression GetAnyQueryableCall(this Expression expression, params Expression[] args)
-            => Expression.Call
-            (
-                typeof(Queryable),
-                "Any",
-                new Type[] { expression.GetUnderlyingElementType() },
-                new Expression[] { expression }.Concat(args).ToArray()
-            );
-
-        public static MethodCallExpression GetAllQueryableCall(this Expression expression, params Expression[] args)
-            => Expression.Call
-            (
-                typeof(Queryable),
-                "All",
-                new Type[] { expression.GetUnderlyingElementType() },
-                new Expression[] { expression }.Concat(args).ToArray()
-            );
 
         public static MethodCallExpression GetSkipCall(this Expression expression, int skip)
             => Expression.Call
