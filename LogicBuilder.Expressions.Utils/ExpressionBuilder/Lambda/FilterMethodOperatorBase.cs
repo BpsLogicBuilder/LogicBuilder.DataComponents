@@ -5,9 +5,9 @@ using System.Text;
 
 namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Lambda
 {
-    public abstract class FilterLambdaOperatorBase
+    public abstract class FilterMethodOperatorBase
     {
-        public FilterLambdaOperatorBase(IDictionary<string, ParameterExpression> parameters, IExpressionPart sourceOperand, IExpressionPart filterBody, string filterParameterName)
+        public FilterMethodOperatorBase(IDictionary<string, ParameterExpression> parameters, IExpressionPart sourceOperand, IExpressionPart filterBody, string filterParameterName)
         {
             SourceOperand = sourceOperand;
             FilterBody = filterBody;
@@ -15,7 +15,7 @@ namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Lambda
             FilterParameterName = filterParameterName;
         }
 
-        public FilterLambdaOperatorBase(IExpressionPart operand)
+        public FilterMethodOperatorBase(IExpressionPart operand)
         {
             SourceOperand = operand;
         }
@@ -40,8 +40,8 @@ namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Lambda
             };
         }
 
-        protected FilterLambdaOperatorHelper GetFilterLambdaOperator(Type elementType) 
-            => new FilterLambdaOperatorHelper
+        protected FilterLambdaOperator GetFilterLambdaOperator(Type elementType) 
+            => new FilterLambdaOperator
             (
                 Parameters,
                 FilterBody,

@@ -1,5 +1,6 @@
 ﻿using LogicBuilder.Expressions.Utils.DataSource;
 using LogicBuilder.Expressions.Utils.ExpressionBuilder;
+using LogicBuilder.Expressions.Utils.ExpressionBuilder.Lambda;
 using LogicBuilder.Expressions.Utils.Strutures;
 using Microsoft.OData.Edm;
 using System;
@@ -87,50 +88,27 @@ namespace LogicBuilder.Expressions.Utils
             };
         }
 
-        public static Expression<Func<T, bool>> GetFilter<T>(this FilterFunctionGroup functionGroup, ParameterExpression parameter)
-            => (Expression<Func<T, bool>>)functionGroup.GetFilter(parameter);
+        public static Expression<Func<T, bool>> GetFilter<T>(this IExpressionPart filterPart, IDictionary<string, ParameterExpression> parameters, string parameterName)
+            => (Expression<Func<T, bool>>)filterPart.GetFilter(typeof(T), parameters, parameterName);
 
-        public static LambdaExpression GetFilter(this FilterFunctionGroup functionGroup, ParameterExpression parameter)
-            => Expression.Lambda
+        public static LambdaExpression GetFilter(this IExpressionPart filterPart, Type sourceType, IDictionary<string, ParameterExpression> parameters, string parameterName)
+            => (LambdaExpression)new FilterLambdaOperator
             (
-                typeof(Func<,>).MakeGenericType(parameter.Type, typeof(bool)),
-                functionGroup.Build(),
-                parameter
-            );
+                parameters,
+                filterPart,
+                sourceType,
+                parameterName
+            ).Build();
 
-        public static Expression<Func<T, bool>> GetFilter<T>(this IExpressionPart filterPart, ParameterExpression parameter)
-            => (Expression<Func<T, bool>>)filterPart.GetFilter(parameter);
-
-        public static LambdaExpression GetFilter(this IExpressionPart filterPart, ParameterExpression parameter)
-        {
-            return Expression.Lambda
+        public static Expression<Func<T, TResult>> GetExpression<T, TResult>(this IExpressionPart filterPart, IDictionary<string, ParameterExpression> parameters, string parameterName)
+            => (Expression<Func<T, TResult>>)new SelectorLambdaOperator
             (
-                typeof(Func<,>).MakeGenericType(parameter.Type, typeof(bool)),
-                ConvertBody(filterPart.Build()),
-                parameter
-            );
-
-            static Expression ConvertBody(Expression body)
-            {
-                if (body.Type != typeof(bool))
-                    return Expression.Convert(body, typeof(bool));
-
-                return body;
-            }
-        }
-
-        public static Expression<Func<T, TResult>> GetExpression<T, TResult>(this IExpressionPart filterPart, ParameterExpression parameter)
-            => (Expression<Func<T, TResult>>)filterPart.GetExpression<TResult>(parameter);
-
-        public static LambdaExpression GetExpression<TResult>(this IExpressionPart filterPart, ParameterExpression parameter)
-        {
-            return Expression.Lambda
-            (
-                typeof(Func<,>).MakeGenericType(parameter.Type, typeof(TResult)),
-                filterPart.Build(),
-                parameter
-            );
-        }
+                parameters,
+                filterPart,
+                typeof(T),
+                typeof(TResult),
+                parameterName
+            ).Build();
 
         public static Expression MakeValueSelectorAccessIfNullable(this Expression expression)
         {
@@ -160,34 +138,32 @@ namespace LogicBuilder.Expressions.Utils
                     )
                 );
 
-        public static Expression BuildSelectorExpression(this Expression param, string fullName, string parameterName = "p0")
+        public static Expression BuildSelectorExpression(this Expression parent, string fullName, string parameterName = "p0")
         {
-            string[] parts = fullName.Split(new char[] { '.' }, StringSplitOptions.RemoveEmptyEntries);
-            Type parentType = param.Type;
-            Expression parent = param;
+            return GetExpression(fullName.Split(new char[] { '.' }, StringSplitOptions.RemoveEmptyEntries));
 
-            for (int i = 0; i < parts.Length; i++)
+            Expression GetExpression(string[] parts)
             {
-                if (parentType.IsList())
+                for (int i = 0; i < parts.Length; i++)
                 {
-                    return GetSelectExpression(parts.Skip(i), parent, parentType.GetUnderlyingElementType(), parameterName);//parentType is the underlying type of the member since it is an IEnumerable<T>
+                    if (parent.Type.IsList())
+                    {
+                        return GetSelectExpression(parts.Skip(i), parent, parent.Type.GetUnderlyingElementType(), parameterName);//parentType is the underlying type of the member since it is an IEnumerable<T>
+                    }
+                    else
+                    {
+                        parent = Expression.MakeMemberAccess(parent, parent.Type.GetMemberInfo(parts[i]));
+                    }
                 }
-                else
-                {
-                    MemberInfo mInfo = parentType.GetMemberInfo(parts[i]);
-                    parent = Expression.MakeMemberAccess(parent, mInfo);
 
-                    parentType = mInfo.GetMemberType();
-                }
+                return parent;
             }
-
-            return parent;
         }
 
         private static Expression GetSelectExpression(IEnumerable<string> parts, Expression parent, Type underlyingType, string parameterName)
         {
-            ParameterExpression param = Expression.Parameter(underlyingType, parameterName.ChildParameterName());
-            Expression selectorBody = BuildSelectorExpression(param, string.Join(".", parts), param.Name);
+            ParameterExpression parameter = Expression.Parameter(underlyingType, parameterName.ChildParameterName());
+            Expression selectorBody = BuildSelectorExpression(parameter, string.Join(".", parts), parameter.Name);
             return Expression.Call
             (
                 typeof(Enumerable),
@@ -198,7 +174,7 @@ namespace LogicBuilder.Expressions.Utils
                 (
                     typeof(Func<,>).MakeGenericType(new[] { underlyingType, selectorBody.Type }),
                     selectorBody,
-                    param
+                    parameter
                 )
             );
         }

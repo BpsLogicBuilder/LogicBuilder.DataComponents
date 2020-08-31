@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 
 namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Lambda
 {
-    public class MinOperator : SelectorLambdaOperatorBase, IExpressionPart
+    public class MinOperator : SelectorMethodOperatorBase, IExpressionPart
     {
         public MinOperator(IDictionary<string, ParameterExpression> parameters, IExpressionPart sourceOperand, IExpressionPart selectorBody, string selectorParameterName) : base(parameters, sourceOperand, selectorBody, selectorParameterName)
         {

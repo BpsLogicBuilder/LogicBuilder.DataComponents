@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 
 namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Lambda
 {
-    public class GroupByOperator : SelectorLambdaOperatorBase, IExpressionPart
+    public class GroupByOperator : SelectorMethodOperatorBase, IExpressionPart
     {
         public GroupByOperator(IDictionary<string, ParameterExpression> parameters, IExpressionPart sourceOperand, IExpressionPart selectorBody, string selectorParameterName) : base(parameters, sourceOperand, selectorBody, selectorParameterName)
         {

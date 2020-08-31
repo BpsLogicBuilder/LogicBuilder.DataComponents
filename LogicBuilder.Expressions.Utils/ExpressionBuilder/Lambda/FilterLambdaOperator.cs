@@ -4,9 +4,9 @@ using System.Linq.Expressions;
 
 namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Lambda
 {
-    public class SelectorLambdaOperatorHelper : IExpressionPart
+    public class FilterLambdaOperator : IExpressionPart
     {
-        public SelectorLambdaOperatorHelper(IDictionary<string, ParameterExpression> parameters, IExpressionPart selector, Type sourceElementType, string parameterName)
+        public FilterLambdaOperator(IDictionary<string, ParameterExpression> parameters, IExpressionPart selector, Type sourceElementType, string parameterName)
         {
             Selector = selector;
             SourceElementType = sourceElementType;
@@ -21,16 +21,12 @@ namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Lambda
 
         public Expression Build()
         {
-            if (!this.Parameters.ContainsKey(ParameterName))
-            {
-                this.Parameters.Add
-                (
-                    ParameterName,
-                    Expression.Parameter(SourceElementType, ParameterName)
-                );
-            }
+            this.Parameters.Add
+            (
+                ParameterName,
+                Expression.Parameter(SourceElementType, ParameterName)
+            );
 
-            var selectorBody = Selector.Build();
             var expression = Expression.Lambda
             (
                 typeof(Func<,>).MakeGenericType
@@ -38,10 +34,10 @@ namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Lambda
                     new Type[]
                     {
                         this.Parameters[ParameterName].Type,
-                        selectorBody.Type
+                        typeof(bool)
                     }
                 ),
-                selectorBody,
+                ConvertBody(Selector.Build()),
                 this.Parameters[ParameterName]
             );
 
@@ -49,5 +45,10 @@ namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Lambda
 
             return expression;
         }
+
+        private Expression ConvertBody(Expression body)
+            => body.Type != typeof(bool)
+                ? Expression.Convert(body, typeof(bool))
+                : body;
     }
 }

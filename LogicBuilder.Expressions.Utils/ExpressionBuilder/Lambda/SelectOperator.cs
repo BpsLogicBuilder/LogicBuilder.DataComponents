@@ -6,7 +6,7 @@ using System.Text;
 
 namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Lambda
 {
-    public class SelectOperator : SelectorLambdaOperatorBase, IExpressionPart
+    public class SelectOperator : SelectorMethodOperatorBase, IExpressionPart
     {
         public SelectOperator(IDictionary<string, ParameterExpression> parameters, IExpressionPart sourceOperand, IExpressionPart selectorBody, string selectorParameterName) : base(parameters, sourceOperand, selectorBody, selectorParameterName)
         {

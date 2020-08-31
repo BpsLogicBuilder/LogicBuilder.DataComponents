@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 
 namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Lambda
 {
-    public class WhereOperator : FilterLambdaOperatorBase, IExpressionPart
+    public class WhereOperator : FilterMethodOperatorBase, IExpressionPart
     {
         public WhereOperator(IDictionary<string, ParameterExpression> parameters, IExpressionPart sourceOperand, IExpressionPart filterBody, string filterParameterName) : base(parameters, sourceOperand, filterBody, filterParameterName)
         {

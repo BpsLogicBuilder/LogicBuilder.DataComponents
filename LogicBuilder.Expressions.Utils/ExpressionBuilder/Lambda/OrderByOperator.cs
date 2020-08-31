@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 
 namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Lambda
 {
-    public class OrderByOperator : SelectorLambdaOperatorBase, IExpressionPart
+    public class OrderByOperator : SelectorMethodOperatorBase, IExpressionPart
     {
         public OrderByOperator(IDictionary<string, ParameterExpression> parameters, IExpressionPart sourceOperand, IExpressionPart selectorBody, ListSortDirection sortDirection, string selectorParameterName) : base(parameters, sourceOperand, selectorBody, selectorParameterName)
         {

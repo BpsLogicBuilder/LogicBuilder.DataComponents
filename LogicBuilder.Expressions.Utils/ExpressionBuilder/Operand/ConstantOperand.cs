@@ -5,7 +5,7 @@ namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Operand
 {
     public class ConstantOperand : IExpressionPart
     {
-        public ConstantOperand(Type type, object constantValue)
+        public ConstantOperand(object constantValue, Type type)
         {
             Type = type;
             ConstantValue = constantValue;

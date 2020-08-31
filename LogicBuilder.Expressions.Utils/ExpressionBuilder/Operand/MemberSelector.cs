@@ -14,6 +14,6 @@ namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Operand
         public IExpressionPart SourceOperand { get; set; }
 
         public Expression Build() 
-            => SourceOperand.Build().MakeSelector(MemberFullName);
+            => SourceOperand.Build().BuildSelectorExpression(MemberFullName);
     }
 }

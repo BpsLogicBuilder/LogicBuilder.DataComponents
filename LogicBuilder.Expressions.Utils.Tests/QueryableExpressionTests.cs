@@ -19,10 +19,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
         [Fact]
         public void BuildWhere_OrderBy_ThenBy_Skip_Take_Average()
         {
-            IDictionary<string, ParameterExpression> parameters = new Dictionary<string, ParameterExpression>
-            {
-                ["q"] = Expression.Parameter(typeof(IQueryable<Student>), "q")
-            };
+            //arrange
+            var parameters = GetParameters();
 
             //{q => q.Where(s => ((s.ID > 1) AndAlso (Compare(s.FirstName, s.LastName) > 0))).OrderBy(v => v.LastName).ThenByDescending(v => v.FirstName).Skip(2).Take(3).Average(j => j.ID)}
             Expression<Func<IQueryable<Student>, double>> expression = new AverageOperator
@@ -47,7 +45,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                                         new GreaterThanBinaryOperator
                                         (
                                             new MemberSelector("Id", new ParameterOperator(parameters, "s")),
-                                            new ConstantOperand(typeof(int), 1)
+                                            new ConstantOperand(1, typeof(int))
                                         ),
                                         new GreaterThanBinaryOperator
                                         (
@@ -72,7 +70,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                 new MemberSelector("Id", new ParameterOperator(parameters, "j")),
                 "j"
             )
-            .GetExpression<IQueryable<Student>, double>(parameters["q"]);
+            .GetExpression<IQueryable<Student>, double>(parameters, "q");
 
             Assert.NotNull(expression);
         }
@@ -80,10 +78,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
         [Fact]
         public void BuildGroupBy_OrderBy_ThenBy_Skip_Take_Average()
         {
-            IDictionary<string, ParameterExpression> parameters = new Dictionary<string, ParameterExpression>
-            {
-                ["q"] = Expression.Parameter(typeof(IQueryable<Department>), "q")
-            };
+            //arrange
+            var parameters = GetParameters();
 
             Expression<Func<IQueryable<Department>, IQueryable<object>>> expression1 =
                 q => q.GroupBy(a => 1)
@@ -111,7 +107,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         parameters,
                         new ParameterOperator(parameters, "q"),
-                        new ConstantOperand(typeof(int), 1),
+                        new ConstantOperand(1, typeof(int)),
                         "a"
                     ),
                     new MemberSelector("Key", new ParameterOperator(parameters, "b")),
@@ -148,7 +144,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                 ),
                 "c"
             )
-            .GetExpression<IQueryable<Department>, IQueryable<object>>(parameters["q"]);
+            .GetExpression<IQueryable<Department>, IQueryable<object>>(parameters, "q");
 
             Assert.NotNull(expression);
         }
@@ -156,10 +152,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
         [Fact]
         public void BuildGroupBy_AsQueryable_OrderBy_Select_FirstOrDefault()
         {
-            IDictionary<string, ParameterExpression> parameters = new Dictionary<string, ParameterExpression>
-            {
-                ["q"] = Expression.Parameter(typeof(IQueryable<Department>), "q")
-            };
+            //arrange
+            var parameters = GetParameters();
 
             Expression<Func<IQueryable<Department>, object>> expression1 =
                 q => q.GroupBy(item => 1)
@@ -169,7 +163,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                 (
                     sel => new
                     {
-                        Min_administratorName = q.Where(d => (1 == sel.Key)).Min(item => string.Concat(string.Concat(item.Administrator.LastName, "B"), item.Administrator.FirstName)),
+                        Min_administratorName = q.Where(d => (1 == sel.Key)).Min(item => string.Concat(string.Concat(item.Administrator.LastName, " "), item.Administrator.FirstName)),
                         Count_name = q.Where(d => (1 == sel.Key)).Count(),
                         Sum_budget = q.Where(d => (1 == sel.Key)).Sum(item => item.Budget),
                         Min_budget = q.Where(d => (1 == sel.Key)).Min(item => item.Budget),
@@ -192,7 +186,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                             (
                                 parameters,
                                 new ParameterOperator(parameters, "q"),
-                                new ConstantOperand(typeof(int), 1),
+                                new ConstantOperand(1, typeof(int)),
                                 "item"
                             )
                         ),
@@ -213,7 +207,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                                     new ParameterOperator(parameters, "q"),
                                     new EqualsBinaryOperator
                                     (
-                                        new ConstantOperand(typeof(int), 1),
+                                        new ConstantOperand(1, typeof(int)),
                                         new MemberSelector("Key", new ParameterOperator(parameters, "sel"))
                                     ),
                                     "d"
@@ -223,7 +217,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                                     new ConcatOperator
                                     (
                                         new MemberSelector("Administrator.LastName", new ParameterOperator(parameters, "item")), 
-                                        new ConstantOperand(typeof(string), "B")
+                                        new ConstantOperand(" ", typeof(string))
                                     ),
                                     new MemberSelector("Administrator.FirstName", new ParameterOperator(parameters, "item"))
                                 ),
@@ -237,7 +231,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                                     new ParameterOperator(parameters, "q"),
                                     new EqualsBinaryOperator
                                     (
-                                        new ConstantOperand(typeof(int), 1),
+                                        new ConstantOperand(1, typeof(int)),
                                         new MemberSelector("Key", new ParameterOperator(parameters, "sel"))
                                     ),
                                     "d"
@@ -252,7 +246,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                                     new ParameterOperator(parameters, "q"),
                                     new EqualsBinaryOperator
                                     (
-                                        new ConstantOperand(typeof(int), 1),
+                                        new ConstantOperand(1, typeof(int)),
                                         new MemberSelector("Key", new ParameterOperator(parameters, "sel"))
                                     ),
                                     "d"
@@ -269,7 +263,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                                     new ParameterOperator(parameters, "q"),
                                     new EqualsBinaryOperator
                                     (
-                                        new ConstantOperand(typeof(int), 1),
+                                        new ConstantOperand(1, typeof(int)),
                                         new MemberSelector("Key", new ParameterOperator(parameters, "sel"))
                                     ),
                                     "d"
@@ -286,7 +280,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                                     new ParameterOperator(parameters, "q"),
                                     new EqualsBinaryOperator
                                     (
-                                        new ConstantOperand(typeof(int), 1),
+                                        new ConstantOperand(1, typeof(int)),
                                         new MemberSelector("Key", new ParameterOperator(parameters, "sel"))
                                     ),
                                     "d"
@@ -298,7 +292,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     ),
                     "sel"
                 )
-            ).GetExpression<IQueryable<Department>, object>(parameters["q"]);
+            ).GetExpression<IQueryable<Department>, object>(parameters, "q");
 
             Assert.NotNull(expression);
         }
@@ -314,5 +308,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
             );
             Assert.NotNull(exp);
         }
+
+        private static IDictionary<string, ParameterExpression> GetParameters()
+            => new Dictionary<string, ParameterExpression>();
     }
 }

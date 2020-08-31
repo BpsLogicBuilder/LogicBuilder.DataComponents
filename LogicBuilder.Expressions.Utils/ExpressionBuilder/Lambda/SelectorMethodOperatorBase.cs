@@ -5,9 +5,9 @@ using System.Text;
 
 namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Lambda
 {
-    public abstract class SelectorLambdaOperatorBase
+    public abstract class SelectorMethodOperatorBase
     {
-        public SelectorLambdaOperatorBase(IDictionary<string, ParameterExpression> parameters, IExpressionPart sourceOperand, IExpressionPart selectorBody, string selectorParameterName)
+        public SelectorMethodOperatorBase(IDictionary<string, ParameterExpression> parameters, IExpressionPart sourceOperand, IExpressionPart selectorBody, string selectorParameterName)
         {
             SourceOperand = sourceOperand;
             SelectorBody = selectorBody;
@@ -15,7 +15,7 @@ namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Lambda
             Parameters = parameters;
         }
 
-        public SelectorLambdaOperatorBase(IExpressionPart sourceOperand)
+        public SelectorMethodOperatorBase(IExpressionPart sourceOperand)
         {
             SourceOperand = sourceOperand;
         }
@@ -43,8 +43,8 @@ namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Lambda
         protected LambdaExpression GetSelector(Expression operandExpression)
             => (LambdaExpression)GetLambdaOperatorHelper(operandExpression.GetUnderlyingElementType()).Build();
 
-        protected SelectorLambdaOperatorHelper GetLambdaOperatorHelper(Type elementType)
-            => new SelectorLambdaOperatorHelper
+        protected SelectorLambdaOperator GetLambdaOperatorHelper(Type elementType)
+            => new SelectorLambdaOperator
             (
                 Parameters,
                 SelectorBody,
