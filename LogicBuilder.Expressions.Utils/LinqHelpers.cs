@@ -148,7 +148,7 @@ namespace LogicBuilder.Expressions.Utils
                 {
                     if (parent.Type.IsList())
                     {
-                        return GetSelectExpression(parts.Skip(i), parent, parent.Type.GetUnderlyingElementType(), parameterName);//parentType is the underlying type of the member since it is an IEnumerable<T>
+                        return GetSelectExpression(parts.Skip(i), parent, parameterName);
                     }
                     else
                     {
@@ -160,19 +160,19 @@ namespace LogicBuilder.Expressions.Utils
             }
         }
 
-        private static Expression GetSelectExpression(IEnumerable<string> parts, Expression parent, Type underlyingType, string parameterName)
+        private static Expression GetSelectExpression(IEnumerable<string> parts, Expression parent, string parameterName)
         {
-            ParameterExpression parameter = Expression.Parameter(underlyingType, parameterName.ChildParameterName());
+            ParameterExpression parameter = Expression.Parameter(parent.GetUnderlyingElementType(), parameterName.ChildParameterName());
             Expression selectorBody = BuildSelectorExpression(parameter, string.Join(".", parts), parameter.Name);
             return Expression.Call
             (
                 typeof(Enumerable),
                 "Select",
-                new Type[] { underlyingType, selectorBody.Type },
+                new Type[] { parameter.Type, selectorBody.Type },
                 parent,
                 Expression.Lambda
                 (
-                    typeof(Func<,>).MakeGenericType(new[] { underlyingType, selectorBody.Type }),
+                    typeof(Func<,>).MakeGenericType(new[] { parameter.Type, selectorBody.Type }),
                     selectorBody,
                     parameter
                 )
