@@ -5,23 +5,23 @@ namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Cacnonical
 {
     public class IndexOfOperator : IExpressionPart
     {
-        public IndexOfOperator(IExpressionPart left, IExpressionPart right)
+        public IndexOfOperator(IExpressionPart sourceOperand, IExpressionPart itemToFind)
         {
-            Left = left;
-            Right = right;
+            SourceOperand = sourceOperand;
+            ItemToFind = itemToFind;
         }
 
-        public IExpressionPart Left { get; private set; }
-        public IExpressionPart Right { get; private set; }
+        public IExpressionPart SourceOperand { get; private set; }
+        public IExpressionPart ItemToFind { get; private set; }
 
-        public Expression Build() => Build(Left.Build());
+        public Expression Build() => Build(SourceOperand.Build());
 
         private Expression Build(Expression leftExpression)
         {
             if (leftExpression.Type == typeof(string))
-                return leftExpression.GetStringIndexOfCall(Right.Build());
+                return leftExpression.GetStringIndexOfCall(ItemToFind.Build());
             else
-                throw new ArgumentException(nameof(Left));
+                throw new ArgumentException(nameof(SourceOperand));
         }
     }
 }
