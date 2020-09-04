@@ -15,14 +15,19 @@
     <PackageProjectUrl>https://github.com/BlaiseD/LogicBuilder</PackageProjectUrl>
     <AssemblyOriginatorKeyFile>..\LogicBuilder.Rules.snk</AssemblyOriginatorKeyFile>
     <SignAssembly>true</SignAssembly>
+    <MinVerTagPrefix>v</MinVerTagPrefix>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper.Extensions.ExpressionMapping" Version="[4.0.0,5.0.0)" />
-    <PackageReference Include="LogicBuilder.Data" Version="4.0.0" />
-    <PackageReference Include="LogicBuilder.Domain" Version="4.0.0" />
-    <PackageReference Include="LogicBuilder.Expressions.Utils" Version="4.0.0" />
+    <PackageReference Include="AutoMapper.Extensions.ExpressionMapping" Version="[4.0.1,5.0.0)" />
+    <PackageReference Include="LogicBuilder.Data" Version="4.0.1-preview.1" />
+    <PackageReference Include="LogicBuilder.Domain" Version="4.0.1-preview.1" />
+    <PackageReference Include="LogicBuilder.Expressions.Utils" Version="4.0.1-preview.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.0" />
+    <PackageReference Include="MinVer" Version="2.3.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>

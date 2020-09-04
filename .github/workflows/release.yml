@@ -11,6 +11,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
@@ -24,7 +27,6 @@ jobs:
 
     - name: Set Variables
       run: |
-        echo '::set-env name=VERSION_NUMBER::4.0.1-preview.0'
         echo '::set-env name=NUGET_URL::https://api.nuget.org/v3/index.json'
         echo '::set-env name=NUGET_API_KEY::${{ secrets.NUGET_API_KEY }}'
         echo '::set-env name=REPO::${{ github.repository }}'
