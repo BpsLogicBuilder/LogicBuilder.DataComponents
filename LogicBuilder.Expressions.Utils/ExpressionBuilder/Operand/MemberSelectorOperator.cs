@@ -2,9 +2,9 @@
 
 namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Operand
 {
-    public class MemberSelector : IExpressionPart
+    public class MemberSelectorOperator : IExpressionPart
     {
-        public MemberSelector(string memberFullName, IExpressionPart sourceOperand)
+        public MemberSelectorOperator(string memberFullName, IExpressionPart sourceOperand)
         {
             MemberFullName = memberFullName;
             SourceOperand = sourceOperand;

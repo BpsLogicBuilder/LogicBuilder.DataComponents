@@ -50,8 +50,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                 (
                     new EqualsBinaryOperator
                     (
-                        new MemberSelector("ProductName", new ParameterOperator(parameters, parameterName)),
-                        new ConstantOperand(null)
+                        new MemberSelectorOperator("ProductName", new ParameterOperator(parameters, parameterName)),
+                        new ConstantOperator(null)
                     ),
                     parameters
                 );
@@ -76,8 +76,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                 (
                     new EqualsBinaryOperator
                     (
-                        new MemberSelector("ProductName", new ParameterOperator(parameters, parameterName)),
-                        new ConstantOperand("Doritos", typeof(string))
+                        new MemberSelectorOperator("ProductName", new ParameterOperator(parameters, parameterName)),
+                        new ConstantOperator("Doritos", typeof(string))
                     ),
                     parameters
                 );
@@ -102,8 +102,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                 (
                     new NotEqualsBinaryOperator
                     (
-                        new MemberSelector("ProductName", new ParameterOperator(parameters, parameterName)),
-                        new ConstantOperand("Doritos", typeof(string))
+                        new MemberSelectorOperator("ProductName", new ParameterOperator(parameters, parameterName)),
+                        new ConstantOperator("Doritos", typeof(string))
                     ),
                     parameters
                 );
@@ -128,8 +128,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                 (
                     new GreaterThanBinaryOperator
                     (
-                        new MemberSelector("UnitPrice", new ParameterOperator(parameters, parameterName)),
-                        new ConstantOperand(5.00m, typeof(decimal))
+                        new MemberSelectorOperator("UnitPrice", new ParameterOperator(parameters, parameterName)),
+                        new ConstantOperator(5.00m, typeof(decimal))
                     ),
                     parameters
                 );
@@ -154,8 +154,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                 (
                     new GreaterThanOrEqualsBinaryOperator
                     (
-                        new MemberSelector("UnitPrice", new ParameterOperator(parameters, parameterName)),
-                        new ConstantOperand(5.00m, typeof(decimal))
+                        new MemberSelectorOperator("UnitPrice", new ParameterOperator(parameters, parameterName)),
+                        new ConstantOperator(5.00m, typeof(decimal))
                     ),
                     parameters
                 );
@@ -180,8 +180,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                 (
                     new LessThanBinaryOperator
                     (
-                        new MemberSelector("UnitPrice", new ParameterOperator(parameters, parameterName)),
-                        new ConstantOperand(5.00m, typeof(decimal))
+                        new MemberSelectorOperator("UnitPrice", new ParameterOperator(parameters, parameterName)),
+                        new ConstantOperator(5.00m, typeof(decimal))
                     ),
                     parameters
                 );
@@ -206,8 +206,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                 (
                     new LessThanOrEqualsBinaryOperator
                     (
-                        new MemberSelector("UnitPrice", new ParameterOperator(parameters, parameterName)),
-                        new ConstantOperand(5.00m, typeof(decimal))
+                        new MemberSelectorOperator("UnitPrice", new ParameterOperator(parameters, parameterName)),
+                        new ConstantOperator(5.00m, typeof(decimal))
                     ),
                     parameters
                 );
@@ -229,8 +229,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                 (
                     new LessThanOrEqualsBinaryOperator
                     (
-                        new MemberSelector("UnitPrice", new ParameterOperator(parameters, parameterName)),
-                        new ConstantOperand(-5.00m, typeof(decimal))
+                        new MemberSelectorOperator("UnitPrice", new ParameterOperator(parameters, parameterName)),
+                        new ConstantOperator(-5.00m, typeof(decimal))
                     ),
                     parameters
                 );
@@ -248,8 +248,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     {
                         new EqualsBinaryOperator
                         (
-                            new MemberSelector("DateTimeOffsetProp", new ParameterOperator(parameters, parameterName)),
-                            new MemberSelector("DateTimeOffsetProp", new ParameterOperator(parameters, parameterName))
+                            new MemberSelectorOperator("DateTimeOffsetProp", new ParameterOperator(parameters, parameterName)),
+                            new MemberSelectorOperator("DateTimeOffsetProp", new ParameterOperator(parameters, parameterName))
                         ),
                         "$it => ($it.DateTimeOffsetProp == $it.DateTimeOffsetProp)",
                         parameters
@@ -258,8 +258,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     {
                         new NotEqualsBinaryOperator
                         (
-                            new MemberSelector("DateTimeOffsetProp", new ParameterOperator(parameters, parameterName)),
-                            new MemberSelector("DateTimeOffsetProp", new ParameterOperator(parameters, parameterName))
+                            new MemberSelectorOperator("DateTimeOffsetProp", new ParameterOperator(parameters, parameterName)),
+                            new MemberSelectorOperator("DateTimeOffsetProp", new ParameterOperator(parameters, parameterName))
                         ),
                         "$it => ($it.DateTimeOffsetProp != $it.DateTimeOffsetProp)",
                         parameters
@@ -268,8 +268,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     {
                         new GreaterThanOrEqualsBinaryOperator
                         (
-                            new MemberSelector("DateTimeOffsetProp", new ParameterOperator(parameters, parameterName)),
-                            new MemberSelector("DateTimeOffsetProp", new ParameterOperator(parameters, parameterName))
+                            new MemberSelectorOperator("DateTimeOffsetProp", new ParameterOperator(parameters, parameterName)),
+                            new MemberSelectorOperator("DateTimeOffsetProp", new ParameterOperator(parameters, parameterName))
                         ),
                         "$it => ($it.DateTimeOffsetProp >= $it.DateTimeOffsetProp)",
                         parameters
@@ -278,8 +278,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     {
                         new LessThanOrEqualsBinaryOperator
                         (
-                            new MemberSelector("DateTimeOffsetProp", new ParameterOperator(parameters, parameterName)),
-                            new MemberSelector("DateTimeOffsetProp", new ParameterOperator(parameters, parameterName))
+                            new MemberSelectorOperator("DateTimeOffsetProp", new ParameterOperator(parameters, parameterName)),
+                            new MemberSelectorOperator("DateTimeOffsetProp", new ParameterOperator(parameters, parameterName))
                         ),
                         "$it => ($it.DateTimeOffsetProp <= $it.DateTimeOffsetProp)",
                         parameters
@@ -320,8 +320,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     {
                         new EqualsBinaryOperator
                         (
-                            new MemberSelector("DateTimeProp", new ParameterOperator(parameters, parameterName)),
-                            new MemberSelector("DateTimeProp", new ParameterOperator(parameters, parameterName))
+                            new MemberSelectorOperator("DateTimeProp", new ParameterOperator(parameters, parameterName)),
+                            new MemberSelectorOperator("DateTimeProp", new ParameterOperator(parameters, parameterName))
                         ),
                         "$it => ($it.DateTimeProp == $it.DateTimeProp)",
                         parameters
@@ -330,8 +330,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     {
                         new NotEqualsBinaryOperator
                         (
-                            new MemberSelector("DateTimeProp", new ParameterOperator(parameters, parameterName)),
-                            new MemberSelector("DateTimeProp", new ParameterOperator(parameters, parameterName))
+                            new MemberSelectorOperator("DateTimeProp", new ParameterOperator(parameters, parameterName)),
+                            new MemberSelectorOperator("DateTimeProp", new ParameterOperator(parameters, parameterName))
                         ),
                         "$it => ($it.DateTimeProp != $it.DateTimeProp)",
                         parameters
@@ -340,8 +340,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     {
                         new GreaterThanOrEqualsBinaryOperator
                         (
-                            new MemberSelector("DateTimeProp", new ParameterOperator(parameters, parameterName)),
-                            new MemberSelector("DateTimeProp", new ParameterOperator(parameters, parameterName))
+                            new MemberSelectorOperator("DateTimeProp", new ParameterOperator(parameters, parameterName)),
+                            new MemberSelectorOperator("DateTimeProp", new ParameterOperator(parameters, parameterName))
                         ),
                         "$it => ($it.DateTimeProp >= $it.DateTimeProp)",
                         parameters
@@ -350,8 +350,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     {
                         new LessThanOrEqualsBinaryOperator
                         (
-                            new MemberSelector("DateTimeProp", new ParameterOperator(parameters, parameterName)),
-                            new MemberSelector("DateTimeProp", new ParameterOperator(parameters, parameterName))
+                            new MemberSelectorOperator("DateTimeProp", new ParameterOperator(parameters, parameterName)),
+                            new MemberSelectorOperator("DateTimeProp", new ParameterOperator(parameters, parameterName))
                         ),
                         "$it => ($it.DateTimeProp <= $it.DateTimeProp)",
                         parameters
@@ -398,13 +398,13 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         new EqualsBinaryOperator
                         (
-                            new MemberSelector("UnitPrice", new ParameterOperator(parameters, parameterName)),
-                            new ConstantOperand(5.00m, typeof(decimal))
+                            new MemberSelectorOperator("UnitPrice", new ParameterOperator(parameters, parameterName)),
+                            new ConstantOperator(5.00m, typeof(decimal))
                         ),
                         new EqualsBinaryOperator
                         (
-                            new MemberSelector("CategoryID", new ParameterOperator(parameters, parameterName)),
-                            new ConstantOperand(0, typeof(int))
+                            new MemberSelectorOperator("CategoryID", new ParameterOperator(parameters, parameterName)),
+                            new ConstantOperator(0, typeof(int))
                         )
                     ),
                     parameters
@@ -425,8 +425,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                 (
                     new EqualsBinaryOperator
                     (
-                        new MemberSelector("Discontinued", new ParameterOperator(parameters, parameterName)),
-                        new ConstantOperand(true, typeof(bool))
+                        new MemberSelectorOperator("Discontinued", new ParameterOperator(parameters, parameterName)),
+                        new ConstantOperator(true, typeof(bool))
                     ),
                     parameters
                 );
@@ -446,8 +446,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                 (
                     new EqualsBinaryOperator
                     (
-                        new MemberSelector("Discontinued", new ParameterOperator(parameters, parameterName)),
-                        new MemberSelector("Discontinued", new ParameterOperator(parameters, parameterName))
+                        new MemberSelectorOperator("Discontinued", new ParameterOperator(parameters, parameterName)),
+                        new MemberSelectorOperator("Discontinued", new ParameterOperator(parameters, parameterName))
                     ),
                     parameters
                 );
@@ -474,13 +474,13 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         new EqualsBinaryOperator
                         (
-                            new MemberSelector("UnitPrice", new ParameterOperator(parameters, parameterName)),
-                            new ConstantOperand(5.00m, typeof(decimal))
+                            new MemberSelectorOperator("UnitPrice", new ParameterOperator(parameters, parameterName)),
+                            new ConstantOperator(5.00m, typeof(decimal))
                         ),
                         new EqualsBinaryOperator
                         (
-                            new ConvertOperand(new MemberSelector("UnitsInStock", new ParameterOperator(parameters, parameterName)), typeof(int?)),
-                            new ConstantOperand(0, typeof(int))
+                            new ConvertOperator(new MemberSelectorOperator("UnitsInStock", new ParameterOperator(parameters, parameterName)), typeof(int?)),
+                            new ConstantOperator(0, typeof(int))
                         )
                     ),
                     parameters
@@ -508,13 +508,13 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         new EqualsBinaryOperator
                         (
-                            new MemberSelector("UnitPrice", new ParameterOperator(parameters, parameterName)),
-                            new ConstantOperand(5.00m, typeof(decimal))
+                            new MemberSelectorOperator("UnitPrice", new ParameterOperator(parameters, parameterName)),
+                            new ConstantOperator(5.00m, typeof(decimal))
                         ),
                         new EqualsBinaryOperator
                         (
-                            new ConvertOperand(new MemberSelector("UnitsInStock", new ParameterOperator(parameters, parameterName)), typeof(decimal?)),
-                            new ConstantOperand(10.00m, typeof(decimal))
+                            new ConvertOperator(new MemberSelectorOperator("UnitsInStock", new ParameterOperator(parameters, parameterName)), typeof(decimal?)),
+                            new ConstantOperator(10.00m, typeof(decimal))
                         )
                     ),
                     parameters
@@ -542,8 +542,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         new EqualsBinaryOperator
                         (
-                            new MemberSelector("UnitPrice", new ParameterOperator(parameters, parameterName)),
-                            new ConstantOperand(5.00m, typeof(decimal))
+                            new MemberSelectorOperator("UnitPrice", new ParameterOperator(parameters, parameterName)),
+                            new ConstantOperator(5.00m, typeof(decimal))
                         )
                     ),
                     parameters
@@ -568,7 +568,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                 (
                     new NotOperator
                     (
-                        new MemberSelector("Discontinued", new ParameterOperator(parameters, parameterName))
+                        new MemberSelectorOperator("Discontinued", new ParameterOperator(parameters, parameterName))
                     ),
                     parameters
                 );
@@ -592,7 +592,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         (
                             new NotOperator
                             (
-                                new MemberSelector("Discontinued", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("Discontinued", new ParameterOperator(parameters, parameterName))
                             )
                         )
                     ),
@@ -623,10 +623,10 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         new SubtractBinaryOperator
                         (
-                            new MemberSelector("UnitPrice", new ParameterOperator(parameters, parameterName)),
-                            new ConstantOperand(1.00m, typeof(decimal))
+                            new MemberSelectorOperator("UnitPrice", new ParameterOperator(parameters, parameterName)),
+                            new ConstantOperator(1.00m, typeof(decimal))
                         ),
-                        new ConstantOperand(5.00m, typeof(decimal))
+                        new ConstantOperator(5.00m, typeof(decimal))
                     ),
                     parameters
                 );
@@ -648,10 +648,10 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         new AddBinaryOperator
                         (
-                            new MemberSelector("UnitPrice", new ParameterOperator(parameters, parameterName)),
-                            new ConstantOperand(1.00m, typeof(decimal))
+                            new MemberSelectorOperator("UnitPrice", new ParameterOperator(parameters, parameterName)),
+                            new ConstantOperator(1.00m, typeof(decimal))
                         ),
-                        new ConstantOperand(5.00m, typeof(decimal))
+                        new ConstantOperator(5.00m, typeof(decimal))
                     ),
                     parameters
                 );
@@ -673,10 +673,10 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         new MultiplyBinaryOperator
                         (
-                            new MemberSelector("UnitPrice", new ParameterOperator(parameters, parameterName)),
-                            new ConstantOperand(1.00m, typeof(decimal))
+                            new MemberSelectorOperator("UnitPrice", new ParameterOperator(parameters, parameterName)),
+                            new ConstantOperator(1.00m, typeof(decimal))
                         ),
-                        new ConstantOperand(5.00m, typeof(decimal))
+                        new ConstantOperator(5.00m, typeof(decimal))
                     ),
                     parameters
                 );
@@ -698,10 +698,10 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         new DivideBinaryOperator
                         (
-                            new MemberSelector("UnitPrice", new ParameterOperator(parameters, parameterName)),
-                            new ConstantOperand(1.00m, typeof(decimal))
+                            new MemberSelectorOperator("UnitPrice", new ParameterOperator(parameters, parameterName)),
+                            new ConstantOperator(1.00m, typeof(decimal))
                         ),
-                        new ConstantOperand(5.00m, typeof(decimal))
+                        new ConstantOperator(5.00m, typeof(decimal))
                     ),
                     parameters
                 );
@@ -723,10 +723,10 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         new ModuloBinaryOperator
                         (
-                            new MemberSelector("UnitPrice", new ParameterOperator(parameters, parameterName)),
-                            new ConstantOperand(1.00m, typeof(decimal))
+                            new MemberSelectorOperator("UnitPrice", new ParameterOperator(parameters, parameterName)),
+                            new ConstantOperator(1.00m, typeof(decimal))
                         ),
-                        new ConstantOperand(5.00m, typeof(decimal))
+                        new ConstantOperator(5.00m, typeof(decimal))
                     ),
                     parameters
                 );
@@ -746,8 +746,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     {
                         new EqualsBinaryOperator
                         (
-                            new MemberSelector("UnitsInStock", new ParameterOperator(parameters, parameterName)),
-                            new MemberSelector("UnitsOnOrder", new ParameterOperator(parameters, parameterName))
+                            new MemberSelectorOperator("UnitsInStock", new ParameterOperator(parameters, parameterName)),
+                            new MemberSelectorOperator("UnitsOnOrder", new ParameterOperator(parameters, parameterName))
                         ),
                         null,
                         null,
@@ -758,8 +758,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     {
                         new NotEqualsBinaryOperator
                         (
-                            new MemberSelector("UnitsInStock", new ParameterOperator(parameters, parameterName)),
-                            new MemberSelector("UnitsOnOrder", new ParameterOperator(parameters, parameterName))
+                            new MemberSelectorOperator("UnitsInStock", new ParameterOperator(parameters, parameterName)),
+                            new MemberSelectorOperator("UnitsOnOrder", new ParameterOperator(parameters, parameterName))
                         ),
                         null,
                         null,
@@ -770,8 +770,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     {
                         new GreaterThanBinaryOperator
                         (
-                            new MemberSelector("UnitsInStock", new ParameterOperator(parameters, parameterName)),
-                            new MemberSelector("UnitsOnOrder", new ParameterOperator(parameters, parameterName))
+                            new MemberSelectorOperator("UnitsInStock", new ParameterOperator(parameters, parameterName)),
+                            new MemberSelectorOperator("UnitsOnOrder", new ParameterOperator(parameters, parameterName))
                         ),
                         null,
                         null,
@@ -782,8 +782,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     {
                         new GreaterThanOrEqualsBinaryOperator
                         (
-                            new MemberSelector("UnitsInStock", new ParameterOperator(parameters, parameterName)),
-                            new MemberSelector("UnitsOnOrder", new ParameterOperator(parameters, parameterName))
+                            new MemberSelectorOperator("UnitsInStock", new ParameterOperator(parameters, parameterName)),
+                            new MemberSelectorOperator("UnitsOnOrder", new ParameterOperator(parameters, parameterName))
                         ),
                         null,
                         null,
@@ -794,8 +794,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     {
                         new LessThanBinaryOperator
                         (
-                            new MemberSelector("UnitsInStock", new ParameterOperator(parameters, parameterName)),
-                            new MemberSelector("UnitsOnOrder", new ParameterOperator(parameters, parameterName))
+                            new MemberSelectorOperator("UnitsInStock", new ParameterOperator(parameters, parameterName)),
+                            new MemberSelectorOperator("UnitsOnOrder", new ParameterOperator(parameters, parameterName))
                         ),
                         null,
                         null,
@@ -806,8 +806,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     {
                         new LessThanOrEqualsBinaryOperator
                         (
-                            new MemberSelector("UnitsInStock", new ParameterOperator(parameters, parameterName)),
-                            new MemberSelector("UnitsOnOrder", new ParameterOperator(parameters, parameterName))
+                            new MemberSelectorOperator("UnitsInStock", new ParameterOperator(parameters, parameterName)),
+                            new MemberSelectorOperator("UnitsOnOrder", new ParameterOperator(parameters, parameterName))
                         ),
                         null,
                         null,
@@ -820,10 +820,10 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         (
                             new AddBinaryOperator
                             (
-                                new MemberSelector("UnitsInStock", new ParameterOperator(parameters, parameterName)),
-                                new MemberSelector("UnitsOnOrder", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("UnitsInStock", new ParameterOperator(parameters, parameterName)),
+                                new MemberSelectorOperator("UnitsOnOrder", new ParameterOperator(parameters, parameterName))
                             ),
-                            new MemberSelector("UnitsInStock", new ParameterOperator(parameters, parameterName))
+                            new MemberSelectorOperator("UnitsInStock", new ParameterOperator(parameters, parameterName))
                         ),
                         null,
                         null,
@@ -836,10 +836,10 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         (
                             new SubtractBinaryOperator
                             (
-                                new MemberSelector("UnitsInStock", new ParameterOperator(parameters, parameterName)),
-                                new MemberSelector("UnitsOnOrder", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("UnitsInStock", new ParameterOperator(parameters, parameterName)),
+                                new MemberSelectorOperator("UnitsOnOrder", new ParameterOperator(parameters, parameterName))
                             ),
-                            new MemberSelector("UnitsInStock", new ParameterOperator(parameters, parameterName))
+                            new MemberSelectorOperator("UnitsInStock", new ParameterOperator(parameters, parameterName))
                         ),
                         null,
                         null,
@@ -852,10 +852,10 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         (
                             new MultiplyBinaryOperator
                             (
-                                new MemberSelector("UnitsInStock", new ParameterOperator(parameters, parameterName)),
-                                new MemberSelector("UnitsOnOrder", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("UnitsInStock", new ParameterOperator(parameters, parameterName)),
+                                new MemberSelectorOperator("UnitsOnOrder", new ParameterOperator(parameters, parameterName))
                             ),
-                            new MemberSelector("UnitsInStock", new ParameterOperator(parameters, parameterName))
+                            new MemberSelectorOperator("UnitsInStock", new ParameterOperator(parameters, parameterName))
                         ),
                         null,
                         null,
@@ -868,10 +868,10 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         (
                             new DivideBinaryOperator
                             (
-                                new MemberSelector("UnitsInStock", new ParameterOperator(parameters, parameterName)),
-                                new MemberSelector("UnitsOnOrder", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("UnitsInStock", new ParameterOperator(parameters, parameterName)),
+                                new MemberSelectorOperator("UnitsOnOrder", new ParameterOperator(parameters, parameterName))
                             ),
-                            new MemberSelector("UnitsInStock", new ParameterOperator(parameters, parameterName))
+                            new MemberSelectorOperator("UnitsInStock", new ParameterOperator(parameters, parameterName))
                         ),
                         null,
                         null,
@@ -884,10 +884,10 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         (
                             new ModuloBinaryOperator
                             (
-                                new MemberSelector("UnitsInStock", new ParameterOperator(parameters, parameterName)),
-                                new MemberSelector("UnitsOnOrder", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("UnitsInStock", new ParameterOperator(parameters, parameterName)),
+                                new MemberSelectorOperator("UnitsOnOrder", new ParameterOperator(parameters, parameterName))
                             ),
-                            new MemberSelector("UnitsInStock", new ParameterOperator(parameters, parameterName))
+                            new MemberSelectorOperator("UnitsInStock", new ParameterOperator(parameters, parameterName))
                         ),
                         null,
                         null,
@@ -898,8 +898,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     {
                         new EqualsBinaryOperator
                         (
-                            new MemberSelector("UnitsInStock", new ParameterOperator(parameters, parameterName)),
-                            new MemberSelector("UnitsOnOrder", new ParameterOperator(parameters, parameterName))
+                            new MemberSelectorOperator("UnitsInStock", new ParameterOperator(parameters, parameterName)),
+                            new MemberSelectorOperator("UnitsOnOrder", new ParameterOperator(parameters, parameterName))
                         ),
                         1,
                         null,
@@ -910,8 +910,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     {
                         new EqualsBinaryOperator
                         (
-                            new MemberSelector("UnitsInStock", new ParameterOperator(parameters, parameterName)),
-                            new MemberSelector("UnitsOnOrder", new ParameterOperator(parameters, parameterName))
+                            new MemberSelectorOperator("UnitsInStock", new ParameterOperator(parameters, parameterName)),
+                            new MemberSelectorOperator("UnitsOnOrder", new ParameterOperator(parameters, parameterName))
                         ),
                         1,
                         1,
@@ -953,8 +953,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     {
                         new EqualsBinaryOperator
                         (
-                            new MemberSelector("UnitsInStock", new ParameterOperator(parameters, parameterName)),
-                            new ConstantOperand(null)
+                            new MemberSelectorOperator("UnitsInStock", new ParameterOperator(parameters, parameterName)),
+                            new ConstantOperator(null)
                         ),
                         null,
                         true,
@@ -964,8 +964,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     {
                         new NotEqualsBinaryOperator
                         (
-                            new MemberSelector("UnitsInStock", new ParameterOperator(parameters, parameterName)),
-                            new ConstantOperand(null)
+                            new MemberSelectorOperator("UnitsInStock", new ParameterOperator(parameters, parameterName)),
+                            new ConstantOperator(null)
                         ),
                         null,
                         false,
@@ -1009,12 +1009,12 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         (
                             new IndexOfOperator
                             (
-                                new ConstantOperand("hello"),
-                                new MemberSelector("StringProp", new ParameterOperator(parameters, parameterName))
+                                new ConstantOperator("hello"),
+                                new MemberSelectorOperator("StringProp", new ParameterOperator(parameters, parameterName))
                             ),
-                            new ConvertOperand
+                            new ConvertOperator
                             (
-                                new MemberSelector("UIntProp", new ParameterOperator(parameters, parameterName)),
+                                new MemberSelectorOperator("UIntProp", new ParameterOperator(parameters, parameterName)),
                                 typeof(int?)
                             )
                         ),
@@ -1026,12 +1026,12 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         (
                             new IndexOfOperator
                             (
-                                new ConstantOperand("hello"),
-                                new MemberSelector("StringProp", new ParameterOperator(parameters, parameterName))
+                                new ConstantOperator("hello"),
+                                new MemberSelectorOperator("StringProp", new ParameterOperator(parameters, parameterName))
                             ),
-                            new ConvertOperand
+                            new ConvertOperator
                             (
-                                new MemberSelector("ULongProp", new ParameterOperator(parameters, parameterName)),
+                                new MemberSelectorOperator("ULongProp", new ParameterOperator(parameters, parameterName)),
                                 typeof(int?)
                             )
                         ),
@@ -1043,12 +1043,12 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         (
                             new IndexOfOperator
                             (
-                                new ConstantOperand("hello"),
-                                new MemberSelector("StringProp", new ParameterOperator(parameters, parameterName))
+                                new ConstantOperator("hello"),
+                                new MemberSelectorOperator("StringProp", new ParameterOperator(parameters, parameterName))
                             ),
-                            new ConvertOperand
+                            new ConvertOperator
                             (
-                                new MemberSelector("UShortProp", new ParameterOperator(parameters, parameterName)),
+                                new MemberSelectorOperator("UShortProp", new ParameterOperator(parameters, parameterName)),
                                 typeof(int?)
                             )
                         ),
@@ -1060,12 +1060,12 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         (
                             new IndexOfOperator
                             (
-                                new ConstantOperand("hello"),
-                                new MemberSelector("StringProp", new ParameterOperator(parameters, parameterName))
+                                new ConstantOperator("hello"),
+                                new MemberSelectorOperator("StringProp", new ParameterOperator(parameters, parameterName))
                             ),
-                            new ConvertOperand
+                            new ConvertOperator
                             (
-                                new MemberSelector("NullableUShortProp", new ParameterOperator(parameters, parameterName)),
+                                new MemberSelectorOperator("NullableUShortProp", new ParameterOperator(parameters, parameterName)),
                                 typeof(int?)
                             )
                         ),
@@ -1077,12 +1077,12 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         (
                             new IndexOfOperator
                             (
-                                new ConstantOperand("hello"),
-                                new MemberSelector("StringProp", new ParameterOperator(parameters, parameterName))
+                                new ConstantOperator("hello"),
+                                new MemberSelectorOperator("StringProp", new ParameterOperator(parameters, parameterName))
                             ),
-                            new ConvertOperand
+                            new ConvertOperator
                             (
-                                new MemberSelector("NullableUIntProp", new ParameterOperator(parameters, parameterName)),
+                                new MemberSelectorOperator("NullableUIntProp", new ParameterOperator(parameters, parameterName)),
                                 typeof(int?)
                             )
                         ),
@@ -1094,12 +1094,12 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         (
                             new IndexOfOperator
                             (
-                                new ConstantOperand("hello"),
-                                new MemberSelector("StringProp", new ParameterOperator(parameters, parameterName))
+                                new ConstantOperator("hello"),
+                                new MemberSelectorOperator("StringProp", new ParameterOperator(parameters, parameterName))
                             ),
-                            new ConvertOperand
+                            new ConvertOperator
                             (
-                                new MemberSelector("NullableULongProp", new ParameterOperator(parameters, parameterName)),
+                                new MemberSelectorOperator("NullableULongProp", new ParameterOperator(parameters, parameterName)),
                                 typeof(int?)
                             )
                         ),
@@ -1148,13 +1148,13 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         new NotEqualsBinaryOperator
                         (
-                            new MemberSelector("ProductName", new ParameterOperator(parameters, parameterName)),
-                            new ConstantOperand("Doritos")
+                            new MemberSelectorOperator("ProductName", new ParameterOperator(parameters, parameterName)),
+                            new ConstantOperator("Doritos")
                         ),
                         new LessThanBinaryOperator
                         (
-                            new MemberSelector("UnitPrice", new ParameterOperator(parameters, parameterName)),
-                            new ConstantOperand(5.00m, typeof(decimal))
+                            new MemberSelectorOperator("UnitPrice", new ParameterOperator(parameters, parameterName)),
+                            new ConstantOperator(5.00m, typeof(decimal))
                         )
                     ),
                     parameters
@@ -1178,12 +1178,12 @@ namespace LogicBuilder.Expressions.Utils.Tests
                 (
                     new EqualsBinaryOperator
                     (
-                        new MemberSelector
+                        new MemberSelectorOperator
                         (
                             "CategoryName",
-                            new MemberSelector("Category", new ParameterOperator(parameters, parameterName))
+                            new MemberSelectorOperator("Category", new ParameterOperator(parameters, parameterName))
                         ),
-                        new ConstantOperand("Snacks")
+                        new ConstantOperator("Snacks")
                     ),
                     parameters
                 );
@@ -1204,20 +1204,20 @@ namespace LogicBuilder.Expressions.Utils.Tests
                 (
                     new EqualsBinaryOperator
                     (
-                        new MemberSelector
+                        new MemberSelectorOperator
                         (
                             "CategoryName",
-                            new MemberSelector
+                            new MemberSelectorOperator
                             (
                                 "Category",
-                                new MemberSelector
+                                new MemberSelectorOperator
                                 (
                                     "Product",
-                                    new MemberSelector("Category", new ParameterOperator(parameters, parameterName))
+                                    new MemberSelectorOperator("Category", new ParameterOperator(parameters, parameterName))
                                 )
                             )
                         ),
-                        new ConstantOperand("Snacks")
+                        new ConstantOperator("Snacks")
                     ),
                     parameters
                 );
@@ -1240,12 +1240,12 @@ namespace LogicBuilder.Expressions.Utils.Tests
                 (
                     new EqualsBinaryOperator
                     (
-                        new MemberSelector
+                        new MemberSelectorOperator
                         (
                             "City",
-                            new MemberSelector("SupplierAddress", new ParameterOperator(parameters, parameterName))
+                            new MemberSelectorOperator("SupplierAddress", new ParameterOperator(parameters, parameterName))
                         ),
-                        new ConstantOperand("Redmond")
+                        new ConstantOperator("Redmond")
                     ),
                     parameters
                 );
@@ -1300,15 +1300,15 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     new AnyOperator
                     (
                         parameters,
-                        new MemberSelector
+                        new MemberSelectorOperator
                         (
                             "EnumerableProducts",
-                            new MemberSelector("Category", new ParameterOperator(parameters, parameterName))
+                            new MemberSelectorOperator("Category", new ParameterOperator(parameters, parameterName))
                         ),
                         new EqualsBinaryOperator
                         (
-                            new MemberSelector("ProductName", new ParameterOperator(parameters, "P")),
-                            new ConstantOperand("Snacks")
+                            new MemberSelectorOperator("ProductName", new ParameterOperator(parameters, "P")),
+                            new ConstantOperator("Snacks")
                         ),
                         "P"
                     ),
@@ -1364,15 +1364,15 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     new AnyOperator
                     (
                         parameters,
-                        new MemberSelector
+                        new MemberSelectorOperator
                         (
                             "QueryableProducts",
-                            new MemberSelector("Category", new ParameterOperator(parameters, parameterName))
+                            new MemberSelectorOperator("Category", new ParameterOperator(parameters, parameterName))
                         ),
                         new EqualsBinaryOperator
                         (
-                            new MemberSelector("ProductName", new ParameterOperator(parameters, "P")),
-                            new ConstantOperand("Snacks")
+                            new MemberSelectorOperator("ProductName", new ParameterOperator(parameters, "P")),
+                            new ConstantOperator("Snacks")
                         ),
                         "P"
                     ),
@@ -1393,18 +1393,18 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         new AnyOperator
                         (
                             parameters,
-                            new MemberSelector
+                            new MemberSelectorOperator
                             (
                                 "QueryableProducts",
-                                new MemberSelector("Category", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("Category", new ParameterOperator(parameters, parameterName))
                             ),
                             new InOperator
                             (
-                                new MemberSelector("ProductID", new ParameterOperator(parameters, "P")),
-                                new CollectionConstantOperand
+                                new MemberSelectorOperator("ProductID", new ParameterOperator(parameters, "P")),
+                                new CollectionConstantOperator
                                 (
-                                    typeof(int),
-                                    new List<object>{ 1 }
+                                    new List<object>{ 1 },
+                                    typeof(int)
                                 )
                             ),
                             "P"
@@ -1417,18 +1417,18 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         new AnyOperator
                         (
                             parameters,
-                            new MemberSelector
+                            new MemberSelectorOperator
                             (
                                 "EnumerableProducts",
-                                new MemberSelector("Category", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("Category", new ParameterOperator(parameters, parameterName))
                             ),
                             new InOperator
                             (
-                                new MemberSelector("ProductID", new ParameterOperator(parameters, "P")),
-                                new CollectionConstantOperand
+                                new MemberSelectorOperator("ProductID", new ParameterOperator(parameters, "P")),
+                                new CollectionConstantOperator
                                 (
-                                    typeof(int),
-                                    new List<object>{ 1 }
+                                    new List<object>{ 1 },
+                                    typeof(int)
                                 )
                             ),
                             "P"
@@ -1441,18 +1441,18 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         new AnyOperator
                         (
                             parameters,
-                            new MemberSelector
+                            new MemberSelectorOperator
                             (
                                 "QueryableProducts",
-                                new MemberSelector("Category", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("Category", new ParameterOperator(parameters, parameterName))
                             ),
                             new InOperator
                             (
-                                new MemberSelector("GuidProperty", new ParameterOperator(parameters, "P")),
-                                new CollectionConstantOperand
+                                new MemberSelectorOperator("GuidProperty", new ParameterOperator(parameters, "P")),
+                                new CollectionConstantOperator
                                 (
-                                    typeof(Guid),
-                                    new List<object>{ new Guid("dc75698b-581d-488b-9638-3e28dd51d8f7") }
+                                    new List<object>{ new Guid("dc75698b-581d-488b-9638-3e28dd51d8f7") },
+                                    typeof(Guid)
                                 )
                             ),
                             "P"
@@ -1465,18 +1465,18 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         new AnyOperator
                         (
                             parameters,
-                            new MemberSelector
+                            new MemberSelectorOperator
                             (
                                 "EnumerableProducts",
-                                new MemberSelector("Category", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("Category", new ParameterOperator(parameters, parameterName))
                             ),
                             new InOperator
                             (
-                                new MemberSelector("GuidProperty", new ParameterOperator(parameters, "P")),
-                                new CollectionConstantOperand
+                                new MemberSelectorOperator("GuidProperty", new ParameterOperator(parameters, "P")),
+                                new CollectionConstantOperator
                                 (
-                                    typeof(Guid),
-                                    new List<object>{ new Guid("dc75698b-581d-488b-9638-3e28dd51d8f7") }
+                                    new List<object>{ new Guid("dc75698b-581d-488b-9638-3e28dd51d8f7") },
+                                    typeof(Guid)
                                 )
                             ),
                             "P"
@@ -1489,18 +1489,18 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         new AnyOperator
                         (
                             parameters,
-                            new MemberSelector
+                            new MemberSelectorOperator
                             (
                                 "QueryableProducts",
-                                new MemberSelector("Category", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("Category", new ParameterOperator(parameters, parameterName))
                             ),
                             new InOperator
                             (
-                                new MemberSelector("NullableGuidProperty", new ParameterOperator(parameters, "P")),
-                                new CollectionConstantOperand
+                                new MemberSelectorOperator("NullableGuidProperty", new ParameterOperator(parameters, "P")),
+                                new CollectionConstantOperator
                                 (
-                                    typeof(Guid?),
-                                    new List<object>{ new Guid("dc75698b-581d-488b-9638-3e28dd51d8f7") }
+                                    new List<object>{ new Guid("dc75698b-581d-488b-9638-3e28dd51d8f7") },
+                                    typeof(Guid?)
                                 )
                             ),
                             "P"
@@ -1513,18 +1513,18 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         new AnyOperator
                         (
                             parameters,
-                            new MemberSelector
+                            new MemberSelectorOperator
                             (
                                 "EnumerableProducts",
-                                new MemberSelector("Category", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("Category", new ParameterOperator(parameters, parameterName))
                             ),
                             new InOperator
                             (
-                                new MemberSelector("NullableGuidProperty", new ParameterOperator(parameters, "P")),
-                                new CollectionConstantOperand
+                                new MemberSelectorOperator("NullableGuidProperty", new ParameterOperator(parameters, "P")),
+                                new CollectionConstantOperator
                                 (
-                                    typeof(Guid?),
-                                    new List<object>{ new Guid("dc75698b-581d-488b-9638-3e28dd51d8f7") }
+                                    new List<object>{ new Guid("dc75698b-581d-488b-9638-3e28dd51d8f7") },
+                                    typeof(Guid?)
                                 )
                             ),
                             "P"
@@ -1537,18 +1537,18 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         new AnyOperator
                         (
                             parameters,
-                            new MemberSelector
+                            new MemberSelectorOperator
                             (
                                 "QueryableProducts",
-                                new MemberSelector("Category", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("Category", new ParameterOperator(parameters, parameterName))
                             ),
                             new InOperator
                             (
-                                new MemberSelector("Discontinued", new ParameterOperator(parameters, "P")),
-                                new CollectionConstantOperand
+                                new MemberSelectorOperator("Discontinued", new ParameterOperator(parameters, "P")),
+                                new CollectionConstantOperator
                                 (
-                                    typeof(bool?),
-                                    new List<object>{ false, null }
+                                    new List<object>{ false, null },
+                                    typeof(bool?)
                                 )
                             ),
                             "P"
@@ -1561,18 +1561,18 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         new AnyOperator
                         (
                             parameters,
-                            new MemberSelector
+                            new MemberSelectorOperator
                             (
                                 "EnumerableProducts",
-                                new MemberSelector("Category", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("Category", new ParameterOperator(parameters, parameterName))
                             ),
                             new InOperator
                             (
-                                new MemberSelector("Discontinued", new ParameterOperator(parameters, "P")),
-                                new CollectionConstantOperand
+                                new MemberSelectorOperator("Discontinued", new ParameterOperator(parameters, "P")),
+                                new CollectionConstantOperator
                                 (
-                                    typeof(bool?),
-                                    new List<object>{ false, null }
+                                    new List<object>{ false, null },
+                                    typeof(bool?)
                                 )
                             ),
                             "P"
@@ -1615,12 +1615,12 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         new AnyOperator
                         (
                             parameters,
-                            new MemberSelector
+                            new MemberSelectorOperator
                             (
                                 "QueryableProducts",
-                                new MemberSelector("Category", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("Category", new ParameterOperator(parameters, parameterName))
                             ),
-                            new ConstantOperand(false),
+                            new ConstantOperator(false),
                             "P"
                         ),
                        "$it => $it.Category.QueryableProducts.Any(P => False)",
@@ -1631,18 +1631,18 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         new AnyOperator
                         (
                             parameters,
-                            new MemberSelector
+                            new MemberSelectorOperator
                             (
                                 "QueryableProducts",
-                                new MemberSelector("Category", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("Category", new ParameterOperator(parameters, parameterName))
                             ),
                             new AndBinaryOperator
                             (
-                                new ConstantOperand(false),
+                                new ConstantOperator(false),
                                 new EqualsBinaryOperator
                                 (
-                                    new MemberSelector("ProductName", new ParameterOperator(parameters, "P")),
-                                    new ConstantOperand("Snacks")
+                                    new MemberSelectorOperator("ProductName", new ParameterOperator(parameters, "P")),
+                                    new ConstantOperator("Snacks")
                                 )
                             ),
                             "P"
@@ -1654,10 +1654,10 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     {
                         new AnyOperator
                         (
-                            new MemberSelector
+                            new MemberSelectorOperator
                             (
                                 "QueryableProducts",
-                                new MemberSelector("Category", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("Category", new ParameterOperator(parameters, parameterName))
                             )
                         ),
                        "$it => $it.Category.QueryableProducts.Any()",
@@ -1716,15 +1716,15 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     new AnyOperator
                     (
                         parameters,
-                        new MemberSelector
+                        new MemberSelectorOperator
                         (
                             "EnumerableProducts",
-                            new MemberSelector("Category", new ParameterOperator(parameters, parameterName))
+                            new MemberSelectorOperator("Category", new ParameterOperator(parameters, parameterName))
                         ),
                         new EqualsBinaryOperator
                         (
-                            new MemberSelector("ProductName", new ParameterOperator(parameters, "P")),
-                            new ConstantOperand("Snacks")
+                            new MemberSelectorOperator("ProductName", new ParameterOperator(parameters, "P")),
+                            new ConstantOperator("Snacks")
                         ),
                         "P"
                     ),
@@ -1764,15 +1764,15 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     new AllOperator
                     (
                         parameters,
-                        new MemberSelector
+                        new MemberSelectorOperator
                         (
                             "EnumerableProducts",
-                            new MemberSelector("Category", new ParameterOperator(parameters, parameterName))
+                            new MemberSelectorOperator("Category", new ParameterOperator(parameters, parameterName))
                         ),
                         new EqualsBinaryOperator
                         (
-                            new MemberSelector("ProductName", new ParameterOperator(parameters, "P")),
-                            new ConstantOperand("Snacks")
+                            new MemberSelectorOperator("ProductName", new ParameterOperator(parameters, "P")),
+                            new ConstantOperator("Snacks")
                         ),
                         "P"
                     ),
@@ -1797,22 +1797,22 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         new AnyOperator
                         (
                             parameters,
-                            new MemberSelector("AlternateIDs", new ParameterOperator(parameters, parameterName)),
+                            new MemberSelectorOperator("AlternateIDs", new ParameterOperator(parameters, parameterName)),
                             new EqualsBinaryOperator
                             (
                                 new ParameterOperator(parameters, "n"),
-                                new ConstantOperand(42)
+                                new ConstantOperator(42)
                             ),
                             "n"
                         ),
                         new AnyOperator
                         (
                             parameters,
-                            new MemberSelector("AlternateAddresses", new ParameterOperator(parameters, parameterName)),
+                            new MemberSelectorOperator("AlternateAddresses", new ParameterOperator(parameters, parameterName)),
                             new EqualsBinaryOperator
                             (
-                                new MemberSelector("City", new ParameterOperator(parameters, "n")),
-                                new ConstantOperand("Redmond")
+                                new MemberSelectorOperator("City", new ParameterOperator(parameters, "n")),
+                                new ConstantOperator("Redmond")
                             ),
                             "n"
                         )
@@ -1837,22 +1837,22 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         new AllOperator
                         (
                             parameters,
-                            new MemberSelector("AlternateIDs", new ParameterOperator(parameters, parameterName)),
+                            new MemberSelectorOperator("AlternateIDs", new ParameterOperator(parameters, parameterName)),
                             new EqualsBinaryOperator
                             (
                                 new ParameterOperator(parameters, "n"),
-                                new ConstantOperand(42)
+                                new ConstantOperator(42)
                             ),
                             "n"
                         ),
                         new AllOperator
                         (
                             parameters,
-                            new MemberSelector("AlternateAddresses", new ParameterOperator(parameters, parameterName)),
+                            new MemberSelectorOperator("AlternateAddresses", new ParameterOperator(parameters, parameterName)),
                             new EqualsBinaryOperator
                             (
-                                new MemberSelector("City", new ParameterOperator(parameters, "n")),
-                                new ConstantOperand("Redmond")
+                                new MemberSelectorOperator("City", new ParameterOperator(parameters, "n")),
+                                new ConstantOperator("Redmond")
                             ),
                             "n"
                         )
@@ -1875,10 +1875,10 @@ namespace LogicBuilder.Expressions.Utils.Tests
                 (
                     new AnyOperator
                     (
-                        new MemberSelector
+                        new MemberSelectorOperator
                         (
                             "EnumerableProducts",
-                            new MemberSelector("Category", new ParameterOperator(parameters, parameterName))
+                            new MemberSelectorOperator("Category", new ParameterOperator(parameters, parameterName))
                         )
                     ),
                     parameters
@@ -1899,10 +1899,10 @@ namespace LogicBuilder.Expressions.Utils.Tests
                 (
                     new AnyOperator
                     (
-                        new MemberSelector
+                        new MemberSelectorOperator
                         (
                             "QueryableProducts",
-                            new MemberSelector("Category", new ParameterOperator(parameters, parameterName))
+                            new MemberSelectorOperator("Category", new ParameterOperator(parameters, parameterName))
                         )
                     ),
                     parameters
@@ -1924,15 +1924,15 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     new AllOperator
                     (
                         parameters,
-                        new MemberSelector
+                        new MemberSelectorOperator
                         (
                             "EnumerableProducts",
-                            new MemberSelector("Category", new ParameterOperator(parameters, parameterName))
+                            new MemberSelectorOperator("Category", new ParameterOperator(parameters, parameterName))
                         ),
                         new EqualsBinaryOperator
                         (
-                            new MemberSelector("ProductName", new ParameterOperator(parameters, "P")),
-                            new ConstantOperand("Snacks")
+                            new MemberSelectorOperator("ProductName", new ParameterOperator(parameters, "P")),
+                            new ConstantOperator("Snacks")
                         ),
                         "P"
                     ),
@@ -1955,15 +1955,15 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     new AllOperator
                     (
                         parameters,
-                        new MemberSelector
+                        new MemberSelectorOperator
                         (
                             "QueryableProducts",
-                            new MemberSelector("Category", new ParameterOperator(parameters, parameterName))
+                            new MemberSelectorOperator("Category", new ParameterOperator(parameters, parameterName))
                         ),
                         new EqualsBinaryOperator
                         (
-                            new MemberSelector("ProductName", new ParameterOperator(parameters, "P")),
-                            new ConstantOperand("Snacks")
+                            new MemberSelectorOperator("ProductName", new ParameterOperator(parameters, "P")),
+                            new ConstantOperator("Snacks")
                         ),
                         "P"
                     ),
@@ -1988,30 +1988,30 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         new AnyOperator
                         (
                             parameters,
-                            new MemberSelector
+                            new MemberSelectorOperator
                             (
                                 "QueryableProducts",
-                                new MemberSelector("Category", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("Category", new ParameterOperator(parameters, parameterName))
                             ),
                             new EqualsBinaryOperator
                             (
-                                new MemberSelector("ProductName", new ParameterOperator(parameters, "P")),
-                                new ConstantOperand("Snacks")
+                                new MemberSelectorOperator("ProductName", new ParameterOperator(parameters, "P")),
+                                new ConstantOperator("Snacks")
                             ),
                             "P"
                         ),
                         new AnyOperator
                         (
                             parameters,
-                            new MemberSelector
+                            new MemberSelectorOperator
                             (
                                 "QueryableProducts",
-                                new MemberSelector("Category", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("Category", new ParameterOperator(parameters, parameterName))
                             ),
                             new EqualsBinaryOperator
                             (
-                                new MemberSelector("ProductName", new ParameterOperator(parameters, "P2")),
-                                new ConstantOperand("Snacks")
+                                new MemberSelectorOperator("ProductName", new ParameterOperator(parameters, "P2")),
+                                new ConstantOperator("Snacks")
                             ),
                             "P2"
                         )
@@ -2037,30 +2037,30 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         new AllOperator
                         (
                             parameters,
-                            new MemberSelector
+                            new MemberSelectorOperator
                             (
                                 "QueryableProducts",
-                                new MemberSelector("Category", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("Category", new ParameterOperator(parameters, parameterName))
                             ),
                             new EqualsBinaryOperator
                             (
-                                new MemberSelector("ProductName", new ParameterOperator(parameters, "P")),
-                                new ConstantOperand("Snacks")
+                                new MemberSelectorOperator("ProductName", new ParameterOperator(parameters, "P")),
+                                new ConstantOperator("Snacks")
                             ),
                             "P"
                         ),
                         new AllOperator
                         (
                             parameters,
-                            new MemberSelector
+                            new MemberSelectorOperator
                             (
                                 "QueryableProducts",
-                                new MemberSelector("Category", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("Category", new ParameterOperator(parameters, parameterName))
                             ),
                             new EqualsBinaryOperator
                             (
-                                new MemberSelector("ProductName", new ParameterOperator(parameters, "P2")),
-                                new ConstantOperand("Snacks")
+                                new MemberSelectorOperator("ProductName", new ParameterOperator(parameters, "P2")),
+                                new ConstantOperator("Snacks")
                             ),
                             "P2"
                         )
@@ -2098,11 +2098,11 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     new AnyOperator
                     (
                         parameters,
-                        new MemberSelector("AlternateIDs", new ParameterOperator(parameters, parameterName)),
+                        new MemberSelectorOperator("AlternateIDs", new ParameterOperator(parameters, parameterName)),
                         new EqualsBinaryOperator
                         (
                             new ParameterOperator(parameters, "id"),
-                            new ConstantOperand(42)
+                            new ConstantOperator(42)
                         ),
                         "id"
                     ),
@@ -2125,11 +2125,11 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     new AllOperator
                     (
                         parameters,
-                        new MemberSelector("AlternateIDs", new ParameterOperator(parameters, parameterName)),
+                        new MemberSelectorOperator("AlternateIDs", new ParameterOperator(parameters, parameterName)),
                         new EqualsBinaryOperator
                         (
                             new ParameterOperator(parameters, "id"),
-                            new ConstantOperand(42)
+                            new ConstantOperator(42)
                         ),
                         "id"
                     ),
@@ -2160,11 +2160,11 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     new AnyOperator
                     (
                         parameters,
-                        new MemberSelector("AlternateAddresses", new ParameterOperator(parameters, parameterName)),
+                        new MemberSelectorOperator("AlternateAddresses", new ParameterOperator(parameters, parameterName)),
                         new EqualsBinaryOperator
                         (
-                            new MemberSelector("City", new ParameterOperator(parameters, "address")),
-                            new ConstantOperand("Redmond")
+                            new MemberSelectorOperator("City", new ParameterOperator(parameters, "address")),
+                            new ConstantOperator("Redmond")
                         ),
                         "address"
                     ),
@@ -2187,11 +2187,11 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     new AllOperator
                     (
                         parameters,
-                        new MemberSelector("AlternateAddresses", new ParameterOperator(parameters, parameterName)),
+                        new MemberSelectorOperator("AlternateAddresses", new ParameterOperator(parameters, parameterName)),
                         new EqualsBinaryOperator
                         (
-                            new MemberSelector("City", new ParameterOperator(parameters, "address")),
-                            new ConstantOperand("Redmond")
+                            new MemberSelectorOperator("City", new ParameterOperator(parameters, "address")),
+                            new ConstantOperator("Redmond")
                         ),
                         "address"
                     ),
@@ -2214,23 +2214,23 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     new AllOperator
                     (
                         parameters,
-                        new MemberSelector
+                        new MemberSelectorOperator
                         (
                             "QueryableProducts",
-                            new MemberSelector("Category", new ParameterOperator(parameters, parameterName))
+                            new MemberSelectorOperator("Category", new ParameterOperator(parameters, parameterName))
                         ),
                         new AnyOperator
                         (
                             parameters,
-                            new MemberSelector
+                            new MemberSelectorOperator
                             (
                                 "EnumerableProducts",
-                                new MemberSelector("Category", new ParameterOperator(parameters, "P"))
+                                new MemberSelectorOperator("Category", new ParameterOperator(parameters, "P"))
                             ),
                             new EqualsBinaryOperator
                             (
-                                new MemberSelector("ProductName", new ParameterOperator(parameters, "PP")),
-                                new ConstantOperand("Snacks")
+                                new MemberSelectorOperator("ProductName", new ParameterOperator(parameters, "PP")),
+                                new ConstantOperator("Snacks")
                             ),
                             "PP"
                         ),
@@ -2267,10 +2267,10 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         new SubstringOperator
                         (
-                            new MemberSelector("ProductName", new ParameterOperator(parameters, parameterName)),
-                            new ConstantOperand(startIndex)
+                            new MemberSelectorOperator("ProductName", new ParameterOperator(parameters, parameterName)),
+                            new ConstantOperator(startIndex)
                         ),
-                        new ConstantOperand(compareString)
+                        new ConstantOperator(compareString)
                     ),
                     parameters
                 );
@@ -2294,10 +2294,10 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         new SubstringOperator
                         (
-                            new MemberSelector("ProductName", new ParameterOperator(parameters, parameterName)),
-                            new ConstantOperand(startIndex)
+                            new MemberSelectorOperator("ProductName", new ParameterOperator(parameters, parameterName)),
+                            new ConstantOperator(startIndex)
                         ),
-                        new ConstantOperand(compareString)
+                        new ConstantOperator(compareString)
                     ),
                     parameters
                 );
@@ -2330,11 +2330,11 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         new SubstringOperator
                         (
-                            new MemberSelector("ProductName", new ParameterOperator(parameters, parameterName)),
-                            new ConstantOperand(startIndex),
-                            new ConstantOperand(length)
+                            new MemberSelectorOperator("ProductName", new ParameterOperator(parameters, parameterName)),
+                            new ConstantOperator(startIndex),
+                            new ConstantOperator(length)
                         ),
-                        new ConstantOperand(compareString)
+                        new ConstantOperator(compareString)
                     ),
                     parameters
                 );
@@ -2363,11 +2363,11 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         new SubstringOperator
                         (
-                            new MemberSelector("ProductName", new ParameterOperator(parameters, parameterName)),
-                            new ConstantOperand(startIndex),
-                            new ConstantOperand(length)
+                            new MemberSelectorOperator("ProductName", new ParameterOperator(parameters, parameterName)),
+                            new ConstantOperator(startIndex),
+                            new ConstantOperator(length)
                         ),
-                        new ConstantOperand(compareString)
+                        new ConstantOperator(compareString)
                     ),
                     parameters
                 );
@@ -2391,8 +2391,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                 (
                     new ContainsOperator
                     (
-                        new MemberSelector("ProductName", new ParameterOperator(parameters, parameterName)),
-                        new ConstantOperand("Abc")
+                        new MemberSelectorOperator("ProductName", new ParameterOperator(parameters, parameterName)),
+                        new ConstantOperator("Abc")
                     ),
                     parameters
                 );
@@ -2413,8 +2413,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                 (
                     new ContainsOperator
                     (
-                        new MemberSelector("ProductName", new ParameterOperator(parameters, parameterName)),
-                        new ConstantOperand("Abc")
+                        new MemberSelectorOperator("ProductName", new ParameterOperator(parameters, parameterName)),
+                        new ConstantOperator("Abc")
                     ),
                     parameters
                 );
@@ -2438,8 +2438,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                 (
                     new StartsWithOperator
                     (
-                        new MemberSelector("ProductName", new ParameterOperator(parameters, parameterName)),
-                        new ConstantOperand("Abc")
+                        new MemberSelectorOperator("ProductName", new ParameterOperator(parameters, parameterName)),
+                        new ConstantOperator("Abc")
                     ),
                     parameters
                 );
@@ -2460,8 +2460,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                 (
                     new StartsWithOperator
                     (
-                        new MemberSelector("ProductName", new ParameterOperator(parameters, parameterName)),
-                        new ConstantOperand("Abc")
+                        new MemberSelectorOperator("ProductName", new ParameterOperator(parameters, parameterName)),
+                        new ConstantOperator("Abc")
                     ),
                     parameters
                 );
@@ -2485,8 +2485,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                 (
                     new EndsWithOperator
                     (
-                        new MemberSelector("ProductName", new ParameterOperator(parameters, parameterName)),
-                        new ConstantOperand("Abc")
+                        new MemberSelectorOperator("ProductName", new ParameterOperator(parameters, parameterName)),
+                        new ConstantOperator("Abc")
                     ),
                     parameters
                 );
@@ -2507,8 +2507,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                 (
                     new EndsWithOperator
                     (
-                        new MemberSelector("ProductName", new ParameterOperator(parameters, parameterName)),
-                        new ConstantOperand("Abc")
+                        new MemberSelectorOperator("ProductName", new ParameterOperator(parameters, parameterName)),
+                        new ConstantOperator("Abc")
                     ),
                     parameters
                 );
@@ -2534,9 +2534,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         new LengthOperator
                         (
-                            new MemberSelector("ProductName", new ParameterOperator(parameters, parameterName))
+                            new MemberSelectorOperator("ProductName", new ParameterOperator(parameters, parameterName))
                         ),
-                        new ConstantOperand(0)
+                        new ConstantOperator(0)
                     ),
                     parameters
                 );
@@ -2559,9 +2559,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         new LengthOperator
                         (
-                            new MemberSelector("ProductName", new ParameterOperator(parameters, parameterName))
+                            new MemberSelectorOperator("ProductName", new ParameterOperator(parameters, parameterName))
                         ),
-                        new ConstantOperand(0)
+                        new ConstantOperator(0)
                     ),
                     parameters
                 );
@@ -2587,10 +2587,10 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         new IndexOfOperator
                         (
-                            new MemberSelector("ProductName", new ParameterOperator(parameters, parameterName)),
-                            new ConstantOperand("Abc")
+                            new MemberSelectorOperator("ProductName", new ParameterOperator(parameters, parameterName)),
+                            new ConstantOperator("Abc")
                         ),
-                        new ConstantOperand(5)
+                        new ConstantOperator(5)
                     ),
                     parameters
                 );
@@ -2613,10 +2613,10 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         new IndexOfOperator
                         (
-                            new MemberSelector("ProductName", new ParameterOperator(parameters, parameterName)),
-                            new ConstantOperand("Abc")
+                            new MemberSelectorOperator("ProductName", new ParameterOperator(parameters, parameterName)),
+                            new ConstantOperator("Abc")
                         ),
-                        new ConstantOperand(5)
+                        new ConstantOperator(5)
                     ),
                     parameters
                 );
@@ -2644,10 +2644,10 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         new SubstringOperator
                         (
-                            new MemberSelector("ProductName", new ParameterOperator(parameters, parameterName)),
-                            new ConstantOperand(3)
+                            new MemberSelectorOperator("ProductName", new ParameterOperator(parameters, parameterName)),
+                            new ConstantOperator(3)
                         ),
-                        new ConstantOperand("uctName")
+                        new ConstantOperator("uctName")
                     ),
                     parameters
                 );
@@ -2659,11 +2659,11 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         new SubstringOperator
                         (
-                            new MemberSelector("ProductName", new ParameterOperator(parameters, parameterName)),
-                            new ConstantOperand(3),
-                            new ConstantOperand(4)
+                            new MemberSelectorOperator("ProductName", new ParameterOperator(parameters, parameterName)),
+                            new ConstantOperator(3),
+                            new ConstantOperator(4)
                         ),
-                        new ConstantOperand("uctN")
+                        new ConstantOperator("uctN")
                     ),
                     parameters
                 );
@@ -2688,10 +2688,10 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         new SubstringOperator
                         (
-                            new MemberSelector("ProductName", new ParameterOperator(parameters, parameterName)),
-                            new ConstantOperand(3)
+                            new MemberSelectorOperator("ProductName", new ParameterOperator(parameters, parameterName)),
+                            new ConstantOperator(3)
                         ),
-                        new ConstantOperand("uctName")
+                        new ConstantOperator("uctName")
                     ),
                     parameters
                 );
@@ -2703,11 +2703,11 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         new SubstringOperator
                         (
-                            new MemberSelector("ProductName", new ParameterOperator(parameters, parameterName)),
-                            new ConstantOperand(3),
-                            new ConstantOperand(4)
+                            new MemberSelectorOperator("ProductName", new ParameterOperator(parameters, parameterName)),
+                            new ConstantOperator(3),
+                            new ConstantOperator(4)
                         ),
-                        new ConstantOperand("uctN")
+                        new ConstantOperator("uctN")
                     ),
                     parameters
                 );
@@ -2733,9 +2733,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         new ToLowerOperator
                         (
-                            new MemberSelector("ProductName", new ParameterOperator(parameters, parameterName))
+                            new MemberSelectorOperator("ProductName", new ParameterOperator(parameters, parameterName))
                         ),
-                        new ConstantOperand("tasty treats")
+                        new ConstantOperator("tasty treats")
                     ),
                     parameters
                 );
@@ -2758,9 +2758,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         new ToLowerOperator
                         (
-                            new MemberSelector("ProductName", new ParameterOperator(parameters, parameterName))
+                            new MemberSelectorOperator("ProductName", new ParameterOperator(parameters, parameterName))
                         ),
-                        new ConstantOperand("tasty treats")
+                        new ConstantOperator("tasty treats")
                     ),
                     parameters
                 );
@@ -2786,9 +2786,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         new ToUpperOperator
                         (
-                            new MemberSelector("ProductName", new ParameterOperator(parameters, parameterName))
+                            new MemberSelectorOperator("ProductName", new ParameterOperator(parameters, parameterName))
                         ),
-                        new ConstantOperand("TASTY TREATS")
+                        new ConstantOperator("TASTY TREATS")
                     ),
                     parameters
                 );
@@ -2811,9 +2811,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         new ToUpperOperator
                         (
-                            new MemberSelector("ProductName", new ParameterOperator(parameters, parameterName))
+                            new MemberSelectorOperator("ProductName", new ParameterOperator(parameters, parameterName))
                         ),
-                        new ConstantOperand("TASTY TREATS")
+                        new ConstantOperator("TASTY TREATS")
                     ),
                     parameters
                 );
@@ -2839,9 +2839,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         new TrimOperator
                         (
-                            new MemberSelector("ProductName", new ParameterOperator(parameters, parameterName))
+                            new MemberSelectorOperator("ProductName", new ParameterOperator(parameters, parameterName))
                         ),
-                        new ConstantOperand("Tasty Treats")
+                        new ConstantOperator("Tasty Treats")
                     ),
                     parameters
                 );
@@ -2864,9 +2864,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         new TrimOperator
                         (
-                            new MemberSelector("ProductName", new ParameterOperator(parameters, parameterName))
+                            new MemberSelectorOperator("ProductName", new ParameterOperator(parameters, parameterName))
                         ),
-                        new ConstantOperand("Tasty Treats")
+                        new ConstantOperator("Tasty Treats")
                     ),
                     parameters
                 );
@@ -2890,10 +2890,10 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         new ConcatOperator
                         (
-                            new ConstantOperand("Food"),
-                            new ConstantOperand("Bar")
+                            new ConstantOperator("Food"),
+                            new ConstantOperator("Bar")
                         ),
-                        new ConstantOperand("FoodBar")
+                        new ConstantOperator("FoodBar")
                     ),
                     parameters
                 );
@@ -2920,9 +2920,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         new DayOperator
                         (
-                            new MemberSelector("DiscontinuedDate", new ParameterOperator(parameters, parameterName))
+                            new MemberSelectorOperator("DiscontinuedDate", new ParameterOperator(parameters, parameterName))
                         ),
-                        new ConstantOperand(8)
+                        new ConstantOperator(8)
                     ),
                     parameters
                 );
@@ -2944,9 +2944,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         new DayOperator
                         (
-                            new MemberSelector("NonNullableDiscontinuedDate", new ParameterOperator(parameters, parameterName))
+                            new MemberSelectorOperator("NonNullableDiscontinuedDate", new ParameterOperator(parameters, parameterName))
                         ),
-                        new ConstantOperand(8)
+                        new ConstantOperator(8)
                     ),
                     parameters
                 );
@@ -2968,9 +2968,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         new MonthOperator
                         (
-                            new MemberSelector("DiscontinuedDate", new ParameterOperator(parameters, parameterName))
+                            new MemberSelectorOperator("DiscontinuedDate", new ParameterOperator(parameters, parameterName))
                         ),
-                        new ConstantOperand(8)
+                        new ConstantOperator(8)
                     ),
                     parameters
                 );
@@ -2992,9 +2992,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         new YearOperator
                         (
-                            new MemberSelector("DiscontinuedDate", new ParameterOperator(parameters, parameterName))
+                            new MemberSelectorOperator("DiscontinuedDate", new ParameterOperator(parameters, parameterName))
                         ),
-                        new ConstantOperand(1974)
+                        new ConstantOperator(1974)
                     ),
                     parameters
                 );
@@ -3016,9 +3016,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         new HourOperator
                         (
-                            new MemberSelector("DiscontinuedDate", new ParameterOperator(parameters, parameterName))
+                            new MemberSelectorOperator("DiscontinuedDate", new ParameterOperator(parameters, parameterName))
                         ),
-                        new ConstantOperand(8)
+                        new ConstantOperator(8)
                     ),
                     parameters
                 );
@@ -3040,9 +3040,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         new MinuteOperator
                         (
-                            new MemberSelector("DiscontinuedDate", new ParameterOperator(parameters, parameterName))
+                            new MemberSelectorOperator("DiscontinuedDate", new ParameterOperator(parameters, parameterName))
                         ),
-                        new ConstantOperand(12)
+                        new ConstantOperator(12)
                     ),
                     parameters
                 );
@@ -3064,9 +3064,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         new SecondOperator
                         (
-                            new MemberSelector("DiscontinuedDate", new ParameterOperator(parameters, parameterName))
+                            new MemberSelectorOperator("DiscontinuedDate", new ParameterOperator(parameters, parameterName))
                         ),
-                        new ConstantOperand(33)
+                        new ConstantOperator(33)
                     ),
                     parameters
                 );
@@ -3086,9 +3086,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         (
                             new YearOperator
                             (
-                                new MemberSelector("DiscontinuedOffset", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("DiscontinuedOffset", new ParameterOperator(parameters, parameterName))
                             ),
-                            new ConstantOperand(100)
+                            new ConstantOperator(100)
                         ),
                        "$it => ($it.DiscontinuedOffset.Year == 100)",
                         parameters
@@ -3099,9 +3099,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         (
                             new MonthOperator
                             (
-                                new MemberSelector("DiscontinuedOffset", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("DiscontinuedOffset", new ParameterOperator(parameters, parameterName))
                             ),
-                            new ConstantOperand(100)
+                            new ConstantOperator(100)
                         ),
                        "$it => ($it.DiscontinuedOffset.Month == 100)",
                         parameters
@@ -3112,9 +3112,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         (
                             new DayOperator
                             (
-                                new MemberSelector("DiscontinuedOffset", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("DiscontinuedOffset", new ParameterOperator(parameters, parameterName))
                             ),
-                            new ConstantOperand(100)
+                            new ConstantOperator(100)
                         ),
                        "$it => ($it.DiscontinuedOffset.Day == 100)",
                         parameters
@@ -3125,9 +3125,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         (
                             new HourOperator
                             (
-                                new MemberSelector("DiscontinuedOffset", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("DiscontinuedOffset", new ParameterOperator(parameters, parameterName))
                             ),
-                            new ConstantOperand(100)
+                            new ConstantOperator(100)
                         ),
                        "$it => ($it.DiscontinuedOffset.Hour == 100)",
                         parameters
@@ -3138,9 +3138,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         (
                             new MinuteOperator
                             (
-                                new MemberSelector("DiscontinuedOffset", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("DiscontinuedOffset", new ParameterOperator(parameters, parameterName))
                             ),
-                            new ConstantOperand(100)
+                            new ConstantOperator(100)
                         ),
                        "$it => ($it.DiscontinuedOffset.Minute == 100)",
                         parameters
@@ -3151,9 +3151,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         (
                             new SecondOperator
                             (
-                                new MemberSelector("DiscontinuedOffset", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("DiscontinuedOffset", new ParameterOperator(parameters, parameterName))
                             ),
-                            new ConstantOperand(100)
+                            new ConstantOperator(100)
                         ),
                        "$it => ($it.DiscontinuedOffset.Second == 100)",
                         parameters
@@ -3163,7 +3163,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         new EqualsBinaryOperator
                         (
                             new NowDateTimeOperator(),
-                            new ConstantOperand(new DateTimeOffset(new DateTime(2016, 11, 8), new TimeSpan(0)))
+                            new ConstantOperator(new DateTimeOffset(new DateTime(2016, 11, 8), new TimeSpan(0)))
                         ),
                        "$it => (DateTimeOffset.UtcNow == 11/08/2016 00:00:00 +00:00)",
                         parameters
@@ -3204,9 +3204,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         (
                             new YearOperator
                             (
-                                new MemberSelector("Birthday", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("Birthday", new ParameterOperator(parameters, parameterName))
                             ),
-                            new ConstantOperand(100)
+                            new ConstantOperator(100)
                         ),
                        "$it => ({0}.Year == 100)",
                         parameters
@@ -3217,9 +3217,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         (
                             new MonthOperator
                             (
-                                new MemberSelector("Birthday", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("Birthday", new ParameterOperator(parameters, parameterName))
                             ),
-                            new ConstantOperand(100)
+                            new ConstantOperator(100)
                         ),
                        "$it => ({0}.Month == 100)",
                         parameters
@@ -3230,9 +3230,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         (
                             new DayOperator
                             (
-                                new MemberSelector("Birthday", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("Birthday", new ParameterOperator(parameters, parameterName))
                             ),
-                            new ConstantOperand(100)
+                            new ConstantOperator(100)
                         ),
                        "$it => ({0}.Day == 100)",
                         parameters
@@ -3243,9 +3243,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         (
                             new HourOperator
                             (
-                                new MemberSelector("Birthday", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("Birthday", new ParameterOperator(parameters, parameterName))
                             ),
-                            new ConstantOperand(100)
+                            new ConstantOperator(100)
                         ),
                        "$it => ({0}.Hour == 100)",
                         parameters
@@ -3256,9 +3256,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         (
                             new MinuteOperator
                             (
-                                new MemberSelector("Birthday", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("Birthday", new ParameterOperator(parameters, parameterName))
                             ),
-                            new ConstantOperand(100)
+                            new ConstantOperator(100)
                         ),
                        "$it => ({0}.Minute == 100)",
                         parameters
@@ -3269,9 +3269,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         (
                             new SecondOperator
                             (
-                                new MemberSelector("Birthday", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("Birthday", new ParameterOperator(parameters, parameterName))
                             ),
-                            new ConstantOperand(100)
+                            new ConstantOperator(100)
                         ),
                        "$it => ({0}.Second == 100)",
                         parameters
@@ -3312,9 +3312,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         (
                             new YearOperator
                             (
-                                new MemberSelector("NullableDateProperty", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("NullableDateProperty", new ParameterOperator(parameters, parameterName))
                             ),
-                            new ConstantOperand(2015)
+                            new ConstantOperator(2015)
                         ),
                        "$it => ($it.NullableDateProperty.Value.Year == 2015)",
                         parameters
@@ -3325,9 +3325,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         (
                             new MonthOperator
                             (
-                                new MemberSelector("NullableDateProperty", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("NullableDateProperty", new ParameterOperator(parameters, parameterName))
                             ),
-                            new ConstantOperand(12)
+                            new ConstantOperator(12)
                         ),
                        "$it => ($it.NullableDateProperty.Value.Month == 12)",
                         parameters
@@ -3338,9 +3338,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         (
                             new DayOperator
                             (
-                                new MemberSelector("NullableDateProperty", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("NullableDateProperty", new ParameterOperator(parameters, parameterName))
                             ),
-                            new ConstantOperand(23)
+                            new ConstantOperator(23)
                         ),
                        "$it => ($it.NullableDateProperty.Value.Day == 23)",
                         parameters
@@ -3381,9 +3381,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         (
                             new YearOperator
                             (
-                                new MemberSelector("DateProperty", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("DateProperty", new ParameterOperator(parameters, parameterName))
                             ),
-                            new ConstantOperand(2015)
+                            new ConstantOperator(2015)
                         ),
                         "$it => ($it.DateProperty.Year == 2015)",
                         parameters
@@ -3394,9 +3394,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         (
                             new MonthOperator
                             (
-                                new MemberSelector("DateProperty", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("DateProperty", new ParameterOperator(parameters, parameterName))
                             ),
-                            new ConstantOperand(12)
+                            new ConstantOperator(12)
                         ),
                        "$it => ($it.DateProperty.Month == 12)",
                         parameters
@@ -3407,9 +3407,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         (
                             new DayOperator
                             (
-                                new MemberSelector("DateProperty", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("DateProperty", new ParameterOperator(parameters, parameterName))
                             ),
-                            new ConstantOperand(23)
+                            new ConstantOperator(23)
                         ),
                        "$it => ($it.DateProperty.Day == 23)",
                         parameters
@@ -3450,9 +3450,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         (
                             new HourOperator
                             (
-                                new MemberSelector("NullableTimeOfDayProperty", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("NullableTimeOfDayProperty", new ParameterOperator(parameters, parameterName))
                             ),
-                            new ConstantOperand(10)
+                            new ConstantOperator(10)
                         ),
                         "$it => ($it.NullableTimeOfDayProperty.Value.Hours == 10)",
                         parameters
@@ -3463,9 +3463,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         (
                             new MinuteOperator
                             (
-                                new MemberSelector("NullableTimeOfDayProperty", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("NullableTimeOfDayProperty", new ParameterOperator(parameters, parameterName))
                             ),
-                            new ConstantOperand(20)
+                            new ConstantOperator(20)
                         ),
                        "$it => ($it.NullableTimeOfDayProperty.Value.Minutes == 20)",
                         parameters
@@ -3476,9 +3476,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         (
                             new SecondOperator
                             (
-                                new MemberSelector("NullableTimeOfDayProperty", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("NullableTimeOfDayProperty", new ParameterOperator(parameters, parameterName))
                             ),
-                            new ConstantOperand(30)
+                            new ConstantOperator(30)
                         ),
                        "$it => ($it.NullableTimeOfDayProperty.Value.Seconds == 30)",
                         parameters
@@ -3519,9 +3519,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         (
                             new HourOperator
                             (
-                                new MemberSelector("TimeOfDayProperty", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("TimeOfDayProperty", new ParameterOperator(parameters, parameterName))
                             ),
-                            new ConstantOperand(10)
+                            new ConstantOperator(10)
                         ),
                         "$it => ($it.TimeOfDayProperty.Hours == 10)",
                         parameters
@@ -3532,9 +3532,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         (
                             new MinuteOperator
                             (
-                                new MemberSelector("TimeOfDayProperty", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("TimeOfDayProperty", new ParameterOperator(parameters, parameterName))
                             ),
-                            new ConstantOperand(20)
+                            new ConstantOperator(20)
                         ),
                        "$it => ($it.TimeOfDayProperty.Minutes == 20)",
                         parameters
@@ -3545,9 +3545,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         (
                             new SecondOperator
                             (
-                                new MemberSelector("TimeOfDayProperty", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("TimeOfDayProperty", new ParameterOperator(parameters, parameterName))
                             ),
-                            new ConstantOperand(30)
+                            new ConstantOperator(30)
                         ),
                        "$it => ($it.TimeOfDayProperty.Seconds == 30)",
                         parameters
@@ -3588,9 +3588,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         (
                             new FractionalSecondsOperator
                             (
-                                new MemberSelector("DiscontinuedDate", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("DiscontinuedDate", new ParameterOperator(parameters, parameterName))
                             ),
-                            new ConstantOperand(0.2m)
+                            new ConstantOperator(0.2m)
                         ),
                        "$it => ((Convert($it.DiscontinuedDate.Value.Millisecond) / 1000) == 0.2)",
                         parameters
@@ -3601,9 +3601,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         (
                             new FractionalSecondsOperator
                             (
-                                new MemberSelector("NullableTimeOfDayProperty", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("NullableTimeOfDayProperty", new ParameterOperator(parameters, parameterName))
                             ),
-                            new ConstantOperand(0.2m)
+                            new ConstantOperator(0.2m)
                         ),
                        "$it => ((Convert($it.NullableTimeOfDayProperty.Value.Milliseconds) / 1000) == 0.2)",
                         parameters
@@ -3644,9 +3644,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         (
                             new FractionalSecondsOperator
                             (
-                                new MemberSelector("NonNullableDiscontinuedDate", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("NonNullableDiscontinuedDate", new ParameterOperator(parameters, parameterName))
                             ),
-                            new ConstantOperand(0.2m)
+                            new ConstantOperator(0.2m)
                         ),
                        "$it => ((Convert($it.NonNullableDiscontinuedDate.Millisecond) / 1000) == 0.2)",
                         parameters
@@ -3657,9 +3657,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         (
                             new FractionalSecondsOperator
                             (
-                                new MemberSelector("TimeOfDayProperty", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("TimeOfDayProperty", new ParameterOperator(parameters, parameterName))
                             ),
-                            new ConstantOperand(0.2m)
+                            new ConstantOperator(0.2m)
                         ),
                        "$it => ((Convert($it.TimeOfDayProperty.Milliseconds) / 1000) == 0.2)",
                         parameters
@@ -3698,13 +3698,13 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     {
                         new EqualsBinaryOperator
                         (
-                            new ConvertToNumericDate
+                            new ConvertToNumericDateOperator
                             (
-                                new MemberSelector("DiscontinuedDate", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("DiscontinuedDate", new ParameterOperator(parameters, parameterName))
                             ),
-                            new ConvertToNumericDate
+                            new ConvertToNumericDateOperator
                             (
-                                new ConstantOperand(new Date(2015, 2, 26))
+                                new ConstantOperator(new Date(2015, 2, 26))
                             )
                         ),
                         "$it => (((($it.DiscontinuedDate.Value.Year * 10000) + ($it.DiscontinuedDate.Value.Month * 100)) + $it.DiscontinuedDate.Value.Day) == (((2015-02-26.Year * 10000) + (2015-02-26.Month * 100)) + 2015-02-26.Day))",
@@ -3714,13 +3714,13 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     {
                         new LessThanBinaryOperator
                         (
-                            new ConvertToNumericDate
+                            new ConvertToNumericDateOperator
                             (
-                                new MemberSelector("DiscontinuedDate", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("DiscontinuedDate", new ParameterOperator(parameters, parameterName))
                             ),
-                            new ConvertToNumericDate
+                            new ConvertToNumericDateOperator
                             (
-                                new ConstantOperand(new Date(2016, 2, 26))
+                                new ConstantOperator(new Date(2016, 2, 26))
                             )
                         ),
                         "$it => (((($it.DiscontinuedDate.Value.Year * 10000) + ($it.DiscontinuedDate.Value.Month * 100)) + $it.DiscontinuedDate.Value.Day) < (((2016-02-26.Year * 10000) + (2016-02-26.Month * 100)) + 2016-02-26.Day))",
@@ -3730,13 +3730,13 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     {
                         new GreaterThanOrEqualsBinaryOperator
                         (
-                            new ConvertToNumericDate
+                            new ConvertToNumericDateOperator
                             (
-                                new ConstantOperand(new Date(2015, 2, 26))
+                                new ConstantOperator(new Date(2015, 2, 26))
                             ),
-                            new ConvertToNumericDate
+                            new ConvertToNumericDateOperator
                             (
-                                new MemberSelector("DiscontinuedDate", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("DiscontinuedDate", new ParameterOperator(parameters, parameterName))
                             )
                         ),
                         "$it => ((((2015-02-26.Year * 10000) + (2015-02-26.Month * 100)) + 2015-02-26.Day) >= ((($it.DiscontinuedDate.Value.Year * 10000) + ($it.DiscontinuedDate.Value.Month * 100)) + $it.DiscontinuedDate.Value.Day))",
@@ -3746,8 +3746,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     {
                         new NotEqualsBinaryOperator
                         (
-                            new ConstantOperand(null),
-                            new MemberSelector("DiscontinuedDate", new ParameterOperator(parameters, parameterName))
+                            new ConstantOperator(null),
+                            new MemberSelectorOperator("DiscontinuedDate", new ParameterOperator(parameters, parameterName))
                         ),
                         "$it => (null != $it.DiscontinuedDate)",
                         parameters
@@ -3756,8 +3756,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     {
                         new EqualsBinaryOperator
                         (
-                            new MemberSelector("DiscontinuedDate", new ParameterOperator(parameters, parameterName)),
-                            new ConstantOperand(null)
+                            new MemberSelectorOperator("DiscontinuedDate", new ParameterOperator(parameters, parameterName)),
+                            new ConstantOperator(null)
                         ),
                         "$it => ($it.DiscontinuedDate == null)",
                         parameters
@@ -3796,13 +3796,13 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     {
                         new EqualsBinaryOperator
                         (
-                            new ConvertToNumericDate
+                            new ConvertToNumericDateOperator
                             (
-                                new MemberSelector("NonNullableDiscontinuedDate", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("NonNullableDiscontinuedDate", new ParameterOperator(parameters, parameterName))
                             ),
-                            new ConvertToNumericDate
+                            new ConvertToNumericDateOperator
                             (
-                                new ConstantOperand(new Date(2015, 2, 26))
+                                new ConstantOperator(new Date(2015, 2, 26))
                             )
                         ),
                         "$it => (((($it.NonNullableDiscontinuedDate.Year * 10000) + ($it.NonNullableDiscontinuedDate.Month * 100)) + $it.NonNullableDiscontinuedDate.Day) == (((2015-02-26.Year * 10000) + (2015-02-26.Month * 100)) + 2015-02-26.Day))",
@@ -3812,13 +3812,13 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     {
                         new LessThanBinaryOperator
                         (
-                            new ConvertToNumericDate
+                            new ConvertToNumericDateOperator
                             (
-                                new MemberSelector("NonNullableDiscontinuedDate", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("NonNullableDiscontinuedDate", new ParameterOperator(parameters, parameterName))
                             ),
-                            new ConvertToNumericDate
+                            new ConvertToNumericDateOperator
                             (
-                                new ConstantOperand(new Date(2016, 2, 26))
+                                new ConstantOperator(new Date(2016, 2, 26))
                             )
                         ),
                         "$it => (((($it.NonNullableDiscontinuedDate.Year * 10000) + ($it.NonNullableDiscontinuedDate.Month * 100)) + $it.NonNullableDiscontinuedDate.Day) < (((2016-02-26.Year * 10000) + (2016-02-26.Month * 100)) + 2016-02-26.Day))",
@@ -3828,13 +3828,13 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     {
                         new GreaterThanOrEqualsBinaryOperator
                         (
-                            new ConvertToNumericDate
+                            new ConvertToNumericDateOperator
                             (
-                                new ConstantOperand(new Date(2015, 2, 26))
+                                new ConstantOperator(new Date(2015, 2, 26))
                             ),
-                            new ConvertToNumericDate
+                            new ConvertToNumericDateOperator
                             (
-                                new MemberSelector("NonNullableDiscontinuedDate", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("NonNullableDiscontinuedDate", new ParameterOperator(parameters, parameterName))
                             )
                         ),
                         "$it => ((((2015-02-26.Year * 10000) + (2015-02-26.Month * 100)) + 2015-02-26.Day) >= ((($it.NonNullableDiscontinuedDate.Year * 10000) + ($it.NonNullableDiscontinuedDate.Month * 100)) + $it.NonNullableDiscontinuedDate.Day))",
@@ -3874,13 +3874,13 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     {
                         new EqualsBinaryOperator
                         (
-                            new ConvertToNumericTime
+                            new ConvertToNumericTimeOperator
                             (
-                                new MemberSelector("DiscontinuedDate", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("DiscontinuedDate", new ParameterOperator(parameters, parameterName))
                             ),
-                            new ConvertToNumericTime
+                            new ConvertToNumericTimeOperator
                             (
-                                new ConstantOperand(new TimeOfDay(1, 2, 3, 4))
+                                new ConstantOperator(new TimeOfDay(1, 2, 3, 4))
                             )
                         ),
                         "$it => (((Convert($it.DiscontinuedDate.Value.Hour) * 36000000000) + ((Convert($it.DiscontinuedDate.Value.Minute) * 600000000) + ((Convert($it.DiscontinuedDate.Value.Second) * 10000000) + Convert($it.DiscontinuedDate.Value.Millisecond)))) == ((Convert(01:02:03.0040000.Hours) * 36000000000) + ((Convert(01:02:03.0040000.Minutes) * 600000000) + ((Convert(01:02:03.0040000.Seconds) * 10000000) + Convert(01:02:03.0040000.Milliseconds)))))",
@@ -3890,13 +3890,13 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     {
                         new GreaterThanOrEqualsBinaryOperator
                         (
-                            new ConvertToNumericTime
+                            new ConvertToNumericTimeOperator
                             (
-                                new MemberSelector("DiscontinuedDate", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("DiscontinuedDate", new ParameterOperator(parameters, parameterName))
                             ),
-                            new ConvertToNumericTime
+                            new ConvertToNumericTimeOperator
                             (
-                                new ConstantOperand(new TimeOfDay(1, 2, 3, 4))
+                                new ConstantOperator(new TimeOfDay(1, 2, 3, 4))
                             )
                         ),
                         "$it => (((Convert($it.DiscontinuedDate.Value.Hour) * 36000000000) + ((Convert($it.DiscontinuedDate.Value.Minute) * 600000000) + ((Convert($it.DiscontinuedDate.Value.Second) * 10000000) + Convert($it.DiscontinuedDate.Value.Millisecond)))) >= ((Convert(01:02:03.0040000.Hours) * 36000000000) + ((Convert(01:02:03.0040000.Minutes) * 600000000) + ((Convert(01:02:03.0040000.Seconds) * 10000000) + Convert(01:02:03.0040000.Milliseconds)))))",
@@ -3906,13 +3906,13 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     {
                         new LessThanOrEqualsBinaryOperator
                         (
-                            new ConvertToNumericTime
+                            new ConvertToNumericTimeOperator
                             (
-                                new ConstantOperand(new TimeOfDay(1, 2, 3, 4))
+                                new ConstantOperator(new TimeOfDay(1, 2, 3, 4))
                             ),
-                            new ConvertToNumericTime
+                            new ConvertToNumericTimeOperator
                             (
-                                new MemberSelector("DiscontinuedDate", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("DiscontinuedDate", new ParameterOperator(parameters, parameterName))
                             )
                         ),
                         "$it => (((Convert(01:02:03.0040000.Hours) * 36000000000) + ((Convert(01:02:03.0040000.Minutes) * 600000000) + ((Convert(01:02:03.0040000.Seconds) * 10000000) + Convert(01:02:03.0040000.Milliseconds)))) <= ((Convert($it.DiscontinuedDate.Value.Hour) * 36000000000) + ((Convert($it.DiscontinuedDate.Value.Minute) * 600000000) + ((Convert($it.DiscontinuedDate.Value.Second) * 10000000) + Convert($it.DiscontinuedDate.Value.Millisecond)))))",
@@ -3922,8 +3922,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     {
                         new NotEqualsBinaryOperator
                         (
-                            new ConstantOperand(null),
-                            new MemberSelector("DiscontinuedDate", new ParameterOperator(parameters, parameterName))
+                            new ConstantOperator(null),
+                            new MemberSelectorOperator("DiscontinuedDate", new ParameterOperator(parameters, parameterName))
                         ),
                         "$it => (null != $it.DiscontinuedDate)",
                         parameters
@@ -3932,8 +3932,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     {
                         new EqualsBinaryOperator
                         (
-                            new MemberSelector("DiscontinuedDate", new ParameterOperator(parameters, parameterName)),
-                            new ConstantOperand(null)
+                            new MemberSelectorOperator("DiscontinuedDate", new ParameterOperator(parameters, parameterName)),
+                            new ConstantOperator(null)
                         ),
                         "$it => ($it.DiscontinuedDate == null)",
                         parameters
@@ -3972,13 +3972,13 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     {
                         new EqualsBinaryOperator
                         (
-                            new ConvertToNumericTime
+                            new ConvertToNumericTimeOperator
                             (
-                                new MemberSelector("NonNullableDiscontinuedDate", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("NonNullableDiscontinuedDate", new ParameterOperator(parameters, parameterName))
                             ),
-                            new ConvertToNumericTime
+                            new ConvertToNumericTimeOperator
                             (
-                                new ConstantOperand(new TimeOfDay(1, 2, 3, 4))
+                                new ConstantOperator(new TimeOfDay(1, 2, 3, 4))
                             )
                         ),
                         "$it => (((Convert($it.NonNullableDiscontinuedDate.Hour) * 36000000000) + ((Convert($it.NonNullableDiscontinuedDate.Minute) * 600000000) + ((Convert($it.NonNullableDiscontinuedDate.Second) * 10000000) + Convert($it.NonNullableDiscontinuedDate.Millisecond)))) == ((Convert(01:02:03.0040000.Hours) * 36000000000) + ((Convert(01:02:03.0040000.Minutes) * 600000000) + ((Convert(01:02:03.0040000.Seconds) * 10000000) + Convert(01:02:03.0040000.Milliseconds)))))",
@@ -3988,13 +3988,13 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     {
                         new GreaterThanOrEqualsBinaryOperator
                         (
-                            new ConvertToNumericTime
+                            new ConvertToNumericTimeOperator
                             (
-                                new MemberSelector("NonNullableDiscontinuedDate", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("NonNullableDiscontinuedDate", new ParameterOperator(parameters, parameterName))
                             ),
-                            new ConvertToNumericTime
+                            new ConvertToNumericTimeOperator
                             (
-                                new ConstantOperand(new TimeOfDay(1, 2, 3, 4))
+                                new ConstantOperator(new TimeOfDay(1, 2, 3, 4))
                             )
                         ),
                         "$it => (((Convert($it.NonNullableDiscontinuedDate.Hour) * 36000000000) + ((Convert($it.NonNullableDiscontinuedDate.Minute) * 600000000) + ((Convert($it.NonNullableDiscontinuedDate.Second) * 10000000) + Convert($it.NonNullableDiscontinuedDate.Millisecond)))) >= ((Convert(01:02:03.0040000.Hours) * 36000000000) + ((Convert(01:02:03.0040000.Minutes) * 600000000) + ((Convert(01:02:03.0040000.Seconds) * 10000000) + Convert(01:02:03.0040000.Milliseconds)))))",
@@ -4004,13 +4004,13 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     {
                         new LessThanOrEqualsBinaryOperator
                         (
-                            new ConvertToNumericTime
+                            new ConvertToNumericTimeOperator
                             (
-                                new ConstantOperand(new TimeOfDay(1, 2, 3, 4))
+                                new ConstantOperator(new TimeOfDay(1, 2, 3, 4))
                             ),
-                            new ConvertToNumericTime
+                            new ConvertToNumericTimeOperator
                             (
-                                new MemberSelector("NonNullableDiscontinuedDate", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("NonNullableDiscontinuedDate", new ParameterOperator(parameters, parameterName))
                             )
                         ),
                         "$it => (((Convert(01:02:03.0040000.Hours) * 36000000000) + ((Convert(01:02:03.0040000.Minutes) * 600000000) + ((Convert(01:02:03.0040000.Seconds) * 10000000) + Convert(01:02:03.0040000.Milliseconds)))) <= ((Convert($it.NonNullableDiscontinuedDate.Hour) * 36000000000) + ((Convert($it.NonNullableDiscontinuedDate.Minute) * 600000000) + ((Convert($it.NonNullableDiscontinuedDate.Second) * 10000000) + Convert($it.NonNullableDiscontinuedDate.Millisecond)))))",
@@ -4060,10 +4060,10 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         (
                             new FloorOperator
                             (
-                                new MemberSelector("UnitPrice", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("UnitPrice", new ParameterOperator(parameters, parameterName))
                             )
                         ),
-                        new ConstantOperand(123m)
+                        new ConstantOperator(123m)
                     ),
                     parameters
                 );
@@ -4088,10 +4088,10 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         (
                             new FloorOperator
                             (
-                                new MemberSelector("UnitPrice", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("UnitPrice", new ParameterOperator(parameters, parameterName))
                             )
                         ),
-                        new ConstantOperand(123m)
+                        new ConstantOperator(123m)
                     ),
                     parameters
                 );
@@ -4114,9 +4114,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         new RoundOperator
                         (
-                            new MemberSelector("UnitPrice", new ParameterOperator(parameters, parameterName))
+                            new MemberSelectorOperator("UnitPrice", new ParameterOperator(parameters, parameterName))
                         ),
-                        new ConstantOperand(5.00m)
+                        new ConstantOperator(5.00m)
                     ),
                     parameters
                 );
@@ -4147,9 +4147,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         new RoundOperator
                         (
-                            new MemberSelector("UnitPrice", new ParameterOperator(parameters, parameterName))
+                            new MemberSelectorOperator("UnitPrice", new ParameterOperator(parameters, parameterName))
                         ),
-                        new ConstantOperand(5.00m)
+                        new ConstantOperator(5.00m)
                     ),
                     parameters
                 );
@@ -4172,9 +4172,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         new RoundOperator
                         (
-                            new MemberSelector("Weight", new ParameterOperator(parameters, parameterName))
+                            new MemberSelectorOperator("Weight", new ParameterOperator(parameters, parameterName))
                         ),
-                        new ConstantOperand(5d)
+                        new ConstantOperator(5d)
                     ),
                     parameters
                 );
@@ -4200,9 +4200,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         new RoundOperator
                         (
-                            new MemberSelector("Weight", new ParameterOperator(parameters, parameterName))
+                            new MemberSelectorOperator("Weight", new ParameterOperator(parameters, parameterName))
                         ),
-                        new ConstantOperand(5d)
+                        new ConstantOperator(5d)
                     ),
                     parameters
                 );
@@ -4225,9 +4225,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         new RoundOperator
                         (
-                            new ConvertOperand(new MemberSelector("Width", new ParameterOperator(parameters, parameterName)), typeof(double?))
+                            new ConvertOperator(new MemberSelectorOperator("Width", new ParameterOperator(parameters, parameterName)), typeof(double?))
                         ),
-                        new ConstantOperand(5d)
+                        new ConstantOperator(5d)
                     ),
                     parameters
                 );
@@ -4253,9 +4253,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         new RoundOperator
                         (
-                            new ConvertOperand(new MemberSelector("Width", new ParameterOperator(parameters, parameterName)), typeof(double?))
+                            new ConvertOperator(new MemberSelectorOperator("Width", new ParameterOperator(parameters, parameterName)), typeof(double?))
                         ),
-                        new ConstantOperand(5d)
+                        new ConstantOperator(5d)
                     ),
                     parameters
                 );
@@ -4278,9 +4278,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         new FloorOperator
                         (
-                            new MemberSelector("UnitPrice", new ParameterOperator(parameters, parameterName))
+                            new MemberSelectorOperator("UnitPrice", new ParameterOperator(parameters, parameterName))
                         ),
-                        new ConstantOperand(5m)
+                        new ConstantOperator(5m)
                     ),
                     parameters
                 );
@@ -4311,9 +4311,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         new FloorOperator
                         (
-                            new MemberSelector("UnitPrice", new ParameterOperator(parameters, parameterName))
+                            new MemberSelectorOperator("UnitPrice", new ParameterOperator(parameters, parameterName))
                         ),
-                        new ConstantOperand(5m)
+                        new ConstantOperator(5m)
                     ),
                     parameters
                 );
@@ -4336,9 +4336,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         new FloorOperator
                         (
-                            new MemberSelector("Weight", new ParameterOperator(parameters, parameterName))
+                            new MemberSelectorOperator("Weight", new ParameterOperator(parameters, parameterName))
                         ),
-                        new ConstantOperand(5d)
+                        new ConstantOperator(5d)
                     ),
                     parameters
                 );
@@ -4364,9 +4364,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         new FloorOperator
                         (
-                            new MemberSelector("Weight", new ParameterOperator(parameters, parameterName))
+                            new MemberSelectorOperator("Weight", new ParameterOperator(parameters, parameterName))
                         ),
-                        new ConstantOperand(5d)
+                        new ConstantOperator(5d)
                     ),
                     parameters
                 );
@@ -4389,9 +4389,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         new FloorOperator
                         (
-                            new ConvertOperand(new MemberSelector("Width", new ParameterOperator(parameters, parameterName)), typeof(double?))
+                            new ConvertOperator(new MemberSelectorOperator("Width", new ParameterOperator(parameters, parameterName)), typeof(double?))
                         ),
-                        new ConstantOperand(5d)
+                        new ConstantOperator(5d)
                     ),
                     parameters
                 );
@@ -4417,9 +4417,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         new FloorOperator
                         (
-                            new ConvertOperand(new MemberSelector("Width", new ParameterOperator(parameters, parameterName)), typeof(double?))
+                            new ConvertOperator(new MemberSelectorOperator("Width", new ParameterOperator(parameters, parameterName)), typeof(double?))
                         ),
-                        new ConstantOperand(5d)
+                        new ConstantOperator(5d)
                     ),
                     parameters
                 );
@@ -4442,9 +4442,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         new CeilingOperator
                         (
-                            new MemberSelector("UnitPrice", new ParameterOperator(parameters, parameterName))
+                            new MemberSelectorOperator("UnitPrice", new ParameterOperator(parameters, parameterName))
                         ),
-                        new ConstantOperand(5m)
+                        new ConstantOperator(5m)
                     ),
                     parameters
                 );
@@ -4475,9 +4475,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         new CeilingOperator
                         (
-                            new MemberSelector("UnitPrice", new ParameterOperator(parameters, parameterName))
+                            new MemberSelectorOperator("UnitPrice", new ParameterOperator(parameters, parameterName))
                         ),
-                        new ConstantOperand(5m)
+                        new ConstantOperator(5m)
                     ),
                     parameters
                 );
@@ -4500,9 +4500,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         new CeilingOperator
                         (
-                            new MemberSelector("Weight", new ParameterOperator(parameters, parameterName))
+                            new MemberSelectorOperator("Weight", new ParameterOperator(parameters, parameterName))
                         ),
-                        new ConstantOperand(5d)
+                        new ConstantOperator(5d)
                     ),
                     parameters
                 );
@@ -4528,9 +4528,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         new CeilingOperator
                         (
-                            new MemberSelector("Weight", new ParameterOperator(parameters, parameterName))
+                            new MemberSelectorOperator("Weight", new ParameterOperator(parameters, parameterName))
                         ),
-                        new ConstantOperand(5d)
+                        new ConstantOperator(5d)
                     ),
                     parameters
                 );
@@ -4553,9 +4553,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         new CeilingOperator
                         (
-                            new ConvertOperand(new MemberSelector("Width", new ParameterOperator(parameters, parameterName)), typeof(double?))
+                            new ConvertOperator(new MemberSelectorOperator("Width", new ParameterOperator(parameters, parameterName)), typeof(double?))
                         ),
-                        new ConstantOperand(5d)
+                        new ConstantOperator(5d)
                     ),
                     parameters
                 );
@@ -4581,9 +4581,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         new CeilingOperator
                         (
-                            new ConvertOperand(new MemberSelector("Width", new ParameterOperator(parameters, parameterName)), typeof(double?))
+                            new ConvertOperator(new MemberSelectorOperator("Width", new ParameterOperator(parameters, parameterName)), typeof(double?))
                         ),
-                        new ConstantOperand(5d)
+                        new ConstantOperator(5d)
                     ),
                     parameters
                 );
@@ -4603,11 +4603,11 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         (
                             new FloorOperator
                             (
-                                new ConvertOperand(new MemberSelector("FloatProp", new ParameterOperator(parameters, parameterName)), typeof(double))
+                                new ConvertOperator(new MemberSelectorOperator("FloatProp", new ParameterOperator(parameters, parameterName)), typeof(double))
                             ),
                             new FloorOperator
                             (
-                                new ConvertOperand(new MemberSelector("FloatProp", new ParameterOperator(parameters, parameterName)), typeof(double))
+                                new ConvertOperator(new MemberSelectorOperator("FloatProp", new ParameterOperator(parameters, parameterName)), typeof(double))
                             )
                         ),
                         parameters
@@ -4618,11 +4618,11 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         (
                             new RoundOperator
                             (
-                                new ConvertOperand(new MemberSelector("FloatProp", new ParameterOperator(parameters, parameterName)), typeof(double))
+                                new ConvertOperator(new MemberSelectorOperator("FloatProp", new ParameterOperator(parameters, parameterName)), typeof(double))
                             ),
                             new RoundOperator
                             (
-                                new ConvertOperand(new MemberSelector("FloatProp", new ParameterOperator(parameters, parameterName)), typeof(double))
+                                new ConvertOperator(new MemberSelectorOperator("FloatProp", new ParameterOperator(parameters, parameterName)), typeof(double))
                             )
                         ),
                         parameters
@@ -4633,11 +4633,11 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         (
                             new CeilingOperator
                             (
-                                new ConvertOperand(new MemberSelector("FloatProp", new ParameterOperator(parameters, parameterName)), typeof(double))
+                                new ConvertOperator(new MemberSelectorOperator("FloatProp", new ParameterOperator(parameters, parameterName)), typeof(double))
                             ),
                             new CeilingOperator
                             (
-                                new ConvertOperand(new MemberSelector("FloatProp", new ParameterOperator(parameters, parameterName)), typeof(double))
+                                new ConvertOperator(new MemberSelectorOperator("FloatProp", new ParameterOperator(parameters, parameterName)), typeof(double))
                             )
                         ),
                         parameters
@@ -4648,11 +4648,11 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         (
                             new FloorOperator
                             (
-                                new MemberSelector("DoubleProp", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("DoubleProp", new ParameterOperator(parameters, parameterName))
                             ),
                             new FloorOperator
                             (
-                                new MemberSelector("DoubleProp", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("DoubleProp", new ParameterOperator(parameters, parameterName))
                             )
                         ),
                         parameters
@@ -4663,11 +4663,11 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         (
                             new RoundOperator
                             (
-                                new MemberSelector("DoubleProp", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("DoubleProp", new ParameterOperator(parameters, parameterName))
                             ),
                             new RoundOperator
                             (
-                                new MemberSelector("DoubleProp", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("DoubleProp", new ParameterOperator(parameters, parameterName))
                             )
                         ),
                         parameters
@@ -4678,11 +4678,11 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         (
                             new CeilingOperator
                             (
-                                new MemberSelector("DoubleProp", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("DoubleProp", new ParameterOperator(parameters, parameterName))
                             ),
                             new CeilingOperator
                             (
-                                new MemberSelector("DoubleProp", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("DoubleProp", new ParameterOperator(parameters, parameterName))
                             )
                         ),
                         parameters
@@ -4693,11 +4693,11 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         (
                             new FloorOperator
                             (
-                                new MemberSelector("DecimalProp", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("DecimalProp", new ParameterOperator(parameters, parameterName))
                             ),
                             new FloorOperator
                             (
-                                new MemberSelector("DecimalProp", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("DecimalProp", new ParameterOperator(parameters, parameterName))
                             )
                         ),
                         parameters
@@ -4708,11 +4708,11 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         (
                             new RoundOperator
                             (
-                                new MemberSelector("DecimalProp", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("DecimalProp", new ParameterOperator(parameters, parameterName))
                             ),
                             new RoundOperator
                             (
-                                new MemberSelector("DecimalProp", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("DecimalProp", new ParameterOperator(parameters, parameterName))
                             )
                         ),
                         parameters
@@ -4723,11 +4723,11 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         (
                             new CeilingOperator
                             (
-                                new MemberSelector("DecimalProp", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("DecimalProp", new ParameterOperator(parameters, parameterName))
                             ),
                             new CeilingOperator
                             (
-                                new MemberSelector("DecimalProp", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("DecimalProp", new ParameterOperator(parameters, parameterName))
                             )
                         ),
                         parameters
@@ -4782,11 +4782,11 @@ namespace LogicBuilder.Expressions.Utils.Tests
                             typeof(string).GetMethod("PadRight", new Type[] { typeof(int) }),
                             new IExpressionPart[]
                             {
-                                new MemberSelector("ProductName", new ParameterOperator(parameters, parameterName)),
-                                new ConstantOperand(totalWidth)
+                                new MemberSelectorOperator("ProductName", new ParameterOperator(parameters, parameterName)),
+                                new ConstantOperator(totalWidth)
                             }
                         ),
-                        new ConstantOperand(expectedProductName)
+                        new ConstantOperator(expectedProductName)
                     ),
                     parameters
                 );
@@ -4817,11 +4817,11 @@ namespace LogicBuilder.Expressions.Utils.Tests
                             typeof(StringExtender).GetMethod("PadRightExStatic", BindingFlags.Public | BindingFlags.Static),
                             new IExpressionPart[]
                             {
-                                new MemberSelector("ProductName", new ParameterOperator(parameters, parameterName)),
-                                new ConstantOperand(totalWidth)
+                                new MemberSelectorOperator("ProductName", new ParameterOperator(parameters, parameterName)),
+                                new ConstantOperator(totalWidth)
                             }
                         ),
-                        new ConstantOperand(expectedProductName)
+                        new ConstantOperator(expectedProductName)
                     ),
                     parameters
                 );
@@ -4852,11 +4852,11 @@ namespace LogicBuilder.Expressions.Utils.Tests
                             typeof(FilterTests).GetMethod("PadRightStatic", BindingFlags.NonPublic | BindingFlags.Static),
                             new IExpressionPart[]
                             {
-                                new MemberSelector("ProductName", new ParameterOperator(parameters, parameterName)),
-                                new ConstantOperand(totalWidth)
+                                new MemberSelectorOperator("ProductName", new ParameterOperator(parameters, parameterName)),
+                                new ConstantOperator(totalWidth)
                             }
                         ),
-                        new ConstantOperand(expectedProductName)
+                        new ConstantOperator(expectedProductName)
                     ),
                     parameters
                 );
@@ -4880,8 +4880,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                 (
                     new EqualsBinaryOperator
                     (
-                        new MemberSelector("GuidProp", new ParameterOperator(parameters, parameterName)),
-                        new ConstantOperand(new Guid("0EFDAECF-A9F0-42F3-A384-1295917AF95E"))
+                        new MemberSelectorOperator("GuidProp", new ParameterOperator(parameters, parameterName)),
+                        new ConstantOperator(new Guid("0EFDAECF-A9F0-42F3-A384-1295917AF95E"))
                     ),
                     parameters
                 );
@@ -4891,8 +4891,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                 (
                     new EqualsBinaryOperator
                     (
-                        new MemberSelector("GuidProp", new ParameterOperator(parameters, parameterName)),
-                        new ConstantOperand(new Guid("0efdaecf-a9f0-42f3-a384-1295917af95e"))
+                        new MemberSelectorOperator("GuidProp", new ParameterOperator(parameters, parameterName)),
+                        new ConstantOperator(new Guid("0efdaecf-a9f0-42f3-a384-1295917af95e"))
                     ),
                     parameters
                 );
@@ -4910,8 +4910,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     {
                         new EqualsBinaryOperator
                         (
-                            new MemberSelector("DateTimeProp", new ParameterOperator(parameters, parameterName)),
-                            new ConstantOperand(new DateTimeOffset(new DateTime(2000, 12, 12, 12, 0, 0), TimeSpan.Zero))
+                            new MemberSelectorOperator("DateTimeProp", new ParameterOperator(parameters, parameterName)),
+                            new ConstantOperator(new DateTimeOffset(new DateTime(2000, 12, 12, 12, 0, 0), TimeSpan.Zero))
                         ),
                        "$it => ($it.DateTimeProp == {0})",
                         parameters
@@ -4920,8 +4920,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     {
                         new LessThanBinaryOperator
                         (
-                            new MemberSelector("DateTimeProp", new ParameterOperator(parameters, parameterName)),
-                            new ConstantOperand(new DateTimeOffset(new DateTime(2000, 12, 12, 12, 0, 0), TimeSpan.Zero))
+                            new MemberSelectorOperator("DateTimeProp", new ParameterOperator(parameters, parameterName)),
+                            new ConstantOperator(new DateTimeOffset(new DateTime(2000, 12, 12, 12, 0, 0), TimeSpan.Zero))
                         ),
                        "$it => ($it.DateTimeProp < {0})",
                         parameters
@@ -4969,13 +4969,13 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         new LessThanBinaryOperator
                         (
-                            new MemberSelector("LongProp", new ParameterOperator(parameters, parameterName)),
-                            new ConstantOperand((long)987654321, typeof(long))
+                            new MemberSelectorOperator("LongProp", new ParameterOperator(parameters, parameterName)),
+                            new ConstantOperator((long)987654321, typeof(long))
                         ),
                         new GreaterThanBinaryOperator
                         (
-                            new MemberSelector("LongProp", new ParameterOperator(parameters, parameterName)),
-                            new ConstantOperand((long)123456789, typeof(long))
+                            new MemberSelectorOperator("LongProp", new ParameterOperator(parameters, parameterName)),
+                            new ConstantOperator((long)123456789, typeof(long))
                         )
                     ),
                     parameters
@@ -4988,13 +4988,13 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         new LessThanBinaryOperator
                         (
-                            new MemberSelector("LongProp", new ParameterOperator(parameters, parameterName)),
-                            new ConstantOperand((long)-987654321, typeof(long))
+                            new MemberSelectorOperator("LongProp", new ParameterOperator(parameters, parameterName)),
+                            new ConstantOperator((long)-987654321, typeof(long))
                         ),
                         new GreaterThanBinaryOperator
                         (
-                            new MemberSelector("LongProp", new ParameterOperator(parameters, parameterName)),
-                            new ConstantOperand((long)-123456789, typeof(long))
+                            new MemberSelectorOperator("LongProp", new ParameterOperator(parameters, parameterName)),
+                            new ConstantOperator((long)-123456789, typeof(long))
                         )
                     ),
                     parameters
@@ -5018,8 +5018,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                 (
                     new InOperator
                     (
-                        new MemberSelector("SimpleEnumProp", new ParameterOperator(parameters, parameterName)),
-                        new CollectionConstantOperand(typeof(SimpleEnum), new List<object> { SimpleEnum.First, SimpleEnum.Second })
+                        new MemberSelectorOperator("SimpleEnumProp", new ParameterOperator(parameters, parameterName)),
+                        new CollectionConstantOperator(new List<object> { SimpleEnum.First, SimpleEnum.Second }, typeof(SimpleEnum))
                     ),
                     parameters
                 );
@@ -5042,8 +5042,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                 (
                     new InOperator
                     (
-                        new MemberSelector("NullableSimpleEnumProp", new ParameterOperator(parameters, parameterName)),
-                        new CollectionConstantOperand(typeof(SimpleEnum?), new List<object> { SimpleEnum.First, SimpleEnum.Second })
+                        new MemberSelectorOperator("NullableSimpleEnumProp", new ParameterOperator(parameters, parameterName)),
+                        new CollectionConstantOperator(new List<object> { SimpleEnum.First, SimpleEnum.Second }, typeof(SimpleEnum?))
                     ),
                     parameters
                 );
@@ -5066,8 +5066,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                 (
                     new InOperator
                     (
-                        new MemberSelector("NullableSimpleEnumProp", new ParameterOperator(parameters, parameterName)),
-                        new CollectionConstantOperand(typeof(SimpleEnum?), new List<object> { SimpleEnum.First, null })
+                        new MemberSelectorOperator("NullableSimpleEnumProp", new ParameterOperator(parameters, parameterName)),
+                        new CollectionConstantOperator(new List<object> { SimpleEnum.First, null }, typeof(SimpleEnum?))
                     ),
                     parameters
                 );
@@ -5091,13 +5091,13 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         new LessThanBinaryOperator
                         (
-                            new MemberSelector("FloatProp", new ParameterOperator(parameters, parameterName)),
-                            new ConstantOperand(4321.56F)
+                            new MemberSelectorOperator("FloatProp", new ParameterOperator(parameters, parameterName)),
+                            new ConstantOperator(4321.56F)
                         ),
                         new GreaterThanBinaryOperator
                         (
-                            new MemberSelector("FloatProp", new ParameterOperator(parameters, parameterName)),
-                            new ConstantOperand(1234.56f)
+                            new MemberSelectorOperator("FloatProp", new ParameterOperator(parameters, parameterName)),
+                            new ConstantOperator(1234.56f)
                         )
                     ),
                     parameters
@@ -5110,13 +5110,13 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         new LessThanBinaryOperator
                         (
-                            new MemberSelector("DecimalProp", new ParameterOperator(parameters, parameterName)),
-                            new ConstantOperand(4321.56M)
+                            new MemberSelectorOperator("DecimalProp", new ParameterOperator(parameters, parameterName)),
+                            new ConstantOperator(4321.56M)
                         ),
                         new GreaterThanBinaryOperator
                         (
-                            new MemberSelector("DecimalProp", new ParameterOperator(parameters, parameterName)),
-                            new ConstantOperand(1234.56m)
+                            new MemberSelectorOperator("DecimalProp", new ParameterOperator(parameters, parameterName)),
+                            new ConstantOperator(1234.56m)
                         )
                     ),
                     parameters
@@ -5149,8 +5149,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                 (
                     new EqualsBinaryOperator
                     (
-                        new MemberSelector("ProductName", new ParameterOperator(parameters, parameterName)),
-                        new ConstantOperand(literal)
+                        new MemberSelectorOperator("ProductName", new ParameterOperator(parameters, parameterName)),
+                        new ConstantOperator(literal)
                     ),
                     parameters
                 );
@@ -5196,8 +5196,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                 (
                     new EqualsBinaryOperator
                     (
-                        new MemberSelector("ProductName", new ParameterOperator(parameters, parameterName)),
-                        new ConstantOperand(c.ToString())
+                        new MemberSelectorOperator("ProductName", new ParameterOperator(parameters, parameterName)),
+                        new ConstantOperator(c.ToString())
                     ),
                     parameters
                 );
@@ -5222,17 +5222,17 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         parameters,
                         new CollectionCastOperator
                         (
-                            new MemberSelector
+                            new MemberSelectorOperator
                             (
                                 "EnumerableProducts",
-                                new MemberSelector("Category", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("Category", new ParameterOperator(parameters, parameterName))
                             ),
                             typeof(DerivedProduct)
                         ),
                         new EqualsBinaryOperator
                         (
-                             new MemberSelector("ProductName", new ParameterOperator(parameters, "p")),
-                             new ConstantOperand("ProductName")
+                             new MemberSelectorOperator("ProductName", new ParameterOperator(parameters, "p")),
+                             new ConstantOperator("ProductName")
                         ),
                         "p"
                     ),
@@ -5257,17 +5257,17 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         parameters,
                         new CollectionCastOperator
                         (
-                            new MemberSelector
+                            new MemberSelectorOperator
                             (
                                 "QueryableProducts",
-                                new MemberSelector("Category", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("Category", new ParameterOperator(parameters, parameterName))
                             ),
                             typeof(DerivedProduct)
                         ),
                         new EqualsBinaryOperator
                         (
-                             new MemberSelector("ProductName", new ParameterOperator(parameters, "p")),
-                             new ConstantOperand("ProductName")
+                             new MemberSelectorOperator("ProductName", new ParameterOperator(parameters, "p")),
+                             new ConstantOperator("ProductName")
                         ),
                         "p"
                     ),
@@ -5295,17 +5295,17 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         parameters,
                         new CollectionCastOperator
                         (
-                            new MemberSelector
+                            new MemberSelectorOperator
                             (
                                 "Products",
-                                new MemberSelector("Category", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("Category", new ParameterOperator(parameters, parameterName))
                             ),
                             typeof(DerivedProduct)
                         ),
                         new EqualsBinaryOperator
                         (
-                             new MemberSelector("DerivedProductName", new ParameterOperator(parameters, "p")),
-                             new ConstantOperand("DerivedProductName")
+                             new MemberSelectorOperator("DerivedProductName", new ParameterOperator(parameters, "p")),
+                             new ConstantOperator("DerivedProductName")
                         ),
                         "p"
                     ),
@@ -5327,7 +5327,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                 (
                     new EqualsBinaryOperator
                     (
-                        new MemberSelector
+                        new MemberSelectorOperator
                         (
                             "ProductName",
                             new CastOperator
@@ -5336,7 +5336,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                                 typeof(Product)
                             )
                         ),
-                        new ConstantOperand("ProductName")
+                        new ConstantOperator("ProductName")
                     ),
                     parameters
                 );
@@ -5354,7 +5354,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     {
                         new EqualsBinaryOperator
                         (
-                            new MemberSelector
+                            new MemberSelectorOperator
                             (
                                 "ProductName",
                                 new CastOperator
@@ -5363,7 +5363,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                                     typeof(Product)
                                 )
                             ),
-                            new ConstantOperand("ProductName")
+                            new ConstantOperator("ProductName")
                         ),
                         parameters
                     },
@@ -5371,7 +5371,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     {
                         new EqualsBinaryOperator
                         (
-                            new MemberSelector
+                            new MemberSelectorOperator
                             (
                                 "DerivedProductName",
                                 new CastOperator
@@ -5380,7 +5380,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                                     typeof(DerivedProduct)
                                 )
                             ),
-                            new ConstantOperand("DerivedProductName")
+                            new ConstantOperator("DerivedProductName")
                         ),
                         parameters
                     },
@@ -5388,10 +5388,10 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     {
                         new EqualsBinaryOperator
                         (
-                            new MemberSelector
+                            new MemberSelectorOperator
                             (
                                 "CategoryID",
-                                new MemberSelector
+                                new MemberSelectorOperator
                                 (
                                     "Category",
                                     new CastOperator
@@ -5401,7 +5401,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                                     )
                                 )
                             ),
-                            new ConstantOperand(123)
+                            new ConstantOperator(123)
                         ),
                         parameters
                     },
@@ -5409,12 +5409,12 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     {
                         new EqualsBinaryOperator
                         (
-                            new MemberSelector
+                            new MemberSelectorOperator
                             (
                                 "CategoryID",
                                 new CastOperator
                                 (
-                                    new MemberSelector
+                                    new MemberSelectorOperator
                                     (
                                         "Category",
                                         new CastOperator
@@ -5426,7 +5426,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                                     typeof(DerivedCategory)
                                 )
                             ),
-                            new ConstantOperand(123)
+                            new ConstantOperator(123)
                         ),
                         parameters
                     },
@@ -5465,7 +5465,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     {
                         new EqualsBinaryOperator
                         (
-                            new MemberSelector
+                            new MemberSelectorOperator
                             (
                                 "DerivedProductName",
                                 new CastOperator
@@ -5474,7 +5474,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                                     typeof(DerivedProduct)
                                 )
                             ),
-                            new ConstantOperand("DerivedProductName")
+                            new ConstantOperator("DerivedProductName")
                         ),
                         parameters
                     },
@@ -5482,10 +5482,10 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     {
                         new EqualsBinaryOperator
                         (
-                            new MemberSelector
+                            new MemberSelectorOperator
                             (
                                 "CategoryID",
-                                new MemberSelector
+                                new MemberSelectorOperator
                                 (
                                     "Category",
                                     new CastOperator
@@ -5495,7 +5495,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                                     )
                                 )
                             ),
-                            new ConstantOperand(123)
+                            new ConstantOperator(123)
                         ),
                         parameters
                     },
@@ -5503,12 +5503,12 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     {
                         new EqualsBinaryOperator
                         (
-                            new MemberSelector
+                            new MemberSelectorOperator
                             (
                                 "CategoryID",
                                 new CastOperator
                                 (
-                                    new MemberSelector
+                                    new MemberSelectorOperator
                                     (
                                         "Category",
                                         new CastOperator
@@ -5520,7 +5520,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                                     typeof(DerivedCategory)
                                 )
                             ),
-                            new ConstantOperand(123)
+                            new ConstantOperator(123)
                         ),
                         parameters
                     },
@@ -5550,8 +5550,6 @@ namespace LogicBuilder.Expressions.Utils.Tests
         {
             get
             {
-                //var parameters = GetParameters();
-
                 return new List<object[]>
                 {
                     GetArguments
@@ -5560,8 +5558,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new EqualsBinaryOperator
                             (
-                                new ConstantOperand(null),
-                                new ConstantOperand(null)
+                                new ConstantOperator(null),
+                                new ConstantOperator(null)
                             ),
                            "$it => (null == null)",
                             parameters
@@ -5573,8 +5571,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new EqualsBinaryOperator
                             (
-                                new ConstantOperand(null),
-                                new ConstantOperand(123)
+                                new ConstantOperator(null),
+                                new ConstantOperator(123)
                             ),
                             "$it => (null == Convert(123))",
                             parameters
@@ -5586,8 +5584,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new NotEqualsBinaryOperator
                             (
-                                new ConstantOperand(null),
-                                new ConstantOperand(123)
+                                new ConstantOperator(null),
+                                new ConstantOperator(123)
                             ),
                             "$it => (null != Convert(123))",
                             parameters
@@ -5599,8 +5597,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new NotEqualsBinaryOperator
                             (
-                                new ConstantOperand(null),
-                                new ConstantOperand(true)
+                                new ConstantOperator(null),
+                                new ConstantOperator(true)
                             ),
                             "$it => (null != Convert(True))",
                             parameters
@@ -5612,8 +5610,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new NotEqualsBinaryOperator
                             (
-                                new ConstantOperand(null),
-                                new ConstantOperand(1)
+                                new ConstantOperator(null),
+                                new ConstantOperator(1)
                             ),
                             "$it => (null != Convert(1))",
                             parameters
@@ -5625,8 +5623,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new EqualsBinaryOperator
                             (
-                                new ConstantOperand(null),
-                                new ConstantOperand(new Guid())
+                                new ConstantOperator(null),
+                                new ConstantOperator(new Guid())
                             ),
                             "$it => (null == Convert(00000000-0000-0000-0000-000000000000))",
                             parameters
@@ -5638,8 +5636,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new NotEqualsBinaryOperator
                             (
-                                new ConstantOperand(null),
-                                new ConstantOperand("123")
+                                new ConstantOperator(null),
+                                new ConstantOperator("123")
                             ),
                             "$it => (null != \"123\")",
                             parameters
@@ -5651,8 +5649,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new EqualsBinaryOperator
                             (
-                                new ConstantOperand(null),
-                                new ConstantOperand(new DateTimeOffset(new DateTime(2001, 1, 1, 12, 0, 0), new TimeSpan(8, 0, 0)))
+                                new ConstantOperator(null),
+                                new ConstantOperator(new DateTimeOffset(new DateTime(2001, 1, 1, 12, 0, 0), new TimeSpan(8, 0, 0)))
                             ),
                             "$it => (null == Convert(01/01/2001 12:00:00 +08:00))",
                             parameters
@@ -5664,8 +5662,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new EqualsBinaryOperator
                             (
-                                new ConstantOperand(null),
-                                new ConstantOperand(new TimeSpan(7775999999000))
+                                new ConstantOperator(null),
+                                new ConstantOperator(new TimeSpan(7775999999000))
                             ),
                             "$it => (null == Convert(8.23:59:59.9999000))",
                             parameters
@@ -5679,9 +5677,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                             (
                                 new ConvertToStringOperator
                                 (
-                                    new MemberSelector("IntProp", new ParameterOperator(parameters, parameterName))
+                                    new MemberSelectorOperator("IntProp", new ParameterOperator(parameters, parameterName))
                                 ),
-                                new ConstantOperand("123")
+                                new ConstantOperator("123")
                             ),
                             "$it => ($it.IntProp.ToString() == \"123\")",
                             parameters
@@ -5695,9 +5693,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                             (
                                 new ConvertToStringOperator
                                 (
-                                    new MemberSelector("LongProp", new ParameterOperator(parameters, parameterName))
+                                    new MemberSelectorOperator("LongProp", new ParameterOperator(parameters, parameterName))
                                 ),
-                                new ConstantOperand("123")
+                                new ConstantOperator("123")
                             ),
                             "$it => ($it.LongProp.ToString() == \"123\")",
                             parameters
@@ -5711,9 +5709,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                             (
                                 new ConvertToStringOperator
                                 (
-                                    new MemberSelector("SingleProp", new ParameterOperator(parameters, parameterName))
+                                    new MemberSelectorOperator("SingleProp", new ParameterOperator(parameters, parameterName))
                                 ),
-                                new ConstantOperand("123")
+                                new ConstantOperator("123")
                             ),
                             "$it => ($it.SingleProp.ToString() == \"123\")",
                             parameters
@@ -5727,9 +5725,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                             (
                                 new ConvertToStringOperator
                                 (
-                                    new MemberSelector("DoubleProp", new ParameterOperator(parameters, parameterName))
+                                    new MemberSelectorOperator("DoubleProp", new ParameterOperator(parameters, parameterName))
                                 ),
-                                new ConstantOperand("123")
+                                new ConstantOperator("123")
                             ),
                             "$it => ($it.DoubleProp.ToString() == \"123\")",
                             parameters
@@ -5743,9 +5741,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                             (
                                 new ConvertToStringOperator
                                 (
-                                    new MemberSelector("DecimalProp", new ParameterOperator(parameters, parameterName))
+                                    new MemberSelectorOperator("DecimalProp", new ParameterOperator(parameters, parameterName))
                                 ),
-                                new ConstantOperand("123")
+                                new ConstantOperator("123")
                             ),
                             "$it => ($it.DecimalProp.ToString() == \"123\")",
                             parameters
@@ -5759,9 +5757,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                             (
                                 new ConvertToStringOperator
                                 (
-                                    new MemberSelector("BoolProp", new ParameterOperator(parameters, parameterName))
+                                    new MemberSelectorOperator("BoolProp", new ParameterOperator(parameters, parameterName))
                                 ),
-                                new ConstantOperand("123")
+                                new ConstantOperator("123")
                             ),
                             "$it => ($it.BoolProp.ToString() == \"123\")",
                             parameters
@@ -5775,9 +5773,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                             (
                                 new ConvertToStringOperator
                                 (
-                                    new MemberSelector("ByteProp", new ParameterOperator(parameters, parameterName))
+                                    new MemberSelectorOperator("ByteProp", new ParameterOperator(parameters, parameterName))
                                 ),
-                                new ConstantOperand("123")
+                                new ConstantOperator("123")
                             ),
                             "$it => ($it.ByteProp.ToString() == \"123\")",
                             parameters
@@ -5791,9 +5789,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                             (
                                 new ConvertToStringOperator
                                 (
-                                    new MemberSelector("GuidProp", new ParameterOperator(parameters, parameterName))
+                                    new MemberSelectorOperator("GuidProp", new ParameterOperator(parameters, parameterName))
                                 ),
-                                new ConstantOperand("123")
+                                new ConstantOperator("123")
                             ),
                             "$it => ($it.GuidProp.ToString() == \"123\")",
                             parameters
@@ -5805,8 +5803,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new EqualsBinaryOperator
                             (
-                                new MemberSelector("StringProp", new ParameterOperator(parameters, parameterName)),
-                                new ConstantOperand("123")
+                                new MemberSelectorOperator("StringProp", new ParameterOperator(parameters, parameterName)),
+                                new ConstantOperator("123")
                             ),
                             "$it => ($it.StringProp == \"123\")",
                             parameters
@@ -5820,9 +5818,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                             (
                                 new ConvertToStringOperator
                                 (
-                                    new MemberSelector("DateTimeOffsetProp", new ParameterOperator(parameters, parameterName))
+                                    new MemberSelectorOperator("DateTimeOffsetProp", new ParameterOperator(parameters, parameterName))
                                 ),
-                                new ConstantOperand("123")
+                                new ConstantOperator("123")
                             ),
                             "$it => ($it.DateTimeOffsetProp.ToString() == \"123\")",
                             parameters
@@ -5836,9 +5834,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                             (
                                 new ConvertToStringOperator
                                 (
-                                    new MemberSelector("TimeSpanProp", new ParameterOperator(parameters, parameterName))
+                                    new MemberSelectorOperator("TimeSpanProp", new ParameterOperator(parameters, parameterName))
                                 ),
-                                new ConstantOperand("123")
+                                new ConstantOperator("123")
                             ),
                             "$it => ($it.TimeSpanProp.ToString() == \"123\")",
                             parameters
@@ -5852,9 +5850,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                             (
                                 new ConvertToStringOperator
                                 (
-                                    new MemberSelector("SimpleEnumProp", new ParameterOperator(parameters, parameterName))
+                                    new MemberSelectorOperator("SimpleEnumProp", new ParameterOperator(parameters, parameterName))
                                 ),
-                                new ConstantOperand("123")
+                                new ConstantOperator("123")
                             ),
                             "$it => (Convert($it.SimpleEnumProp).ToString() == \"123\")",
                             parameters
@@ -5868,9 +5866,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                             (
                                 new ConvertToStringOperator
                                 (
-                                    new MemberSelector("FlagsEnumProp", new ParameterOperator(parameters, parameterName))
+                                    new MemberSelectorOperator("FlagsEnumProp", new ParameterOperator(parameters, parameterName))
                                 ),
-                                new ConstantOperand("123")
+                                new ConstantOperator("123")
                             ),
                             "$it => (Convert($it.FlagsEnumProp).ToString() == \"123\")",
                             parameters
@@ -5884,9 +5882,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                             (
                                 new ConvertToStringOperator
                                 (
-                                    new MemberSelector("LongEnumProp", new ParameterOperator(parameters, parameterName))
+                                    new MemberSelectorOperator("LongEnumProp", new ParameterOperator(parameters, parameterName))
                                 ),
-                                new ConstantOperand("123")
+                                new ConstantOperator("123")
                             ),
                             "$it => (Convert($it.LongEnumProp).ToString() == \"123\")",
                             parameters
@@ -5900,9 +5898,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                             (
                                 new ConvertToStringOperator
                                 (
-                                    new MemberSelector("NullableIntProp", new ParameterOperator(parameters, parameterName))
+                                    new MemberSelectorOperator("NullableIntProp", new ParameterOperator(parameters, parameterName))
                                 ),
-                                new ConstantOperand("123")
+                                new ConstantOperator("123")
                             ),
                             "$it => (IIF($it.NullableIntProp.HasValue, $it.NullableIntProp.Value.ToString(), null) == \"123\")",
                             parameters
@@ -5916,9 +5914,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                             (
                                 new ConvertToStringOperator
                                 (
-                                    new MemberSelector("NullableLongProp", new ParameterOperator(parameters, parameterName))
+                                    new MemberSelectorOperator("NullableLongProp", new ParameterOperator(parameters, parameterName))
                                 ),
-                                new ConstantOperand("123")
+                                new ConstantOperator("123")
                             ),
                             "$it => (IIF($it.NullableLongProp.HasValue, $it.NullableLongProp.Value.ToString(), null) == \"123\")",
                             parameters
@@ -5932,9 +5930,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                             (
                                 new ConvertToStringOperator
                                 (
-                                    new MemberSelector("NullableSingleProp", new ParameterOperator(parameters, parameterName))
+                                    new MemberSelectorOperator("NullableSingleProp", new ParameterOperator(parameters, parameterName))
                                 ),
-                                new ConstantOperand("123")
+                                new ConstantOperator("123")
                             ),
                             "$it => (IIF($it.NullableSingleProp.HasValue, $it.NullableSingleProp.Value.ToString(), null) == \"123\")",
                             parameters
@@ -5948,9 +5946,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                             (
                                 new ConvertToStringOperator
                                 (
-                                    new MemberSelector("NullableDoubleProp", new ParameterOperator(parameters, parameterName))
+                                    new MemberSelectorOperator("NullableDoubleProp", new ParameterOperator(parameters, parameterName))
                                 ),
-                                new ConstantOperand("123")
+                                new ConstantOperator("123")
                             ),
                             "$it => (IIF($it.NullableDoubleProp.HasValue, $it.NullableDoubleProp.Value.ToString(), null) == \"123\")",
                             parameters
@@ -5964,9 +5962,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                             (
                                 new ConvertToStringOperator
                                 (
-                                    new MemberSelector("NullableDecimalProp", new ParameterOperator(parameters, parameterName))
+                                    new MemberSelectorOperator("NullableDecimalProp", new ParameterOperator(parameters, parameterName))
                                 ),
-                                new ConstantOperand("123")
+                                new ConstantOperator("123")
                             ),
                             "$it => (IIF($it.NullableDecimalProp.HasValue, $it.NullableDecimalProp.Value.ToString(), null) == \"123\")",
                             parameters
@@ -5980,9 +5978,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                             (
                                 new ConvertToStringOperator
                                 (
-                                    new MemberSelector("NullableBoolProp", new ParameterOperator(parameters, parameterName))
+                                    new MemberSelectorOperator("NullableBoolProp", new ParameterOperator(parameters, parameterName))
                                 ),
-                                new ConstantOperand("123")
+                                new ConstantOperator("123")
                             ),
                             "$it => (IIF($it.NullableBoolProp.HasValue, $it.NullableBoolProp.Value.ToString(), null) == \"123\")",
                             parameters
@@ -5996,9 +5994,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                             (
                                 new ConvertToStringOperator
                                 (
-                                    new MemberSelector("NullableByteProp", new ParameterOperator(parameters, parameterName))
+                                    new MemberSelectorOperator("NullableByteProp", new ParameterOperator(parameters, parameterName))
                                 ),
-                                new ConstantOperand("123")
+                                new ConstantOperator("123")
                             ),
                             "$it => (IIF($it.NullableByteProp.HasValue, $it.NullableByteProp.Value.ToString(), null) == \"123\")",
                             parameters
@@ -6012,9 +6010,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                             (
                                 new ConvertToStringOperator
                                 (
-                                    new MemberSelector("NullableGuidProp", new ParameterOperator(parameters, parameterName))
+                                    new MemberSelectorOperator("NullableGuidProp", new ParameterOperator(parameters, parameterName))
                                 ),
-                                new ConstantOperand("123")
+                                new ConstantOperator("123")
                             ),
                             "$it => (IIF($it.NullableGuidProp.HasValue, $it.NullableGuidProp.Value.ToString(), null) == \"123\")",
                             parameters
@@ -6028,9 +6026,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                             (
                                 new ConvertToStringOperator
                                 (
-                                    new MemberSelector("NullableDateTimeOffsetProp", new ParameterOperator(parameters, parameterName))
+                                    new MemberSelectorOperator("NullableDateTimeOffsetProp", new ParameterOperator(parameters, parameterName))
                                 ),
-                                new ConstantOperand("123")
+                                new ConstantOperator("123")
                             ),
                             "$it => (IIF($it.NullableDateTimeOffsetProp.HasValue, $it.NullableDateTimeOffsetProp.Value.ToString(), null) == \"123\")",
                             parameters
@@ -6044,9 +6042,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                             (
                                 new ConvertToStringOperator
                                 (
-                                    new MemberSelector("NullableTimeSpanProp", new ParameterOperator(parameters, parameterName))
+                                    new MemberSelectorOperator("NullableTimeSpanProp", new ParameterOperator(parameters, parameterName))
                                 ),
-                                new ConstantOperand("123")
+                                new ConstantOperator("123")
                             ),
                             "$it => (IIF($it.NullableTimeSpanProp.HasValue, $it.NullableTimeSpanProp.Value.ToString(), null) == \"123\")",
                             parameters
@@ -6060,9 +6058,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                             (
                                 new ConvertToStringOperator
                                 (
-                                    new MemberSelector("NullableSimpleEnumProp", new ParameterOperator(parameters, parameterName))
+                                    new MemberSelectorOperator("NullableSimpleEnumProp", new ParameterOperator(parameters, parameterName))
                                 ),
-                                new ConstantOperand("123")
+                                new ConstantOperator("123")
                             ),
                             "$it => (IIF($it.NullableSimpleEnumProp.HasValue, Convert($it.NullableSimpleEnumProp.Value).ToString(), null) == \"123\")",
                             parameters
@@ -6074,12 +6072,12 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new EqualsBinaryOperator
                             (
-                                new ConvertOperand
+                                new ConvertOperator
                                 (
-                                    new MemberSelector("IntProp", new ParameterOperator(parameters, parameterName)),
+                                    new MemberSelectorOperator("IntProp", new ParameterOperator(parameters, parameterName)),
                                     typeof(long)
                                 ),
-                                new ConstantOperand((long)123)
+                                new ConstantOperator((long)123)
                             ),
                             "$it => (Convert($it.IntProp) == 123)",
                             parameters
@@ -6091,12 +6089,12 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new EqualsBinaryOperator
                             (
-                                new ConvertOperand
+                                new ConvertOperator
                                 (
-                                    new MemberSelector("NullableLongProp", new ParameterOperator(parameters, parameterName)),
+                                    new MemberSelectorOperator("NullableLongProp", new ParameterOperator(parameters, parameterName)),
                                     typeof(double)
                                 ),
-                                new ConstantOperand(1.23d)
+                                new ConstantOperator(1.23d)
                             ),
                             "$it => (Convert($it.NullableLongProp) == 1.23)",
                             parameters
@@ -6108,12 +6106,12 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new NotEqualsBinaryOperator
                             (
-                                new ConvertOperand
+                                new ConvertOperator
                                 (
-                                    new ConstantOperand(2147483647),
+                                    new ConstantOperator(2147483647),
                                     typeof(short)
                                 ),
-                                new ConstantOperand(null)
+                                new ConstantOperator(null)
                             ),
                             "$it => (Convert(Convert(2147483647)) != null)",
                             parameters
@@ -6127,9 +6125,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
                             (
                                 new ConvertToStringOperator
                                 (
-                                    new ConstantOperand(SimpleEnum.Second, typeof(SimpleEnum))
+                                    new ConstantOperator(SimpleEnum.Second, typeof(SimpleEnum))
                                 ),
-                                new ConstantOperand("1")
+                                new ConstantOperator("1")
                             ),
                             "$it => (Convert(Second).ToString() == \"1\")",
                             parameters
@@ -6143,17 +6141,17 @@ namespace LogicBuilder.Expressions.Utils.Tests
                             (
                                 new ConvertToStringOperator
                                 (
-                                    new ConvertOperand
+                                    new ConvertOperator
                                     (
-                                        new ConvertOperand
+                                        new ConvertOperator
                                         (
-                                            new MemberSelector("IntProp", new ParameterOperator(parameters, parameterName)),
+                                            new MemberSelectorOperator("IntProp", new ParameterOperator(parameters, parameterName)),
                                             typeof(long)
                                         ),
                                         typeof(short)
                                     )
                                 ),
-                                new ConstantOperand("123")
+                                new ConstantOperator("123")
                             ),
                             "$it => (Convert(Convert($it.IntProp)).ToString() == \"123\")",
                             parameters
@@ -6170,7 +6168,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                                     "123",
                                     typeof(SimpleEnum)
                                 ),
-                                new ConstantOperand(null)
+                                new ConstantOperator(null)
                             ),
                             "$it => (Convert(123) != null)",
                             parameters
@@ -6204,8 +6202,6 @@ namespace LogicBuilder.Expressions.Utils.Tests
         {
             get
             {
-                var parameters = GetParameters();
-
                 return new List<object[]>
                 {
                     GetArguments
@@ -6240,7 +6236,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new IsOfOperator
                             (
-                                new MemberSelector("ProductName", new ParameterOperator(parameters, parameterName)),
+                                new MemberSelectorOperator("ProductName", new ParameterOperator(parameters, parameterName)),
                                 typeof(string)
                             ),
                             "$it => IIF(($it.ProductName Is System.String), True, False)",
@@ -6253,7 +6249,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new IsOfOperator
                             (
-                                new MemberSelector("Category", new ParameterOperator(parameters, parameterName)),
+                                new MemberSelectorOperator("Category", new ParameterOperator(parameters, parameterName)),
                                 typeof(Category)
                             ),
                             "$it => IIF(($it.Category Is LogicBuilder.Expressions.Utils.Tests.Data.Category), True, False)",
@@ -6266,7 +6262,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new IsOfOperator
                             (
-                                new MemberSelector("Category", new ParameterOperator(parameters, parameterName)),
+                                new MemberSelectorOperator("Category", new ParameterOperator(parameters, parameterName)),
                                 typeof(DerivedCategory)
                             ),
                             "$it => IIF(($it.Category Is LogicBuilder.Expressions.Utils.Tests.Data.DerivedCategory), True, False)",
@@ -6279,7 +6275,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new IsOfOperator
                             (
-                                new MemberSelector("Ranking", new ParameterOperator(parameters, parameterName)),
+                                new MemberSelectorOperator("Ranking", new ParameterOperator(parameters, parameterName)),
                                 typeof(SimpleEnum)
                             ),
                             "$it => IIF(($it.Ranking Is LogicBuilder.Expressions.Utils.Tests.Data.SimpleEnum), True, False)",
@@ -6312,8 +6308,6 @@ namespace LogicBuilder.Expressions.Utils.Tests
         {
             get
             {
-                var parameters = GetParameters();
-
                 return new List<object[]>
                 {
                     GetArguments
@@ -6322,7 +6316,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new IsOfOperator
                             (
-                                new ConstantOperand(null),
+                                new ConstantOperator(null),
                                 typeof(byte[])
                             ),
                             parameters
@@ -6334,7 +6328,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new IsOfOperator
                             (
-                                new ConstantOperand(null),
+                                new ConstantOperator(null),
                                 typeof(bool)
                             ),
                             parameters
@@ -6346,7 +6340,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new IsOfOperator
                             (
-                                new ConstantOperand(null),
+                                new ConstantOperator(null),
                                 typeof(byte)
                             ),
                             parameters
@@ -6358,7 +6352,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new IsOfOperator
                             (
-                                new ConstantOperand(null),
+                                new ConstantOperator(null),
                                 typeof(DateTimeOffset)
                             ),
                             parameters
@@ -6370,7 +6364,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new IsOfOperator
                             (
-                                new ConstantOperand(null),
+                                new ConstantOperator(null),
                                 typeof(Decimal)
                             ),
                             parameters
@@ -6382,7 +6376,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new IsOfOperator
                             (
-                                new ConstantOperand(null),
+                                new ConstantOperator(null),
                                 typeof(double)
                             ),
                             parameters
@@ -6394,7 +6388,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new IsOfOperator
                             (
-                                new ConstantOperand(null),
+                                new ConstantOperator(null),
                                 typeof(TimeSpan)
                             ),
                             parameters
@@ -6406,7 +6400,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new IsOfOperator
                             (
-                                new ConstantOperand(null),
+                                new ConstantOperator(null),
                                 typeof(Guid)
                             ),
                             parameters
@@ -6418,7 +6412,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new IsOfOperator
                             (
-                                new ConstantOperand(null),
+                                new ConstantOperator(null),
                                 typeof(Int16)
                             ),
                             parameters
@@ -6430,7 +6424,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new IsOfOperator
                             (
-                                new ConstantOperand(null),
+                                new ConstantOperator(null),
                                 typeof(Int32)
                             ),
                             parameters
@@ -6442,7 +6436,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new IsOfOperator
                             (
-                                new ConstantOperand(null),
+                                new ConstantOperator(null),
                                 typeof(Int64)
                             ),
                             parameters
@@ -6454,7 +6448,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new IsOfOperator
                             (
-                                new ConstantOperand(null),
+                                new ConstantOperator(null),
                                 typeof(sbyte)
                             ),
                             parameters
@@ -6466,7 +6460,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new IsOfOperator
                             (
-                                new ConstantOperand(null),
+                                new ConstantOperator(null),
                                 typeof(Single)
                             ),
                             parameters
@@ -6478,7 +6472,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new IsOfOperator
                             (
-                                new ConstantOperand(null),
+                                new ConstantOperator(null),
                                 typeof(System.IO.Stream)
                             ),
                             parameters
@@ -6490,7 +6484,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new IsOfOperator
                             (
-                                new ConstantOperand(null),
+                                new ConstantOperator(null),
                                 typeof(string)
                             ),
                             parameters
@@ -6502,7 +6496,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new IsOfOperator
                             (
-                                new ConstantOperand(null),
+                                new ConstantOperator(null),
                                 typeof(SimpleEnum)
                             ),
                             parameters
@@ -6514,7 +6508,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new IsOfOperator
                             (
-                                new ConstantOperand(null),
+                                new ConstantOperator(null),
                                 typeof(FlagsEnum)
                             ),
                             parameters
@@ -6526,7 +6520,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new IsOfOperator
                             (
-                                new MemberSelector("ByteArrayProp", new ParameterOperator(parameters, parameterName)),
+                                new MemberSelectorOperator("ByteArrayProp", new ParameterOperator(parameters, parameterName)),
                                 typeof(byte[])
                             ),
                             parameters
@@ -6538,7 +6532,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new IsOfOperator
                             (
-                                new MemberSelector("IntProp", new ParameterOperator(parameters, parameterName)),
+                                new MemberSelectorOperator("IntProp", new ParameterOperator(parameters, parameterName)),
                                 typeof(SimpleEnum)
                             ),
                             parameters
@@ -6550,7 +6544,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new IsOfOperator
                             (
-                                new MemberSelector("NullableShortProp", new ParameterOperator(parameters, parameterName)),
+                                new MemberSelectorOperator("NullableShortProp", new ParameterOperator(parameters, parameterName)),
                                 typeof(short)
                             ),
                             parameters
@@ -6766,7 +6760,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new IsOfOperator
                             (
-                                new ConstantOperand(23),
+                                new ConstantOperator(23),
                                 typeof(byte)
                             ),
                             parameters
@@ -6778,7 +6772,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new IsOfOperator
                             (
-                                new ConstantOperand(23),
+                                new ConstantOperator(23),
                                 typeof(decimal)
                             ),
                             parameters
@@ -6790,7 +6784,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new IsOfOperator
                             (
-                                new ConstantOperand(23),
+                                new ConstantOperator(23),
                                 typeof(double)
                             ),
                             parameters
@@ -6802,7 +6796,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new IsOfOperator
                             (
-                                new ConstantOperand(23),
+                                new ConstantOperator(23),
                                 typeof(short)
                             ),
                             parameters
@@ -6814,7 +6808,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new IsOfOperator
                             (
-                                new ConstantOperand(23),
+                                new ConstantOperator(23),
                                 typeof(long)
                             ),
                             parameters
@@ -6826,7 +6820,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new IsOfOperator
                             (
-                                new ConstantOperand(23),
+                                new ConstantOperator(23),
                                 typeof(sbyte)
                             ),
                             parameters
@@ -6838,7 +6832,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new IsOfOperator
                             (
-                                new ConstantOperand(23),
+                                new ConstantOperator(23),
                                 typeof(float)
                             ),
                             parameters
@@ -6850,7 +6844,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new IsOfOperator
                             (
-                                new ConstantOperand("hello"),
+                                new ConstantOperator("hello"),
                                 typeof(Stream)
                             ),
                             parameters
@@ -6862,7 +6856,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new IsOfOperator
                             (
-                                new ConstantOperand(0),
+                                new ConstantOperator(0),
                                 typeof(FlagsEnum)
                             ),
                             parameters
@@ -6874,7 +6868,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new IsOfOperator
                             (
-                                new ConstantOperand(0),
+                                new ConstantOperator(0),
                                 typeof(SimpleEnum)
                             ),
                             parameters
@@ -6886,7 +6880,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new IsOfOperator
                             (
-                                new ConstantOperand("2001-01-01T12:00:00.000+08:00"),
+                                new ConstantOperator("2001-01-01T12:00:00.000+08:00"),
                                 typeof(DateTimeOffset)
                             ),
                             parameters
@@ -6898,7 +6892,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new IsOfOperator
                             (
-                                new ConstantOperand("00000000-0000-0000-0000-000000000000"),
+                                new ConstantOperator("00000000-0000-0000-0000-000000000000"),
                                 typeof(Guid)
                             ),
                             parameters
@@ -6910,7 +6904,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new IsOfOperator
                             (
-                                new ConstantOperand("23"),
+                                new ConstantOperator("23"),
                                 typeof(byte)
                             ),
                             parameters
@@ -6922,7 +6916,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new IsOfOperator
                             (
-                                new ConstantOperand("23"),
+                                new ConstantOperator("23"),
                                 typeof(short)
                             ),
                             parameters
@@ -6934,7 +6928,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new IsOfOperator
                             (
-                                new ConstantOperand("23"),
+                                new ConstantOperator("23"),
                                 typeof(int)
                             ),
                             parameters
@@ -6946,7 +6940,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new IsOfOperator
                             (
-                                new ConstantOperand("false"),
+                                new ConstantOperator("false"),
                                 typeof(bool)
                             ),
                             parameters
@@ -6958,7 +6952,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new IsOfOperator
                             (
-                                new ConstantOperand("OData"),
+                                new ConstantOperator("OData"),
                                 typeof(byte[])
                             ),
                             parameters
@@ -6970,7 +6964,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new IsOfOperator
                             (
-                                new ConstantOperand("PT12H'"),
+                                new ConstantOperator("PT12H'"),
                                 typeof(TimeSpan)
                             ),
                             parameters
@@ -6982,7 +6976,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new IsOfOperator
                             (
-                                new ConstantOperand(23),
+                                new ConstantOperator(23),
                                 typeof(string)
                             ),
                             parameters
@@ -6994,7 +6988,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new IsOfOperator
                             (
-                                new ConstantOperand("0"),
+                                new ConstantOperator("0"),
                                 typeof(FlagsEnum)
                             ),
                             parameters
@@ -7006,7 +7000,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new IsOfOperator
                             (
-                                new ConstantOperand("0"),
+                                new ConstantOperator("0"),
                                 typeof(SimpleEnum)
                             ),
                             parameters
@@ -7062,7 +7056,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new IsOfOperator
                             (
-                                new MemberSelector("SupplierAddress", new ParameterOperator(parameters, parameterName)),
+                                new MemberSelectorOperator("SupplierAddress", new ParameterOperator(parameters, parameterName)),
                                 typeof(Address)
                             ),
                             parameters
@@ -7074,7 +7068,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new IsOfOperator
                             (
-                                new MemberSelector("Category", new ParameterOperator(parameters, parameterName)),
+                                new MemberSelectorOperator("Category", new ParameterOperator(parameters, parameterName)),
                                 typeof(DerivedCategory)
                             ),
                             parameters
@@ -7122,7 +7116,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new IsOfOperator
                             (
-                                new ConstantOperand(null),
+                                new ConstantOperator(null),
                                 typeof(Address)
                             ),
                             parameters
@@ -7134,7 +7128,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new IsOfOperator
                             (
-                                new ConstantOperand(null),
+                                new ConstantOperator(null),
                                 typeof(DerivedCategory)
                             ),
                             parameters
@@ -7143,6 +7137,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                 };
             }
         }
+
         [Theory]
         [MemberData(nameof(IsOfQuotedNonPrimitiveTypeWithNull_Succeeds_WithFalse_Data))]
         public void IsOfQuotedNonPrimitiveTypeWithNull_Succeeds_WithFalse(IExpressionPart filterBody, IDictionary<string, ParameterExpression> parameters)
@@ -7170,12 +7165,11 @@ namespace LogicBuilder.Expressions.Utils.Tests
         }
         #endregion 'isof' in query option
 
+        #region
         public static List<object[]> ByteArrayComparisons_Data
         {
             get
             {
-                var parameters = GetParameters();
-
                 return new List<object[]>
                 {
                     GetArguments
@@ -7184,8 +7178,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new EqualsBinaryOperator
                             (
-                                new MemberSelector("ByteArrayProp", new ParameterOperator(parameters, parameterName)),
-                                new ConstantOperand(Convert.FromBase64String("I6v/"))
+                                new MemberSelectorOperator("ByteArrayProp", new ParameterOperator(parameters, parameterName)),
+                                new ConstantOperator(Convert.FromBase64String("I6v/"))
                             ),
                             "$it => ($it.ByteArrayProp == System.Byte[])",
                             true,
@@ -7198,8 +7192,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new NotEqualsBinaryOperator
                             (
-                                new MemberSelector("ByteArrayProp", new ParameterOperator(parameters, parameterName)),
-                                new ConstantOperand(Convert.FromBase64String("I6v/"))
+                                new MemberSelectorOperator("ByteArrayProp", new ParameterOperator(parameters, parameterName)),
+                                new ConstantOperator(Convert.FromBase64String("I6v/"))
                             ),
                             "$it => ($it.ByteArrayProp != System.Byte[])",
                             false,
@@ -7212,8 +7206,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new EqualsBinaryOperator
                             (
-                                new ConstantOperand(Convert.FromBase64String("I6v/")),
-                                new ConstantOperand(Convert.FromBase64String("I6v/"))
+                                new ConstantOperator(Convert.FromBase64String("I6v/")),
+                                new ConstantOperator(Convert.FromBase64String("I6v/"))
                             ),
                             "$it => (System.Byte[] == System.Byte[])",
                             true,
@@ -7226,8 +7220,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new NotEqualsBinaryOperator
                             (
-                                new ConstantOperand(Convert.FromBase64String("I6v/")),
-                                new ConstantOperand(Convert.FromBase64String("I6v/"))
+                                new ConstantOperator(Convert.FromBase64String("I6v/")),
+                                new ConstantOperator(Convert.FromBase64String("I6v/"))
                             ),
                             "$it => (System.Byte[] != System.Byte[])",
                             false,
@@ -7240,8 +7234,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new NotEqualsBinaryOperator
                             (
-                                new MemberSelector("ByteArrayPropWithNullValue", new ParameterOperator(parameters, parameterName)),
-                                new ConstantOperand(Convert.FromBase64String("I6v/"))
+                                new MemberSelectorOperator("ByteArrayPropWithNullValue", new ParameterOperator(parameters, parameterName)),
+                                new ConstantOperator(Convert.FromBase64String("I6v/"))
                             ),
                             "$it => ($it.ByteArrayPropWithNullValue != System.Byte[])",
                             true,
@@ -7254,8 +7248,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new NotEqualsBinaryOperator
                             (
-                                new MemberSelector("ByteArrayPropWithNullValue", new ParameterOperator(parameters, parameterName)),
-                                new MemberSelector("ByteArrayPropWithNullValue", new ParameterOperator(parameters, parameterName))
+                                new MemberSelectorOperator("ByteArrayPropWithNullValue", new ParameterOperator(parameters, parameterName)),
+                                new MemberSelectorOperator("ByteArrayPropWithNullValue", new ParameterOperator(parameters, parameterName))
                             ),
                             "$it => ($it.ByteArrayPropWithNullValue != $it.ByteArrayPropWithNullValue)",
                             false,
@@ -7268,8 +7262,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new NotEqualsBinaryOperator
                             (
-                                new MemberSelector("ByteArrayPropWithNullValue", new ParameterOperator(parameters, parameterName)),
-                                new ConstantOperand(null)
+                                new MemberSelectorOperator("ByteArrayPropWithNullValue", new ParameterOperator(parameters, parameterName)),
+                                new ConstantOperator(null)
                             ),
                             "$it => ($it.ByteArrayPropWithNullValue != null)",
                             false,
@@ -7282,8 +7276,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new EqualsBinaryOperator
                             (
-                                new MemberSelector("ByteArrayPropWithNullValue", new ParameterOperator(parameters, parameterName)),
-                                new ConstantOperand(null)
+                                new MemberSelectorOperator("ByteArrayPropWithNullValue", new ParameterOperator(parameters, parameterName)),
+                                new ConstantOperator(null)
                             ),
                             "$it => ($it.ByteArrayPropWithNullValue == null)",
                             true,
@@ -7296,8 +7290,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new NotEqualsBinaryOperator
                             (
-                                new ConstantOperand(null),
-                                new MemberSelector("ByteArrayPropWithNullValue", new ParameterOperator(parameters, parameterName))
+                                new ConstantOperator(null),
+                                new MemberSelectorOperator("ByteArrayPropWithNullValue", new ParameterOperator(parameters, parameterName))
                             ),
                             "$it => (null != $it.ByteArrayPropWithNullValue)",
                             false,
@@ -7310,8 +7304,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new EqualsBinaryOperator
                             (
-                                new ConstantOperand(null),
-                                new MemberSelector("ByteArrayPropWithNullValue", new ParameterOperator(parameters, parameterName))
+                                new ConstantOperator(null),
+                                new MemberSelectorOperator("ByteArrayPropWithNullValue", new ParameterOperator(parameters, parameterName))
                             ),
                             "$it => (null == $it.ByteArrayPropWithNullValue)",
                             true,
@@ -7353,8 +7347,6 @@ namespace LogicBuilder.Expressions.Utils.Tests
         {
             get
             {
-                var parameters = GetParameters();
-
                 return new List<object[]>
                 {
                     GetArguments
@@ -7363,8 +7355,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new GreaterThanOrEqualsBinaryOperator
                             (
-                                new ConstantOperand(Convert.FromBase64String("AP8Q")),
-                                new ConstantOperand(Convert.FromBase64String("AP8Q"))
+                                new ConstantOperator(Convert.FromBase64String("AP8Q")),
+                                new ConstantOperator(Convert.FromBase64String("AP8Q"))
                             ),
                             parameters
                         }
@@ -7375,8 +7367,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new LessThanOrEqualsBinaryOperator
                             (
-                                new ConstantOperand(Convert.FromBase64String("AP8Q")),
-                                new ConstantOperand(Convert.FromBase64String("AP8Q"))
+                                new ConstantOperator(Convert.FromBase64String("AP8Q")),
+                                new ConstantOperator(Convert.FromBase64String("AP8Q"))
                             ),
                             parameters
                         }
@@ -7387,8 +7379,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new LessThanBinaryOperator
                             (
-                                new ConstantOperand(Convert.FromBase64String("AP8Q")),
-                                new ConstantOperand(Convert.FromBase64String("AP8Q"))
+                                new ConstantOperator(Convert.FromBase64String("AP8Q")),
+                                new ConstantOperator(Convert.FromBase64String("AP8Q"))
                             ),
                             parameters
                         }
@@ -7399,8 +7391,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new GreaterThanBinaryOperator
                             (
-                                new ConstantOperand(Convert.FromBase64String("AP8Q")),
-                                new ConstantOperand(Convert.FromBase64String("AP8Q"))
+                                new ConstantOperator(Convert.FromBase64String("AP8Q")),
+                                new ConstantOperator(Convert.FromBase64String("AP8Q"))
                             ),
                             parameters
                         }
@@ -7427,8 +7419,6 @@ namespace LogicBuilder.Expressions.Utils.Tests
         {
             get
             {
-                var parameters = GetParameters();
-
                 return new List<object[]>
                 {
                     GetArguments
@@ -7437,15 +7427,15 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new EqualsBinaryOperator
                             (
-                                new ConvertOperand
+                                new ConvertOperator
                                 (
                                     new ConvertToNullableUnderlyingValueOperator
                                     (
-                                        new MemberSelector("NullableUShortProp", new ParameterOperator(parameters, parameterName))
+                                        new MemberSelectorOperator("NullableUShortProp", new ParameterOperator(parameters, parameterName))
                                     ),
                                     typeof(int?)
                                 ),
-                                new ConstantOperand(12)
+                                new ConstantOperator(12)
                             ),
                             "$it => (Convert($it.NullableUShortProp.Value) == Convert(12))",
                             parameters
@@ -7457,15 +7447,15 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new EqualsBinaryOperator
                             (
-                                new ConvertOperand
+                                new ConvertOperator
                                 (
                                     new ConvertToNullableUnderlyingValueOperator
                                     (
-                                        new MemberSelector("NullableULongProp", new ParameterOperator(parameters, parameterName))
+                                        new MemberSelectorOperator("NullableULongProp", new ParameterOperator(parameters, parameterName))
                                     ),
                                     typeof(long?)
                                 ),
-                                new ConstantOperand(12l)
+                                new ConstantOperator(12l)
                             ),
                             "$it => (Convert($it.NullableULongProp.Value) == Convert(12))",
                             parameters
@@ -7477,15 +7467,15 @@ namespace LogicBuilder.Expressions.Utils.Tests
                         {
                             new EqualsBinaryOperator
                             (
-                                new ConvertOperand
+                                new ConvertOperator
                                 (
                                     new ConvertToNullableUnderlyingValueOperator
                                     (
-                                        new MemberSelector("NullableUIntProp", new ParameterOperator(parameters, parameterName))
+                                        new MemberSelectorOperator("NullableUIntProp", new ParameterOperator(parameters, parameterName))
                                     ),
                                     typeof(int?)
                                 ),
-                                new ConstantOperand(12)
+                                new ConstantOperator(12)
                             ),
                             "$it => (Convert($it.NullableUIntProp.Value) == Convert(12))",
                             parameters
@@ -7501,10 +7491,10 @@ namespace LogicBuilder.Expressions.Utils.Tests
                                 (
                                     new ConvertToNullableUnderlyingValueOperator
                                     (
-                                        new MemberSelector("NullableCharProp", new ParameterOperator(parameters, parameterName))
+                                        new MemberSelectorOperator("NullableCharProp", new ParameterOperator(parameters, parameterName))
                                     )
                                 ),
-                                new ConstantOperand("a")
+                                new ConstantOperator("a")
                             ),
                             "$it => ($it.NullableCharProp.Value.ToString() == \"a\")",
                             parameters
@@ -7532,6 +7522,243 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     parameters
                 );
         }
+
+        public static List<object[]> InOnNavigation_Data
+        {
+            get
+            {
+                return new List<object[]>
+                {
+                    GetArguments
+                    (
+                        parameters => new object []
+                        {
+                            new InOperator
+                            (
+                                new MemberSelectorOperator
+                                (
+                                    "ProductID",
+                                    new MemberSelectorOperator
+                                    (
+                                        "Product",
+                                        new MemberSelectorOperator("Category", new ParameterOperator(parameters, parameterName))
+                                    )
+                                ),
+                                new CollectionConstantOperator
+                                (
+                                    new List<object>{ 1 },
+                                    typeof(int)
+                                )
+                            ),
+                            "$it => System.Collections.Generic.List`1[System.Int32].Contains($it.Category.Product.ProductID)",
+                            parameters
+                        }
+                    ),
+                    GetArguments
+                    (
+                        parameters => new object []
+                        {
+                            new InOperator
+                            (
+                                new MemberSelectorOperator("Category.Product.ProductID", new ParameterOperator(parameters, parameterName)),
+                                new CollectionConstantOperator
+                                (
+                                    new List<object>{ 1 },
+                                    typeof(int)
+                                )
+                            ),
+                            "$it => System.Collections.Generic.List`1[System.Int32].Contains($it.Category.Product.ProductID)",
+                            parameters
+                        }
+                    ),
+                    GetArguments
+                    (
+                        parameters => new object []
+                        {
+                            new InOperator
+                            (
+                                new MemberSelectorOperator
+                                (
+                                    "GuidProperty",
+                                    new MemberSelectorOperator
+                                    (
+                                        "Product",
+                                        new MemberSelectorOperator("Category", new ParameterOperator(parameters, parameterName))
+                                    )
+                                ),
+                                new CollectionConstantOperator
+                                (
+                                    new List<object>{ new Guid("dc75698b-581d-488b-9638-3e28dd51d8f7") },
+                                    typeof(Guid)
+                                )
+                            ),
+                            "$it => System.Collections.Generic.List`1[System.Guid].Contains($it.Category.Product.GuidProperty)",
+                            parameters
+                        }
+                    ),
+                    GetArguments
+                    (
+                        parameters => new object []
+                        {
+                            new InOperator
+                            (
+                                new MemberSelectorOperator
+                                (
+                                    "NullableGuidProperty",
+                                    new MemberSelectorOperator
+                                    (
+                                        "Product",
+                                        new MemberSelectorOperator("Category", new ParameterOperator(parameters, parameterName))
+                                    )
+                                ),
+                                new CollectionConstantOperator
+                                (
+                                    new List<object>{ new Guid("dc75698b-581d-488b-9638-3e28dd51d8f7") },
+                                    typeof(Guid?)
+                                )
+                            ),
+                            "$it => System.Collections.Generic.List`1[System.Nullable`1[System.Guid]].Contains($it.Category.Product.NullableGuidProperty)",
+                            parameters
+                        }
+                    ),
+                };
+            }
+        }
+
+        [Theory]
+        [MemberData(nameof(InOnNavigation_Data))]
+        public void InOnNavigation(IExpressionPart filterBody, string expectedExpression, IDictionary<string, ParameterExpression> parameters)
+        {
+            //act
+            var filter = CreateFilter<Product>();
+
+            //assert
+            AssertFilterStringIsCorrect(filter, expectedExpression);
+
+            Expression<Func<T, bool>> CreateFilter<T>()
+                => GetFilter<T>
+                (
+                    filterBody,
+                    parameters
+                );
+        }
+
+        [Fact]
+        public void MultipleConstants_Are_Parameterized()
+        {
+            //act
+            var filter = CreateFilter<Product>();
+
+            //assert
+            AssertFilterStringIsCorrect(filter, "$it => (((($it.ProductName == \"1\") OrElse ($it.ProductName == \"2\")) OrElse ($it.ProductName == \"3\")) OrElse ($it.ProductName == \"4\"))");
+
+            Expression<Func<T, bool>> CreateFilter<T>()
+                => GetFilter<T>
+                (
+                    new OrBinaryOperator
+                    (
+                        new OrBinaryOperator
+                        (
+                            new OrBinaryOperator
+                            (
+                                new EqualsBinaryOperator
+                                (
+                                    new MemberSelectorOperator("ProductName", new ParameterOperator(parameters, parameterName)),
+                                    new ConstantOperator("1")
+                                ),
+                                new EqualsBinaryOperator
+                                (
+                                    new MemberSelectorOperator("ProductName", new ParameterOperator(parameters, parameterName)),
+                                    new ConstantOperator("2")
+                                )
+                            ),
+                            new EqualsBinaryOperator
+                            (
+                                new MemberSelectorOperator("ProductName", new ParameterOperator(parameters, parameterName)),
+                                new ConstantOperator("3")
+                            )
+                        ),
+                        new EqualsBinaryOperator
+                        (
+                            new MemberSelectorOperator("ProductName", new ParameterOperator(parameters, parameterName)),
+                            new ConstantOperator("4")
+                        )
+                    ),
+                    parameters
+                );
+        }
+
+        [Fact]
+        public void Constants_Are_Not_Parameterized_IfDisabled()
+        {
+            //act
+            var filter = CreateFilter<Product>();
+
+            //assert
+            AssertFilterStringIsCorrect(filter, "$it => ($it.ProductName == \"1\")");
+
+            Expression<Func<T, bool>> CreateFilter<T>()
+                => GetFilter<T>
+                (
+                    new EqualsBinaryOperator
+                    (
+                        new MemberSelectorOperator("ProductName", new ParameterOperator(parameters, parameterName)),
+                        new ConstantOperator("1")
+                    ),
+                    parameters
+                );
+        }
+
+        [Fact]
+        public void CollectionConstants_Are_Parameterized()
+        {
+            //act
+            var filter = CreateFilter<Product>();
+
+            //assert
+            AssertFilterStringIsCorrect(filter, "$it => System.Collections.Generic.List`1[System.String].Contains($it.ProductName)");
+
+            Expression<Func<T, bool>> CreateFilter<T>()
+                => GetFilter<T>
+                (
+                    new InOperator
+                    (
+                        new MemberSelectorOperator("ProductName", new ParameterOperator(parameters, parameterName)),
+                        new CollectionConstantOperator
+                        (
+                            new List<object> { "Prod1", "Prod2" },
+                            typeof(string)
+                        )
+                    ),
+                    parameters
+                );
+        }
+
+        [Fact]
+        public void CollectionConstants_OfEnums_Are_Not_Parameterized_If_Disabled()
+        {
+            //act
+            var filter = CreateFilter<DataTypes>();
+
+            //assert
+            AssertFilterStringIsCorrect(filter, "$it => System.Collections.Generic.List`1[LogicBuilder.Expressions.Utils.Tests.Data.SimpleEnum].Contains($it.SimpleEnumProp)");
+
+            Expression<Func<T, bool>> CreateFilter<T>()
+                => GetFilter<T>
+                (
+                    new InOperator
+                    (
+                        new MemberSelectorOperator("SimpleEnumProp", new ParameterOperator(parameters, parameterName)),
+                        new CollectionConstantOperator
+                        (
+                            new List<object> { SimpleEnum.First, SimpleEnum.Second },
+                            typeof(SimpleEnum)
+                        )
+                    ),
+                    parameters
+                );
+        }
+        #endregion
 
         private string PadRightInstance(string str, int number)
         {

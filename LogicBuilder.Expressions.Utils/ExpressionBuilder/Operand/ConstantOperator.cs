@@ -3,15 +3,15 @@ using System.Linq.Expressions;
 
 namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Operand
 {
-    public class ConstantOperand : IExpressionPart
+    public class ConstantOperator : IExpressionPart
     {
-        public ConstantOperand(object constantValue, Type type)
+        public ConstantOperator(object constantValue, Type type)
         {
             Type = type;
             ConstantValue = constantValue;
         }
 
-        public ConstantOperand(object constantValue)
+        public ConstantOperator(object constantValue)
         {
             ConstantValue = constantValue;
         }

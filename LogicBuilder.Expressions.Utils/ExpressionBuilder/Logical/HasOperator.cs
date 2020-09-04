@@ -23,7 +23,7 @@ namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Logical
                 ConvertRightToEnumExpression
                 (
                     Right.Build(),
-                    left.Type.IsNullableType() ? Nullable.GetUnderlyingType(left.Type) : left.Type
+                    left.Type.ToNullableUnderlyingType()
                 )
             );
         }

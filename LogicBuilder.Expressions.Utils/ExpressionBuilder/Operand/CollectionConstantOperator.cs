@@ -6,9 +6,9 @@ using System.Linq.Expressions;
 
 namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Operand
 {
-    public class CollectionConstantOperand : IExpressionPart
+    public class CollectionConstantOperator : IExpressionPart
     {
-        public CollectionConstantOperand(Type elementType, ICollection<object> constantValues)
+        public CollectionConstantOperator(ICollection<object> constantValues, Type elementType)
         {
             ElementType = elementType;
             ConstantValues = constantValues;

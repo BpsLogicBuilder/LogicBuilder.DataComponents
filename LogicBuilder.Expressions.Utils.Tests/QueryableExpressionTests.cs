@@ -44,22 +44,22 @@ namespace LogicBuilder.Expressions.Utils.Tests
                                     (
                                         new GreaterThanBinaryOperator
                                         (
-                                            new MemberSelector("Id", new ParameterOperator(parameters, "s")),
-                                            new ConstantOperand(1, typeof(int))
+                                            new MemberSelectorOperator("Id", new ParameterOperator(parameters, "s")),
+                                            new ConstantOperator(1, typeof(int))
                                         ),
                                         new GreaterThanBinaryOperator
                                         (
-                                            new MemberSelector("FirstName", new ParameterOperator(parameters, "s")),
-                                            new MemberSelector("LastName", new ParameterOperator(parameters, "s"))
+                                            new MemberSelectorOperator("FirstName", new ParameterOperator(parameters, "s")),
+                                            new MemberSelectorOperator("LastName", new ParameterOperator(parameters, "s"))
                                         )
                                     ),
                                     "s"//s => (created in Where operator.  The parameter type is based on the source operand underlying type in this case Student.)
                                 ),
-                                new MemberSelector("LastName", new ParameterOperator(parameters, "v")),
+                                new MemberSelectorOperator("LastName", new ParameterOperator(parameters, "v")),
                                 Strutures.ListSortDirection.Ascending,
                                 "v"
                             ),
-                            new MemberSelector("FirstName", new ParameterOperator(parameters, "v")),
+                            new MemberSelectorOperator("FirstName", new ParameterOperator(parameters, "v")),
                             Strutures.ListSortDirection.Descending,
                             "v"
                         ),
@@ -67,7 +67,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     ),
                     3
                 ),
-                new MemberSelector("Id", new ParameterOperator(parameters, "j")),
+                new MemberSelectorOperator("Id", new ParameterOperator(parameters, "j")),
                 "j"
             )
             .GetExpression<IQueryable<Student>, double>(parameters, "q");
@@ -107,10 +107,10 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         parameters,
                         new ParameterOperator(parameters, "q"),
-                        new ConstantOperand(1, typeof(int)),
+                        new ConstantOperator(1, typeof(int)),
                         "a"
                     ),
-                    new MemberSelector("Key", new ParameterOperator(parameters, "b")),
+                    new MemberSelectorOperator("Key", new ParameterOperator(parameters, "b")),
                     Strutures.ListSortDirection.Ascending,
                     "b"
                 ),
@@ -128,13 +128,13 @@ namespace LogicBuilder.Expressions.Utils.Tests
                                 (
                                     new EqualsBinaryOperator
                                     (
-                                        new MemberSelector("DepartmentID", new ParameterOperator(parameters, "d")),
+                                        new MemberSelectorOperator("DepartmentID", new ParameterOperator(parameters, "d")),
                                         new CountOperator(new ParameterOperator(parameters, "q"))
                                     ),
                                     new EqualsBinaryOperator
                                     (
-                                        new MemberSelector("DepartmentID", new ParameterOperator(parameters, "d")),
-                                        new MemberSelector("Key", new ParameterOperator(parameters, "c"))
+                                        new MemberSelectorOperator("DepartmentID", new ParameterOperator(parameters, "d")),
+                                        new MemberSelectorOperator("Key", new ParameterOperator(parameters, "c"))
                                     )
                                 ),
                                 "d"
@@ -186,11 +186,11 @@ namespace LogicBuilder.Expressions.Utils.Tests
                             (
                                 parameters,
                                 new ParameterOperator(parameters, "q"),
-                                new ConstantOperand(1, typeof(int)),
+                                new ConstantOperator(1, typeof(int)),
                                 "item"
                             )
                         ),
-                        new MemberSelector("Key", new ParameterOperator(parameters, "group")),
+                        new MemberSelectorOperator("Key", new ParameterOperator(parameters, "group")),
                         Strutures.ListSortDirection.Ascending,
                         "group"
                     ),
@@ -207,8 +207,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                                     new ParameterOperator(parameters, "q"),
                                     new EqualsBinaryOperator
                                     (
-                                        new ConstantOperand(1, typeof(int)),
-                                        new MemberSelector("Key", new ParameterOperator(parameters, "sel"))
+                                        new ConstantOperator(1, typeof(int)),
+                                        new MemberSelectorOperator("Key", new ParameterOperator(parameters, "sel"))
                                     ),
                                     "d"
                                 ),
@@ -216,10 +216,10 @@ namespace LogicBuilder.Expressions.Utils.Tests
                                 (
                                     new ConcatOperator
                                     (
-                                        new MemberSelector("Administrator.LastName", new ParameterOperator(parameters, "item")), 
-                                        new ConstantOperand(" ", typeof(string))
+                                        new MemberSelectorOperator("Administrator.LastName", new ParameterOperator(parameters, "item")), 
+                                        new ConstantOperator(" ", typeof(string))
                                     ),
-                                    new MemberSelector("Administrator.FirstName", new ParameterOperator(parameters, "item"))
+                                    new MemberSelectorOperator("Administrator.FirstName", new ParameterOperator(parameters, "item"))
                                 ),
                                 "item"
                             ),
@@ -231,8 +231,8 @@ namespace LogicBuilder.Expressions.Utils.Tests
                                     new ParameterOperator(parameters, "q"),
                                     new EqualsBinaryOperator
                                     (
-                                        new ConstantOperand(1, typeof(int)),
-                                        new MemberSelector("Key", new ParameterOperator(parameters, "sel"))
+                                        new ConstantOperator(1, typeof(int)),
+                                        new MemberSelectorOperator("Key", new ParameterOperator(parameters, "sel"))
                                     ),
                                     "d"
                                 )
@@ -246,12 +246,12 @@ namespace LogicBuilder.Expressions.Utils.Tests
                                     new ParameterOperator(parameters, "q"),
                                     new EqualsBinaryOperator
                                     (
-                                        new ConstantOperand(1, typeof(int)),
-                                        new MemberSelector("Key", new ParameterOperator(parameters, "sel"))
+                                        new ConstantOperator(1, typeof(int)),
+                                        new MemberSelectorOperator("Key", new ParameterOperator(parameters, "sel"))
                                     ),
                                     "d"
                                 ),
-                                new MemberSelector("Budget", new ParameterOperator(parameters, "item")),
+                                new MemberSelectorOperator("Budget", new ParameterOperator(parameters, "item")),
                                 "item"
                             ),
                             ["Min_budget"] = new MinOperator
@@ -263,12 +263,12 @@ namespace LogicBuilder.Expressions.Utils.Tests
                                     new ParameterOperator(parameters, "q"),
                                     new EqualsBinaryOperator
                                     (
-                                        new ConstantOperand(1, typeof(int)),
-                                        new MemberSelector("Key", new ParameterOperator(parameters, "sel"))
+                                        new ConstantOperator(1, typeof(int)),
+                                        new MemberSelectorOperator("Key", new ParameterOperator(parameters, "sel"))
                                     ),
                                     "d"
                                 ),
-                                new MemberSelector("Budget", new ParameterOperator(parameters, "item")),
+                                new MemberSelectorOperator("Budget", new ParameterOperator(parameters, "item")),
                                 "item"
                             ),
                             ["Min_startDate"] = new MinOperator
@@ -280,12 +280,12 @@ namespace LogicBuilder.Expressions.Utils.Tests
                                     new ParameterOperator(parameters, "q"),
                                     new EqualsBinaryOperator
                                     (
-                                        new ConstantOperand(1, typeof(int)),
-                                        new MemberSelector("Key", new ParameterOperator(parameters, "sel"))
+                                        new ConstantOperator(1, typeof(int)),
+                                        new MemberSelectorOperator("Key", new ParameterOperator(parameters, "sel"))
                                     ),
                                     "d"
                                 ),
-                                new MemberSelector("StartDate", new ParameterOperator(parameters, "item")),
+                                new MemberSelectorOperator("StartDate", new ParameterOperator(parameters, "item")),
                                 "item"
                             )
                         }
