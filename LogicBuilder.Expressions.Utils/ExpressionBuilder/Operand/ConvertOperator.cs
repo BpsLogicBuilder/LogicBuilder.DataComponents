@@ -3,9 +3,9 @@ using System.Linq.Expressions;
 
 namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Operand
 {
-    public class ConvertOperand : IExpressionPart
+    public class ConvertOperator : IExpressionPart
     {
-        public ConvertOperand(Type type, IExpressionPart sourceOperand)
+        public ConvertOperator(IExpressionPart sourceOperand, Type type)
         {
             Type = type;
             SourceOperand = sourceOperand;

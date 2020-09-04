@@ -5,7 +5,7 @@ namespace LogicBuilder.Expressions.Utils.ExpressionBuilder
 {
     public class ConvertToEnumOperator : IExpressionPart
     {
-        public ConvertToEnumOperator(Type type, object constantValue)
+        public ConvertToEnumOperator(object constantValue, Type type)
         {
             Type = type;
             ConstantValue = constantValue;

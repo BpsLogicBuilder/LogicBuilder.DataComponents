@@ -8,45 +8,15 @@ namespace LogicBuilder.Expressions.Utils.ExpressionBuilder
         {
             Left = left;
             Right = right;
+            BinaryOperatorHandler = new BinaryOperatorHandler(Left, Right, Operator);
         }
 
         public abstract FilterFunction Operator { get; }
         public IExpressionPart Left { get; }
         public IExpressionPart Right { get; }
+        protected virtual BinaryOperatorHandler BinaryOperatorHandler { get; }
 
-        public Expression Build()
-        {
-            var left = Left.Build();
-            var right = Right.Build();
-
-            MatchTypes(ref left, ref right);
-
-            return Build(left, right);
-        }
-
-        protected virtual Expression Build(Expression left, Expression right)
-            => Expression.MakeBinary
-            (
-                Constants.BinaryOperatorExpressionType[Operator],
-                left,
-                right
-            );
-
-        protected void MatchTypes(ref Expression left, ref Expression right)
-        {
-            if (left.Type == right.Type)
-                return;
-
-            left = ToNullable(left);
-            right = ToNullable(right);
-        }
-
-        private Expression ToNullable(Expression expression)
-        {
-            if (expression.Type.IsValueType && !expression.Type.IsNullableType())
-                return Expression.Convert(expression, expression.Type.ToNullable());
-
-            return expression;
-        }
+        public Expression Build() 
+            => BinaryOperatorHandler.Build();
     }
 }

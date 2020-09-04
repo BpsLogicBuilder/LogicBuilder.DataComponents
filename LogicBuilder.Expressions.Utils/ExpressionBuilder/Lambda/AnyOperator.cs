@@ -1,31 +1,19 @@
-﻿using System.Linq.Expressions;
+﻿using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Lambda
 {
-    public class AnyOperator : IExpressionPart
+    public class AnyOperator : FilterMethodOperatorBase, IExpressionPart
     {
-        public AnyOperator(IExpressionPart operand, IExpressionPart filter)
+        public AnyOperator(IDictionary<string, ParameterExpression> parameters, IExpressionPart sourceOperand, IExpressionPart filterBody, string filterParameterName) : base(parameters, sourceOperand, filterBody, filterParameterName)
         {
-            Operand = operand;
-            Filter = filter;
         }
 
-        public AnyOperator(IExpressionPart operand)
+        public AnyOperator(IExpressionPart operand) : base(operand)
         {
-            Operand = operand;
         }
 
-        public IExpressionPart Operand { get; }
-        public IExpressionPart Filter { get; }
-
-        public Expression Build() => Build(Operand.Build());
-
-        private Expression Build(Expression operandExpression) 
-            => operandExpression.Type.IsIQueryable()
-                ? operandExpression.GetAnyQueryableCall(GetParameters())
-                : operandExpression.GetAnyEnumerableCall(GetParameters());
-
-        private Expression[] GetParameters()
-                => Filter == null ? new Expression[0] : new Expression[] { Filter.Build() };
+        protected override Expression Build(Expression operandExpression) 
+            => operandExpression.GetAnyCall(GetParameters(operandExpression));
     }
 }

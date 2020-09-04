@@ -3,9 +3,9 @@ using System.Linq.Expressions;
 
 namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.StringOperators
 {
-    public class TolowerOperator : IExpressionPart
+    public class ToLowerOperator : IExpressionPart
     {
-        public TolowerOperator(IExpressionPart operand)
+        public ToLowerOperator(IExpressionPart operand)
         {
             Operand = operand;
         }

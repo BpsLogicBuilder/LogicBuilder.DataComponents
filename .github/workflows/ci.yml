@@ -13,6 +13,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
@@ -26,7 +29,6 @@ jobs:
 
     - name: Set Variables
       run: |
-        echo '::set-env name=VERSION_NUMBER::4.0.1-preview.0'
         echo '::set-env name=REPO::${{ github.repository }}'
         echo '::set-env name=REPO_OWNER::${{ github.repository_owner }}'
 

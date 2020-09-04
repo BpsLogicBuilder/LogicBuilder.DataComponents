@@ -1,24 +1,19 @@
 ﻿using LogicBuilder.Expressions.Utils.Strutures;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Lambda
 {
-    public class OrderByOperator : IExpressionPart
+    public class OrderByOperator : SelectorMethodOperatorBase, IExpressionPart
     {
-        public OrderByOperator(IExpressionPart sourceOperand, IExpressionPart selector, ListSortDirection sortDirection)
+        public OrderByOperator(IDictionary<string, ParameterExpression> parameters, IExpressionPart sourceOperand, IExpressionPart selectorBody, ListSortDirection sortDirection, string selectorParameterName) : base(parameters, sourceOperand, selectorBody, selectorParameterName)
         {
-            SourceOperand = sourceOperand;
-            Selector = selector;
             SortDirection = sortDirection;
         }
 
-        public IExpressionPart SourceOperand { get; }
-        public IExpressionPart Selector { get; }
         public ListSortDirection SortDirection { get; }
 
-        public Expression Build() => Build(SourceOperand.Build());
-
-        private Expression Build(Expression operandExpression)
-            => operandExpression.GetOrderByCall((LambdaExpression)Selector.Build(), SortDirection);
+        protected override Expression Build(Expression operandExpression)
+            => operandExpression.GetOrderByCall(GetSelector(operandExpression), SortDirection);
     }
 }

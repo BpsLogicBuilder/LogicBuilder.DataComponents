@@ -4,9 +4,9 @@ using System.Linq.Expressions;
 
 namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.DateTimeOperators
 {
-    public class ConvertToNumericTime : IExpressionPart
+    public class ConvertToNumericTimeOperator : IExpressionPart
     {
-        public ConvertToNumericTime(IExpressionPart sourceOperand)
+        public ConvertToNumericTimeOperator(IExpressionPart sourceOperand)
         {
             SourceOperand = sourceOperand;
         }

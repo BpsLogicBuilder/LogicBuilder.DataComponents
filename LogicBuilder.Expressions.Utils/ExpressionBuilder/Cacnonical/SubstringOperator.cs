@@ -6,26 +6,26 @@ namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Cacnonical
 {
     public class SubstringOperator : IExpressionPart
     {
-        public SubstringOperator(IExpressionPart left, params IExpressionPart[] args)
+        public SubstringOperator(IExpressionPart sourceOperand, params IExpressionPart[] indexes)
         {
-            Left = left;
-            Args = args;
+            SourceOperand = sourceOperand;
+            Indexes = indexes;
         }
 
-        public IExpressionPart Left { get; private set; }
-        public IExpressionPart[] Args { get; private set; }
+        public IExpressionPart SourceOperand { get; private set; }
+        public IExpressionPart[] Indexes { get; private set; }
 
-        public Expression Build() => Build(Left.Build());
+        public Expression Build() => Build(SourceOperand.Build());
 
         private Expression Build(Expression leftExpression)
         {
             if (leftExpression.Type == typeof(string))
                 return leftExpression.GetSubStringCall
                 (
-                    Args.Select(arg => arg.Build()).ToArray()
+                    Indexes.Select(arg => arg.Build()).ToArray()
                 );
             else
-                throw new ArgumentException(nameof(Args));
+                throw new ArgumentException(nameof(Indexes));
         }
     }
 }

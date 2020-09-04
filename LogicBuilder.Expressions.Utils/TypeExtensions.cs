@@ -148,7 +148,12 @@ namespace LogicBuilder.Expressions.Utils
             => expression.Type.GetUnderlyingElementType();
 
         public static bool IsList(this Type type)
-            => type.IsArray || (type.IsGenericType && typeof(System.Collections.IEnumerable).IsAssignableFrom(type));
+        {
+            if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(IGrouping<,>))
+                return false;
+
+            return type.IsArray || (type.IsGenericType && typeof(System.Collections.IEnumerable).IsAssignableFrom(type));
+        }
 
         public static bool IsIQueryable(this Type type)
             => type.IsGenericType && typeof(IQueryable).IsAssignableFrom(type);

@@ -1,21 +1,19 @@
 ﻿using System.Linq.Expressions;
 
-namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Lambda
+namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Collection
 {
-    public class TakeOperator : IExpressionPart
+    public class AsQueryableOperator : IExpressionPart
     {
-        public TakeOperator(IExpressionPart sourceOperand, int count)
+        public AsQueryableOperator(IExpressionPart sourceOperand)
         {
             SourceOperand = sourceOperand;
-            Count = count;
         }
 
         public IExpressionPart SourceOperand { get; }
-        public int Count { get; }
 
         public Expression Build() => Build(SourceOperand.Build());
 
         private Expression Build(Expression operandExpression)
-            => operandExpression.GetTakeCall(Count);
+            => operandExpression.GetAsQueryableCall();
     }
 }

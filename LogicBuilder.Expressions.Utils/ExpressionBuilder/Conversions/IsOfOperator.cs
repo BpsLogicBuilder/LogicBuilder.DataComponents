@@ -1,10 +1,11 @@
-﻿using System.Linq.Expressions;
+﻿using System;
+using System.Linq.Expressions;
 
 namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Conversions
 {
     public class IsOfOperator : IExpressionPart
     {
-        public IsOfOperator(IExpressionPart operand, System.Type type)
+        public IsOfOperator(IExpressionPart operand, Type type)
         {
             Operand = operand;
             Type = type;
