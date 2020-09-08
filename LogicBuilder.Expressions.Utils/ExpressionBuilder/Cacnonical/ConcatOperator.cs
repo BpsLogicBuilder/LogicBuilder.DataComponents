@@ -19,7 +19,7 @@ namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Cacnonical
         private Expression Build(Expression leftExpression)
         {
             if (leftExpression.Type.IsList())
-                return leftExpression.GetEnumerableConcatCall(Right.Build());
+                return leftExpression.GetConcatCall(Right.Build());
             else if (leftExpression.Type == typeof(string))
                 return LinqHelpers.GetStringConcatCall(leftExpression, Right.Build());
             else

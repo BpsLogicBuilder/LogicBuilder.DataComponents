@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 
 namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Lambda
 {
@@ -14,7 +13,7 @@ namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Lambda
         protected override Expression Build(Expression operandExpression)
             => operandExpression.GetSelectManyCall(GetSelector(operandExpression));
 
-        protected override IExpressionPart GetLambdaOperatorHelper(Type sourceElementType)
+        protected override IExpressionPart GetLambdaOperator(Type sourceElementType)
             => new IEnumerableSelectorLambdaOperator
             (
                 Parameters,

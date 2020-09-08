@@ -19,7 +19,7 @@ namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Cacnonical
         private Expression Build(Expression leftExpression)
         {
             if (leftExpression.Type.IsList())
-                return leftExpression.GetEnumerableContainsCall(Right.Build());
+                return leftExpression.GetContainsCall(Right.Build());
             else if (leftExpression.Type == typeof(string))
                 return leftExpression.GetStringContainsCall(Right.Build());
             else

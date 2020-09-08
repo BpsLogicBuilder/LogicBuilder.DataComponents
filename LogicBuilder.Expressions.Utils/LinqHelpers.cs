@@ -352,141 +352,64 @@ namespace LogicBuilder.Expressions.Utils
                 throw new ArgumentException(nameof(operandExpression));
         }
 
-        public static Expression GetEnumerableCountCall(this Expression expression, params Expression[] args)
-            => Expression.Call
-            (
-                typeof(Enumerable),
-                "Count",
-                new[] { expression.GetUnderlyingElementType() },
-                new Expression[] { expression }.Concat(args).ToArray()
-            );
-
-        public static Expression GetEnumerableContainsCall(this Expression expression, Expression operand)
-            => Expression.Call
-            (
-                typeof(Enumerable),
-                "Contains",
-                new[] { expression.GetUnderlyingElementType() },
-                expression,
-                operand
-            );
-
         public static Expression GetStringContainsCall(this Expression instance, Expression operand)
             => Expression.Call(instance, StringContainsMethodInfo, operand);
 
-        public static Expression GetEnumerableConcatCall(this Expression expression, Expression operand)
+        public static Expression GetMethodCall(this Expression expression, string methodName, params Expression[] args)
             => Expression.Call
             (
-                typeof(Enumerable),
-                "Concat",
+                expression.Type.IsIQueryable() ? typeof(Queryable) : typeof(Enumerable),
+                methodName,
                 new[] { expression.GetUnderlyingElementType() },
-                expression,
-                operand
-            );
-
-        public static MethodCallExpression GetFirstOrDefaultCall(this Expression expression, params Expression[] args)
-           => Expression.Call
-            (
-                expression.Type.IsIQueryable() ? typeof(Queryable) : typeof(Enumerable),
-                "FirstOrDefault",
-                new Type[] { expression.GetUnderlyingElementType() },
                 new Expression[] { expression }.Concat(args).ToArray()
             );
 
-        public static MethodCallExpression GetFirstCall(this Expression expression, params Expression[] args)
-           => Expression.Call
-            (
-                expression.Type.IsIQueryable() ? typeof(Queryable) : typeof(Enumerable),
-                "First",
-                new Type[] { expression.GetUnderlyingElementType() },
-                new Expression[] { expression }.Concat(args).ToArray()
-            );
+        public static Expression GetAllCall(this Expression expression, params Expression[] args)
+            => expression.GetMethodCall("All", args);
 
-        public static MethodCallExpression GetLastOrDefaultCall(this Expression expression, params Expression[] args)
-           => Expression.Call
-            (
-                expression.Type.IsIQueryable() ? typeof(Queryable) : typeof(Enumerable),
-                "LastOrDefault",
-                new Type[] { expression.GetUnderlyingElementType() },
-                new Expression[] { expression }.Concat(args).ToArray()
-            );
+        public static Expression GetAnyCall(this Expression expression, params Expression[] args)
+            => expression.GetMethodCall("Any", args);
 
-        public static MethodCallExpression GetLastCall(this Expression expression, params Expression[] args)
-           => Expression.Call
-            (
-                expression.Type.IsIQueryable() ? typeof(Queryable) : typeof(Enumerable),
-                "Last",
-                new Type[] { expression.GetUnderlyingElementType() },
-                new Expression[] { expression }.Concat(args).ToArray()
-            );
+        public static Expression GetConcatCall(this Expression expression, Expression operand)
+            => expression.GetMethodCall("Concat", operand);
 
-        public static MethodCallExpression GetSingleOrDefaultCall(this Expression expression, params Expression[] args)
-           => Expression.Call
-            (
-                expression.Type.IsIQueryable() ? typeof(Queryable) : typeof(Enumerable),
-                "SingleOrDefault",
-                new Type[] { expression.GetUnderlyingElementType() },
-                new Expression[] { expression }.Concat(args).ToArray()
-            );
+        public static Expression GetContainsCall(this Expression expression, Expression operand)
+            => expression.GetMethodCall("Contains", operand);
 
-        public static MethodCallExpression GetSingleCall(this Expression expression, params Expression[] args)
-           => Expression.Call
-            (
-                expression.Type.IsIQueryable() ? typeof(Queryable) : typeof(Enumerable),
-                "Single",
-                new Type[] { expression.GetUnderlyingElementType() },
-                new Expression[] { expression }.Concat(args).ToArray()
-            );
+        public static Expression GetCountCall(this Expression expression, params Expression[] args)
+            => expression.GetMethodCall("Count", args);
 
-        public static MethodCallExpression GetAnyCall(this Expression expression, params Expression[] args)
-            => Expression.Call
-            (
-                expression.Type.IsIQueryable() ? typeof(Queryable) : typeof(Enumerable),
-                "Any",
-                new Type[] { expression.GetUnderlyingElementType() },
-                new Expression[] { expression }.Concat(args).ToArray()
-            );
+        public static Expression GetDistinctCall(this Expression expression)
+            => expression.GetMethodCall("Distinct");
 
-        public static MethodCallExpression GetAllCall(this Expression expression, params Expression[] args)
-            => Expression.Call
-            (
-                expression.Type.IsIQueryable() ? typeof(Queryable) : typeof(Enumerable),
-                "All",
-                new Type[] { expression.GetUnderlyingElementType() },
-                new Expression[] { expression }.Concat(args).ToArray()
-            );
+        public static Expression GetFirstCall(this Expression expression, params Expression[] args)
+            => expression.GetMethodCall("First", args);
 
-        public static MethodCallExpression GetWhereCall(this Expression expression, params Expression[] args)
-            => Expression.Call
-            (
-                expression.Type.IsIQueryable() ? typeof(Queryable) : typeof(Enumerable),
-                "Where",
-                new Type[] { expression.GetUnderlyingElementType() },
-                new Expression[] { expression }.Concat(args).ToArray()
-            );
+        public static Expression GetFirstOrDefaultCall(this Expression expression, params Expression[] args)
+            => expression.GetMethodCall("FirstOrDefault", args);
 
+        public static Expression GetLastCall(this Expression expression, params Expression[] args)
+            => expression.GetMethodCall("Last", args);
 
-        public static MethodCallExpression GetSkipCall(this Expression expression, int skip)
-            => Expression.Call
-            (
-                expression.Type.IsIQueryable() ? typeof(Queryable) : typeof(Enumerable),
-                "Skip",
-                new[] { expression.GetUnderlyingElementType() },
-                expression,
-                Expression.Constant(skip)
-            );
+        public static Expression GetLastOrDefaultCall(this Expression expression, params Expression[] args)
+            => expression.GetMethodCall("LastOrDefault", args);
 
-        public static MethodCallExpression GetTakeCall(this Expression expression, int take)
-            => Expression.Call
-            (
-                expression.Type.IsIQueryable() ? typeof(Queryable) : typeof(Enumerable),
-                "Take",
-                new[] { expression.GetUnderlyingElementType() },
-                expression,
-                Expression.Constant(take)
-            );
+        public static Expression GetSingleCall(this Expression expression, params Expression[] args)
+            => expression.GetMethodCall("Single", args);
 
-        public static MethodCallExpression GetOrderByCall(this Expression expression, LambdaExpression selector, ListSortDirection sortDirection)
+        public static Expression GetSingleOrDefaultCall(this Expression expression, params Expression[] args)
+            => expression.GetMethodCall("SingleOrDefault", args);
+
+        public static Expression GetSkipCall(this Expression expression, int skip)
+            => expression.GetMethodCall("Skip", Expression.Constant(skip));
+
+        public static Expression GetTakeCall(this Expression expression, int take)
+            => expression.GetMethodCall("Take", Expression.Constant(take));
+
+        public static Expression GetWhereCall(this Expression expression, params Expression[] args)
+            => expression.GetMethodCall("Where", args);
+
+        public static Expression GetOrderByCall(this Expression expression, LambdaExpression selector, ListSortDirection sortDirection)
         {
             return GetCall(expression.GetUnderlyingElementType());
             MethodCallExpression GetCall(Type sourceType)
@@ -504,7 +427,7 @@ namespace LogicBuilder.Expressions.Utils
                 );
         }
 
-        public static MethodCallExpression GetThenByCall(this Expression expression, LambdaExpression selector, ListSortDirection sortDirection)
+        public static Expression GetThenByCall(this Expression expression, LambdaExpression selector, ListSortDirection sortDirection)
         {
             return GetCall(expression.GetUnderlyingElementType());
             MethodCallExpression GetCall(Type sourceType)
@@ -522,7 +445,7 @@ namespace LogicBuilder.Expressions.Utils
                 );
         }
 
-        public static MethodCallExpression GetGroupByCall(this Expression expression, LambdaExpression selectorExpression)
+        public static Expression GetGroupByCall(this Expression expression, LambdaExpression selectorExpression)
         {
             return Expression.Call
             (
@@ -558,18 +481,7 @@ namespace LogicBuilder.Expressions.Utils
                 selectorExpression
             );
 
-        public static Expression GetCountCall(this Expression expression, params Expression[] args)
-        {
-            return Expression.Call
-            (
-                expression.Type.IsIQueryable() ? typeof(Queryable) : typeof(Enumerable),
-                "Count",
-                new Type[] { expression.GetUnderlyingElementType() },
-                new Expression[] { expression }.Concat(args).ToArray()
-            );
-        }
-
-        public static MethodCallExpression GetToListCall(this Expression expression)
+        public static Expression GetToListCall(this Expression expression)
             => Expression.Call
             (
                 typeof(Enumerable),
@@ -578,16 +490,7 @@ namespace LogicBuilder.Expressions.Utils
                 expression
             );
 
-        public static MethodCallExpression GetDistinctCall(this Expression expression)
-            => Expression.Call
-            (
-                expression.Type.IsIQueryable() ? typeof(Queryable) : typeof(Enumerable),
-                "Distinct",
-                new Type[] { expression.GetUnderlyingElementType() },
-                expression
-            );
-
-        public static MethodCallExpression GetAsQueryableCall(this Expression expression)
+        public static Expression GetAsQueryableCall(this Expression expression)
             => Expression.Call
             (
                 typeof(Queryable), 
@@ -596,7 +499,7 @@ namespace LogicBuilder.Expressions.Utils
                 expression
             );
 
-        public static MethodCallExpression GetOfTypeCall(this Expression expression, Type elementType)
+        public static Expression GetOfTypeCall(this Expression expression, Type elementType)
             => Expression.Call
             (
                 expression.Type.IsIQueryable() ? typeof(Queryable) : typeof(Enumerable),
@@ -668,7 +571,7 @@ namespace LogicBuilder.Expressions.Utils
         public static Expression GetNowDateTimOffsetProperty()
             => Expression.MakeMemberAccess(null, DateTimeUtcNowMemberInfo);
 
-        public static MethodCallExpression GetAverageCall(this Expression expression, params Expression[] args)
+        public static Expression GetAverageCall(this Expression expression, params Expression[] args)
            => Expression.Call
             (
                 expression.Type.IsIQueryable() ? typeof(Queryable) : typeof(Enumerable),
@@ -679,7 +582,7 @@ namespace LogicBuilder.Expressions.Utils
                 new Expression[] { expression }.Concat(args).ToArray()
             );
 
-        public static MethodCallExpression GetMaxCall(this Expression expression, params Expression[] args)
+        public static Expression GetMaxCall(this Expression expression, params Expression[] args)
         {
             Type sourceType = expression.GetUnderlyingElementType();
             return Expression.Call
@@ -693,7 +596,7 @@ namespace LogicBuilder.Expressions.Utils
             );
         }
 
-        public static MethodCallExpression GetMinCall(this Expression expression, params Expression[] args)
+        public static Expression GetMinCall(this Expression expression, params Expression[] args)
         {
             Type sourceType = expression.GetUnderlyingElementType();
             return Expression.Call
@@ -707,7 +610,7 @@ namespace LogicBuilder.Expressions.Utils
             );
         }
 
-        public static MethodCallExpression GetSumCall(this Expression expression, params Expression[] args)
+        public static Expression GetSumCall(this Expression expression, params Expression[] args)
            => Expression.Call
             (
                 expression.Type.IsIQueryable() ? typeof(Queryable) : typeof(Enumerable),

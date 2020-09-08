@@ -14,6 +14,6 @@ namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Logical
         public IExpressionPart ListToSearch { get; private set; }
 
         public Expression Build()
-            => ListToSearch.Build().GetEnumerableContainsCall(ItemToFind.Build());
+            => ListToSearch.Build().GetContainsCall(ItemToFind.Build());
     }
 }

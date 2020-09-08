@@ -17,7 +17,7 @@ namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Cacnonical
         private Expression Build(Expression operandExpression)
         {
             if (operandExpression.Type.IsList())
-                return operandExpression.GetEnumerableCountCall();
+                return operandExpression.GetCountCall();
             else if (operandExpression.Type == typeof(string))
                 return operandExpression.MakeSelector("Length");
             else
