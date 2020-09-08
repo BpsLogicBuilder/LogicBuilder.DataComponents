@@ -35,14 +35,14 @@ namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Lambda
 
             return new Expression[]
             {
-                GetLambdaOperatorHelper(operandExpression.GetUnderlyingElementType()).Build()
+                GetLambdaOperator(operandExpression.GetUnderlyingElementType()).Build()
             };
         }
 
         protected LambdaExpression GetSelector(Expression operandExpression)
-            => (LambdaExpression)GetLambdaOperatorHelper(operandExpression.GetUnderlyingElementType()).Build();
+            => (LambdaExpression)GetLambdaOperator(operandExpression.GetUnderlyingElementType()).Build();
 
-        protected SelectorLambdaOperator GetLambdaOperatorHelper(Type elementType)
+        protected virtual IExpressionPart GetLambdaOperator(Type elementType)
             => new SelectorLambdaOperator
             (
                 Parameters,

@@ -16,9 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\LogicBuilder.Data\LogicBuilder.Data.csproj" />
-    <ProjectReference Include="..\LogicBuilder.EntityFrameworkCore.SqlServer\LogicBuilder.EntityFrameworkCore.SqlServer.csproj" />
     <ProjectReference Include="..\LogicBuilder.Expressions.Utils\LogicBuilder.Expressions.Utils.csproj" />
-    <ProjectReference Include="..\LogicBuilder.Structures\LogicBuilder.Structures.csproj" />
   </ItemGroup>
 
 </Project>
