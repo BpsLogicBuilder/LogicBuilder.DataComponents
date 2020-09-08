@@ -7455,7 +7455,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                                     ),
                                     typeof(long?)
                                 ),
-                                new ConstantOperator(12l)
+                                new ConstantOperator(12L)
                             ),
                             "$it => (Convert($it.NullableULongProp.Value) == Convert(12))",
                             parameters
