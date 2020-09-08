@@ -101,12 +101,30 @@ namespace LogicBuilder.Expressions.Utils
             ).Build();
 
         public static Expression<Func<T, TResult>> GetExpression<T, TResult>(this IExpressionPart filterPart, IDictionary<string, ParameterExpression> parameters, string parameterName)
-            => (Expression<Func<T, TResult>>)new SelectorLambdaOperator
+            => (Expression<Func<T, TResult>>)filterPart.GetExpression
+            (
+                typeof(T),
+                typeof(TResult),
+                parameters,
+                parameterName
+            );
+
+        public static LambdaExpression GetExpression(this IExpressionPart filterPart, Type sourceType, Type retultType, IDictionary<string, ParameterExpression> parameters, string parameterName)
+            => (LambdaExpression)new SelectorLambdaOperator
             (
                 parameters,
                 filterPart,
-                typeof(T),
-                typeof(TResult),
+                sourceType,
+                retultType,
+                parameterName
+            ).Build();
+
+        public static LambdaExpression GetExpression(this IExpressionPart filterPart, Type sourceType, IDictionary<string, ParameterExpression> parameters, string parameterName)
+            => (LambdaExpression)new SelectorLambdaOperator
+            (
+                parameters,
+                filterPart,
+                sourceType,
                 parameterName
             ).Build();
 
@@ -375,6 +393,51 @@ namespace LogicBuilder.Expressions.Utils
                 new Expression[] { expression }.Concat(args).ToArray()
             );
 
+        public static MethodCallExpression GetFirstCall(this Expression expression, params Expression[] args)
+           => Expression.Call
+            (
+                expression.Type.IsIQueryable() ? typeof(Queryable) : typeof(Enumerable),
+                "First",
+                new Type[] { expression.GetUnderlyingElementType() },
+                new Expression[] { expression }.Concat(args).ToArray()
+            );
+
+        public static MethodCallExpression GetLastOrDefaultCall(this Expression expression, params Expression[] args)
+           => Expression.Call
+            (
+                expression.Type.IsIQueryable() ? typeof(Queryable) : typeof(Enumerable),
+                "LastOrDefault",
+                new Type[] { expression.GetUnderlyingElementType() },
+                new Expression[] { expression }.Concat(args).ToArray()
+            );
+
+        public static MethodCallExpression GetLastCall(this Expression expression, params Expression[] args)
+           => Expression.Call
+            (
+                expression.Type.IsIQueryable() ? typeof(Queryable) : typeof(Enumerable),
+                "Last",
+                new Type[] { expression.GetUnderlyingElementType() },
+                new Expression[] { expression }.Concat(args).ToArray()
+            );
+
+        public static MethodCallExpression GetSingleOrDefaultCall(this Expression expression, params Expression[] args)
+           => Expression.Call
+            (
+                expression.Type.IsIQueryable() ? typeof(Queryable) : typeof(Enumerable),
+                "SingleOrDefault",
+                new Type[] { expression.GetUnderlyingElementType() },
+                new Expression[] { expression }.Concat(args).ToArray()
+            );
+
+        public static MethodCallExpression GetSingleCall(this Expression expression, params Expression[] args)
+           => Expression.Call
+            (
+                expression.Type.IsIQueryable() ? typeof(Queryable) : typeof(Enumerable),
+                "Single",
+                new Type[] { expression.GetUnderlyingElementType() },
+                new Expression[] { expression }.Concat(args).ToArray()
+            );
+
         public static MethodCallExpression GetAnyCall(this Expression expression, params Expression[] args)
             => Expression.Call
             (
@@ -481,6 +544,20 @@ namespace LogicBuilder.Expressions.Utils
                 selectorExpression
             );
 
+        public static Expression GetSelectManyCall(this Expression expression, LambdaExpression selectorExpression)
+            => Expression.Call
+            (
+                expression.Type.IsIQueryable() ? typeof(Queryable) : typeof(Enumerable),
+                "SelectMany",
+                new Type[] 
+                {
+                    expression.GetUnderlyingElementType(), 
+                    selectorExpression.ReturnType.GetUnderlyingElementType() 
+                },
+                expression,
+                selectorExpression
+            );
+
         public static Expression GetCountCall(this Expression expression, params Expression[] args)
         {
             return Expression.Call
@@ -501,6 +578,15 @@ namespace LogicBuilder.Expressions.Utils
                 expression
             );
 
+        public static MethodCallExpression GetDistinctCall(this Expression expression)
+            => Expression.Call
+            (
+                expression.Type.IsIQueryable() ? typeof(Queryable) : typeof(Enumerable),
+                "Distinct",
+                new Type[] { expression.GetUnderlyingElementType() },
+                expression
+            );
+
         public static MethodCallExpression GetAsQueryableCall(this Expression expression)
             => Expression.Call
             (
@@ -510,19 +596,10 @@ namespace LogicBuilder.Expressions.Utils
                 expression
             );
 
-        public static MethodCallExpression GetOfTypeEnumerableCall(this Expression expression, Type elementType)
-           => Expression.Call
-           (
-               typeof(Enumerable),
-               "OfType",
-               new Type[] { elementType },
-               expression
-           );
-
-        public static MethodCallExpression GetOfTypeQueryableCall(this Expression expression, Type elementType)
+        public static MethodCallExpression GetOfTypeCall(this Expression expression, Type elementType)
             => Expression.Call
             (
-                typeof(Queryable),
+                expression.Type.IsIQueryable() ? typeof(Queryable) : typeof(Enumerable),
                 "OfType",
                 new Type[] { elementType },
                 expression

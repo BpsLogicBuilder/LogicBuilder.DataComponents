@@ -17,8 +17,6 @@ namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Conversions
         public Expression Build() => Build(Operand.Build());
 
         private Expression Build(Expression operandExpression) 
-            => operandExpression.Type.IsIQueryable()
-                ? operandExpression.GetOfTypeQueryableCall(Type)
-                : operandExpression.GetOfTypeEnumerableCall(Type);
+            => operandExpression.GetOfTypeCall(Type);
     }
 }

@@ -42,7 +42,7 @@ namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Lambda
         protected LambdaExpression GetSelector(Expression operandExpression)
             => (LambdaExpression)GetLambdaOperatorHelper(operandExpression.GetUnderlyingElementType()).Build();
 
-        protected SelectorLambdaOperator GetLambdaOperatorHelper(Type elementType)
+        protected virtual IExpressionPart GetLambdaOperatorHelper(Type elementType)
             => new SelectorLambdaOperator
             (
                 Parameters,
