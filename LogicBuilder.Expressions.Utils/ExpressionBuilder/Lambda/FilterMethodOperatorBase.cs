@@ -14,9 +14,9 @@ namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Lambda
             FilterParameterName = filterParameterName;
         }
 
-        public FilterMethodOperatorBase(IExpressionPart operand)
+        public FilterMethodOperatorBase(IExpressionPart sourceOperand)
         {
-            SourceOperand = operand;
+            SourceOperand = sourceOperand;
         }
 
         public IExpressionPart SourceOperand { get; }

@@ -11,7 +11,7 @@ namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Lambda
         {
         }
 
-        public LastOrDefaultOperator(IExpressionPart operand) : base(operand)
+        public LastOrDefaultOperator(IExpressionPart sourceOperand) : base(sourceOperand)
         {
         }
 

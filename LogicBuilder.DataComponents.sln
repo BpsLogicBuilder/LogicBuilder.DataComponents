@@ -35,6 +35,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogicBuilder.Expressions.Utils.Tests", "LogicBuilder.Expressions.Utils.Tests\LogicBuilder.Expressions.Utils.Tests.csproj", "{DD4F86BC-0089-48E3-A1FF-FEA8B328D21E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogicBuilder.EntityFrameworkCore.SqlServer.Tests", "LogicBuilder.EntityFrameworkCore.SqlServer.Tests\LogicBuilder.EntityFrameworkCore.SqlServer.Tests.csproj", "{E7020D55-C111-48B3-AA6D-75E3D3C611FB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,6 +79,10 @@ Global
 		{DD4F86BC-0089-48E3-A1FF-FEA8B328D21E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD4F86BC-0089-48E3-A1FF-FEA8B328D21E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DD4F86BC-0089-48E3-A1FF-FEA8B328D21E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7020D55-C111-48B3-AA6D-75E3D3C611FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7020D55-C111-48B3-AA6D-75E3D3C611FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7020D55-C111-48B3-AA6D-75E3D3C611FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7020D55-C111-48B3-AA6D-75E3D3C611FB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -91,6 +97,7 @@ Global
 		{2AB1465E-6F0C-41E9-951C-B6AC49B76623} = {EE0AA77E-ACC5-48E9-91BB-CFB43D08D28E}
 		{1539ED6D-868C-4BDA-9828-F8AE63A56944} = {96A33DAA-746B-41B6-ACF9-74E166C73446}
 		{DD4F86BC-0089-48E3-A1FF-FEA8B328D21E} = {EE0AA77E-ACC5-48E9-91BB-CFB43D08D28E}
+		{E7020D55-C111-48B3-AA6D-75E3D3C611FB} = {EE0AA77E-ACC5-48E9-91BB-CFB43D08D28E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CFE1F282-4500-44FA-BA40-7840CD503455}
