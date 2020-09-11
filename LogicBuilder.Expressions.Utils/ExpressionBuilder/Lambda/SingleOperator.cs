@@ -9,7 +9,7 @@ namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Lambda
         {
         }
 
-        public SingleOperator(IExpressionPart operand) : base(operand)
+        public SingleOperator(IExpressionPart sourceOperand) : base(sourceOperand)
         {
         }
 
