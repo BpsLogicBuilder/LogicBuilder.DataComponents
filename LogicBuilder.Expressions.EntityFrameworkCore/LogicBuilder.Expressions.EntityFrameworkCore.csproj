@@ -19,7 +19,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="LogicBuilder.Expressions.Utils" Version="[4.0.2-alpha.0.2,4.0.3)" />
+    <PackageReference Include="LogicBuilder.Expressions.Utils" Version="[4.0.2-alpha.0.1.1,4.0.3)" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.0" />
     <PackageReference Include="MinVer" Version="2.3.0">
       <PrivateAssets>all</PrivateAssets>
