@@ -521,19 +521,6 @@ namespace LogicBuilder.Expressions.Utils
             );
         }
 
-        private static string ChildParameterName(this string currentParameterName)
-        {
-            string lastChar = currentParameterName.Substring(currentParameterName.Length - 1);
-            if (short.TryParse(lastChar, out short lastCharShort))
-            {
-                return string.Concat(currentParameterName.Substring(0, currentParameterName.Length - 1), (lastCharShort++).ToString(CultureInfo.CurrentCulture));
-            }
-            else
-            {
-                return currentParameterName += "0";
-            }
-        }
-
         private static Expression GetSelectExpression(IEnumerable<string> parts, Expression parent, Type underlyingType, string parameterName)//underlying type because paranet is a collection
             => Expression.Call
             (

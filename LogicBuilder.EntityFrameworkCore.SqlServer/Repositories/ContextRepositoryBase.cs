@@ -2,6 +2,7 @@
 using LogicBuilder.Data;
 using LogicBuilder.Domain;
 using LogicBuilder.EntityFrameworkCore.SqlServer.Crud.DataStores;
+using LogicBuilder.Expressions.Utils.Expansions;
 using LogicBuilder.Expressions.Utils.Strutures;
 using Microsoft.EntityFrameworkCore.Query;
 using System;
@@ -37,6 +38,19 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Repositories
                 queryFunc,
                 includeProperties,
                 filteredIncludes
+            );
+        }
+
+        public async Task<ICollection<TModel>> GetAsync<TModel, TData>(Expression<Func<TModel, bool>> filter = null, Expression<Func<IQueryable<TModel>, IQueryable<TModel>>> queryFunc = null, SelectExpandDefinition selectExpandDefinition = null)
+            where TModel : BaseModel
+            where TData : BaseData
+        {
+            return await _store.GetAsync<TModel, TData>
+            (
+                _mapper,
+                filter,
+                queryFunc,
+                selectExpandDefinition
             );
         }
 

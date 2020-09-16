@@ -33,8 +33,18 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests
         #endregion Fields
 
         #region Methods
+        static MapperConfiguration MapperConfiguration;
         private void Initialize()
         {
+            if (MapperConfiguration == null)
+            {
+                MapperConfiguration = new MapperConfiguration(cfg =>
+                {
+                    cfg.AddExpressionMapping();
+                    cfg.AddMaps(typeof(SchoolProfile).GetTypeInfo().Assembly);
+                });
+            }
+
             serviceProvider = new ServiceCollection()
                 .AddDbContext<SchoolContext>
                 (
@@ -49,14 +59,7 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests
                 .AddTransient<ISchoolRepository, SchoolRepository>()
                 .AddSingleton<AutoMapper.IConfigurationProvider>
                 (
-                    new MapperConfiguration
-                    (
-                        cfg => 
-                        {
-                            cfg.AddExpressionMapping();
-                            cfg.AddMaps(typeof(SchoolProfile).GetTypeInfo().Assembly);
-                        }
-                    )
+                    MapperConfiguration
                 )
                 .AddTransient<IMapper>(sp => new Mapper(sp.GetRequiredService<AutoMapper.IConfigurationProvider>(), sp.GetService))
                 .BuildServiceProvider();

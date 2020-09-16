@@ -1,5 +1,6 @@
 ﻿using LogicBuilder.Data;
 using LogicBuilder.Domain;
+using LogicBuilder.Expressions.Utils.Expansions;
 using LogicBuilder.Expressions.Utils.Strutures;
 using Microsoft.EntityFrameworkCore.Query;
 using System;
@@ -13,6 +14,10 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Repositories
     public interface IContextRepository
     {
         Task<ICollection<TModel>> GetItemsAsync<TModel, TData>(Expression<Func<TModel, bool>> filter = null, Expression<Func<IQueryable<TModel>, IQueryable<TModel>>> queryFunc = null, ICollection<Expression<Func<IQueryable<TModel>, IIncludableQueryable<TModel, object>>>> includeProperties = null, ICollection<FilteredIncludeExpression> filteredIncludes = null)
+            where TModel : BaseModel
+            where TData : BaseData;
+
+        Task<ICollection<TModel>> GetAsync<TModel, TData>(Expression<Func<TModel, bool>> filter = null, Expression<Func<IQueryable<TModel>, IQueryable<TModel>>> queryFunc = null, SelectExpandDefinition selectExpandDefinition = null)
             where TModel : BaseModel
             where TData : BaseData;
 

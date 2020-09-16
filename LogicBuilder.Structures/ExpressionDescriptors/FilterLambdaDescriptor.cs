@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System;
+﻿using System;
 
 namespace LogicBuilder.Expressions.Utils.ExpressionDescriptors
 {
@@ -9,14 +8,14 @@ namespace LogicBuilder.Expressions.Utils.ExpressionDescriptors
 		{
 		}
 
-		public FilterLambdaDescriptor(IExpressionDescriptor selector, Type sourceElementType, string parameterName)
+		public FilterLambdaDescriptor(IExpressionDescriptor filterBody, Type sourceElementType, string parameterName)
 		{
-			Selector = selector;
+			FilterBody = filterBody;
 			SourceElementType = sourceElementType;
 			ParameterName = parameterName;
 		}
 
-		public IExpressionDescriptor Selector { get; set; }
+		public IExpressionDescriptor FilterBody { get; set; }
 		public Type SourceElementType { get; set; }
 		public string ParameterName { get; set; }
     }

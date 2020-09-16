@@ -163,5 +163,28 @@ namespace LogicBuilder.Expressions.Utils
             => memberType.IsList()
                 ? memberType.GetUnderlyingElementType()
                 : memberType;
+
+        public static MemberInfo[] GetSelectedMembers(this Type parentType, List<string> selects)
+        {
+            if (selects == null || !selects.Any())
+                return parentType.GetValueTypeMembers();
+
+            return selects.Select(select => parentType.GetMemberInfo(select)).ToArray();
+        }
+
+        private static MemberInfo[] GetValueTypeMembers(this Type parentType)
+        {
+            if (parentType.IsList())
+                return new MemberInfo[] { };
+
+            return parentType.GetMemberInfos().Where
+            (
+                info => (info.MemberType == MemberTypes.Field || info.MemberType == MemberTypes.Property)
+                && info.GetMemberType().IsLiteralType()
+            ).ToArray();
+        }
+
+        private static MemberInfo[] GetMemberInfos(this Type parentType)
+            => parentType.GetMembers(BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy | BindingFlags.IgnoreCase);
     }
 }

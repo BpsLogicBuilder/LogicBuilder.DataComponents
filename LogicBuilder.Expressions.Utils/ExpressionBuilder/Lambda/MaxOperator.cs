@@ -14,6 +14,8 @@ namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Lambda
         }
 
         protected override Expression Build(Expression operandExpression)
-            => operandExpression.GetMaxCall(GetParameters(operandExpression));
+            => SelectorBody == null
+                ? operandExpression.GetMaxCall()
+                : operandExpression.GetMaxCall(GetSelector(operandExpression));
     }
 }

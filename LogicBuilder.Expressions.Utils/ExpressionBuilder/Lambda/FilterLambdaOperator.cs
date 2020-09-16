@@ -6,15 +6,15 @@ namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Lambda
 {
     public class FilterLambdaOperator : IExpressionPart
     {
-        public FilterLambdaOperator(IDictionary<string, ParameterExpression> parameters, IExpressionPart selector, Type sourceElementType, string parameterName)
+        public FilterLambdaOperator(IDictionary<string, ParameterExpression> parameters, IExpressionPart filterBody, Type sourceElementType, string parameterName)
         {
-            Selector = selector;
+            FilterBody = filterBody;
             SourceElementType = sourceElementType;
             ParameterName = parameterName;
             Parameters = parameters;
         }
 
-        public IExpressionPart Selector { get; }
+        public IExpressionPart FilterBody { get; }
         public Type SourceElementType { get; }
         public string ParameterName { get; }
         public IDictionary<string, ParameterExpression> Parameters { get; }
@@ -37,7 +37,7 @@ namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Lambda
                         typeof(bool)
                     }
                 ),
-                ConvertBody(Selector.Build()),
+                ConvertBody(FilterBody.Build()),
                 this.Parameters[ParameterName]
             );
 

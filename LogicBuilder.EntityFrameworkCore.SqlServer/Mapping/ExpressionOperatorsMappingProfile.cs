@@ -13,13 +13,11 @@ using LogicBuilder.Expressions.Utils.ExpressionDescriptors;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
+namespace LogicBuilder.EntityFrameworkCore.SqlServer.Mapping
 {
-	public class MappingProfile : Profile
+    public class ExpressionOperatorsMappingProfile : Profile
 	{
-		const string PARAMETERS_KEY = "parameters";
-
-		public MappingProfile()
+		public ExpressionOperatorsMappingProfile()
 		{
 			CreateMap<AddBinaryDescriptor, AddBinaryOperator>();
 			CreateMap<AllDescriptor, AllOperator>()
@@ -27,7 +25,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
 				(
 					(src, context) => new AllOperator
 					(
-						(IDictionary<string, ParameterExpression>)context.Items[PARAMETERS_KEY],
+						(IDictionary<string, ParameterExpression>)context.Items[ExpressionOperators.PARAMETERS_KEY],
 						context.Mapper.Map<IExpressionPart>(src.SourceOperand),
 						context.Mapper.Map<IExpressionPart>(src.FilterBody),
 						src.FilterParameterName
@@ -41,7 +39,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
 				(
 					(src, context) => new AnyOperator
 					(
-						(IDictionary<string, ParameterExpression>)context.Items[PARAMETERS_KEY],
+						(IDictionary<string, ParameterExpression>)context.Items[ExpressionOperators.PARAMETERS_KEY],
 						context.Mapper.Map<IExpressionPart>(src.SourceOperand),
 						context.Mapper.Map<IExpressionPart>(src.FilterBody),
 						src.FilterParameterName
@@ -55,7 +53,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
 				(
 					(src, context) => new AverageOperator
 					(
-						(IDictionary<string, ParameterExpression>)context.Items[PARAMETERS_KEY],
+						(IDictionary<string, ParameterExpression>)context.Items[ExpressionOperators.PARAMETERS_KEY],
 						context.Mapper.Map<IExpressionPart>(src.SourceOperand),
 						context.Mapper.Map<IExpressionPart>(src.SelectorBody),
 						src.SelectorParameterName
@@ -83,7 +81,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
 				(
 					(src, context) => new CountOperator
 					(
-						(IDictionary<string, ParameterExpression>)context.Items[PARAMETERS_KEY],
+						(IDictionary<string, ParameterExpression>)context.Items[ExpressionOperators.PARAMETERS_KEY],
 						context.Mapper.Map<IExpressionPart>(src.SourceOperand),
 						context.Mapper.Map<IExpressionPart>(src.FilterBody),
 						src.FilterParameterName
@@ -103,8 +101,8 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
 				(
 					(src, context) => new FilterLambdaOperator
 					(
-						(IDictionary<string, ParameterExpression>)context.Items[PARAMETERS_KEY],
-						context.Mapper.Map<IExpressionPart>(src.Selector),
+						(IDictionary<string, ParameterExpression>)context.Items[ExpressionOperators.PARAMETERS_KEY],
+						context.Mapper.Map<IExpressionPart>(src.FilterBody),
 						src.SourceElementType,
 						src.ParameterName
 					)
@@ -116,7 +114,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
 				(
 					(src, context) => new FirstOperator
 					(
-						(IDictionary<string, ParameterExpression>)context.Items[PARAMETERS_KEY],
+						(IDictionary<string, ParameterExpression>)context.Items[ExpressionOperators.PARAMETERS_KEY],
 						context.Mapper.Map<IExpressionPart>(src.SourceOperand),
 						context.Mapper.Map<IExpressionPart>(src.FilterBody),
 						src.FilterParameterName
@@ -129,7 +127,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
 				(
 					(src, context) => new FirstOrDefaultOperator
 					(
-						(IDictionary<string, ParameterExpression>)context.Items[PARAMETERS_KEY],
+						(IDictionary<string, ParameterExpression>)context.Items[ExpressionOperators.PARAMETERS_KEY],
 						context.Mapper.Map<IExpressionPart>(src.SourceOperand),
 						context.Mapper.Map<IExpressionPart>(src.FilterBody),
 						src.FilterParameterName
@@ -146,7 +144,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
 				(
 					(src, context) => new GroupByOperator
 					(
-						(IDictionary<string, ParameterExpression>)context.Items[PARAMETERS_KEY],
+						(IDictionary<string, ParameterExpression>)context.Items[ExpressionOperators.PARAMETERS_KEY],
 						context.Mapper.Map<IExpressionPart>(src.SourceOperand),
 						context.Mapper.Map<IExpressionPart>(src.SelectorBody),
 						src.SelectorParameterName
@@ -161,7 +159,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
 				(
 					(src, context) => new IEnumerableSelectorLambdaOperator
 					(
-						(IDictionary<string, ParameterExpression>)context.Items[PARAMETERS_KEY],
+						(IDictionary<string, ParameterExpression>)context.Items[ExpressionOperators.PARAMETERS_KEY],
 						context.Mapper.Map<IExpressionPart>(src.Selector),
 						src.SourceElementType,
 						src.ParameterName
@@ -177,7 +175,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
 				(
 					(src, context) => new LastOperator
 					(
-						(IDictionary<string, ParameterExpression>)context.Items[PARAMETERS_KEY],
+						(IDictionary<string, ParameterExpression>)context.Items[ExpressionOperators.PARAMETERS_KEY],
 						context.Mapper.Map<IExpressionPart>(src.SourceOperand),
 						context.Mapper.Map<IExpressionPart>(src.FilterBody),
 						src.FilterParameterName
@@ -190,7 +188,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
 				(
 					(src, context) => new LastOrDefaultOperator
 					(
-						(IDictionary<string, ParameterExpression>)context.Items[PARAMETERS_KEY],
+						(IDictionary<string, ParameterExpression>)context.Items[ExpressionOperators.PARAMETERS_KEY],
 						context.Mapper.Map<IExpressionPart>(src.SourceOperand),
 						context.Mapper.Map<IExpressionPart>(src.FilterBody),
 						src.FilterParameterName
@@ -207,7 +205,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
 				(
 					(src, context) => new MaxOperator
 					(
-						(IDictionary<string, ParameterExpression>)context.Items[PARAMETERS_KEY],
+						(IDictionary<string, ParameterExpression>)context.Items[ExpressionOperators.PARAMETERS_KEY],
 						context.Mapper.Map<IExpressionPart>(src.SourceOperand),
 						context.Mapper.Map<IExpressionPart>(src.SelectorBody),
 						src.SelectorParameterName
@@ -223,7 +221,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
 				(
 					(src, context) => new MinOperator
 					(
-						(IDictionary<string, ParameterExpression>)context.Items[PARAMETERS_KEY],
+						(IDictionary<string, ParameterExpression>)context.Items[ExpressionOperators.PARAMETERS_KEY],
 						context.Mapper.Map<IExpressionPart>(src.SourceOperand),
 						context.Mapper.Map<IExpressionPart>(src.SelectorBody),
 						src.SelectorParameterName
@@ -245,7 +243,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
 				(
 					(src, context) => new OrderByOperator
 					(
-						(IDictionary<string, ParameterExpression>)context.Items[PARAMETERS_KEY],
+						(IDictionary<string, ParameterExpression>)context.Items[ExpressionOperators.PARAMETERS_KEY],
 						context.Mapper.Map<IExpressionPart>(src.SourceOperand),
 						context.Mapper.Map<IExpressionPart>(src.SelectorBody),
 						src.SortDirection,
@@ -259,7 +257,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
 				(
 					(src, context) => new ParameterOperator
 					(
-						(IDictionary<string, ParameterExpression>)context.Items[PARAMETERS_KEY],
+						(IDictionary<string, ParameterExpression>)context.Items[ExpressionOperators.PARAMETERS_KEY],
 						src.ParameterName
 					)
 				)
@@ -272,7 +270,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
 				(
 					(src, context) => new SelectManyOperator
 					(
-						(IDictionary<string, ParameterExpression>)context.Items[PARAMETERS_KEY],
+						(IDictionary<string, ParameterExpression>)context.Items[ExpressionOperators.PARAMETERS_KEY],
 						context.Mapper.Map<IExpressionPart>(src.SourceOperand),
 						context.Mapper.Map<IExpressionPart>(src.SelectorBody),
 						src.SelectorParameterName
@@ -285,7 +283,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
 				(
 					(src, context) => new SelectOperator
 					(
-						(IDictionary<string, ParameterExpression>)context.Items[PARAMETERS_KEY],
+						(IDictionary<string, ParameterExpression>)context.Items[ExpressionOperators.PARAMETERS_KEY],
 						context.Mapper.Map<IExpressionPart>(src.SourceOperand),
 						context.Mapper.Map<IExpressionPart>(src.SelectorBody),
 						src.SelectorParameterName
@@ -298,7 +296,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
 				(
 					(src, context) => new SelectorLambdaOperator
 					(
-						(IDictionary<string, ParameterExpression>)context.Items[PARAMETERS_KEY],
+						(IDictionary<string, ParameterExpression>)context.Items[ExpressionOperators.PARAMETERS_KEY],
 						context.Mapper.Map<IExpressionPart>(src.Selector),
 						src.SourceElementType,
 						src.BodyType,
@@ -312,7 +310,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
 				(
 					(src, context) => new SingleOperator
 					(
-						(IDictionary<string, ParameterExpression>)context.Items[PARAMETERS_KEY],
+						(IDictionary<string, ParameterExpression>)context.Items[ExpressionOperators.PARAMETERS_KEY],
 						context.Mapper.Map<IExpressionPart>(src.SourceOperand),
 						context.Mapper.Map<IExpressionPart>(src.FilterBody),
 						src.FilterParameterName
@@ -325,7 +323,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
 				(
 					(src, context) => new SingleOrDefaultOperator
 					(
-						(IDictionary<string, ParameterExpression>)context.Items[PARAMETERS_KEY],
+						(IDictionary<string, ParameterExpression>)context.Items[ExpressionOperators.PARAMETERS_KEY],
 						context.Mapper.Map<IExpressionPart>(src.SourceOperand),
 						context.Mapper.Map<IExpressionPart>(src.FilterBody),
 						src.FilterParameterName
@@ -342,7 +340,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
 				(
 					(src, context) => new SumOperator
 					(
-						(IDictionary<string, ParameterExpression>)context.Items[PARAMETERS_KEY],
+						(IDictionary<string, ParameterExpression>)context.Items[ExpressionOperators.PARAMETERS_KEY],
 						context.Mapper.Map<IExpressionPart>(src.SourceOperand),
 						context.Mapper.Map<IExpressionPart>(src.SelectorBody),
 						src.SelectorParameterName
@@ -356,7 +354,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
 				(
 					(src, context) => new ThenByOperator
 					(
-						(IDictionary<string, ParameterExpression>)context.Items[PARAMETERS_KEY],
+						(IDictionary<string, ParameterExpression>)context.Items[ExpressionOperators.PARAMETERS_KEY],
 						context.Mapper.Map<IExpressionPart>(src.SourceOperand),
 						context.Mapper.Map<IExpressionPart>(src.SelectorBody),
 						src.SortDirection,
@@ -377,7 +375,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
 				(
 					(src, context) => new WhereOperator
 					(
-						(IDictionary<string, ParameterExpression>)context.Items[PARAMETERS_KEY],
+						(IDictionary<string, ParameterExpression>)context.Items[ExpressionOperators.PARAMETERS_KEY],
 						context.Mapper.Map<IExpressionPart>(src.SourceOperand),
 						context.Mapper.Map<IExpressionPart>(src.FilterBody),
 						src.FilterParameterName
