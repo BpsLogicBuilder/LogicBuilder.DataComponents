@@ -14,6 +14,8 @@ namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Lambda
         }
 
         protected override Expression Build(Expression operandExpression)
-            => operandExpression.GetMinCall(GetParameters(operandExpression));
+            => SelectorBody == null
+                ? operandExpression.GetMinCall()
+                : operandExpression.GetMinCall(GetSelector(operandExpression));
     }
 }

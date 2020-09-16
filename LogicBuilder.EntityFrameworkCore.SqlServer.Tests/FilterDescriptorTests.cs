@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.Extensions.ExpressionMapping;
+using LogicBuilder.EntityFrameworkCore.SqlServer.Mapping;
 using LogicBuilder.EntityFrameworkCore.SqlServer.Tests.Data;
 using LogicBuilder.Expressions.Utils.ExpressionBuilder.Lambda;
 using LogicBuilder.Expressions.Utils.ExpressionDescriptors;
@@ -6756,7 +6757,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
                 MapperConfiguration = new MapperConfiguration(cfg =>
                 {
                     cfg.AddExpressionMapping();
-                    cfg.AddMaps(typeof(MappingProfile).Assembly);
+                    cfg.AddProfile<ExpressionOperatorsMappingProfile>();
                 });
             }
 

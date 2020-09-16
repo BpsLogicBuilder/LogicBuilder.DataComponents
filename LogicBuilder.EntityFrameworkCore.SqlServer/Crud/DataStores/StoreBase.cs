@@ -33,6 +33,15 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Crud.DataStores
             );
         }
 
+        public async Task<IQueryable<T>> GetQueryableAsync<T>(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IQueryable<T>> queryableFunc = null) where T : BaseData
+        {
+            return await _unitOfWork.GetRepository<T>().GetQueryableAsync
+            (
+                filter,
+                queryableFunc
+            );
+        }
+
         public async Task<int> CountAsync<T>(Expression<Func<T, bool>> filter = null) where T : BaseData
         {
             return await _unitOfWork.GetRepository<T>().CountAsync(filter);

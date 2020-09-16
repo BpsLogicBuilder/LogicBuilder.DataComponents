@@ -197,7 +197,7 @@ namespace LogicBuilder.Expressions.Utils
             );
         }
 
-        private static string ChildParameterName(this string currentParameterName)
+        internal static string ChildParameterName(this string currentParameterName)
         {
             string lastChar = currentParameterName.Substring(currentParameterName.Length - 1);
             if (short.TryParse(lastChar, out short lastCharShort))
@@ -410,31 +410,27 @@ namespace LogicBuilder.Expressions.Utils
             => expression.GetMethodCall("Where", args);
 
         public static Expression GetOrderByCall(this Expression expression, LambdaExpression selector, ListSortDirection sortDirection)
-        {
-            return GetCall(expression.GetUnderlyingElementType());
-            MethodCallExpression GetCall(Type sourceType)
-                => Expression.Call
-                (
-                    expression.Type.IsIQueryable() ? typeof(Queryable) : typeof(Enumerable),
-                    sortDirection == ListSortDirection.Ascending ? "OrderBy" : "OrderByDescending",
-                    new Type[]
-                    {
-                        sourceType,
-                        selector.ReturnType
-                    },
-                    expression,
-                    selector
-                );
-        }
+            => expression.GetOrderByThenByCall
+            (
+                selector,
+                sortDirection == ListSortDirection.Ascending ? "OrderBy" : "OrderByDescending"
+            );
 
-        public static Expression GetThenByCall(this Expression expression, LambdaExpression selector, ListSortDirection sortDirection)
+        public static Expression GetThenByCall(this Expression expression, LambdaExpression selector, ListSortDirection sortDirection) 
+            => expression.GetOrderByThenByCall
+            (
+                selector,
+                sortDirection == ListSortDirection.Ascending ? "ThenBy" : "ThenByDescending"
+            );
+
+        private static Expression GetOrderByThenByCall(this Expression expression, LambdaExpression selector, string methodName)
         {
             return GetCall(expression.GetUnderlyingElementType());
             MethodCallExpression GetCall(Type sourceType)
                 => Expression.Call
                 (
                     expression.Type.IsIQueryable() ? typeof(Queryable) : typeof(Enumerable),
-                    sortDirection == ListSortDirection.Ascending ? "ThenBy" : "ThenByDescending",
+                    methodName,
                     new Type[]
                     {
                         sourceType,
@@ -582,33 +578,40 @@ namespace LogicBuilder.Expressions.Utils
                 new Expression[] { expression }.Concat(args).ToArray()
             );
 
-        public static Expression GetMaxCall(this Expression expression, params Expression[] args)
-        {
-            Type sourceType = expression.GetUnderlyingElementType();
-            return Expression.Call
+        public static Expression GetMaxCall(this Expression expression) => Expression.Call
             (
                 expression.Type.IsIQueryable() ? typeof(Queryable) : typeof(Enumerable),
                 "Max",
-                args.Length == 0
-                    ? new Type[] { sourceType }
-                    : new Type[] { sourceType, ((LambdaExpression)args[0]).ReturnType },
-                new Expression[] { expression }.Concat(args).ToArray()
+                new Type[] { expression.GetUnderlyingElementType() },
+                new Expression[] { expression }
             );
-        }
 
-        public static Expression GetMinCall(this Expression expression, params Expression[] args)
-        {
-            Type sourceType = expression.GetUnderlyingElementType();
-            return Expression.Call
+        public static Expression GetMaxCall(this Expression expression, LambdaExpression selector) 
+            => Expression.Call
+            (
+                expression.Type.IsIQueryable() ? typeof(Queryable) : typeof(Enumerable),
+                "Max",
+                new Type[] { expression.GetUnderlyingElementType(), selector.ReturnType },
+                new Expression[] { expression, selector }
+            );
+
+        public static Expression GetMinCall(this Expression expression) 
+            => Expression.Call
             (
                 expression.Type.IsIQueryable() ? typeof(Queryable) : typeof(Enumerable),
                 "Min",
-                args.Length == 0
-                    ? new Type[] { sourceType }
-                    : new Type[] { sourceType, ((LambdaExpression)args[0]).ReturnType },
-                new Expression[] { expression }.Concat(args).ToArray()
+                new Type[] { expression.GetUnderlyingElementType() },
+                new Expression[] { expression }
             );
-        }
+
+        public static Expression GetMinCall(this Expression expression, LambdaExpression selector) 
+            => Expression.Call
+            (
+                expression.Type.IsIQueryable() ? typeof(Queryable) : typeof(Enumerable),
+                "Min",
+                new Type[] { expression.GetUnderlyingElementType(), selector.ReturnType },
+                new Expression[] { expression, selector }
+            );
 
         public static Expression GetSumCall(this Expression expression, params Expression[] args)
            => Expression.Call

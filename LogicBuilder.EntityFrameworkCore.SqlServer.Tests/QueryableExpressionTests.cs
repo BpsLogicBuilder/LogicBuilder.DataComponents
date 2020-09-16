@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using AutoMapper.Extensions.ExpressionMapping;
 using Contoso.Data.Entities;
+using LogicBuilder.EntityFrameworkCore.SqlServer.Mapping;
 using LogicBuilder.EntityFrameworkCore.SqlServer.Tests.Data;
 using LogicBuilder.Expressions.Utils;
 using LogicBuilder.Expressions.Utils.ExpressionBuilder.Lambda;
@@ -1395,7 +1396,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
                 MapperConfiguration = new MapperConfiguration(cfg =>
                 {
                     cfg.AddExpressionMapping();
-                    cfg.AddMaps(typeof(MappingProfile).Assembly);
+                    cfg.AddProfile<ExpressionOperatorsMappingProfile>();
                 });
             }
 

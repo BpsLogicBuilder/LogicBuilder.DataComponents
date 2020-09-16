@@ -26,19 +26,9 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Crud
         #endregion Fields
 
         #region Properties
-        //public DbSet<T> DbSet { get { return this.dbSet; } }
         #endregion Properties
 
         #region Methods
-        /// <summary>
-        /// Expression<Func<T,bool>> filter e.g. student => student.Name == smith
-        /// Func<IQueryable<T>, IQueryable<T>> orderBy e.g. q => q.OrderBy(s => s.name)
-        /// ICollection<Expression<Func<T, object>>> includeProperties e.g. new ICollection<Expression<Func<T, object>>> { user => user.Address, user => user.Roles }
-        /// </summary>
-        /// <param name="filter"></param>
-        /// <param name="orderBy"></param>
-        /// <param name="includeProperties"></param>
-        /// <returns></returns>
         public virtual async Task<ICollection<T>> GetAsync(Expression<Func<T, bool>> filter = null,
             Func<IQueryable<T>, IQueryable<T>> queryableFunc = null,
             ICollection<Func<IQueryable<T>, IIncludableQueryable<T, object>>> includeProperties = null,
@@ -65,12 +55,17 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Crud
 
         }
 
-        /// <summary>
-        /// General query function to return lists or scalar value.
-        /// </summary>
-        /// <param name="queryableFunc"></param>
-        /// <param name="includeProperties"></param>
-        /// <returns></returns>
+        public virtual async Task<IQueryable<T>> GetQueryableAsync(Expression<Func<T, bool>> filter = null,
+            Func<IQueryable<T>, IQueryable<T>> queryableFunc = null)
+        {
+            IQueryable<T> query = this.dbSet;
+
+            if (filter != null)
+                query = query.Where(filter);
+
+            return await Task.Run(() => queryableFunc != null ? queryableFunc(query) : query);
+        }
+
         public virtual async Task<TReturn> QueryAsync<TReturn>(Func<IQueryable<T>, TReturn> queryableFunc, ICollection<Func<IQueryable<T>, IIncludableQueryable<T, object>>> includeProperties = null)
         {
             IQueryable<T> query = this.dbSet;
@@ -81,11 +76,6 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Crud
             return await Task.Run(() => queryableFunc(query));
         }
 
-        /// <summary>
-        /// Returns a count of all rows to be returned by the query
-        /// </summary>
-        /// <param name="filter"></param>
-        /// <returns></returns>
         public virtual async Task<int> CountAsync(Expression<Func<T, bool>> filter = null)
         {
             IQueryable<T> query = this.dbSet;

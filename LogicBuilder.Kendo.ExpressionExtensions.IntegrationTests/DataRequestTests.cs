@@ -5,8 +5,11 @@ using Contoso.Data.Entities;
 using Contoso.Domain.Entities;
 using Contoso.Repositories;
 using Kendo.Mvc.UI;
+using LogicBuilder.EntityFrameworkCore.SqlServer.Mapping;
 using LogicBuilder.Expressions.Utils;
 using LogicBuilder.Expressions.Utils.DataSource;
+using LogicBuilder.Expressions.Utils.Expansions;
+using LogicBuilder.Expressions.Utils.ExpressionDescriptors;
 using LogicBuilder.Expressions.Utils.Strutures;
 using LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests.AutoMapperProfiles;
 using LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests.Data;
@@ -259,6 +262,43 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests
         }
 
         [Fact]
+        public void Get_students_with_filtered_inlude_no_filter_select_expand_definition()
+        {
+            ISchoolRepository repository = serviceProvider.GetRequiredService<ISchoolRepository>();
+            ICollection<StudentModel> list = Task.Run
+            (
+                () => repository.GetAsync<StudentModel, Student>
+                (
+                    s => s.Enrollments.Count > 0, 
+                    null, 
+                    new SelectExpandDefinition
+                    {
+                        ExpandedItems =  new List<SelectExpandItem> { new SelectExpandItem { MemberName = "enrollments" } }
+                    }
+                )
+            ).Result;
+
+            Assert.True(list.First().Enrollments.Count > 0);
+        }
+
+        [Fact]
+        public void Get_students_no_filtered_inlude_no_filter_select_expand_definition()
+        {
+            ISchoolRepository repository = serviceProvider.GetRequiredService<ISchoolRepository>();
+            ICollection<StudentModel> list = Task.Run
+            (
+                () => repository.GetAsync<StudentModel, Student>
+                (
+                    s => s.Enrollments.Count > 0,
+                    null,
+                    null
+                )
+            ).Result;
+
+            Assert.Null(list.First().Enrollments);
+        }
+
+        [Fact]
         public void Get_students_with_filtered_inlude_with_filter_kendo_filter()
         {
             ISchoolRepository repository = serviceProvider.GetRequiredService<ISchoolRepository>();
@@ -276,6 +316,41 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests
                         }
                     }.Select(fi => fi.GetFilteredIncludeExpression(typeof(StudentModel)))
                         .ToArray()
+                )
+            ).Result;
+
+            Assert.False(list.First().Enrollments.Any());
+        }
+
+        [Fact]
+        public void Get_students_with_filtered_inlude_with_filter_select_expand_definition()
+        {
+            ISchoolRepository repository = serviceProvider.GetRequiredService<ISchoolRepository>();
+            ICollection<StudentModel> list = Task.Run
+            (
+                () => repository.GetAsync<StudentModel, Student>
+                (
+                    s => s.Enrollments.Count > 0, 
+                    null,
+                    new SelectExpandDefinition
+                    {
+                        ExpandedItems = new List<SelectExpandItem> 
+                        { 
+                            new SelectExpandItem 
+                            { 
+                                MemberName = "enrollments",
+                                Filter = new SelectExpandItemFilter
+                                {
+                                    FilterBody = new EqualsBinaryDescriptor
+                                    (
+                                        new MemberSelectorDescriptor("enrollmentID", new ParameterDescriptor("a")),
+                                        new ConstantDescriptor(-1)
+                                    ),
+                                    ParameterName = "a"
+                                }
+                            }
+                        }
+                    }
                 )
             ).Result;
 
@@ -304,6 +379,114 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests
 
             Assert.True(list.First().Enrollments.Count > 0);
             Assert.Null(list.First().Enrollments.First().CourseTitle);
+        }
+
+        [Fact]
+        public void Get_students_with_filtered_inlude_no_filter_sorted_select_expand_definition()
+        {
+            ISchoolRepository repository = serviceProvider.GetRequiredService<ISchoolRepository>();
+            ICollection<StudentModel> list = Task.Run
+            (
+                () => repository.GetAsync<StudentModel, Student>
+                (
+                    s => s.Enrollments.Count > 0, 
+                    null,
+                    new SelectExpandDefinition
+                    {
+                        ExpandedItems = new List<SelectExpandItem>
+                        {
+                            new SelectExpandItem
+                            {
+                                MemberName = "enrollments",
+                                Filter = new SelectExpandItemFilter
+                                {
+                                    FilterBody = new GreaterThanBinaryDescriptor
+                                    (
+                                        new MemberSelectorDescriptor("enrollmentID", new ParameterDescriptor("a")),
+                                        new ConstantDescriptor(0)
+                                    ),
+                                    ParameterName = "a"
+                                },
+                                QueryFunction = new SelectExpandItemQueryFunction
+                                {
+                                    MethodCallDescriptor = new OrderByDescriptor
+                                    (
+                                        new ConstantDescriptor(null, typeof(IEnumerable<EnrollmentModel>)),
+                                        new MemberSelectorDescriptor("GradeLetter", new ParameterDescriptor("b")),
+                                        ListSortDirection.Ascending,
+                                        "b"
+                                    )
+                                }
+                            }
+                        }
+                    }
+                )
+            ).Result;
+
+            Assert.True(list.First().Enrollments.Count > 0);
+            Assert.True
+            (
+                string.Compare
+                (
+                    list.First().Enrollments.First().GradeLetter, 
+                    list.Skip(1).First().Enrollments.First().GradeLetter
+                ) <= 0
+            );
+        }
+
+        [Fact]
+        public void Get_students_with_filtered_inlude_no_filter_sort_skip_and_take_select_expand_definition()
+        {
+            ISchoolRepository repository = serviceProvider.GetRequiredService<ISchoolRepository>();
+            ICollection<StudentModel> list = Task.Run
+            (
+                () => repository.GetAsync<StudentModel, Student>
+                (
+                    s => s.FirstName == "Carson" && s.LastName == "Alexander",
+                    null,
+                    new SelectExpandDefinition
+                    {
+                        ExpandedItems = new List<SelectExpandItem>
+                        {
+                            new SelectExpandItem
+                            {
+                                MemberName = "enrollments",
+                                Filter = new SelectExpandItemFilter
+                                {
+                                    FilterBody = new GreaterThanBinaryDescriptor
+                                    (
+                                        new MemberSelectorDescriptor("enrollmentID", new ParameterDescriptor("a")),
+                                        new ConstantDescriptor(0)
+                                    ),
+                                    ParameterName = "a"
+                                },
+                                QueryFunction = new SelectExpandItemQueryFunction
+                                {
+                                    MethodCallDescriptor = new TakeDescriptor
+                                    (
+                                        new SkipDescriptor
+                                        (
+                                            new OrderByDescriptor
+                                            (
+                                                new ConstantDescriptor(null, typeof(IEnumerable<EnrollmentModel>)),
+                                                new MemberSelectorDescriptor("GradeLetter", new ParameterDescriptor("b")),
+                                                ListSortDirection.Descending,
+                                                "b"
+                                            ),
+                                            1
+                                        ),
+                                        2
+                                    )
+                                }
+                            }
+                        }
+                    }
+                )
+            ).Result;
+
+            Assert.Single(list);
+            Assert.Equal(2, list.First().Enrollments.Count);
+            Assert.Equal("A", list.First().Enrollments.Last().GradeLetter);
         }
 
         [Fact]
@@ -344,8 +527,20 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests
         #endregion Tests
 
         #region Methods
+        static MapperConfiguration MapperConfiguration;
         private void Initialize()
         {
+            if (MapperConfiguration == null)
+            {
+                MapperConfiguration = new MapperConfiguration(cfg =>
+                {
+                    cfg.AddExpressionMapping();
+                    cfg.AddMaps(typeof(SchoolProfile).GetTypeInfo().Assembly);
+                    cfg.AddMaps(typeof(GroupingProfile).GetTypeInfo().Assembly);
+                    cfg.AddProfile<ExpressionOperatorsMappingProfile>();
+                });
+            }
+
             serviceProvider = new ServiceCollection()
                  .AddDbContext<SchoolContext>
                  (
@@ -360,12 +555,7 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests
                 .AddTransient<ISchoolRepository, SchoolRepository>()
                 .AddSingleton<AutoMapper.IConfigurationProvider>
                 (
-                    new MapperConfiguration(cfg =>
-                    {
-                        cfg.AddExpressionMapping();
-                        cfg.AddMaps(typeof(SchoolProfile).GetTypeInfo().Assembly);
-                        cfg.AddMaps(typeof(GroupingProfile).GetTypeInfo().Assembly);
-                    })
+                    MapperConfiguration
                 )
                 .AddTransient<IMapper>(sp => new Mapper(sp.GetRequiredService<AutoMapper.IConfigurationProvider>(), sp.GetService))
                 .BuildServiceProvider();
