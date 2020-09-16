@@ -30,12 +30,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		CI_Pack_Push.ps1 = CI_Pack_Push.ps1
 		Directory.Build.props = Directory.Build.props
 		.github\workflows\release.yml = .github\workflows\release.yml
+		Release_Build_Push.ps1 = Release_Build_Push.ps1
 		Release_Pack_Push.ps1 = Release_Pack_Push.ps1
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogicBuilder.Expressions.Utils.Tests", "LogicBuilder.Expressions.Utils.Tests\LogicBuilder.Expressions.Utils.Tests.csproj", "{DD4F86BC-0089-48E3-A1FF-FEA8B328D21E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogicBuilder.EntityFrameworkCore.SqlServer.Tests", "LogicBuilder.EntityFrameworkCore.SqlServer.Tests\LogicBuilder.EntityFrameworkCore.SqlServer.Tests.csproj", "{E7020D55-C111-48B3-AA6D-75E3D3C611FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogicBuilder.EntityFrameworkCore.SqlServer.Tests", "LogicBuilder.EntityFrameworkCore.SqlServer.Tests\LogicBuilder.EntityFrameworkCore.SqlServer.Tests.csproj", "{E7020D55-C111-48B3-AA6D-75E3D3C611FB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

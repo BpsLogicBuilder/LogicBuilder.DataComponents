@@ -32,6 +32,26 @@ jobs:
         echo '::set-env name=REPO::${{ github.repository }}'
         echo '::set-env name=REPO_OWNER::${{ github.repository_owner }}'
 
+    - run: echo '::set-env name=PROJECT_NAME::LogicBuilder.Data'
+    - name: Build and push
+      run: ./Release_Build_Push.ps1
+      shell: pwsh
+
+    - run: echo '::set-env name=PROJECT_NAME::LogicBuilder.Domain'
+    - name: Build and push
+      run: ./Release_Build_Push.ps1
+      shell: pwsh
+
+    - run: echo '::set-env name=PROJECT_NAME::LogicBuilder.Structures'
+    - name: Build and push
+      run: ./Release_Build_Push.ps1
+      shell: pwsh
+
+    - run: echo '::set-env name=PROJECT_NAME::LogicBuilder.Expressions.Utils'
+    - name: Build and push
+      run: ./Release_Build_Push.ps1
+      shell: pwsh
+
     - name: Restore
       run: dotnet restore
 
@@ -40,26 +60,6 @@ jobs:
 
     - name: Test
       run: dotnet test --no-restore --verbosity normal
-
-    - run: echo '::set-env name=PROJECT_NAME::LogicBuilder.Data'
-    - name: Pack and push
-      run: ./Release_Pack_Push.ps1
-      shell: pwsh
-
-    - run: echo '::set-env name=PROJECT_NAME::LogicBuilder.Domain'
-    - name: Pack and push
-      run: ./Release_Pack_Push.ps1
-      shell: pwsh
-
-    - run: echo '::set-env name=PROJECT_NAME::LogicBuilder.Structures'
-    - name: Pack and push
-      run: ./Release_Pack_Push.ps1
-      shell: pwsh
-
-    - run: echo '::set-env name=PROJECT_NAME::LogicBuilder.Expressions.Utils'
-    - name: Pack and push
-      run: ./Release_Pack_Push.ps1
-      shell: pwsh
 
     - run: echo '::set-env name=PROJECT_NAME::LogicBuilder.Kendo.ExpressionExtensions'
     - name: Pack and push
