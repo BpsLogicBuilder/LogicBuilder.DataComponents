@@ -7,7 +7,7 @@
     <Authors>BlaiseD</Authors>
     <Description>Augments LogicBuilder.Expressions.Utils with LINQ queries specific to EF Core.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>Updates to support AutoMapper v10.</PackageReleaseNotes>
+    <PackageReleaseNotes>Filtering and sorting child collections.</PackageReleaseNotes>
     <PackageTags>linq expressions efcore</PackageTags>
     <Copyright>Copyright © BPS 2018</Copyright>
     <RepositoryUrl>https://github.com/BlaiseD/LogicBuilder.DataComponents</RepositoryUrl>
