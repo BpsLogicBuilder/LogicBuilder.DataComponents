@@ -27,28 +27,32 @@ jobs:
 
     - name: Set Variables
       run: |
-        echo '::set-env name=NUGET_URL::https://api.nuget.org/v3/index.json'
-        echo '::set-env name=NUGET_API_KEY::${{ secrets.NUGET_API_KEY }}'
-        echo '::set-env name=REPO::${{ github.repository }}'
-        echo '::set-env name=REPO_OWNER::${{ github.repository_owner }}'
+        echo "NUGET_URL=https://api.nuget.org/v3/index.json" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
+        echo "NUGET_API_KEY=${{ secrets.NUGET_API_KEY }}" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
+        echo "REPO=${{ github.repository }}" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
+        echo "REPO=${{ github.repository_owner }}" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
 
-    - run: echo '::set-env name=PROJECT_NAME::LogicBuilder.Data'
-    - name: Build and push
+    - name: Build and push LogicBuilder.Data
+      env:
+        PROJECT_NAME: LogicBuilder.Data
       run: ./Release_Build_Push.ps1
       shell: pwsh
 
-    - run: echo '::set-env name=PROJECT_NAME::LogicBuilder.Domain'
-    - name: Build and push
+    - name: Build and push LogicBuilder.Domain
+      env:
+        PROJECT_NAME: LogicBuilder.Domain
       run: ./Release_Build_Push.ps1
       shell: pwsh
 
-    - run: echo '::set-env name=PROJECT_NAME::LogicBuilder.Structures'
-    - name: Build and push
+    - name: Build and push LogicBuilder.Structures
+      env:
+        PROJECT_NAME: LogicBuilder.Structures
       run: ./Release_Build_Push.ps1
       shell: pwsh
 
-    - run: echo '::set-env name=PROJECT_NAME::LogicBuilder.Expressions.Utils'
-    - name: Build and push
+    - name: Build and push LogicBuilder.Expressions.Utils
+      env:
+        PROJECT_NAME: LogicBuilder.Expressions.Utils
       run: ./Release_Build_Push.ps1
       shell: pwsh
 
@@ -61,17 +65,20 @@ jobs:
     - name: Test
       run: dotnet test --no-restore --verbosity normal
 
-    - run: echo '::set-env name=PROJECT_NAME::LogicBuilder.Kendo.ExpressionExtensions'
-    - name: Pack and push
+    - name: Pack and push LogicBuilder.Kendo.ExpressionExtensions
+      env:
+        PROJECT_NAME: LogicBuilder.Kendo.ExpressionExtensions
       run: ./Release_Pack_Push.ps1
       shell: pwsh
 
-    - run: echo '::set-env name=PROJECT_NAME::LogicBuilder.Expressions.EntityFrameworkCore'
-    - name: Pack and push
+    - name: Pack and push LogicBuilder.Expressions.EntityFrameworkCore
+      env:
+        PROJECT_NAME: LogicBuilder.Expressions.EntityFrameworkCore
       run: ./Release_Pack_Push.ps1
       shell: pwsh
 
-    - run: echo '::set-env name=PROJECT_NAME::LogicBuilder.EntityFrameworkCore.SqlServer'
-    - name: Pack and push
+    - name: Pack and push LogicBuilder.EntityFrameworkCore.SqlServer
+      env:
+        PROJECT_NAME: LogicBuilder.EntityFrameworkCore.SqlServer
       run: ./Release_Pack_Push.ps1
       shell: pwsh
