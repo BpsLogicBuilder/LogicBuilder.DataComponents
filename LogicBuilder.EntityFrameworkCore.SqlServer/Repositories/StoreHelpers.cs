@@ -218,7 +218,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Repositories
                 {
                     var filterNextList = nextList.Aggregate(new List<ExpansionOptions>(), (list, next) =>
                     {
-                        if (next.FilterOption != null)
+                        if (next.FilterOption?.FilterLambdaOperator != null)
                         {
                             list = list.ConvertAll
                             (
@@ -237,7 +237,8 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Repositories
                                     MemberName = next.MemberName,
                                     MemberType = next.MemberType,
                                     ParentType = next.ParentType,
-                                    FilterOption = new ExpansionFilterOption { Filter = next.FilterOption.Filter }
+                                    FilterOption = new ExpansionFilterOption { FilterLambdaOperator = next.FilterOption.FilterLambdaOperator }
+                                    //FilterOption = new ExpansionFilterOption { Filter = next.FilterOption.Filter }
                                 }
                             );//add expansion with filter
 
@@ -260,7 +261,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Repositories
                 {
                     var filterNextList = nextList.Aggregate(new List<ExpansionOptions>(), (list, next) =>
                     {
-                        if (next.QueryOption != null)
+                        if (next.QueryOption?.SortCollection != null)
                         {
                             list = list.ConvertAll
                             (

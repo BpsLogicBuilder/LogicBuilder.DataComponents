@@ -29,13 +29,13 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Visitors
                 && expansion.MemberType.GetUnderlyingElementType() == node.GetUnderlyingElementType()
                 && this.expression.ToString().StartsWith(node.ToString()))//makes sure we're not updating some nested "Select"
             {
-                FilterLambdaOperator filterOperator = mapper.Map<FilterLambdaOperator>
-                (
-                    expansion.FilterOption.Filter,
-                    opts => opts.Items[ExpressionOperators.PARAMETERS_KEY] = new Dictionary<string, ParameterExpression>()
-                );
+                //FilterLambdaOperator filterOperator = mapper.Map<FilterLambdaOperator>
+                //(
+                //    expansion.FilterOption.Filter,
+                //    opts => opts.Items[ExpressionOperators.PARAMETERS_KEY] = new Dictionary<string, ParameterExpression>()
+                //);
 
-                return node.GetWhereCall(filterOperator.Build());
+                return node.GetWhereCall(expansion.FilterOption.FilterLambdaOperator.Build());
             }
 
             return base.VisitMethodCall(node);
