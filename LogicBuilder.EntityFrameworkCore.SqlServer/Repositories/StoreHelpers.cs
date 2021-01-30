@@ -279,7 +279,8 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Repositories
                                     MemberName = next.MemberName,
                                     MemberType = next.MemberType,
                                     ParentType = next.ParentType,
-                                    QueryOption = new ExpansionQueryOption { QueryFunction = next.QueryOption.QueryFunction }
+                                    QueryOption = new ExpansionQueryOption { SortCollection = next.QueryOption.SortCollection }
+                                    //QueryOption = new ExpansionQueryOption { QueryFunction = next.QueryOption.QueryFunction }
                                 }
                             );//add expansion with query options
 
