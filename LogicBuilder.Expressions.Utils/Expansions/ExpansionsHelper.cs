@@ -83,12 +83,13 @@ namespace LogicBuilder.Expressions.Utils.Expansions
                     => HasFilter()
                         ? new ExpansionFilterOption 
                         { 
-                            Filter = new FilterLambdaDescriptor//change to next.FilterExpression
-                            {
-                                ParameterName = next.Filter.ParameterName,
-                                FilterBody = next.Filter.FilterBody,
-                                SourceElementType = elementType
-                            }
+                            //Filter = new FilterLambdaDescriptor//change to next.FilterExpression
+                            //{
+                            //    ParameterName = next.Filter.ParameterName,
+                            //    FilterBody = next.Filter.FilterBody,
+                            //    SourceElementType = elementType
+                            //}
+                            FilterLambdaOperator = next.Filter.FilterLambdaOperator
                         }
                         : null;
 
@@ -96,15 +97,16 @@ namespace LogicBuilder.Expressions.Utils.Expansions
                     => HasQuery()
                         ? new ExpansionQueryOption
                         {
-                            QueryFunction = next.QueryFunction.MethodCallDescriptor
+                            //QueryFunction = next.QueryFunction.MethodCallDescriptor
+                            SortCollection = next.QueryFunction.SortCollection
                         }
                         : null;
 
                 bool HasFilter()
-                    => memberType.IsList() && next.Filter != null;
+                    => memberType.IsList() && next?.Filter?.FilterLambdaOperator != null;
 
                 bool HasQuery()
-                    => memberType.IsList() && next.QueryFunction != null;
+                    => memberType.IsList() && next?.QueryFunction?.SortCollection != null;
             });
         }
 

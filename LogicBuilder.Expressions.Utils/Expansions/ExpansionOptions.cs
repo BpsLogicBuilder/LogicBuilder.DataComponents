@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace LogicBuilder.Expressions.Utils.Expansions
+﻿namespace LogicBuilder.Expressions.Utils.Expansions
 {
     public class ExpansionOptions : Expansion
     {

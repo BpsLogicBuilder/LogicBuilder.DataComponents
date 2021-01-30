@@ -6,7 +6,7 @@ namespace LogicBuilder.Expressions.Utils.Expansions
 {
     public class ExpansionQueryOption
     {
-        [Obsolete("Use SortCollection")]
+        [Obsolete("Use SortCollection.", false)]
         public IExpressionDescriptor QueryFunction { get; set; }
         public SortCollection SortCollection { get; set; }
     }
