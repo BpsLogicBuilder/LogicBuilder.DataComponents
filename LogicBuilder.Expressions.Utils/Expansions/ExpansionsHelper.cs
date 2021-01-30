@@ -83,7 +83,7 @@ namespace LogicBuilder.Expressions.Utils.Expansions
                     => HasFilter()
                         ? new ExpansionFilterOption 
                         { 
-                            Filter = new FilterLambdaDescriptor
+                            Filter = new FilterLambdaDescriptor//change to next.FilterExpression
                             {
                                 ParameterName = next.Filter.ParameterName,
                                 FilterBody = next.Filter.FilterBody,

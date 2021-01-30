@@ -2,8 +2,8 @@
 
 namespace LogicBuilder.Expressions.Utils.Expansions
 {
-    public class SelectExpandItemQueryFunction
-    {
-        public IExpressionDescriptor MethodCallDescriptor { get; set; }
-    }
+    //public class SelectExpandItemQueryFunction
+    //{
+    //    public IExpressionDescriptor MethodCallDescriptor { get; set; }
+    //}
 }
