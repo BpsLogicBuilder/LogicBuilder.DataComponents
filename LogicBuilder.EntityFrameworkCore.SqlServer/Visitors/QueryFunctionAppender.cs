@@ -30,17 +30,10 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Visitors
                 && expansion.MemberType.GetUnderlyingElementType() == node.Type.GetUnderlyingElementType()
                 && this.expression.ToString().StartsWith(node.ToString()))//makes sure we're not updating some nested "Select"
             {
-                return OrderBySourceExpressionReplacer.ReplaceOrderBySource(node, GetMethodCallExpressionPart().Build());
+                return node.GetOrderBy(node.GetUnderlyingElementType(), expansion.QueryOption.SortCollection);
             }
 
             return base.VisitMethodCall(node);
-
-            IExpressionPart GetMethodCallExpressionPart()
-                => mapper.Map<IExpressionPart>
-                (
-                    expansion.QueryOption.QueryFunction,
-                    opts => opts.Items[ExpressionOperators.PARAMETERS_KEY] = new Dictionary<string, ParameterExpression>()
-                );
         }
     }
 }
