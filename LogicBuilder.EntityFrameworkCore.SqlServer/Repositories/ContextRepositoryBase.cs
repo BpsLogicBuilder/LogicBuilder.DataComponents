@@ -81,6 +81,28 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Repositories
                 includeProperties);
         }
 
+        public async Task<TModelReturn> QueryAsync<TModel, TData, TModelReturn, TDataReturn>(Expression<Func<IQueryable<TModel>, TModelReturn>> queryFunc, SelectExpandDefinition selectExpandDefinition = null)
+            where TModel : BaseModel
+            where TData : BaseData
+        {
+            return await _store.QueryAsync<TModel, TData, TModelReturn, TDataReturn>(
+                _mapper,
+                queryFunc,
+                null,
+                selectExpandDefinition);
+        }
+
+        public async Task<TReturn> QueryAsync<TModel, TData, TModelReturn, TDataReturn, TReturn>(Expression<Func<IQueryable<TModel>, TModelReturn>> queryFunc, SelectExpandDefinition selectExpandDefinition = null)
+            where TModel : BaseModel
+            where TData : BaseData
+        {
+            return await _store.QueryAsync<TModel, TData, TModelReturn, TDataReturn, TReturn>(
+                _mapper,
+                queryFunc,
+                null,
+                selectExpandDefinition);
+        }
+
         public async Task<bool> SaveAsync<TModel, TData>(TModel entity)
             where TModel : BaseModel
             where TData : BaseData

@@ -23,6 +23,6 @@ namespace LogicBuilder.Expressions.Utils.Strutures
 
         public ICollection<SortDescription> SortDescriptions { get; set; }
         public int Skip { get; set; }
-        public int Take { get; set; }
+        public int Take { get; set; } = int.MaxValue;
     }
 }

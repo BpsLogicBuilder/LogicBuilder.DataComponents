@@ -5,6 +5,7 @@ using LogicBuilder.Data;
 using LogicBuilder.Domain;
 using LogicBuilder.EntityFrameworkCore.SqlServer.Crud.DataStores;
 using LogicBuilder.EntityFrameworkCore.SqlServer.Visitors;
+using LogicBuilder.Expressions.Utils;
 using LogicBuilder.Expressions.Utils.Expansions;
 using LogicBuilder.Expressions.Utils.Strutures;
 using Microsoft.EntityFrameworkCore.Query;
@@ -12,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace LogicBuilder.EntityFrameworkCore.SqlServer.Repositories
@@ -59,13 +61,10 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Repositories
                     GetQueryFunc()
                 ),
                 null,
-                GetIncludes()
+                GetIncludes<TModel>(selectExpandDefinition)
             )
             .UpdateQueryable(selectExpandDefinition.GetExpansions(typeof(TModel)), mapper)
             .ToList();
-
-            Expression<Func<TModel, object>>[] GetIncludes() 
-                => selectExpandDefinition?.GetExpansionSelectors<TModel>().ToArray() ?? new Expression<Func<TModel, object>>[] { };
 
             Func<IQueryable<TData>, IQueryable<TData>> GetQueryFunc()
                 => mapper.MapExpression<Expression<Func<IQueryable<TData>, IQueryable<TData>>>>(queryFunc)?.Compile();
@@ -74,9 +73,13 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Repositories
                 => mapper.MapExpression<Expression<Func<TData, bool>>>(filter);
         }
 
+        private static Expression<Func<TModel, object>>[] GetIncludes<TModel>(SelectExpandDefinition selectExpandDefinition) where TModel : class
+                => selectExpandDefinition.GetExpansionSelectors<TModel>().ToArray() ?? new Expression<Func<TModel, object>>[] { };
+
         internal static async Task<TReturn> QueryAsync<TModel, TData, TModelReturn, TDataReturn, TReturn>(this IStore store, IMapper mapper,
             Expression<Func<IQueryable<TModel>, TModelReturn>> queryFunc = null,
-            ICollection<Expression<Func<IQueryable<TModel>, IIncludableQueryable<TModel, object>>>> includeProperties = null)
+            ICollection<Expression<Func<IQueryable<TModel>, IIncludableQueryable<TModel, object>>>> includeProperties = null,
+            SelectExpandDefinition selectExpandDefinition = null)
             where TModel : BaseModel
             where TData : BaseData
         {
@@ -88,22 +91,51 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Repositories
             TDataReturn result = await store.QueryAsync(mappedQueryFunc?.Compile(),
                 includes?.Select(i => i.Compile()).ToList());
 
-            return typeof(TReturn) == typeof(TDataReturn) ? (TReturn)(object)result : mapper.Map<TDataReturn, TReturn>(result);
+            if (typeof(TReturn) == typeof(TDataReturn))
+                return (TReturn)(object)result;
+
+            if (typeof(TReturn).IsIQueryable() && typeof(TDataReturn).IsIQueryable())
+                return GetProjection(typeof(TReturn).GetUnderlyingElementType());
+
+            return mapper.Map<TDataReturn, TReturn>(result);
+
+            TReturn GetProjection(Type elementType)
+                => (TReturn)mapper.ProjectTo
+                (
+                    (IQueryable)result,
+                    elementType,
+                    selectExpandDefinition
+                )
+                .UpdateQueryable(elementType, selectExpandDefinition.GetExpansions(elementType), mapper);
         }
+
+        public static IQueryable ProjectTo(this IMapper mapper, IQueryable source, Type destType, SelectExpandDefinition selectExpandDefinition = null)
+            => (IQueryable)"_ProjectTo".GetGenericMethodInfo().MakeGenericMethod
+            (
+                destType
+            ).Invoke(null, new object[] { mapper, source, selectExpandDefinition });
+
+        private static IQueryable<TDest> _ProjectTo<TDest>(IMapper mapper, IQueryable source, SelectExpandDefinition selectExpandDefinition = null) where TDest : class
+            => mapper.ProjectTo<TDest>(source, null, GetIncludes<TDest>(selectExpandDefinition));
+
+        private static MethodInfo GetGenericMethodInfo(this string methodName)
+           => typeof(StoreHelpers).GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Static);
 
         public static async Task<TModelReturn> QueryAsync<TModel, TData, TModelReturn, TDataReturn>(this IStore store, IMapper mapper,
             Expression<Func<IQueryable<TModel>, TModelReturn>> queryFunc,
-            ICollection<Expression<Func<IQueryable<TModel>, IIncludableQueryable<TModel, object>>>> includeProperties = null)
+            ICollection<Expression<Func<IQueryable<TModel>, IIncludableQueryable<TModel, object>>>> includeProperties = null,
+            SelectExpandDefinition selectExpandDefinition = null)
             where TModel : BaseModel
             where TData : BaseData
-            => await store.QueryAsync<TModel, TData, TModelReturn, TDataReturn, TModelReturn>(mapper, queryFunc, includeProperties);
+            => await store.QueryAsync<TModel, TData, TModelReturn, TDataReturn, TModelReturn>(mapper, queryFunc, includeProperties, selectExpandDefinition);
 
         public static async Task<TModelReturn> QueryAsync<TModel, TData, TModelReturn>(this IStore store, IMapper mapper,
             Expression<Func<IQueryable<TModel>, TModelReturn>> queryFunc,
-            ICollection<Expression<Func<IQueryable<TModel>, IIncludableQueryable<TModel, object>>>> includeProperties = null)
+            ICollection<Expression<Func<IQueryable<TModel>, IIncludableQueryable<TModel, object>>>> includeProperties = null,
+            SelectExpandDefinition selectExpandDefinition = null)
             where TModel : BaseModel
             where TData : BaseData
-            => await store.QueryAsync<TModel, TData, TModelReturn, TModelReturn, TModelReturn>(mapper, queryFunc, includeProperties);
+            => await store.QueryAsync<TModel, TData, TModelReturn, TModelReturn, TModelReturn>(mapper, queryFunc, includeProperties, selectExpandDefinition);
 
         internal static async Task<int> CountAsync<TModel, TData>(this IStore store, IMapper mapper, Expression<Func<TModel, bool>> filter = null)
             where TModel : BaseModel
@@ -165,6 +197,15 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Repositories
             store.AddGraphChanges<TData>(mapper.Map<IEnumerable<TData>>(entities).ToList());
         }
 
+        internal static IQueryable UpdateQueryable(this IQueryable query, Type modelType, List<List<ExpansionOptions>> expansions, IMapper mapper) 
+            => (IQueryable)"_UpdateQueryable".GetGenericMethodInfo().MakeGenericMethod
+            (
+                modelType
+            ).Invoke(null, new object[] { query, expansions, mapper });
+
+        private static IQueryable<TModel> _UpdateQueryable<TModel>(this IQueryable<TModel> query, List<List<ExpansionOptions>> expansions, IMapper mapper) 
+            => query.UpdateQueryable(expansions, mapper);
+
         internal static IQueryable<TModel> UpdateQueryable<TModel>(this IQueryable<TModel> query, List<List<ExpansionOptions>> expansions, IMapper mapper)
         {
             List<List<ExpansionOptions>> filters = GetFilters();
@@ -218,7 +259,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Repositories
                 {
                     var filterNextList = nextList.Aggregate(new List<ExpansionOptions>(), (list, next) =>
                     {
-                        if (next.FilterOption != null)
+                        if (next.FilterOption?.FilterLambdaOperator != null)
                         {
                             list = list.ConvertAll
                             (
@@ -237,7 +278,8 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Repositories
                                     MemberName = next.MemberName,
                                     MemberType = next.MemberType,
                                     ParentType = next.ParentType,
-                                    FilterOption = new ExpansionFilterOption { Filter = next.FilterOption.Filter }
+                                    FilterOption = new ExpansionFilterOption { FilterLambdaOperator = next.FilterOption.FilterLambdaOperator }
+                                    //FilterOption = new ExpansionFilterOption { Filter = next.FilterOption.Filter }
                                 }
                             );//add expansion with filter
 
@@ -260,7 +302,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Repositories
                 {
                     var filterNextList = nextList.Aggregate(new List<ExpansionOptions>(), (list, next) =>
                     {
-                        if (next.QueryOption != null)
+                        if (next.QueryOption?.SortCollection != null)
                         {
                             list = list.ConvertAll
                             (
@@ -279,7 +321,8 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Repositories
                                     MemberName = next.MemberName,
                                     MemberType = next.MemberType,
                                     ParentType = next.ParentType,
-                                    QueryOption = new ExpansionQueryOption { QueryFunction = next.QueryOption.QueryFunction }
+                                    QueryOption = new ExpansionQueryOption { SortCollection = next.QueryOption.SortCollection }
+                                    //QueryOption = new ExpansionQueryOption { QueryFunction = next.QueryOption.QueryFunction }
                                 }
                             );//add expansion with query options
 

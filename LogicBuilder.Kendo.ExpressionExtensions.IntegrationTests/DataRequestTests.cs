@@ -9,6 +9,10 @@ using LogicBuilder.EntityFrameworkCore.SqlServer.Mapping;
 using LogicBuilder.Expressions.Utils;
 using LogicBuilder.Expressions.Utils.DataSource;
 using LogicBuilder.Expressions.Utils.Expansions;
+using LogicBuilder.Expressions.Utils.ExpressionBuilder;
+using LogicBuilder.Expressions.Utils.ExpressionBuilder.Lambda;
+using LogicBuilder.Expressions.Utils.ExpressionBuilder.Logical;
+using LogicBuilder.Expressions.Utils.ExpressionBuilder.Operand;
 using LogicBuilder.Expressions.Utils.ExpressionDescriptors;
 using LogicBuilder.Expressions.Utils.Strutures;
 using LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests.AutoMapperProfiles;
@@ -19,6 +23,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
 using Xunit;
@@ -325,6 +330,7 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests
         [Fact]
         public void Get_students_with_filtered_inlude_with_filter_select_expand_definition()
         {
+            var parameters = new Dictionary<string, ParameterExpression>();
             ISchoolRepository repository = serviceProvider.GetRequiredService<ISchoolRepository>();
             ICollection<StudentModel> list = Task.Run
             (
@@ -341,12 +347,17 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests
                                 MemberName = "enrollments",
                                 Filter = new SelectExpandItemFilter
                                 {
-                                    FilterBody = new EqualsBinaryDescriptor
+                                    FilterLambdaOperator = new FilterLambdaOperator
                                     (
-                                        new MemberSelectorDescriptor("enrollmentID", new ParameterDescriptor("a")),
-                                        new ConstantDescriptor(-1)
-                                    ),
-                                    ParameterName = "a"
+                                        parameters,
+                                        new EqualsBinaryOperator
+                                        (
+                                            new MemberSelectorOperator("enrollmentID", new ParameterOperator(parameters, "a")),
+                                            new ConstantOperator(-1)
+                                        ),
+                                        typeof(EnrollmentModel),
+                                        "a"
+                                    )
                                 }
                             }
                         }
@@ -384,6 +395,7 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests
         [Fact]
         public void Get_students_with_filtered_inlude_no_filter_sorted_select_expand_definition()
         {
+            var parameters = new Dictionary<string, ParameterExpression>();
             ISchoolRepository repository = serviceProvider.GetRequiredService<ISchoolRepository>();
             ICollection<StudentModel> list = Task.Run
             (
@@ -400,21 +412,30 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests
                                 MemberName = "enrollments",
                                 Filter = new SelectExpandItemFilter
                                 {
-                                    FilterBody = new GreaterThanBinaryDescriptor
+                                    FilterLambdaOperator = new FilterLambdaOperator
                                     (
-                                        new MemberSelectorDescriptor("enrollmentID", new ParameterDescriptor("a")),
-                                        new ConstantDescriptor(0)
-                                    ),
-                                    ParameterName = "a"
+                                        parameters,
+                                        new GreaterThanBinaryOperator
+                                        (
+                                            new MemberSelectorOperator("enrollmentID", new ParameterOperator(parameters, "a")),
+                                            new ConstantOperator(0)
+                                        ),
+                                        typeof(EnrollmentModel),
+                                        "a"
+                                    )
                                 },
                                 QueryFunction = new SelectExpandItemQueryFunction
                                 {
-                                    MethodCallDescriptor = new OrderByDescriptor
+                                    SortCollection = new SortCollection
                                     (
-                                        new ConstantDescriptor(null, typeof(IEnumerable<EnrollmentModel>)),
-                                        new MemberSelectorDescriptor("GradeLetter", new ParameterDescriptor("b")),
-                                        ListSortDirection.Ascending,
-                                        "b"
+                                        new List<SortDescription>
+                                        {
+                                            new SortDescription
+                                            { 
+                                                PropertyName = "GradeLetter",
+                                                SortDirection = ListSortDirection.Ascending
+                                            }
+                                        }
                                     )
                                 }
                             }
@@ -437,6 +458,7 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests
         [Fact]
         public void Get_students_with_filtered_inlude_no_filter_sort_skip_and_take_select_expand_definition()
         {
+            var parameters = new Dictionary<string, ParameterExpression>();
             ISchoolRepository repository = serviceProvider.GetRequiredService<ISchoolRepository>();
             ICollection<StudentModel> list = Task.Run
             (
@@ -453,28 +475,31 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests
                                 MemberName = "enrollments",
                                 Filter = new SelectExpandItemFilter
                                 {
-                                    FilterBody = new GreaterThanBinaryDescriptor
+                                    FilterLambdaOperator = new FilterLambdaOperator
                                     (
-                                        new MemberSelectorDescriptor("enrollmentID", new ParameterDescriptor("a")),
-                                        new ConstantDescriptor(0)
-                                    ),
-                                    ParameterName = "a"
+                                        parameters,
+                                        new GreaterThanBinaryOperator
+                                        (
+                                            new MemberSelectorOperator("enrollmentID", new ParameterOperator(parameters, "a")),
+                                            new ConstantOperator(0)
+                                        ),
+                                        typeof(EnrollmentModel),
+                                        "a"
+                                    )
                                 },
                                 QueryFunction = new SelectExpandItemQueryFunction
                                 {
-                                    MethodCallDescriptor = new TakeDescriptor
+                                    SortCollection = new SortCollection
                                     (
-                                        new SkipDescriptor
-                                        (
-                                            new OrderByDescriptor
-                                            (
-                                                new ConstantDescriptor(null, typeof(IEnumerable<EnrollmentModel>)),
-                                                new MemberSelectorDescriptor("GradeLetter", new ParameterDescriptor("b")),
-                                                ListSortDirection.Descending,
-                                                "b"
-                                            ),
-                                            1
-                                        ),
+                                        new List<SortDescription>
+                                        {
+                                            new SortDescription
+                                            {
+                                                PropertyName = "GradeLetter",
+                                                SortDirection = ListSortDirection.Descending,
+                                            }
+                                        },
+                                        1,
                                         2
                                     )
                                 }

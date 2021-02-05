@@ -4,10 +4,14 @@ using System;
 
 namespace LogicBuilder.Expressions.Utils.Expansions
 {
-    public class ExpansionFilterOption
+    public class SelectExpandItemFilter
     {
         [Obsolete("Use FilterLambdaOperator.", false)]
-        public FilterLambdaDescriptor Filter { get; set; }
+        public IExpressionDescriptor FilterBody { get; set; }
+        
+        [Obsolete("Use FilterLambdaOperator.", false)]
+        public string ParameterName { get; set; }
+
         public FilterLambdaOperator FilterLambdaOperator { get; set; }
     }
 }

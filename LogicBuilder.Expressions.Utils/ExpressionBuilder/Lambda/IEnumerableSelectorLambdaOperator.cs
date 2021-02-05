@@ -39,7 +39,7 @@ namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Lambda
                         this.Parameters[ParameterName].Type,
                         typeof(IEnumerable<>).MakeGenericType//specifically using IEnumerable<T> (vs ICollection<T> etc) for the Func return type
                         (
-                            selectorBody.GetUnderlyingElementType()
+                            GetUnderlyingType(selectorBody)
                         )
                     }
                 ),
@@ -50,6 +50,14 @@ namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Lambda
             this.Parameters.Remove(ParameterName);
 
             return expression;
+        }
+
+        private Type GetUnderlyingType(Expression expression)
+        {
+            if (expression.Type.IsGenericType && expression.Type.GetGenericTypeDefinition() == typeof(System.Linq.IGrouping<,>))
+                return expression.Type.GetGenericArguments()[1];
+
+            return expression.GetUnderlyingElementType();
         }
     }
 }

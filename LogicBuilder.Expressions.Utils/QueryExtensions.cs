@@ -35,33 +35,44 @@ namespace LogicBuilder.Expressions.Utils
         /// <typeparam name="TSource"></typeparam>
         /// <param name="expression"></param>
         /// <param name="sorts"></param>
-        /// <param name="parameterName"></param>
         /// <returns></returns>
-        public static MethodCallExpression GetOrderBy<TSource>(this Expression expression, SortCollection sorts)
+        public static MethodCallExpression GetOrderBy<TSource>(this Expression expression, SortCollection sorts) 
+            => expression.GetOrderBy(typeof(TSource), sorts);
+
+        /// <summary>
+        /// Creates an order by method call expression to be invoked on an expression e.g. (parameter, member, method call) of type IQueryable<T>.
+        /// </summary>
+        /// <param name="expression"></param>
+        /// <param name="sourceType"></param>
+        /// <param name="sorts"></param>
+        /// <returns></returns>
+        public static MethodCallExpression GetOrderBy(this Expression expression, Type sourceType, SortCollection sorts)
         {
+            Type reflectedType = expression.Type.IsIQueryable() ? typeof(Queryable) : typeof(Enumerable);
+
             MethodCallExpression resultExp = sorts.SortDescriptions.Aggregate(null, (MethodCallExpression mce, SortDescription description) =>
             {
-                LambdaExpression selectorExpression = description.PropertyName.GetTypedSelector<TSource>();
-                MemberInfo orderByPropertyInfo = typeof(TSource).GetMemberInfoFromFullName(description.PropertyName);
-                Type[] genericArgumentsForMethod = new Type[] { typeof(TSource), orderByPropertyInfo.GetMemberType() };
+                LambdaExpression selectorExpression = description.PropertyName.GetTypedSelector(sourceType);
+                MemberInfo orderByPropertyInfo = sourceType.GetMemberInfoFromFullName(description.PropertyName);
+                Type[] genericArgumentsForMethod = new Type[] { sourceType, orderByPropertyInfo.GetMemberType() };
 
                 if (mce == null)
                 {//OrderBy and OrderByDescending espressions take two arguments each.  The parameter (object being extended by the helper method) and the lambda expression for the property selector
                     mce = description.SortDirection == ListSortDirection.Ascending
-                        ? Expression.Call(typeof(Queryable), "OrderBy", genericArgumentsForMethod, expression, selectorExpression)
-                        : Expression.Call(typeof(Queryable), "OrderByDescending", genericArgumentsForMethod, expression, selectorExpression);
+                        ? Expression.Call(reflectedType, "OrderBy", genericArgumentsForMethod, expression, selectorExpression)
+                        : Expression.Call(reflectedType, "OrderByDescending", genericArgumentsForMethod, expression, selectorExpression);
                 }
                 else
                 {//ThenBy and ThenByDescending espressions take two arguments each.  The resulting method call expression from OrderBy or OrderByDescending and the lambda expression for the property selector
                     mce = description.SortDirection == ListSortDirection.Ascending
-                        ? Expression.Call(typeof(Queryable), "ThenBy", genericArgumentsForMethod, mce, selectorExpression)
-                        : Expression.Call(typeof(Queryable), "ThenByDescending", genericArgumentsForMethod, mce, selectorExpression);
+                        ? Expression.Call(reflectedType, "ThenBy", genericArgumentsForMethod, mce, selectorExpression)
+                        : Expression.Call(reflectedType, "ThenByDescending", genericArgumentsForMethod, mce, selectorExpression);
                 }
                 return mce;
             });
 
-            resultExp = Expression.Call(typeof(Queryable), "Skip", new[] { typeof(TSource) }, resultExp, Expression.Constant(sorts.Skip));
-            resultExp = Expression.Call(typeof(Queryable), "Take", new[] { typeof(TSource) }, resultExp, Expression.Constant(sorts.Take));
+            resultExp = Expression.Call(reflectedType, "Skip", new[] { sourceType }, resultExp, Expression.Constant(sorts.Skip));
+            resultExp = Expression.Call(reflectedType, "Take", new[] { sourceType }, resultExp, Expression.Constant(sorts.Take));
 
             return resultExp;
         }
