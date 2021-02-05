@@ -1,26 +1,22 @@
-﻿using LogicBuilder.Expressions.Utils.ExpressionDescriptors;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 
 namespace LogicBuilder.Expressions.Utils.Expansions
 {
     public static class ExpansionsHelper
     {
-        public static IEnumerable<Expression<Func<TSource, object>>> GetExpansionSelectors<TSource>(this SelectExpandDefinition selectExpandDefinition) where TSource : class
-        {
-            if (selectExpandDefinition == null)
-                return new List<Expression<Func<TSource, object>>>();
-
-            return selectExpandDefinition.GetExpansions(typeof(TSource))
-                .Select(list => new List<Expansion>(list))
-                .BuildIncludes<TSource>
-                (
-                    selectExpandDefinition.Selects
-                );
-        }
+        public static IEnumerable<Expression<Func<TSource, object>>> GetExpansionSelectors<TSource>(this SelectExpandDefinition selectExpandDefinition) where TSource : class 
+            => selectExpandDefinition.GetExpansions
+            (
+                typeof(TSource)
+            )
+            .Select(list => new List<Expansion>(list))
+            .BuildIncludes<TSource>
+            (
+                selectExpandDefinition?.Selects ?? new List<string>()
+            );
 
         public static List<List<ExpansionOptions>> GetExpansions(this SelectExpandDefinition selectExpandDefinition, Type sourceType)
         {
@@ -29,7 +25,7 @@ namespace LogicBuilder.Expressions.Utils.Expansions
 
             return selectExpandDefinition.ExpandedItems.GetExpansions
             (
-                new HashSet<string>(selectExpandDefinition.Selects), 
+                new HashSet<string>(selectExpandDefinition.Selects ?? new List<string>()), 
                 sourceType
             );
         }
@@ -60,7 +56,7 @@ namespace LogicBuilder.Expressions.Utils.Expansions
 
                 List<List<ExpansionOptions>> navigationItems = next.ExpandedItems.GetExpansions
                 (
-                    new HashSet<string>(next.Selects), 
+                    new HashSet<string>(next.Selects ?? new List<string>()), 
                     elementType
                 )
                 .Select
@@ -83,12 +79,6 @@ namespace LogicBuilder.Expressions.Utils.Expansions
                     => HasFilter()
                         ? new ExpansionFilterOption 
                         { 
-                            //Filter = new FilterLambdaDescriptor//change to next.FilterExpression
-                            //{
-                            //    ParameterName = next.Filter.ParameterName,
-                            //    FilterBody = next.Filter.FilterBody,
-                            //    SourceElementType = elementType
-                            //}
                             FilterLambdaOperator = next.Filter.FilterLambdaOperator
                         }
                         : null;
@@ -97,7 +87,6 @@ namespace LogicBuilder.Expressions.Utils.Expansions
                     => HasQuery()
                         ? new ExpansionQueryOption
                         {
-                            //QueryFunction = next.QueryFunction.MethodCallDescriptor
                             SortCollection = next.QueryFunction.SortCollection
                         }
                         : null;
@@ -112,7 +101,7 @@ namespace LogicBuilder.Expressions.Utils.Expansions
 
         private static bool ExpansionIsValid(this HashSet<string> siblingSelects, string expansion)
         {
-            if (!siblingSelects.Any())
+            if (siblingSelects == null || !siblingSelects.Any())
                 return true;
 
             return siblingSelects.Contains(expansion);

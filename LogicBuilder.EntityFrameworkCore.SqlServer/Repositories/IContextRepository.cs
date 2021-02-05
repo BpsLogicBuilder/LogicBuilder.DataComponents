@@ -25,11 +25,21 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Repositories
             where TModel : BaseModel
             where TData : BaseData;
 
+        [Obsolete("Use \"Task<TModelReturn> QueryAsync<TModel, TData, TModelReturn, TDataReturn>(Expression<Func<IQueryable<TModel>, TModelReturn>> queryFunc, SelectExpandDefinition selectExpandDefinition = null)\" or \"GetItemsAsync<TModel, TData>()\"")]
         Task<TModelReturn> QueryAsync<TModel, TData, TModelReturn, TDataReturn>(Expression<Func<IQueryable<TModel>, TModelReturn>> queryFunc, ICollection<Expression<Func<IQueryable<TModel>, IIncludableQueryable<TModel, object>>>> includeProperties = null)
             where TModel : BaseModel
             where TData : BaseData;
 
+        [Obsolete("Use \"Task<TReturn> QueryAsync<TModel, TData, TModelReturn, TDataReturn, TReturn>(Expression<Func<IQueryable<TModel>, TModelReturn>> queryFunc, SelectExpandDefinition selectExpandDefinition = null)\" or \"GetItemsAsync<TModel, TData>()\"")]
         Task<TReturn> QueryAsync<TModel, TData, TModelReturn, TDataReturn, TReturn>(Expression<Func<IQueryable<TModel>, TModelReturn>> queryFunc, ICollection<Expression<Func<IQueryable<TModel>, IIncludableQueryable<TModel, object>>>> includeProperties = null)
+            where TModel : BaseModel
+            where TData : BaseData;
+
+        Task<TModelReturn> QueryAsync<TModel, TData, TModelReturn, TDataReturn>(Expression<Func<IQueryable<TModel>, TModelReturn>> queryFunc, SelectExpandDefinition selectExpandDefinition = null)
+            where TModel : BaseModel
+            where TData : BaseData;
+
+        Task<TReturn> QueryAsync<TModel, TData, TModelReturn, TDataReturn, TReturn>(Expression<Func<IQueryable<TModel>, TModelReturn>> queryFunc, SelectExpandDefinition selectExpandDefinition = null)
             where TModel : BaseModel
             where TData : BaseData;
 
