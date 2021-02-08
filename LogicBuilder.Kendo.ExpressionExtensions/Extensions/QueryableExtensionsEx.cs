@@ -61,6 +61,17 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.Extensions
             return Expression.Lambda<Func<IQueryable<TModel>, IEnumerable<AggregateFunctionsGroup>>>(ex, param);
         }
 
+        public static Expression<Func<IQueryable<TModel>, IQueryable<AggregateFunctionsGroup>>> CreateGroupedQueryableExpression<TModel>(this DataSourceRequest request)
+        {
+            if (request.Groups == null || request.Groups.Count == 0)
+                throw new ArgumentException("Groups are required.");
+
+            ParameterExpression param = Expression.Parameter(typeof(IQueryable<TModel>), "q");
+            Expression ex = CreateGroupedMethodExpression(request, param);
+
+            return Expression.Lambda<Func<IQueryable<TModel>, IQueryable<AggregateFunctionsGroup>>>(ex, param);
+        }
+
         public static Expression CreateGroupedMethodExpression(this DataSourceRequest request, Expression ex)
         {
             if (request.Groups == null || request.Groups.Count == 0)
@@ -143,6 +154,23 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.Extensions
             ex = Expression.Call(typeof(Enumerable), "ToList", new Type[] { typeof(TSource) }, ex);
 
             return Expression.Lambda<Func<IQueryable<TSource>, IEnumerable<TSource>>>(ex, param);
+        }
+
+        /// <summary>
+        /// Create Ungrouped Queryable Expression
+        /// </summary>
+        /// <typeparam name="TSource"></typeparam>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public static Expression<Func<IQueryable<TSource>, IQueryable<TSource>>> CreateUngroupedQueryableExpression<TSource>(this DataSourceRequest request)
+        {
+            if (request.Groups != null && request.Groups.Count > 0)
+                throw new ArgumentException("Groups count must be zero.");
+
+            ParameterExpression param = Expression.Parameter(typeof(IQueryable<TSource>), "q");
+            Expression ex = CreateUngroupedMethodExpression(request, param);
+
+            return Expression.Lambda<Func<IQueryable<TSource>, IQueryable<TSource>>>(ex, param);
         }
 
         public static Expression CreateUngroupedMethodExpression(this DataSourceRequest request, Expression ex)
