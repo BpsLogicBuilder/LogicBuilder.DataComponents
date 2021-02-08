@@ -7,7 +7,7 @@
     <Authors>BlaiseD</Authors>
     <Description>LogicBuilder.Data includes the base class for all data objects in the applications data stack.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>Filtering and sorting child collections.</PackageReleaseNotes>
+    <PackageReleaseNotes>Favor expansions over includes.</PackageReleaseNotes>
     <PackageTags>crud operations</PackageTags>
     <Copyright>Copyright © BPS 2017</Copyright>
     <RepositoryUrl>https://github.com/BlaiseD/LogicBuilder.DataComponents</RepositoryUrl>
