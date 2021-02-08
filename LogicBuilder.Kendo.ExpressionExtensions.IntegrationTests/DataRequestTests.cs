@@ -117,7 +117,7 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests
                     Sort = null,
                     PageSize = 5
                 },
-                Includes = new string[] { "administratorName" },
+                Includes = null,
                 Selects = null,
                 Distinct = false
             };
@@ -150,7 +150,7 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests
                     Sort = null,
                     PageSize = 5
                 },
-                Includes = new string[] { "administratorName" },
+                Includes = null,
                 Selects = null,
                 Distinct = false
             };
@@ -180,7 +180,16 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests
                     Sort = null,
                     PageSize = 0
                 },
-                Includes = new string[] { "enrollments.courseTitle" },
+                SelectExpandDefinition = new SelectExpandDefinition
+                {
+                    ExpandedItems = new List<SelectExpandItem>
+                    {
+                        new SelectExpandItem
+                        {
+                            MemberName = "enrollments"
+                        }
+                    }
+                },
                 Selects = null,
                 Distinct = false
             };

@@ -27,6 +27,7 @@ jobs:
 
     - name: Set Variables
       run: |
+        echo "GITHUB_NUGET_AUTH_TOKEN=${{ secrets.GITHUB_TOKEN }}" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
         echo "NUGET_URL=https://api.nuget.org/v3/index.json" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
         echo "NUGET_API_KEY=${{ secrets.NUGET_API_KEY }}" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
         echo "REPO=${{ github.repository }}" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
