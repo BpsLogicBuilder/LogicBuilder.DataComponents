@@ -7,7 +7,7 @@
     <Authors>BlaiseD</Authors>
     <Description>LogicBuilder.Domain includes the base class for all DTOs in the data stack;</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>Filtering and sorting child collections.</PackageReleaseNotes>
+    <PackageReleaseNotes>Favor expansions over includes.</PackageReleaseNotes>
     <PackageTags>crud operations logic-builder</PackageTags>
     <Copyright>Copyright © BPS 2017</Copyright>
     <RepositoryUrl>https://github.com/BlaiseD/LogicBuilder.DataComponents</RepositoryUrl>
