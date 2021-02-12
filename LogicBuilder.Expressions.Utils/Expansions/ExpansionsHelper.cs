@@ -54,19 +54,21 @@ namespace LogicBuilder.Expressions.Utils.Expansions
                     Selects = next.Selects
                 };
 
-                List<List<ExpansionOptions>> navigationItems = next.ExpandedItems.GetExpansions
-                (
-                    new HashSet<string>(next.Selects ?? new List<string>()), 
-                    elementType
-                )
-                .Select
-                (
-                    expansions =>
-                    {
-                        expansions.Insert(0, expansionOption);
-                        return expansions;
-                    }
-                ).ToList();
+                List<List<ExpansionOptions>> navigationItems = next.ExpandedItems == null
+                    ? new List<List<ExpansionOptions>>()
+                    : next.ExpandedItems.GetExpansions
+                    (
+                        new HashSet<string>(next.Selects ?? new List<string>()), 
+                        elementType
+                    )
+                    .Select
+                    (
+                        expansions =>
+                        {
+                            expansions.Insert(0, expansionOption);
+                            return expansions;
+                        }
+                    ).ToList();
 
                 if (navigationItems.Any())
                     listOfExpansionLists.AddRange(navigationItems);
