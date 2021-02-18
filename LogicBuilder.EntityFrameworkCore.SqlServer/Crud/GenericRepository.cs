@@ -138,6 +138,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Crud
         /// <param name="t"></param>
         public virtual void Update(T t)
         {
+            this.context.DetachMatchingKeyEntries(t);
             this.dbSet.Attach(t);
             this.context.Entry(t).State = EntityState.Modified;
         }
@@ -150,6 +151,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Crud
         /// <param name="t"></param>
         public virtual void UpdateGraph(T t)
         {
+            this.context.DetachMatchingKeyEntries(t);
             this.dbSet.Add(t);
             this.context.ApplyStateChanges();
         }
