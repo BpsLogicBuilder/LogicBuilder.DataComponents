@@ -89,16 +89,14 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Crud
             while (true)
             {
                 if (!enumerator.MoveNext()) break;
-                GetEntityList(enumerator.Current, enumerator.Current?.GetType(), entities);
+                if (enumerator.Current == null) continue;
+                GetEntityList(enumerator.Current, enumerator.Current.GetType(), entities);
             }
         }
 
         private static void GetEntityList(BaseData entity, List<BaseData> entities)
         {
-            if (!typeof(BaseData).IsAssignableFrom(entity.GetType()))
-                return;
-
-            entities.Add((BaseData)entity);
+            entities.Add(entity);
 
             foreach (PropertyInfo pInfo in entity.GetType().GetProperties())
                 GetEntityList(pInfo.GetValue(entity, null), pInfo.PropertyType, entities);
