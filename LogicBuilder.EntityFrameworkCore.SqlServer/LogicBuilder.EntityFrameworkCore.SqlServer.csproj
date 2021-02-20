@@ -20,10 +20,10 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.ExpressionMapping" Version="[4.1.1, 5.0.0)" />
-    <PackageReference Include="LogicBuilder.Data" Version="4.1.1-preview.4.2" />
-    <PackageReference Include="LogicBuilder.Domain" Version="4.1.1-preview.4.2" />
-    <PackageReference Include="LogicBuilder.Expressions.Utils" Version="4.1.1-preview.4.2" />
-    <PackageReference Include="LogicBuilder.Structures" Version="4.1.1-preview.4.2" />
+    <PackageReference Include="LogicBuilder.Data" Version="4.1.1" />
+    <PackageReference Include="LogicBuilder.Domain" Version="4.1.1" />
+    <PackageReference Include="LogicBuilder.Expressions.Utils" Version="4.1.1" />
+    <PackageReference Include="LogicBuilder.Structures" Version="4.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.0" />
     <PackageReference Include="MinVer" Version="2.3.0">
       <PrivateAssets>all</PrivateAssets>
