@@ -25,7 +25,11 @@ namespace LogicBuilder.Expressions.Utils.Expansions
 
             return selectExpandDefinition.ExpandedItems.GetExpansions
             (
-                new HashSet<string>(selectExpandDefinition.Selects ?? new List<string>()), 
+                new HashSet<string>
+                (
+                    selectExpandDefinition.Selects ?? new List<string>(), 
+                    new SelectsEqualityComparer()
+                ), 
                 sourceType
             );
         }
@@ -58,7 +62,11 @@ namespace LogicBuilder.Expressions.Utils.Expansions
                     ? new List<List<ExpansionOptions>>()
                     : next.ExpandedItems.GetExpansions
                     (
-                        new HashSet<string>(next.Selects ?? new List<string>()), 
+                        new HashSet<string>
+                        (
+                            next.Selects ?? new List<string>(), 
+                            new SelectsEqualityComparer()
+                        ), 
                         elementType
                     )
                     .Select
