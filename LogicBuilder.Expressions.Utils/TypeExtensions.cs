@@ -180,7 +180,7 @@ namespace LogicBuilder.Expressions.Utils
             return parentType.GetMemberInfos().Where
             (
                 info => (info.MemberType == MemberTypes.Field || info.MemberType == MemberTypes.Property)
-                && info.GetMemberType().IsLiteralType()
+                && (info.GetMemberType().IsLiteralType() || info.GetMemberType() == typeof(byte[]))//Need typeof(byte[]) for SQL Server timestamp column
             ).ToArray();
         }
 
