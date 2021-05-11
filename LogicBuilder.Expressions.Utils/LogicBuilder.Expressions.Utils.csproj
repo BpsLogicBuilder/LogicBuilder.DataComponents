@@ -7,7 +7,7 @@
     <Authors>BlaiseD</Authors>
     <Description>Creates CRUD related LINQ queries from data.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>Favor expansions over includes.</PackageReleaseNotes>
+    <PackageReleaseNotes>Bug fixes.</PackageReleaseNotes>
     <PackageTags>linq expressions</PackageTags>
     <Copyright>Copyright © BPS 2018</Copyright>
     <RepositoryUrl>https://github.com/BlaiseD/LogicBuilder.DataComponents</RepositoryUrl>
@@ -19,7 +19,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="LogicBuilder.Structures" Version="4.1.2-alpha.0.1" />
+    <PackageReference Include="LogicBuilder.Structures" Version="4.1.2" />
     <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
     <PackageReference Include="System.Linq.Dynamic.Core" Version="1.0.18" />
     <PackageReference Include="Microsoft.OData.Edm" Version="7.6.1" />

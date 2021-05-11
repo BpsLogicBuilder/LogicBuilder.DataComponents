@@ -83,21 +83,3 @@ jobs:
 
     - name: Test
       run: dotnet test --no-restore --verbosity normal
-
-    - name: Pack and push LogicBuilder.Kendo.ExpressionExtensions
-      env:
-        PROJECT_NAME: LogicBuilder.Kendo.ExpressionExtensions
-      run: ./CI_Pack_Push.ps1
-      shell: pwsh
-
-    - name: Pack and push LogicBuilder.Expressions.EntityFrameworkCore
-      env:
-        PROJECT_NAME: LogicBuilder.Expressions.EntityFrameworkCore
-      run: ./CI_Pack_Push.ps1
-      shell: pwsh
-
-    - name: Pack and push LogicBuilder.EntityFrameworkCore.SqlServer
-      env:
-        PROJECT_NAME: LogicBuilder.EntityFrameworkCore.SqlServer
-      run: ./CI_Pack_Push.ps1
-      shell: pwsh

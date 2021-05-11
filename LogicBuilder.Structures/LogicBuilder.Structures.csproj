@@ -7,7 +7,7 @@
     <Authors>BlaiseD</Authors>
     <Description>LogicBuilder.Structures includes classes used by multiple components in the LogicBuilder data stack.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>Favor expansions over includes.</PackageReleaseNotes>
+    <PackageReleaseNotes>Bug fixes.</PackageReleaseNotes>
     <PackageTags>logicbuilder</PackageTags>
     <Copyright>Copyright © BPS 2019</Copyright>
     <RepositoryUrl>https://github.com/BlaiseD/LogicBuilder.DataComponents</RepositoryUrl>
