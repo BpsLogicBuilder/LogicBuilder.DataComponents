@@ -225,7 +225,7 @@ namespace LogicBuilder.Expressions.Utils.Expansions
 
         private static void AddSelectors(this List<LambdaExpression> valueMemberSelectors, List<string> selects, ParameterExpression param, Expression parentBody)
         {
-            if (parentBody.Type.IsList())
+            if (parentBody.Type.IsList() || parentBody.Type.IsLiteralType())
                 return;
 
             valueMemberSelectors.AddRange
