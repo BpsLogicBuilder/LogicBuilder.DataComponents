@@ -19,7 +19,15 @@ namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Operand
         public Type Type { get;  }
         public object ConstantValue { get; }
 
-        public Expression Build() 
-            => Type == null ? Expression.Constant(ConstantValue) : Expression.Constant(ConstantValue, Type);
+        public Expression Build()
+            => Type == null ? Expression.Constant(ConstantValue) : Expression.Constant(ConvertConstantValue(), Type);
+
+        private object ConvertConstantValue()
+        {
+            if (ConstantValue?.GetType() == Type)
+                return ConstantValue;
+
+            return Convert.ChangeType(ConstantValue, Type);
+        }
     }
 }
