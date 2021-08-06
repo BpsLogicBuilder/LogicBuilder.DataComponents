@@ -84,6 +84,32 @@ namespace LogicBuilder.Expressions.Utils.Tests
         }
 
         [Theory]
+        [InlineData((byte)1, false)]
+        [InlineData((byte)2, false)]
+        [InlineData((byte)3, true)]
+        public void EqualityOperatorWithChangedType(byte id, bool expected)
+        {
+            //act
+            var filter = CreateFilter<Product>();
+            bool result = RunFilter(filter, new Product { ProductID = id });
+
+            //assert
+            AssertFilterStringIsCorrect(filter, "$it => ($it.ProductID == 3)");
+            Assert.Equal(expected, result);
+
+            Expression<Func<T, bool>> CreateFilter<T>()
+                => GetFilter<T>
+                (
+                    new EqualsBinaryOperator
+                    (
+                        new MemberSelectorOperator("ProductID", new ParameterOperator(parameters, parameterName)),
+                        new ConstantOperator((byte)3, typeof(int))
+                    ),
+                    parameters
+                );
+        }
+
+        [Theory]
         [InlineData(null, true)]
         [InlineData("", true)]
         [InlineData("Doritos", false)]
