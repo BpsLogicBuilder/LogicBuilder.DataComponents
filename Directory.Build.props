@@ -4,5 +4,9 @@
     <LangVersion>latest</LangVersion>
     <WarningsAsErrors>true</WarningsAsErrors>
     <NoWarn>$(NoWarn);1701;1702;1591</NoWarn>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
   </PropertyGroup>
 </Project>
