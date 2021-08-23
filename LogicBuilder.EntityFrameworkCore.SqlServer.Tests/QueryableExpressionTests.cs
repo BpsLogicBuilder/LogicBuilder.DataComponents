@@ -297,6 +297,56 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
         }
 
         [Fact]
+        public void BuildGroupBy_AsQueryable_OrderBy_Select_IGroupableAsEnumerable_FirstOrDefault()
+        {
+            //act
+            var descriptor = new FirstOrDefaultDescriptor
+            (
+                new SelectDescriptor
+                (
+                    new OrderByDescriptor
+                    (
+                        new AsQueryableDescriptor
+                        (
+                            new GroupByDescriptor
+                            (
+                                new ParameterDescriptor("q"),
+                                new ConstantDescriptor(1, typeof(int)),
+                                "item"
+                            )
+                        ),
+                        new MemberSelectorDescriptor("Key", new ParameterDescriptor("group")),
+                        ListSortDirection.Ascending,
+                        "group"
+                    ),
+                    new MemberInitDescriptor
+                    (
+                        new Dictionary<string, IExpressionDescriptor>
+                        {
+                            ["NumericValue"] = new CountDescriptor
+                            {
+                                SourceOperand = new AsEnumerableDescriptor
+                                {
+                                    SourceOperand = new ParameterDescriptor
+                                    {
+                                        ParameterName = "sel"
+                                    }
+                                }
+                            }
+                        }
+                    ),
+                    "sel"
+                )
+            );
+
+            Expression<Func<IQueryable<Department>, object>> expression = GetExpression<IQueryable<Department>, object>(descriptor, "q");
+
+            //assert
+            AssertFilterStringIsCorrect(expression, "q => Convert(q.GroupBy(item => 1).AsQueryable().OrderBy(group => group.Key).Select(sel => new AnonymousType() {NumericValue = sel.AsEnumerable().Count()}).FirstOrDefault())");
+            Assert.NotNull(expression);
+        }
+
+        [Fact]
         public void All_Filter()
         {
             //act
