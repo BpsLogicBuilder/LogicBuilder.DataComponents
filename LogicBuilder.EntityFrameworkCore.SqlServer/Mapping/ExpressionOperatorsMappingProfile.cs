@@ -47,6 +47,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Mapping
 				)
 				.ForAllMembers(opt => opt.Ignore());
 
+			CreateMap<AsEnumerableDescriptor, AsEnumerableOperator>();
 			CreateMap<AsQueryableDescriptor, AsQueryableOperator>();
 			CreateMap<AverageDescriptor, AverageOperator>()
 				.ConstructUsing
@@ -390,6 +391,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Mapping
 				.Include<AllDescriptor, AllOperator>()
 				.Include<AndBinaryDescriptor, AndBinaryOperator>()
 				.Include<AnyDescriptor, AnyOperator>()
+				.Include<AsEnumerableDescriptor, AsEnumerableOperator>()
 				.Include<AsQueryableDescriptor, AsQueryableOperator>()
 				.Include<AverageDescriptor, AverageOperator>()
 				.Include<BinaryDescriptor, BinaryOperator>()

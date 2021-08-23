@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
 {
@@ -116,10 +117,13 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
 
         protected override Expression VisitNew(NewExpression node)
         {
-            Out("new " + node.Type.Name + "(");
+            Out("new " + GetTypeName() + "(");
             VisitArguments(node.Arguments.ToArray());
             Out(")");
             return node;
+
+            string GetTypeName()
+                => Regex.IsMatch(node.Type.Name, @"^AnonymousType[\d]+$") ? "AnonymousType" : node.Type.Name;
         }
 
         protected override MemberListBinding VisitMemberListBinding(MemberListBinding node)
@@ -136,12 +140,17 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
         {
             VisitNew(node.NewExpression);
             Out(" {");
-            foreach (MemberAssignment memberNode in node.Bindings)
+            for (int i = 0; i < node.Bindings.Count; i++)
             {
-                Out(memberNode.Member.Name + " = ");
+                if (node.Bindings[i] is MemberAssignment memberNode)
+                {
+                    Out(memberNode.Member.Name + " = ");
 
-                Visit(memberNode.Expression);
-                Out(", ");
+                    Visit(memberNode.Expression);
+
+                    if (i < node.Bindings.Count - 1)
+                        Out(", ");
+                }
             }
             Out("}");
 

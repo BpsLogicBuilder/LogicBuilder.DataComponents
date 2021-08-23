@@ -495,6 +495,35 @@ namespace LogicBuilder.Expressions.Utils
                 expression
             );
 
+        public static Expression GetAsEnumerableCall(this Expression expression)
+        {
+            return Expression.Call
+            (
+                typeof(Enumerable),
+                "AsEnumerable",
+                new Type[] { GetUnderlyingType(expression.Type) },
+                expression
+            );
+
+            Type GetUnderlyingType(Type expressionType)
+            {
+                if (!expressionType.IsGenericType)
+                    throw new ArgumentException(nameof(expressionType));
+
+                Type[] genericArguments = expressionType.GetGenericArguments();
+                Type genericTypeDefinition = expressionType.GetGenericTypeDefinition();
+
+                if (genericTypeDefinition == typeof(IGrouping<,>))
+                    return genericArguments[1];
+                else if (genericTypeDefinition == typeof(IDictionary<,>) || genericTypeDefinition == typeof(Dictionary<,>))
+                    return typeof(KeyValuePair<,>).MakeGenericType(genericArguments[0], genericArguments[1]);
+                else if (genericArguments.Length == 1)
+                    return genericArguments[0];
+                else
+                    throw new ArgumentException(nameof(expressionType));
+            }
+        }
+
         public static Expression GetOfTypeCall(this Expression expression, Type elementType)
             => Expression.Call
             (
