@@ -27,7 +27,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Repositories
         #endregion Fields
 
         #region Methods
-        public async Task<ICollection<TModel>> GetItemsAsync<TModel, TData>(Expression<Func<TModel, bool>> filter = null, Expression<Func<IQueryable<TModel>, IQueryable<TModel>>> queryFunc = null, ICollection<Expression<Func<IQueryable<TModel>, IIncludableQueryable<TModel, object>>>> includeProperties = null, ICollection<FilteredIncludeExpression> filteredIncludes = null)
+        public async Task<ICollection<TModel>> GetItemsAsync<TModel, TData>(Expression<Func<TModel, bool>> filter = null, Expression<Func<IQueryable<TModel>, IQueryable<TModel>>> queryFunc = null, ICollection<Expression<Func<IQueryable<TModel>, IIncludableQueryable<TModel, object>>>> includeProperties = null)
             where TModel : BaseModel
             where TData : BaseData
         {
@@ -36,8 +36,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Repositories
                 _mapper,
                 filter,
                 queryFunc,
-                includeProperties,
-                filteredIncludes
+                includeProperties
             );
         }
 
@@ -59,26 +58,6 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Repositories
             where TData : BaseData
         {
             return await _store.CountAsync<TModel, TData>(_mapper, filter);
-        }
-
-        public async Task<TModelReturn> QueryAsync<TModel, TData, TModelReturn, TDataReturn>(Expression<Func<IQueryable<TModel>, TModelReturn>> queryFunc, ICollection<Expression<Func<IQueryable<TModel>, IIncludableQueryable<TModel, object>>>> includeProperties = null)
-            where TModel : BaseModel
-            where TData : BaseData
-        {
-            return await _store.QueryAsync<TModel, TData, TModelReturn, TDataReturn>(
-                _mapper,
-                queryFunc,
-                includeProperties);
-        }
-
-        public async Task<TReturn> QueryAsync<TModel, TData, TModelReturn, TDataReturn, TReturn>(Expression<Func<IQueryable<TModel>, TModelReturn>> queryFunc, ICollection<Expression<Func<IQueryable<TModel>, IIncludableQueryable<TModel, object>>>> includeProperties = null)
-            where TModel : BaseModel
-            where TData : BaseData
-        {
-            return await _store.QueryAsync<TModel, TData, TModelReturn, TDataReturn, TReturn>(
-                _mapper,
-                queryFunc,
-                includeProperties);
         }
 
         public async Task<TModelReturn> QueryAsync<TModel, TData, TModelReturn, TDataReturn>(Expression<Func<IQueryable<TModel>, TModelReturn>> queryFunc, SelectExpandDefinition selectExpandDefinition = null)

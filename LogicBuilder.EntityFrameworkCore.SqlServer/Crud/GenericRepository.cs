@@ -31,8 +31,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Crud
         #region Methods
         public virtual async Task<ICollection<T>> GetAsync(Expression<Func<T, bool>> filter = null,
             Func<IQueryable<T>, IQueryable<T>> queryableFunc = null,
-            ICollection<Func<IQueryable<T>, IIncludableQueryable<T, object>>> includeProperties = null,
-            ICollection<FilteredIncludeExpression> filteredIncludes = null)
+            ICollection<Func<IQueryable<T>, IIncludableQueryable<T, object>>> includeProperties = null)
         {
             IQueryable<T> query = this.dbSet;
 
@@ -42,20 +41,10 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Crud
             if (includeProperties != null)
                 query = includeProperties.Aggregate(query, (list, next) => query = next(query));
 
-            return LoadFilteredIncludes(queryableFunc != null ? await queryableFunc(query).ToListAsync() : await query.ToListAsync());
-
-            ICollection<T> LoadFilteredIncludes(List<T> list)
-            {
-                if (filteredIncludes == null)
-                    return list;
-
-                FilteredIncludesHelper.DoExplicitLoading(this.context, list, filteredIncludes);
-                return list;
-            }
-
+            return queryableFunc != null ? await queryableFunc(query).ToListAsync() : await query.ToListAsync();
         }
 
-        public virtual async Task<IQueryable<T>> GetQueryableAsync(Expression<Func<T, bool>> filter = null,
+        public virtual Task<IQueryable<T>> GetQueryableAsync(Expression<Func<T, bool>> filter = null,
             Func<IQueryable<T>, IQueryable<T>> queryableFunc = null)
         {
             IQueryable<T> query = this.dbSet;
@@ -63,17 +52,17 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Crud
             if (filter != null)
                 query = query.Where(filter);
 
-            return await Task.Run(() => queryableFunc != null ? queryableFunc(query) : query);
+            return Task.FromResult(queryableFunc != null ? queryableFunc(query) : query);
         }
 
-        public virtual async Task<TReturn> QueryAsync<TReturn>(Func<IQueryable<T>, TReturn> queryableFunc, ICollection<Func<IQueryable<T>, IIncludableQueryable<T, object>>> includeProperties = null)
+        public virtual Task<TReturn> QueryAsync<TReturn>(Func<IQueryable<T>, TReturn> queryableFunc, ICollection<Func<IQueryable<T>, IIncludableQueryable<T, object>>> includeProperties = null)
         {
             IQueryable<T> query = this.dbSet;
 
             if (includeProperties != null)
                 query = includeProperties.Aggregate(query, (list, next) => query = next(query));
 
-            return await Task.Run(() => queryableFunc(query));
+            return Task.FromResult(queryableFunc(query));
         }
 
         public virtual async Task<int> CountAsync(Expression<Func<T, bool>> filter = null)

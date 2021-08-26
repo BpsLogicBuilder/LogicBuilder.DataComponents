@@ -23,8 +23,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Repositories
         internal static async Task<ICollection<TModel>> GetItemsAsync<TModel, TData>(this IStore store, IMapper mapper,
             Expression<Func<TModel, bool>> filter = null,
             Expression<Func<IQueryable<TModel>, IQueryable<TModel>>> queryFunc = null,
-            ICollection<Expression<Func<IQueryable<TModel>, IIncludableQueryable<TModel, object>>>> includeProperties = null,
-            ICollection<FilteredIncludeExpression> filteredIncludes = null)
+            ICollection<Expression<Func<IQueryable<TModel>, IIncludableQueryable<TModel, object>>>> includeProperties = null)
             where TModel : BaseModel
             where TData : BaseData
         {
@@ -38,8 +37,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Repositories
             (
                 f,
                 mappedQueryFunc?.Compile(),
-                includes?.Select(i => i.Compile()).ToList(),
-                filteredIncludes.MapFilteredIncludes<TModel, TData>(mapper)
+                includes?.Select(i => i.Compile()).ToList()
             );
 
             //Map and return the data
