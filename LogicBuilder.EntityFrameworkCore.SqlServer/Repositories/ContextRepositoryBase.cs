@@ -60,26 +60,6 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Repositories
             return await _store.CountAsync<TModel, TData>(_mapper, filter);
         }
 
-        public async Task<TModelReturn> QueryAsync<TModel, TData, TModelReturn, TDataReturn>(Expression<Func<IQueryable<TModel>, TModelReturn>> queryFunc, ICollection<Expression<Func<IQueryable<TModel>, IIncludableQueryable<TModel, object>>>> includeProperties = null)
-            where TModel : BaseModel
-            where TData : BaseData
-        {
-            return await _store.QueryAsync<TModel, TData, TModelReturn, TDataReturn>(
-                _mapper,
-                queryFunc,
-                includeProperties);
-        }
-
-        public async Task<TReturn> QueryAsync<TModel, TData, TModelReturn, TDataReturn, TReturn>(Expression<Func<IQueryable<TModel>, TModelReturn>> queryFunc, ICollection<Expression<Func<IQueryable<TModel>, IIncludableQueryable<TModel, object>>>> includeProperties = null)
-            where TModel : BaseModel
-            where TData : BaseData
-        {
-            return await _store.QueryAsync<TModel, TData, TModelReturn, TDataReturn, TReturn>(
-                _mapper,
-                queryFunc,
-                includeProperties);
-        }
-
         public async Task<TModelReturn> QueryAsync<TModel, TData, TModelReturn, TDataReturn>(Expression<Func<IQueryable<TModel>, TModelReturn>> queryFunc, SelectExpandDefinition selectExpandDefinition = null)
             where TModel : BaseModel
             where TData : BaseData
