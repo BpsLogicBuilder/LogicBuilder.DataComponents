@@ -75,19 +75,6 @@ namespace LogicBuilder.Expressions.Utils
         public static Expression<TDelegate> ToExpression<TDelegate>(Expression<TDelegate> expression)
             => expression;
 
-        public static FilteredIncludeExpression BuildFilteredIncludeExpression(this FilteredInclude filteredInclude, Type type)
-        {
-            LambdaExpression include = QueryExtensions.BuildSelectorExpression(type, filteredInclude.Include);
-
-            Type propertyType = (include.Body as MemberExpression).GetMemberType().GetCurrentType();
-            return new FilteredIncludeExpression
-            {
-                Include = include,
-                Filter = filteredInclude.FilterGroup.GetFilterExpression(propertyType),
-                FilteredIncludes = filteredInclude.FilteredIncludes?.Select(fi => fi.BuildFilteredIncludeExpression(propertyType)).ToList()
-            };
-        }
-
         public static Expression<Func<T, bool>> GetFilter<T>(this IExpressionPart filterPart, IDictionary<string, ParameterExpression> parameters, string parameterName)
             => (Expression<Func<T, bool>>)filterPart.GetFilter(typeof(T), parameters, parameterName);
 

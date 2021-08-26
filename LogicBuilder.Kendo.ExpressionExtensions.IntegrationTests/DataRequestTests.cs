@@ -252,30 +252,6 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests
         }
 
         [Fact]
-        public void Get_students_with_filtered_inlude_no_filter_kendo_filter()
-        {
-            ISchoolRepository repository = serviceProvider.GetRequiredService<ISchoolRepository>();
-            ICollection<StudentModel> list = Task.Run
-            (
-                () => repository.GetItemsAsync<StudentModel, Student>
-                (
-                    s => s.Enrollments.Count > 0, null, null,
-                    new FilteredInclude[]
-                    {
-                        new FilteredInclude
-                        {
-                            Include = "enrollments"
-                        }
-                    }.Select(fi => fi.GetFilteredIncludeExpression(typeof(StudentModel)))
-                        .ToArray()
-                )
-            ).Result;
-
-            Assert.True(list.First().Enrollments.Count > 0);
-            Assert.Null(list.First().Enrollments.First().CourseTitle);
-        }
-
-        [Fact]
         public void Get_students_with_filtered_inlude_no_filter_select_expand_definition()
         {
             ISchoolRepository repository = serviceProvider.GetRequiredService<ISchoolRepository>();
@@ -310,30 +286,6 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests
             ).Result;
 
             Assert.Null(list.First().Enrollments);
-        }
-
-        [Fact]
-        public void Get_students_with_filtered_inlude_with_filter_kendo_filter()
-        {
-            ISchoolRepository repository = serviceProvider.GetRequiredService<ISchoolRepository>();
-            ICollection<StudentModel> list = Task.Run
-            (
-                () => repository.GetItemsAsync<StudentModel, Student>
-                (
-                    s => s.Enrollments.Count > 0, null, null,
-                    new FilteredInclude[]
-                    {
-                        new FilteredInclude
-                        {
-                            Include = "enrollments",
-                            Filter = "enrollmentID~eq~-1"
-                        }
-                    }.Select(fi => fi.GetFilteredIncludeExpression(typeof(StudentModel)))
-                        .ToArray()
-                )
-            ).Result;
-
-            Assert.False(list.First().Enrollments.Any());
         }
 
         [Fact]
@@ -375,30 +327,6 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests
             ).Result;
 
             Assert.False(list.First().Enrollments.Any());
-        }
-
-        [Fact]
-        public void Get_students_with_filtered_inlude_no_filter_logicBuilder_filter()
-        {
-            ISchoolRepository repository = serviceProvider.GetRequiredService<ISchoolRepository>();
-            ICollection<StudentModel> list = Task.Run
-            (
-                () => repository.GetItemsAsync<StudentModel, Student>
-                (
-                    s => s.Enrollments.Count > 0, null, null,
-                    new FilteredInclude[]
-                    {
-                        new FilteredInclude
-                        {
-                            Include = "enrollments"
-                        }
-                    }.Select(fi => fi.BuildFilteredIncludeExpression((typeof(StudentModel))))
-                        .ToArray()
-                )
-            ).Result;
-
-            Assert.True(list.First().Enrollments.Count > 0);
-            Assert.Null(list.First().Enrollments.First().CourseTitle);
         }
 
         [Fact]
@@ -521,42 +449,6 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests
             Assert.Single(list);
             Assert.Equal(2, list.First().Enrollments.Count);
             Assert.Equal("A", list.First().Enrollments.Last().GradeLetter);
-        }
-
-        [Fact]
-        public void Get_students_with_filtered_inlude_with_filter_logicBuilder_filter()
-        {
-            ISchoolRepository repository = serviceProvider.GetRequiredService<ISchoolRepository>();
-            ICollection<StudentModel> list = Task.Run
-            (
-                () => repository.GetItemsAsync<StudentModel, Student>
-                (
-                    s => s.Enrollments.Count > 0, null, null,
-                    new FilteredInclude[]
-                    {
-                        new FilteredInclude
-                        {
-                            Include = "enrollments",
-                            FilterGroup = new FilterGroup
-                            {
-                                Logic = "and",
-                                Filters = new List<Filter>
-                                {
-                                    new Filter
-                                    {
-                                        Field = "enrollmentID",
-                                        Operator = "eq",
-                                        Value = -1
-                                    }
-                                }
-                            }
-                        }
-                    }.Select(fi => fi.BuildFilteredIncludeExpression((typeof(StudentModel))))
-                        .ToArray()
-                )
-            ).Result;
-
-            Assert.False(list.First().Enrollments.Any());
         }
         #endregion Tests
 

@@ -155,19 +155,6 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests
             };
         }
 
-        public static FilteredIncludeExpression GetFilteredIncludeExpression(this FilteredInclude filteredInclude, Type type)
-        {
-           LambdaExpression include = LogicBuilder.Expressions.Utils.QueryExtensions.BuildSelectorExpression(type, filteredInclude.Include);
-
-            Type propertyType = (include.Body as MemberExpression).GetMemberType().GetCurrentType();
-            return new FilteredIncludeExpression
-            {
-                Include = include,
-                Filter = filteredInclude.Filter.GetFilter(propertyType),
-                FilteredIncludes = filteredInclude.FilteredIncludes?.Select(fi => fi.GetFilteredIncludeExpression(propertyType)).ToList()
-            };
-        }
-
         private static LambdaExpression GetFilter(this string filter, Type type, string parameterName = "i")
         {
             if (string.IsNullOrEmpty(filter))

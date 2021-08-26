@@ -27,7 +27,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Repositories
         #endregion Fields
 
         #region Methods
-        public async Task<ICollection<TModel>> GetItemsAsync<TModel, TData>(Expression<Func<TModel, bool>> filter = null, Expression<Func<IQueryable<TModel>, IQueryable<TModel>>> queryFunc = null, ICollection<Expression<Func<IQueryable<TModel>, IIncludableQueryable<TModel, object>>>> includeProperties = null, ICollection<FilteredIncludeExpression> filteredIncludes = null)
+        public async Task<ICollection<TModel>> GetItemsAsync<TModel, TData>(Expression<Func<TModel, bool>> filter = null, Expression<Func<IQueryable<TModel>, IQueryable<TModel>>> queryFunc = null, ICollection<Expression<Func<IQueryable<TModel>, IIncludableQueryable<TModel, object>>>> includeProperties = null)
             where TModel : BaseModel
             where TData : BaseData
         {
@@ -36,8 +36,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Repositories
                 _mapper,
                 filter,
                 queryFunc,
-                includeProperties,
-                filteredIncludes
+                includeProperties
             );
         }
 

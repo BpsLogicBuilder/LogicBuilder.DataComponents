@@ -11,7 +11,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Crud.DataStores
 {
     public interface IStore
     {
-        Task<ICollection<T>> GetAsync<T>(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IQueryable<T>> queryFunc = null, ICollection<Func<IQueryable<T>, IIncludableQueryable<T, object>>> includeProperties = null, ICollection<FilteredIncludeExpression> filteredIncludes = null) where T : BaseData;
+        Task<ICollection<T>> GetAsync<T>(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IQueryable<T>> queryFunc = null, ICollection<Func<IQueryable<T>, IIncludableQueryable<T, object>>> includeProperties = null) where T : BaseData;
         Task<IQueryable<T>> GetQueryableAsync<T>(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IQueryable<T>> queryableFunc = null) where T : BaseData;
         Task<int> CountAsync<T>(Expression<Func<T, bool>> filter = null) where T : BaseData;
         Task<bool> SaveAsync<T>(ICollection<T> entities) where T : BaseData;
