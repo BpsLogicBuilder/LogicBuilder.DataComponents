@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LogicBuilder.Expressions.Utils.ExpressionBuilder.Operand;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -60,7 +61,8 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
             else if (node.Expression.NodeType == ExpressionType.Constant)
             {
                 Visit(node.Expression);
-                Out("." + node.Member.Name);
+                if (!typeof(ConstantContainer).IsAssignableFrom(node.Expression?.Type))
+                    Out("." + node.Member.Name);
             }
             else
             {
@@ -79,13 +81,23 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
             }
             else
             {
-                string stringValue = node.Type == typeof(string)
-                    ? string.Format(CultureInfo.InvariantCulture, "\"{0}\"", node.Value)
-                    : string.Format(CultureInfo.InvariantCulture, "{0}", node.Value);
-                Out(stringValue);
+                Out
+                (
+                    GetOutString(GetConstantValue())
+                );
             }
 
             return node;
+
+            object GetConstantValue()
+                => node.Value is ConstantContainer constantContainer
+                    ? constantContainer.Property
+                    : node.Value;
+
+            string GetOutString(object constant)
+                => constant.GetType() == typeof(string)
+                    ? string.Format(CultureInfo.InvariantCulture, "\"{0}\"", constant)
+                    : string.Format(CultureInfo.InvariantCulture, "{0}", constant);
         }
 
         protected override Expression VisitUnary(UnaryExpression node)
