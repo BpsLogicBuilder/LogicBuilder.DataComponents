@@ -19,12 +19,35 @@ namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Operand
         public Type Type { get;  }
         public object ConstantValue { get; }
 
-        public Expression Build()
-            => Type == null ? Expression.Constant(ConstantValue) : Expression.Constant(ConvertConstantValue(), Type);
+        public Expression Build() => GetConstantExpression(Type ?? ConstantValue?.GetType());
+
+        private Expression GetConstantExpression(Type constantType)
+        {
+            if (constantType == null)
+                return Expression.Constant(ConvertConstantValue());
+
+            if (constantType.IsLiteralType() == false)
+                return Expression.Constant(ConvertConstantValue(), constantType);
+
+            const string PropertyName = "TypedProperty";
+
+            return CreateExpression(typeof(ConstantContainer<>).MakeGenericType(constantType));
+
+            Expression CreateExpression(Type containerType)
+                => Expression.Property
+                (
+                    Expression.Constant
+                    (
+                        Activator.CreateInstance(containerType, ConvertConstantValue()),
+                        containerType
+                    ),
+                    PropertyName
+                );
+        }
 
         private object ConvertConstantValue()
         {
-            if (ConstantValue?.GetType() == Type)
+            if (Type == null || ConstantValue?.GetType() == Type)
                 return ConstantValue;
 
             return Convert.ChangeType(ConstantValue, Type);
