@@ -121,7 +121,8 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests
                 (
                     options => options.UseSqlServer
                     (
-                        @"Server=(localdb)\mssqllocaldb;Database=SchoolDb;ConnectRetryCount=0"
+                        @"Server=(localdb)\mssqllocaldb;Database=SchoolDb;ConnectRetryCount=0",
+                        options => options.EnableRetryOnFailure()
                     ),
                     ServiceLifetime.Transient
                 )

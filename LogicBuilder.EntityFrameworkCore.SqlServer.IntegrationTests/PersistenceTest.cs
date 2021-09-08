@@ -113,7 +113,8 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.IntegrationTests
                 (
                     options => options.UseSqlServer
                     (
-                        @"Server=(localdb)\mssqllocaldb;Database=PersistenceTest;ConnectRetryCount=0"
+                        @"Server=(localdb)\mssqllocaldb;Database=PersistenceTest;ConnectRetryCount=0",
+                        options => options.EnableRetryOnFailure()
                     ),
                     ServiceLifetime.Transient
                 )
