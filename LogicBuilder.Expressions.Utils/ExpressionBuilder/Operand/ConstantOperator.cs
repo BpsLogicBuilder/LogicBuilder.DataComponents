@@ -29,8 +29,6 @@ namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Operand
             if (constantType.IsLiteralType() == false)
                 return Expression.Constant(ConvertConstantValue(), constantType);
 
-            const string PropertyName = "TypedProperty";
-
             return CreateExpression(typeof(ConstantContainer<>).MakeGenericType(constantType));
 
             Expression CreateExpression(Type containerType)
@@ -41,7 +39,7 @@ namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.Operand
                         Activator.CreateInstance(containerType, ConvertConstantValue()),
                         containerType
                     ),
-                    PropertyName
+                    nameof(ConstantContainer<object>.TypedProperty)
                 );
         }
 
