@@ -59,29 +59,79 @@ To use:
     ICollection<StudentModel> list = Task.Run(() => repository.GetItemsAsync<StudentModel, Student>()).Result;
 ```
 
-## LogicBuilder.Kendo.ExpressionExtensions
-LogicBuilder.Kendo.ExpressionExtensions depends on Telerik.UI.for.AspNet.Core but has not been created or maintained by Telerik/Progress.  It contains extension methods for creating IQueryable expressions given an instance of Telerik's DataSourceRequest class.
+## Build LINQ Expressions Dynamically
+Create complex expressions from single descriptor objects.
 
-First implement the context, store, repository and service registrations as decribed earlier for LogicBuilder.EntityFrameworkCore.SqlServer.
-
+To use:
 ```c#
-    //Use the DataSourceRequest helper to get the DataSourceResult.
-    ISchoolRepository repository = serviceProvider.GetRequiredService<ISchoolRepository>();
-    DataSourceResult result = Task.Run(() => request.GetData<StudentModel, Student>(repository)).Result;
-
-    internal static class Helpers
-    {
-        public static async Task<DataSourceResult> GetData<TModel, TData>(this DataSourceRequest request, IContextRepository contextRepository, IEnumerable<string> includes = null)
-				where TModel : BaseModelClass
-				where TData : BaseDataClass
+        public void BuildFilter()
         {
-            return await request.GetDataSourceResult<TModel, TData>
-            (
-		contextRepository,
-		includes.BuildIncludesExpressionCollection<TModel>()
-            );
+            IConfigurationProvider config = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile<ExpressionOperatorsMappingProfile>();
+            });
+            IMapper mapper = config.CreateMapper();
+
+            Expression<Func<Product, bool>> filter = GetFilterExpression<Product>(mapper);
+
+            //$it => $it.AlternateAddresses.Any(address => (address.City == "Redmond"))
+            Expression<Func<T, bool>> GetFilterExpression<T>(IMapper mapper) 
+                => (Expression<Func<T, bool>>)mapper.Map<FilterLambdaOperator>
+                (
+                    new FilterLambdaDescriptor
+                    (
+                        new AnyDescriptor
+                        (
+                            new MemberSelectorDescriptor("AlternateAddresses", new ParameterDescriptor("$it")),
+                            new EqualsBinaryDescriptor
+                            (
+                                new MemberSelectorDescriptor("City", new ParameterDescriptor("address")),
+                                new ConstantDescriptor("Redmond")
+                            ),
+                            "address"
+                        ),
+                        typeof(Product),
+                        "$it"
+                    ),
+                    opts => opts.Items["parameters"] = GetParameters()
+                ).Build();
         }
-    }
+
+        public void BuildSelector()
+        {
+            IConfigurationProvider config = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile<ExpressionOperatorsMappingProfile>();
+            });
+            IMapper mapper = config.CreateMapper();
+
+            Expression<Func<IQueryable<Category>, Category>> selector = GetSelectorExpression<IQueryable<Category>, Category>();
+
+            //$it => $it.FirstOrDefault(a => (a.CategoryID == -1))
+            Expression<Func<T, TResult>> GetSelectorExpression<T, TResult>()
+                => (Expression<Func<T, TResult>>)mapper.Map<SelectorLambdaOperator>
+                (
+                    new SelectorLambdaDescriptor
+                    (
+                        new FirstOrDefaultDescriptor
+                        (
+                            new ParameterDescriptor("$it"),
+                            new EqualsBinaryDescriptor
+                            (
+                                new MemberSelectorDescriptor("CategoryID", new ParameterDescriptor("a")),
+                                new ConstantDescriptor(-1)
+                            ),
+                            "a"
+                        ),
+                        typeof(IQueryable<Category>),
+                        typeof(Category),
+                        "$it"
+                    ),
+                    opts => opts.Items["parameters"] = new Dictionary<string, ParameterExpression>()
+                ).Build();
+        }
 ```
 
-Refer to [the data request tests](https://github.com/BlaiseD/LogicBuilder.DataComponents/blob/master/LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests/DataRequestTests.cs) for complete examples.
+`ExpressionOperatorsMappingProfile` is a mapping profile from `LogicBuilder.EntityFrameworkCore.SqlServer`.
+
+For serializable descriptors, replace `cfg.AddProfile<ExpressionOperatorsMappingProfile>();` with a [custom mapping profile](https://github.com/BlaiseD/Contoso.XPlatform/blob/master/Contoso.AutoMapperProfiles/DescriptorToOperatorMappingProfile.cs) with serializable descriptors.
