@@ -93,7 +93,7 @@ To use:
                         typeof(Product),
                         "$it"
                     ),
-                    opts => opts.Items["parameters"] = GetParameters()
+                    opts => opts.Items["parameters"] = new Dictionary<string, ParameterExpression>()
                 ).Build();
         }
 
