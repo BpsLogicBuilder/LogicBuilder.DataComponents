@@ -72,27 +72,30 @@ To use:
             });
             IMapper mapper = config.CreateMapper();
 
-            Expression<Func<Product, bool>> filter = GetFilterExpression<Product>(mapper);
+            Expression<Func<Product, bool>> filter = GetFilterExpression<Product>
+            (
+                //$it => $it.AlternateAddresses.Any(address => (address.City == "Redmond"))
+                new FilterLambdaDescriptor
+                (
+                    new AnyDescriptor
+                    (
+                        new MemberSelectorDescriptor("AlternateAddresses", new ParameterDescriptor("$it")),
+                        new EqualsBinaryDescriptor
+                        (
+                            new MemberSelectorDescriptor("City", new ParameterDescriptor("address")),
+                            new ConstantDescriptor("Redmond")
+                        ),
+                        "address"
+                    ),
+                    typeof(Product),
+                    "$it"
+                )
+            );
 
-            //$it => $it.AlternateAddresses.Any(address => (address.City == "Redmond"))
-            Expression<Func<T, bool>> GetFilterExpression<T>(IMapper mapper) 
+            Expression<Func<T, bool>> GetFilterExpression<T>(FilterLambdaDescriptor descriptor)
                 => (Expression<Func<T, bool>>)mapper.Map<FilterLambdaOperator>
                 (
-                    new FilterLambdaDescriptor
-                    (
-                        new AnyDescriptor
-                        (
-                            new MemberSelectorDescriptor("AlternateAddresses", new ParameterDescriptor("$it")),
-                            new EqualsBinaryDescriptor
-                            (
-                                new MemberSelectorDescriptor("City", new ParameterDescriptor("address")),
-                                new ConstantDescriptor("Redmond")
-                            ),
-                            "address"
-                        ),
-                        typeof(Product),
-                        "$it"
-                    ),
+                    descriptor,
                     opts => opts.Items["parameters"] = new Dictionary<string, ParameterExpression>()
                 ).Build();
         }
@@ -105,28 +108,31 @@ To use:
             });
             IMapper mapper = config.CreateMapper();
 
-            Expression<Func<IQueryable<Category>, Category>> selector = GetSelectorExpression<IQueryable<Category>, Category>();
-
-            //$it => $it.FirstOrDefault(a => (a.CategoryID == -1))
-            Expression<Func<T, TResult>> GetSelectorExpression<T, TResult>()
+            Expression<Func<IQueryable<Category>, Category>> selector = GetSelectorExpression<IQueryable<Category>, Category>
+            (
+                //$it => $it.FirstOrDefault(a => (a.CategoryID == -1))
+                new SelectorLambdaDescriptor
+                (
+                    new FirstOrDefaultDescriptor
+                    (
+                        new ParameterDescriptor("$it"),
+                        new EqualsBinaryDescriptor
+                        (
+                            new MemberSelectorDescriptor("CategoryID", new ParameterDescriptor("a")),
+                            new ConstantDescriptor(-1)
+                        ),
+                        "a"
+                    ),
+                    typeof(IQueryable<Category>),
+                    typeof(Category),
+                    "$it"
+                )
+            );
+            
+            Expression<Func<T, TResult>> GetSelectorExpression<T, TResult>(SelectorLambdaDescriptor descriptor)
                 => (Expression<Func<T, TResult>>)mapper.Map<SelectorLambdaOperator>
                 (
-                    new SelectorLambdaDescriptor
-                    (
-                        new FirstOrDefaultDescriptor
-                        (
-                            new ParameterDescriptor("$it"),
-                            new EqualsBinaryDescriptor
-                            (
-                                new MemberSelectorDescriptor("CategoryID", new ParameterDescriptor("a")),
-                                new ConstantDescriptor(-1)
-                            ),
-                            "a"
-                        ),
-                        typeof(IQueryable<Category>),
-                        typeof(Category),
-                        "$it"
-                    ),
+                    descriptor,
                     opts => opts.Items["parameters"] = new Dictionary<string, ParameterExpression>()
                 ).Build();
         }
