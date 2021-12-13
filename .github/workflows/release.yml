@@ -56,12 +56,6 @@ jobs:
         PROJECT_NAME: LogicBuilder.Expressions.Utils
       run: ./Release_Build_Push.ps1
       shell: pwsh
-      
-    - name: Pack and push LogicBuilder.Kendo.ExpressionExtensions
-      env:
-        PROJECT_NAME: LogicBuilder.Kendo.ExpressionExtensions
-      run: ./Release_Build_Push.ps1
-      shell: pwsh
 
     - name: Pack and push LogicBuilder.Expressions.EntityFrameworkCore
       env:

@@ -112,7 +112,16 @@ namespace LogicBuilder.Expressions.Utils
                 => enumType.IsValueType && !enumType.IsNullableType() ? Activator.CreateInstance(underlyingType) : null;
 
             static MethodInfo GetMethod()
-                => typeof(Enum).GetMethods().SingleOrDefault(s => s.Name == "TryParse" && s.GetParameters().Length == 2);
+                => typeof(Enum).GetMethods().SingleOrDefault(IsTryParseMethod);
+
+            static bool IsTryParseMethod(MethodInfo method)
+            {
+                if (method.Name != "TryParse") return false;
+                ParameterInfo[] parameters = method.GetParameters();
+                return parameters.Length == 2
+                    && parameters[0].ParameterType == typeof(string)
+                    && parameters[1].IsOut;
+            }
         }
 
         public static Type ToNullableUnderlyingType(this Type type)
