@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>LogicBuilder.Expressions.Utils</RootNamespace>
-    <PackageId>LogicBuilder.Structures</PackageId>
+    <PackageId>Upgrading for compatibility with .Net 6.0 and EF Core 6.0.</PackageId>
     <Authors>BlaiseD</Authors>
     <Description>LogicBuilder.Structures includes classes used by multiple components in the LogicBuilder data stack.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
