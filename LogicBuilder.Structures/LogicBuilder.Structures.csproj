@@ -3,11 +3,11 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>LogicBuilder.Expressions.Utils</RootNamespace>
-    <PackageId>Upgrading for compatibility with .Net 6.0 and EF Core 6.0.</PackageId>
+    <PackageId>LogicBuilder.Structures</PackageId>
     <Authors>BlaiseD</Authors>
     <Description>LogicBuilder.Structures includes classes used by multiple components in the LogicBuilder data stack.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>Bug fixes.</PackageReleaseNotes>
+    <PackageReleaseNotes>Upgrading for compatibility with .Net 6.0 and EF Core 6.0.</PackageReleaseNotes>
     <PackageTags>logicbuilder</PackageTags>
     <Copyright>Copyright © BPS 2019</Copyright>
     <RepositoryUrl>https://github.com/BlaiseD/LogicBuilder.DataComponents</RepositoryUrl>
