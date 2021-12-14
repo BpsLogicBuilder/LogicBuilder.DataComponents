@@ -474,13 +474,31 @@ namespace LogicBuilder.Expressions.Utils
             );
 
         public static Expression GetAsQueryableCall(this Expression expression)
-            => Expression.Call
+        {
+            return Expression.Call
             (
-                typeof(Queryable), 
-                "AsQueryable", 
-                new Type[] { expression.GetUnderlyingElementType() }, 
+                typeof(Queryable),
+                "AsQueryable",
+                new Type[] { GetUnderlyingType(expression.Type) },
                 expression
             );
+
+            Type GetUnderlyingType(Type expressionType)
+            {
+                if (!expressionType.IsGenericType)
+                    throw new ArgumentException(nameof(expressionType));
+
+                Type[] genericArguments = expressionType.GetGenericArguments();
+                Type genericTypeDefinition = expressionType.GetGenericTypeDefinition();
+
+                if (genericTypeDefinition == typeof(IGrouping<,>))
+                    return genericArguments[1];
+                else if (genericArguments.Length == 1)
+                    return genericArguments[0];
+                else
+                    throw new ArgumentException(nameof(expressionType));
+            }
+        }
 
         public static Expression GetAsEnumerableCall(this Expression expression)
         {

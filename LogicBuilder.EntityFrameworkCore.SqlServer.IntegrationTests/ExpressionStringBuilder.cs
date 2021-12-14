@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
+namespace LogicBuilder.EntityFrameworkCore.SqlServer.IntegrationTests
 {
     public class ExpressionStringBuilder : ExpressionVisitor
     {
