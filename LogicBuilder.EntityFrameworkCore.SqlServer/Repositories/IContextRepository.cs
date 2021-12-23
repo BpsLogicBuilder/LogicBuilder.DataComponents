@@ -24,11 +24,13 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Repositories
             where TModel : BaseModel
             where TData : BaseData;
 
-        Task<TModelReturn> QueryAsync<TModel, TData, TModelReturn, TDataReturn>(Expression<Func<IQueryable<TModel>, TModelReturn>> queryFunc, SelectExpandDefinition selectExpandDefinition = null)
+        Task<TModelReturn> QueryAsync<TModel, TData, TModelReturn, TDataReturn>(Expression<Func<IQueryable<TModel>, TModelReturn>> queryFunc, SelectExpandDefinition selectExpandDefinition = null,
+            ICollection<Expression<Func<IQueryable<TModel>, IIncludableQueryable<TModel, object>>>> includeProperties = null)
             where TModel : BaseModel
             where TData : BaseData;
 
-        Task<TReturn> QueryAsync<TModel, TData, TModelReturn, TDataReturn, TReturn>(Expression<Func<IQueryable<TModel>, TModelReturn>> queryFunc, SelectExpandDefinition selectExpandDefinition = null)
+        Task<TReturn> QueryAsync<TModel, TData, TModelReturn, TDataReturn, TReturn>(Expression<Func<IQueryable<TModel>, TModelReturn>> queryFunc, SelectExpandDefinition selectExpandDefinition = null,
+            ICollection<Expression<Func<IQueryable<TModel>, IIncludableQueryable<TModel, object>>>> includeProperties = null)
             where TModel : BaseModel
             where TData : BaseData;
 

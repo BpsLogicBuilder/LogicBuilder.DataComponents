@@ -6,22 +6,17 @@ using Kendo.Mvc.Infrastructure.Implementation.Expressions;
 using Kendo.Mvc.UI;
 using LogicBuilder.Data;
 using LogicBuilder.Domain;
-using LogicBuilder.EntityFrameworkCore.SqlServer;
 using LogicBuilder.EntityFrameworkCore.SqlServer.Repositories;
 using LogicBuilder.Expressions.EntityFrameworkCore;
 using LogicBuilder.Expressions.Utils;
 using LogicBuilder.Expressions.Utils.Expansions;
-using LogicBuilder.Expressions.Utils.Strutures;
 using LogicBuilder.Kendo.ExpressionExtensions.Extensions;
 using LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests.Models;
 using Microsoft.EntityFrameworkCore.Query;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests
@@ -35,7 +30,8 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests
             return await request.Options.CreateDataSourceRequest().GetDataSourceResult<TModel, TData>
             (
                 contextRepository,
-                request.SelectExpandDefinition
+                request.SelectExpandDefinition,
+                request.Includes.BuildIncludesExpressionCollection<TModel>()
             );
         }
 
@@ -110,11 +106,11 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests
         /// <param name="contextRepository"></param>
         /// <param name="selectExpandDefinition"></param>
         /// <returns></returns>
-        public static async Task<DataSourceResult> GetDataSourceResult<TModel, TData>(this DataSourceRequest request, IContextRepository contextRepository, SelectExpandDefinition selectExpandDefinition = null)
+        public static async Task<DataSourceResult> GetDataSourceResult<TModel, TData>(this DataSourceRequest request, IContextRepository contextRepository, SelectExpandDefinition selectExpandDefinition = null, ICollection<Expression<Func<IQueryable<TModel>, IIncludableQueryable<TModel, object>>>> includeProperties = null)
             where TModel : BaseModel
             where TData : BaseData
             => request.Groups != null && request.Groups.Count > 0
-                ? await request.GetGroupedDataSourceResult<TModel, TData>(contextRepository, request.Aggregates != null && request.Aggregates.Count > 0, selectExpandDefinition)
+                ? await request.GetGroupedDataSourceResult<TModel, TData>(contextRepository, request.Aggregates != null && request.Aggregates.Count > 0, selectExpandDefinition, includeProperties)
                 : await request.GetUngroupedDataSourceResult<TModel, TData>(contextRepository, request.Aggregates != null && request.Aggregates.Count > 0, selectExpandDefinition);
 
         private static async Task<DataSourceResult> GetUngroupedDataSourceResult<TModel, TData>(this DataSourceRequest request, IContextRepository contextRepository, bool getAggregates, SelectExpandDefinition selectExpandDefinition = null)
@@ -136,17 +132,17 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests
             };
         }
 
-        private static async Task<DataSourceResult> GetGroupedDataSourceResult<TModel, TData>(this DataSourceRequest request, IContextRepository contextRepository, bool getAggregates, SelectExpandDefinition selectExpandDefinition = null)
+        private static async Task<DataSourceResult> GetGroupedDataSourceResult<TModel, TData>(this DataSourceRequest request, IContextRepository contextRepository, bool getAggregates, SelectExpandDefinition selectExpandDefinition = null, ICollection<Expression<Func<IQueryable<TModel>, IIncludableQueryable<TModel, object>>>> includeProperties = null)
             where TModel : BaseModel
             where TData : BaseData
         {
             Expression<Func<IQueryable<TModel>, AggregateFunctionsGroup>> aggregatesExp = getAggregates ? QueryableExtensionsEx.CreateAggregatesExpression<TModel>(request) : null;
             Expression<Func<IQueryable<TModel>, int>> totalExp = QueryableExtensionsEx.CreateTotalExpression<TModel>(request);
-            Expression<Func<IQueryable<TModel>, IQueryable<AggregateFunctionsGroup>>> groupedExp = QueryableExtensionsEx.CreateGroupedQueryableExpression<TModel>(request);
+            Expression<Func<IQueryable<TModel>, IEnumerable<AggregateFunctionsGroup>>> groupedExp = QueryableExtensionsEx.CreateGroupedDataExpression<TModel>(request);
 
             return new DataSourceResult
             {
-                Data = await contextRepository.QueryAsync<TModel, TData, IQueryable<AggregateFunctionsGroup>, IQueryable<AggregateFunctionsGroup>, IQueryable<AggregateFunctionsGroupModel<TModel>>>(groupedExp, selectExpandDefinition),
+                Data = await contextRepository.QueryAsync<TModel, TData, IEnumerable<AggregateFunctionsGroup>, IEnumerable<AggregateFunctionsGroup>, IEnumerable<AggregateFunctionsGroupModel<TModel>>>(groupedExp, selectExpandDefinition, includeProperties),
                 AggregateResults = getAggregates
                                     ? (await contextRepository.QueryAsync<TModel, TData, AggregateFunctionsGroup, AggregateFunctionsGroup, AggregateFunctionsGroupModel<TModel>>(aggregatesExp, selectExpandDefinition))
                                                                 ?.GetAggregateResults(request.Aggregates.SelectMany(a => a.Aggregates))
