@@ -167,6 +167,107 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests
         }
 
         [Fact]
+        public void Get_instructors_ungrouped_with_aggregates()
+        {
+            DataRequest request = new DataRequest
+            {
+                Options = new DataSourceRequestOptions
+                {
+                    Aggregate = "lastName-count~hireDate-min",
+                    Filter = null,
+                    Group = null,
+                    Page = 1,
+                    Sort = null,
+                    PageSize = 5
+                },
+                SelectExpandDefinition = new SelectExpandDefinition
+                {
+                    ExpandedItems = new List<SelectExpandItem>
+                    {
+                        new SelectExpandItem
+                        {
+                            MemberName = "courses"
+                        },
+                        new SelectExpandItem
+                        {
+                            MemberName = "officeAssignment"
+                        }
+                    }
+                },
+                Selects = null,
+                Distinct = false
+            };
+
+            ISchoolRepository repository = serviceProvider.GetRequiredService<ISchoolRepository>();
+            DataSourceResult result = Task.Run(() => request.GetData<InstructorModel, Instructor>(repository)).Result;
+
+            Assert.Equal(5, result.Total);
+            Assert.Equal(5, ((IEnumerable<InstructorModel>)result.Data).Count());
+            Assert.Equal(2, result.AggregateResults.Count());
+            Assert.Equal("Roger Zheng", ((IEnumerable<InstructorModel>)result.Data).First().FullName);
+        }
+
+        [Fact]
+        public void Get_instructors_grouped_with_aggregates_and_includes()
+        {
+            DataRequest request = new DataRequest
+            {
+                Options = new DataSourceRequestOptions
+                {
+                    Aggregate = "lastName-count~hireDate-min",
+                    Filter = null,
+                    Group = "hireDate-asc",
+                    Page = 1,
+                    Sort = null,
+                    PageSize = 5
+                },
+                Includes = new string[] { "courses.courseTitle", "officeAssignment" },
+                Selects = null,
+                Distinct = false
+            };
+
+            ISchoolRepository repository = serviceProvider.GetRequiredService<ISchoolRepository>();
+            DataSourceResult result = Task.Run(() => request.GetData<InstructorModel, Instructor>(repository)).Result;
+            var obj = ((IEnumerable<AggregateFunctionsGroupModel<InstructorModel>>)result.Data).First().Items.Cast<InstructorModel>().First();
+            Assert.Equal(5, result.Total);
+            Assert.Equal(5, ((IEnumerable<AggregateFunctionsGroupModel<InstructorModel>>)result.Data).Count());
+            Assert.NotEmpty(((IEnumerable<AggregateFunctionsGroupModel<InstructorModel>>)result.Data).First().Items.Cast<InstructorModel>().First().Courses);
+            Assert.Equal(2, result.AggregateResults.Count());
+            Assert.Equal("Count", result.AggregateResults.First().AggregateMethodName);
+            Assert.Equal(5, (int)result.AggregateResults.First().Value);
+        }
+
+        [Fact]
+        public void Get_instructors_grouped_with_aggregates_without_includes()
+        {
+            DataRequest request = new DataRequest
+            {
+                Options = new DataSourceRequestOptions
+                {
+                    Aggregate = "lastName-count~hireDate-min",
+                    Filter = null,
+                    Group = "hireDate-asc",
+                    Page = 1,
+                    Sort = null,
+                    PageSize = 5
+                },
+                Selects = null,
+                Distinct = false
+            };
+
+            ISchoolRepository repository = serviceProvider.GetRequiredService<ISchoolRepository>();
+            DataSourceResult result = Task.Run(() => request.GetData<InstructorModel, Instructor>(repository)).Result;
+            var obj = ((IEnumerable<AggregateFunctionsGroupModel<InstructorModel>>)result.Data).First().Items.Cast<InstructorModel>().First();
+            Assert.Equal(5, result.Total);
+            Assert.Equal(5, ((IEnumerable<AggregateFunctionsGroupModel<InstructorModel>>)result.Data).Count());
+            Assert.Empty(((IEnumerable<AggregateFunctionsGroupModel<InstructorModel>>)result.Data).First().Items.Cast<InstructorModel>().First().Courses);
+            Assert.Null(((IEnumerable<AggregateFunctionsGroupModel<InstructorModel>>)result.Data).First().Items.Cast<InstructorModel>().First().OfficeAssignment);
+            Assert.Equal(2, result.AggregateResults.Count());
+            Assert.Equal("Count", result.AggregateResults.First().AggregateMethodName);
+            Assert.Equal(5, (int)result.AggregateResults.First().Value);
+        }
+
+        [Fact]
         public void Get_single_student_with_navigation_property_of_navigation_property()
         {
             DataRequest request = new DataRequest
