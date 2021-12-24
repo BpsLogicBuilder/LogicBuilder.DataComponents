@@ -82,5 +82,5 @@ jobs:
       run: dotnet build --configuration Release --no-restore
 
     - name: Test
-      run: dotnet test --no-restore --verbosity normal
+      run: dotnet test --no-restore --verbosity normal --filter "LogicBuilder.EntityFrameworkCore.SqlServer.Tests.FilterDescriptorTests|LogicBuilder.EntityFrameworkCore.SqlServer.Tests.QueryableExpressionTests|LogicBuilder.Expressions.Utils.Tests.BuildExpansionsTests|LogicBuilder.Expressions.Utils.Tests.FilterTests|LogicBuilder.Expressions.Utils.Tests.QueryableExpressionTests|LogicBuilder.EntityFrameworkCore.SqlServer.IntegrationTests.PersistenceTest|LogicBuilder.EntityFrameworkCore.SqlServer.IntegrationTests.QueryableExpressionTests"
 
