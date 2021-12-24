@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29001.49
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogicBuilder.EntityFrameworkCore.SqlServer", "LogicBuilder.EntityFrameworkCore.SqlServer\LogicBuilder.EntityFrameworkCore.SqlServer.csproj", "{07241C06-097A-40F3-8174-B3ED0ED8F33E}"
 EndProject
@@ -38,7 +38,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogicBuilder.Expressions.Ut
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogicBuilder.EntityFrameworkCore.SqlServer.Tests", "LogicBuilder.EntityFrameworkCore.SqlServer.Tests\LogicBuilder.EntityFrameworkCore.SqlServer.Tests.csproj", "{E7020D55-C111-48B3-AA6D-75E3D3C611FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogicBuilder.EntityFrameworkCore.SqlServer.IntegrationTests", "LogicBuilder.EntityFrameworkCore.SqlServer.IntegrationTests\LogicBuilder.EntityFrameworkCore.SqlServer.IntegrationTests.csproj", "{E42BDB6A-4425-4983-8B94-C914FD2F9015}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogicBuilder.EntityFrameworkCore.SqlServer.IntegrationTests", "LogicBuilder.EntityFrameworkCore.SqlServer.IntegrationTests\LogicBuilder.EntityFrameworkCore.SqlServer.IntegrationTests.csproj", "{E42BDB6A-4425-4983-8B94-C914FD2F9015}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,9 +71,7 @@ Global
 		{7F514D5A-7F56-499D-AA4D-1D72579C85DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7F514D5A-7F56-499D-AA4D-1D72579C85DC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2AB1465E-6F0C-41E9-951C-B6AC49B76623}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2AB1465E-6F0C-41E9-951C-B6AC49B76623}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2AB1465E-6F0C-41E9-951C-B6AC49B76623}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2AB1465E-6F0C-41E9-951C-B6AC49B76623}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1539ED6D-868C-4BDA-9828-F8AE63A56944}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1539ED6D-868C-4BDA-9828-F8AE63A56944}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1539ED6D-868C-4BDA-9828-F8AE63A56944}.Release|Any CPU.ActiveCfg = Release|Any CPU
