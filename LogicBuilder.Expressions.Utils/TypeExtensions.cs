@@ -200,7 +200,16 @@ namespace LogicBuilder.Expressions.Utils
             ).ToArray();
         }
 
-        private static MemberInfo[] GetMemberInfos(this Type parentType)
-            => parentType.GetMembers(instanceBindingFlags);
+        private static MemberInfo[] GetMemberInfos(this Type parentType) 
+            => parentType.GetMembers(instanceBindingFlags).Select
+            (
+                member =>
+                {
+                    if (member.DeclaringType != parentType)
+                        return member.DeclaringType.GetMember(member.Name, instanceBindingFlags).FirstOrDefault();
+
+                    return member;
+                }
+            ).ToArray();
     }
 }
