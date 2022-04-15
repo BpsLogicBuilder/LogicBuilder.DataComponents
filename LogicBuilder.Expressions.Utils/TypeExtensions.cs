@@ -10,6 +10,8 @@ namespace LogicBuilder.Expressions.Utils
 {
     public static class TypeExtensions
     {
+        const BindingFlags instanceBindingFlags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase;
+
         public static MemberInfo GetMemberInfoFromFullName(this Type type, string propertyFullName)
         {
             if (propertyFullName.IndexOf('.') < 0)
@@ -25,7 +27,12 @@ namespace LogicBuilder.Expressions.Utils
 
         public static MemberInfo GetMemberInfo(this Type parentType, string memberName)
         {
-            MemberInfo mInfo = parentType.GetMember(memberName, BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy | BindingFlags.IgnoreCase).FirstOrDefault();
+            MemberInfo mInfo = parentType.GetMember(memberName, instanceBindingFlags).FirstOrDefault();
+
+            //AutoMapper's expansions use declared only MemberInfos
+            if (mInfo?.DeclaringType != null && mInfo.DeclaringType.FullName != parentType.FullName)
+                mInfo = mInfo.DeclaringType.GetMember(memberName, instanceBindingFlags).FirstOrDefault();
+
             if (mInfo == null)
                 throw new ArgumentException(string.Format(Resources.invalidPropertyFormat, memberName, parentType.FullName));
 
@@ -194,6 +201,6 @@ namespace LogicBuilder.Expressions.Utils
         }
 
         private static MemberInfo[] GetMemberInfos(this Type parentType)
-            => parentType.GetMembers(BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy | BindingFlags.IgnoreCase);
+            => parentType.GetMembers(instanceBindingFlags);
     }
 }
