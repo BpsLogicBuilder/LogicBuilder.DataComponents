@@ -21,7 +21,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="LogicBuilder.Structures" Version="5.0.3" />
+    <PackageReference Include="LogicBuilder.Structures" Version="5.0.4" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.14" />
     <PackageReference Include="Microsoft.OData.Edm" Version="7.9.4" />
