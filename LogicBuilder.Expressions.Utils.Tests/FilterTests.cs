@@ -3393,6 +3393,75 @@ namespace LogicBuilder.Expressions.Utils.Tests
                 );
         }
 
+        public static List<object[]> DateOnlyFunctions_Nullable_Data
+        {
+            get
+            {
+                var parameters = GetParameters();
+
+                return new List<object[]>
+                {
+                    new object[]
+                    {
+                        new EqualsBinaryOperator
+                        (
+                            new YearOperator
+                            (
+                                new MemberSelectorOperator("NullableDateOnlyProperty", new ParameterOperator(parameters, parameterName))
+                            ),
+                            new ConstantOperator(2015)
+                        ),
+                       "$it => ($it.NullableDateOnlyProperty.Value.Year == 2015)",
+                        parameters
+                    },
+                    new object[]
+                    {
+                        new EqualsBinaryOperator
+                        (
+                            new MonthOperator
+                            (
+                                new MemberSelectorOperator("NullableDateOnlyProperty", new ParameterOperator(parameters, parameterName))
+                            ),
+                            new ConstantOperator(12)
+                        ),
+                       "$it => ($it.NullableDateOnlyProperty.Value.Month == 12)",
+                        parameters
+                    },
+                    new object[]
+                    {
+                        new EqualsBinaryOperator
+                        (
+                            new DayOperator
+                            (
+                                new MemberSelectorOperator("NullableDateOnlyProperty", new ParameterOperator(parameters, parameterName))
+                            ),
+                            new ConstantOperator(23)
+                        ),
+                       "$it => ($it.NullableDateOnlyProperty.Value.Day == 23)",
+                        parameters
+                    },
+                };
+            }
+        }
+
+        [Theory]
+        [MemberData(nameof(DateOnlyFunctions_Nullable_Data))]
+        public void DateOnlyFunctions_Nullable(IExpressionPart filterBody, string expression, IDictionary<string, ParameterExpression> parameters)
+        {
+            //act
+            var filter = CreateFilter<Product>();
+
+            //assert
+            AssertFilterStringIsCorrect(filter, expression);
+
+            Expression<Func<T, bool>> CreateFilter<T>()
+                => GetFilter<T>
+                (
+                    filterBody,
+                    parameters
+                );
+        }
+
         public static List<object[]> DateFunctions_NonNullable_Data
         {
             get
@@ -3447,6 +3516,75 @@ namespace LogicBuilder.Expressions.Utils.Tests
         [Theory]
         [MemberData(nameof(DateFunctions_NonNullable_Data))]
         public void DateFunctions_NonNullable(IExpressionPart filterBody, string expression, IDictionary<string, ParameterExpression> parameters)
+        {
+            //act
+            var filter = CreateFilter<Product>();
+
+            //assert
+            AssertFilterStringIsCorrect(filter, expression);
+
+            Expression<Func<T, bool>> CreateFilter<T>()
+                => GetFilter<T>
+                (
+                    filterBody,
+                    parameters
+                );
+        }
+
+        public static List<object[]> DateOnlyFunctions_NonNullable_Data
+        {
+            get
+            {
+                var parameters = GetParameters();
+
+                return new List<object[]>
+                {
+                    new object[]
+                    {
+                        new EqualsBinaryOperator
+                        (
+                            new YearOperator
+                            (
+                                new MemberSelectorOperator("DateOnlyProperty", new ParameterOperator(parameters, parameterName))
+                            ),
+                            new ConstantOperator(2015)
+                        ),
+                        "$it => ($it.DateOnlyProperty.Year == 2015)",
+                        parameters
+                    },
+                    new object[]
+                    {
+                        new EqualsBinaryOperator
+                        (
+                            new MonthOperator
+                            (
+                                new MemberSelectorOperator("DateOnlyProperty", new ParameterOperator(parameters, parameterName))
+                            ),
+                            new ConstantOperator(12)
+                        ),
+                       "$it => ($it.DateOnlyProperty.Month == 12)",
+                        parameters
+                    },
+                    new object[]
+                    {
+                        new EqualsBinaryOperator
+                        (
+                            new DayOperator
+                            (
+                                new MemberSelectorOperator("DateOnlyProperty", new ParameterOperator(parameters, parameterName))
+                            ),
+                            new ConstantOperator(23)
+                        ),
+                       "$it => ($it.DateOnlyProperty.Day == 23)",
+                        parameters
+                    },
+                };
+            }
+        }
+
+        [Theory]
+        [MemberData(nameof(DateOnlyFunctions_NonNullable_Data))]
+        public void DateOnlyFunctions_NonNullable(IExpressionPart filterBody, string expression, IDictionary<string, ParameterExpression> parameters)
         {
             //act
             var filter = CreateFilter<Product>();
@@ -3531,6 +3669,75 @@ namespace LogicBuilder.Expressions.Utils.Tests
                 );
         }
 
+        public static List<object[]> TimeOnlyFunctions_Nullable_Data
+        {
+            get
+            {
+                var parameters = GetParameters();
+
+                return new List<object[]>
+                {
+                    new object[]
+                    {
+                        new EqualsBinaryOperator
+                        (
+                            new HourOperator
+                            (
+                                new MemberSelectorOperator("NullableTimeOnlyProperty", new ParameterOperator(parameters, parameterName))
+                            ),
+                            new ConstantOperator(10)
+                        ),
+                        "$it => ($it.NullableTimeOnlyProperty.Value.Hour == 10)",
+                        parameters
+                    },
+                    new object[]
+                    {
+                        new EqualsBinaryOperator
+                        (
+                            new MinuteOperator
+                            (
+                                new MemberSelectorOperator("NullableTimeOnlyProperty", new ParameterOperator(parameters, parameterName))
+                            ),
+                            new ConstantOperator(20)
+                        ),
+                       "$it => ($it.NullableTimeOnlyProperty.Value.Minute == 20)",
+                        parameters
+                    },
+                    new object[]
+                    {
+                        new EqualsBinaryOperator
+                        (
+                            new SecondOperator
+                            (
+                                new MemberSelectorOperator("NullableTimeOnlyProperty", new ParameterOperator(parameters, parameterName))
+                            ),
+                            new ConstantOperator(30)
+                        ),
+                       "$it => ($it.NullableTimeOnlyProperty.Value.Second == 30)",
+                        parameters
+                    },
+                };
+            }
+        }
+
+        [Theory]
+        [MemberData(nameof(TimeOnlyFunctions_Nullable_Data))]
+        public void TimeOnlyFunctions_Nullable(IExpressionPart filterBody, string expression, IDictionary<string, ParameterExpression> parameters)
+        {
+            //act
+            var filter = CreateFilter<Product>();
+
+            //assert
+            AssertFilterStringIsCorrect(filter, expression);
+
+            Expression<Func<T, bool>> CreateFilter<T>()
+                => GetFilter<T>
+                (
+                    filterBody,
+                    parameters
+                );
+        }
+
         public static List<object[]> TimeOfDayFunctions_NonNullable_Data
         {
             get
@@ -3600,6 +3807,75 @@ namespace LogicBuilder.Expressions.Utils.Tests
                 );
         }
 
+        public static List<object[]> TimeOnlyFunctions_NonNullable_Data
+        {
+            get
+            {
+                var parameters = GetParameters();
+
+                return new List<object[]>
+                {
+                    new object[]
+                    {
+                        new EqualsBinaryOperator
+                        (
+                            new HourOperator
+                            (
+                                new MemberSelectorOperator("TimeOnlyProperty", new ParameterOperator(parameters, parameterName))
+                            ),
+                            new ConstantOperator(10)
+                        ),
+                        "$it => ($it.TimeOnlyProperty.Hour == 10)",
+                        parameters
+                    },
+                    new object[]
+                    {
+                        new EqualsBinaryOperator
+                        (
+                            new MinuteOperator
+                            (
+                                new MemberSelectorOperator("TimeOnlyProperty", new ParameterOperator(parameters, parameterName))
+                            ),
+                            new ConstantOperator(20)
+                        ),
+                       "$it => ($it.TimeOnlyProperty.Minute == 20)",
+                        parameters
+                    },
+                    new object[]
+                    {
+                        new EqualsBinaryOperator
+                        (
+                            new SecondOperator
+                            (
+                                new MemberSelectorOperator("TimeOnlyProperty", new ParameterOperator(parameters, parameterName))
+                            ),
+                            new ConstantOperator(30)
+                        ),
+                       "$it => ($it.TimeOnlyProperty.Second == 30)",
+                        parameters
+                    },
+                };
+            }
+        }
+
+        [Theory]
+        [MemberData(nameof(TimeOnlyFunctions_NonNullable_Data))]
+        public void TimeOnlyFunctions_NonNullable(IExpressionPart filterBody, string expression, IDictionary<string, ParameterExpression> parameters)
+        {
+            //act
+            var filter = CreateFilter<Product>();
+
+            //assert
+            AssertFilterStringIsCorrect(filter, expression);
+
+            Expression<Func<T, bool>> CreateFilter<T>()
+                => GetFilter<T>
+                (
+                    filterBody,
+                    parameters
+                );
+        }
+
         public static List<object[]> FractionalsecondsFunction_Nullable_Data
         {
             get
@@ -3632,6 +3908,19 @@ namespace LogicBuilder.Expressions.Utils.Tests
                             new ConstantOperator(0.2m)
                         ),
                        "$it => ((Convert($it.NullableTimeOfDayProperty.Value.Milliseconds) / 1000) == 0.2)",
+                        parameters
+                    },
+                    new object[]
+                    {
+                        new EqualsBinaryOperator
+                        (
+                            new FractionalSecondsOperator
+                            (
+                                new MemberSelectorOperator("NullableTimeOnlyProperty", new ParameterOperator(parameters, parameterName))
+                            ),
+                            new ConstantOperator(0.2m)
+                        ),
+                       "$it => ((Convert($it.NullableTimeOnlyProperty.Value.Millisecond) / 1000) == 0.2)",
                         parameters
                     },
                 };
@@ -3688,6 +3977,19 @@ namespace LogicBuilder.Expressions.Utils.Tests
                             new ConstantOperator(0.2m)
                         ),
                        "$it => ((Convert($it.TimeOfDayProperty.Milliseconds) / 1000) == 0.2)",
+                        parameters
+                    },
+                    new object[]
+                    {
+                        new EqualsBinaryOperator
+                        (
+                            new FractionalSecondsOperator
+                            (
+                                new MemberSelectorOperator("TimeOnlyProperty", new ParameterOperator(parameters, parameterName))
+                            ),
+                            new ConstantOperator(0.2m)
+                        ),
+                       "$it => ((Convert($it.TimeOnlyProperty.Millisecond) / 1000) == 0.2)",
                         parameters
                     },
                 };
@@ -3810,6 +4112,104 @@ namespace LogicBuilder.Expressions.Utils.Tests
                 );
         }
 
+        public static List<object[]> DateOnlyFunction_Nullable_Data
+        {
+            get
+            {
+                var parameters = GetParameters();
+
+                return new List<object[]>
+                {
+                    new object[]
+                    {
+                        new EqualsBinaryOperator
+                        (
+                            new ConvertToNumericDateOperator
+                            (
+                                new MemberSelectorOperator("DiscontinuedDate", new ParameterOperator(parameters, parameterName))
+                            ),
+                            new ConvertToNumericDateOperator
+                            (
+                                new ConstantOperator(new DateOnly(2015, 2, 26))
+                            )
+                        ),
+                        "$it => (((($it.DiscontinuedDate.Value.Year * 10000) + ($it.DiscontinuedDate.Value.Month * 100)) + $it.DiscontinuedDate.Value.Day) == (((2015-02-26.Year * 10000) + (2015-02-26.Month * 100)) + 2015-02-26.Day))",
+                        parameters
+                    },
+                    new object[]
+                    {
+                        new LessThanBinaryOperator
+                        (
+                            new ConvertToNumericDateOperator
+                            (
+                                new MemberSelectorOperator("DiscontinuedDate", new ParameterOperator(parameters, parameterName))
+                            ),
+                            new ConvertToNumericDateOperator
+                            (
+                                new ConstantOperator(new DateOnly(2016, 2, 26))
+                            )
+                        ),
+                        "$it => (((($it.DiscontinuedDate.Value.Year * 10000) + ($it.DiscontinuedDate.Value.Month * 100)) + $it.DiscontinuedDate.Value.Day) < (((2016-02-26.Year * 10000) + (2016-02-26.Month * 100)) + 2016-02-26.Day))",
+                        parameters
+                    },
+                    new object[]
+                    {
+                        new GreaterThanOrEqualsBinaryOperator
+                        (
+                            new ConvertToNumericDateOperator
+                            (
+                                new ConstantOperator(new DateOnly(2015, 2, 26))
+                            ),
+                            new ConvertToNumericDateOperator
+                            (
+                                new MemberSelectorOperator("DiscontinuedDate", new ParameterOperator(parameters, parameterName))
+                            )
+                        ),
+                        "$it => ((((2015-02-26.Year * 10000) + (2015-02-26.Month * 100)) + 2015-02-26.Day) >= ((($it.DiscontinuedDate.Value.Year * 10000) + ($it.DiscontinuedDate.Value.Month * 100)) + $it.DiscontinuedDate.Value.Day))",
+                        parameters
+                    },
+                    new object[]
+                    {
+                        new NotEqualsBinaryOperator
+                        (
+                            new ConstantOperator(null),
+                            new MemberSelectorOperator("DiscontinuedDate", new ParameterOperator(parameters, parameterName))
+                        ),
+                        "$it => (null != $it.DiscontinuedDate)",
+                        parameters
+                    },
+                    new object[]
+                    {
+                        new EqualsBinaryOperator
+                        (
+                            new MemberSelectorOperator("DiscontinuedDate", new ParameterOperator(parameters, parameterName)),
+                            new ConstantOperator(null)
+                        ),
+                        "$it => ($it.DiscontinuedDate == null)",
+                        parameters
+                    },
+                };
+            }
+        }
+
+        [Theory]
+        [MemberData(nameof(DateOnlyFunction_Nullable_Data))]
+        public void DateOnlyFunction_Nullable(IExpressionPart filterBody, string expression, IDictionary<string, ParameterExpression> parameters)
+        {
+            //act
+            var filter = CreateFilter<Product>();
+
+            //assert
+            AssertFilterStringIsCorrect(filter, expression);
+
+            Expression<Func<T, bool>> CreateFilter<T>()
+                => GetFilter<T>
+                (
+                    filterBody,
+                    parameters
+                );
+        }
+
         public static List<object[]> DateFunction_NonNullable_Data
         {
             get
@@ -3873,6 +4273,84 @@ namespace LogicBuilder.Expressions.Utils.Tests
         [Theory]
         [MemberData(nameof(DateFunction_NonNullable_Data))]
         public void DateFunction_NonNullable(IExpressionPart filterBody, string expression, IDictionary<string, ParameterExpression> parameters)
+        {
+            //act
+            var filter = CreateFilter<Product>();
+
+            //assert
+            AssertFilterStringIsCorrect(filter, expression);
+
+            Expression<Func<T, bool>> CreateFilter<T>()
+                => GetFilter<T>
+                (
+                    filterBody,
+                    parameters
+                );
+        }
+
+        public static List<object[]> DateOnlyFunction_NonNullable_Data
+        {
+            get
+            {
+                var parameters = GetParameters();
+
+                return new List<object[]>
+                {
+                    new object[]
+                    {
+                        new EqualsBinaryOperator
+                        (
+                            new ConvertToNumericDateOperator
+                            (
+                                new MemberSelectorOperator("NonNullableDiscontinuedDate", new ParameterOperator(parameters, parameterName))
+                            ),
+                            new ConvertToNumericDateOperator
+                            (
+                                new ConstantOperator(new DateOnly(2015, 2, 26))
+                            )
+                        ),
+                        "$it => (((($it.NonNullableDiscontinuedDate.Year * 10000) + ($it.NonNullableDiscontinuedDate.Month * 100)) + $it.NonNullableDiscontinuedDate.Day) == (((2015-02-26.Year * 10000) + (2015-02-26.Month * 100)) + 2015-02-26.Day))",
+                        parameters
+                    },
+                    new object[]
+                    {
+                        new LessThanBinaryOperator
+                        (
+                            new ConvertToNumericDateOperator
+                            (
+                                new MemberSelectorOperator("NonNullableDiscontinuedDate", new ParameterOperator(parameters, parameterName))
+                            ),
+                            new ConvertToNumericDateOperator
+                            (
+                                new ConstantOperator(new DateOnly(2016, 2, 26))
+                            )
+                        ),
+                        "$it => (((($it.NonNullableDiscontinuedDate.Year * 10000) + ($it.NonNullableDiscontinuedDate.Month * 100)) + $it.NonNullableDiscontinuedDate.Day) < (((2016-02-26.Year * 10000) + (2016-02-26.Month * 100)) + 2016-02-26.Day))",
+                        parameters
+                    },
+                    new object[]
+                    {
+                        new GreaterThanOrEqualsBinaryOperator
+                        (
+                            new ConvertToNumericDateOperator
+                            (
+                                new ConstantOperator(new DateOnly(2015, 2, 26))
+                            ),
+                            new ConvertToNumericDateOperator
+                            (
+                                new MemberSelectorOperator("NonNullableDiscontinuedDate", new ParameterOperator(parameters, parameterName))
+                            )
+                        ),
+                        "$it => ((((2015-02-26.Year * 10000) + (2015-02-26.Month * 100)) + 2015-02-26.Day) >= ((($it.NonNullableDiscontinuedDate.Year * 10000) + ($it.NonNullableDiscontinuedDate.Month * 100)) + $it.NonNullableDiscontinuedDate.Day))",
+                        parameters
+                    }
+                };
+            }
+        }
+
+        [Theory]
+        [MemberData(nameof(DateOnlyFunction_NonNullable_Data))]
+        public void DateOnlyFunction_NonNullable(IExpressionPart filterBody, string expression, IDictionary<string, ParameterExpression> parameters)
         {
             //act
             var filter = CreateFilter<Product>();
@@ -3986,6 +4464,104 @@ namespace LogicBuilder.Expressions.Utils.Tests
                 );
         }
 
+        public static List<object[]> TimeOnlyFunction_Nullable_Data
+        {
+            get
+            {
+                var parameters = GetParameters();
+
+                return new List<object[]>
+                {
+                    new object[]
+                    {
+                        new EqualsBinaryOperator
+                        (
+                            new ConvertToNumericTimeOperator
+                            (
+                                new MemberSelectorOperator("DiscontinuedDate", new ParameterOperator(parameters, parameterName))
+                            ),
+                            new ConvertToNumericTimeOperator
+                            (
+                                new ConstantOperator(new TimeOnly(1, 2, 3, 4))
+                            )
+                        ),
+                        "$it => (((Convert($it.DiscontinuedDate.Value.Hour) * 36000000000) + ((Convert($it.DiscontinuedDate.Value.Minute) * 600000000) + ((Convert($it.DiscontinuedDate.Value.Second) * 10000000) + Convert($it.DiscontinuedDate.Value.Millisecond)))) == ((Convert(01:02:03.0040000.Hour) * 36000000000) + ((Convert(01:02:03.0040000.Minute) * 600000000) + ((Convert(01:02:03.0040000.Second) * 10000000) + Convert(01:02:03.0040000.Millisecond)))))",
+                        parameters
+                    },
+                    new object[]
+                    {
+                        new GreaterThanOrEqualsBinaryOperator
+                        (
+                            new ConvertToNumericTimeOperator
+                            (
+                                new MemberSelectorOperator("DiscontinuedDate", new ParameterOperator(parameters, parameterName))
+                            ),
+                            new ConvertToNumericTimeOperator
+                            (
+                                new ConstantOperator(new TimeOnly(1, 2, 3, 4))
+                            )
+                        ),
+                        "$it => (((Convert($it.DiscontinuedDate.Value.Hour) * 36000000000) + ((Convert($it.DiscontinuedDate.Value.Minute) * 600000000) + ((Convert($it.DiscontinuedDate.Value.Second) * 10000000) + Convert($it.DiscontinuedDate.Value.Millisecond)))) >= ((Convert(01:02:03.0040000.Hour) * 36000000000) + ((Convert(01:02:03.0040000.Minute) * 600000000) + ((Convert(01:02:03.0040000.Second) * 10000000) + Convert(01:02:03.0040000.Millisecond)))))",
+                        parameters
+                    },
+                    new object[]
+                    {
+                        new LessThanOrEqualsBinaryOperator
+                        (
+                            new ConvertToNumericTimeOperator
+                            (
+                                new ConstantOperator(new TimeOnly(1, 2, 3, 4))
+                            ),
+                            new ConvertToNumericTimeOperator
+                            (
+                                new MemberSelectorOperator("DiscontinuedDate", new ParameterOperator(parameters, parameterName))
+                            )
+                        ),
+                        "$it => (((Convert(01:02:03.0040000.Hour) * 36000000000) + ((Convert(01:02:03.0040000.Minute) * 600000000) + ((Convert(01:02:03.0040000.Second) * 10000000) + Convert(01:02:03.0040000.Millisecond)))) <= ((Convert($it.DiscontinuedDate.Value.Hour) * 36000000000) + ((Convert($it.DiscontinuedDate.Value.Minute) * 600000000) + ((Convert($it.DiscontinuedDate.Value.Second) * 10000000) + Convert($it.DiscontinuedDate.Value.Millisecond)))))",
+                        parameters
+                    },
+                    new object[]
+                    {
+                        new NotEqualsBinaryOperator
+                        (
+                            new ConstantOperator(null),
+                            new MemberSelectorOperator("DiscontinuedDate", new ParameterOperator(parameters, parameterName))
+                        ),
+                        "$it => (null != $it.DiscontinuedDate)",
+                        parameters
+                    },
+                    new object[]
+                    {
+                        new EqualsBinaryOperator
+                        (
+                            new MemberSelectorOperator("DiscontinuedDate", new ParameterOperator(parameters, parameterName)),
+                            new ConstantOperator(null)
+                        ),
+                        "$it => ($it.DiscontinuedDate == null)",
+                        parameters
+                    }
+                };
+            }
+        }
+
+        [Theory]
+        [MemberData(nameof(TimeOnlyFunction_Nullable_Data))]
+        public void TimeOnlyFunction_Nullable(IExpressionPart filterBody, string expression, IDictionary<string, ParameterExpression> parameters)
+        {
+            //act
+            var filter = CreateFilter<Product>();
+
+            //assert
+            AssertFilterStringIsCorrect(filter, expression);
+
+            Expression<Func<T, bool>> CreateFilter<T>()
+                => GetFilter<T>
+                (
+                    filterBody,
+                    parameters
+                );
+        }
+
         public static List<object[]> TimeFunction_NonNullable_Data
         {
             get
@@ -4049,6 +4625,84 @@ namespace LogicBuilder.Expressions.Utils.Tests
         [Theory]
         [MemberData(nameof(TimeFunction_NonNullable_Data))]
         public void TimeFunction_NonNullable(IExpressionPart filterBody, string expression, IDictionary<string, ParameterExpression> parameters)
+        {
+            //act
+            var filter = CreateFilter<Product>();
+
+            //assert
+            AssertFilterStringIsCorrect(filter, expression);
+
+            Expression<Func<T, bool>> CreateFilter<T>()
+                => GetFilter<T>
+                (
+                    filterBody,
+                    parameters
+                );
+        }
+
+        public static List<object[]> TimeOnlyFunction_NonNullable_Data
+        {
+            get
+            {
+                var parameters = GetParameters();
+
+                return new List<object[]>
+                {
+                    new object[]
+                    {
+                        new EqualsBinaryOperator
+                        (
+                            new ConvertToNumericTimeOperator
+                            (
+                                new MemberSelectorOperator("NonNullableDiscontinuedDate", new ParameterOperator(parameters, parameterName))
+                            ),
+                            new ConvertToNumericTimeOperator
+                            (
+                                new ConstantOperator(new TimeOnly(1, 2, 3, 4))
+                            )
+                        ),
+                        "$it => (((Convert($it.NonNullableDiscontinuedDate.Hour) * 36000000000) + ((Convert($it.NonNullableDiscontinuedDate.Minute) * 600000000) + ((Convert($it.NonNullableDiscontinuedDate.Second) * 10000000) + Convert($it.NonNullableDiscontinuedDate.Millisecond)))) == ((Convert(01:02:03.0040000.Hour) * 36000000000) + ((Convert(01:02:03.0040000.Minute) * 600000000) + ((Convert(01:02:03.0040000.Second) * 10000000) + Convert(01:02:03.0040000.Millisecond)))))",
+                        parameters
+                    },
+                    new object[]
+                    {
+                        new GreaterThanOrEqualsBinaryOperator
+                        (
+                            new ConvertToNumericTimeOperator
+                            (
+                                new MemberSelectorOperator("NonNullableDiscontinuedDate", new ParameterOperator(parameters, parameterName))
+                            ),
+                            new ConvertToNumericTimeOperator
+                            (
+                                new ConstantOperator(new TimeOnly(1, 2, 3, 4))
+                            )
+                        ),
+                        "$it => (((Convert($it.NonNullableDiscontinuedDate.Hour) * 36000000000) + ((Convert($it.NonNullableDiscontinuedDate.Minute) * 600000000) + ((Convert($it.NonNullableDiscontinuedDate.Second) * 10000000) + Convert($it.NonNullableDiscontinuedDate.Millisecond)))) >= ((Convert(01:02:03.0040000.Hour) * 36000000000) + ((Convert(01:02:03.0040000.Minute) * 600000000) + ((Convert(01:02:03.0040000.Second) * 10000000) + Convert(01:02:03.0040000.Millisecond)))))",
+                        parameters
+                    },
+                    new object[]
+                    {
+                        new LessThanOrEqualsBinaryOperator
+                        (
+                            new ConvertToNumericTimeOperator
+                            (
+                                new ConstantOperator(new TimeOnly(1, 2, 3, 4))
+                            ),
+                            new ConvertToNumericTimeOperator
+                            (
+                                new MemberSelectorOperator("NonNullableDiscontinuedDate", new ParameterOperator(parameters, parameterName))
+                            )
+                        ),
+                        "$it => (((Convert(01:02:03.0040000.Hour) * 36000000000) + ((Convert(01:02:03.0040000.Minute) * 600000000) + ((Convert(01:02:03.0040000.Second) * 10000000) + Convert(01:02:03.0040000.Millisecond)))) <= ((Convert($it.NonNullableDiscontinuedDate.Hour) * 36000000000) + ((Convert($it.NonNullableDiscontinuedDate.Minute) * 600000000) + ((Convert($it.NonNullableDiscontinuedDate.Second) * 10000000) + Convert($it.NonNullableDiscontinuedDate.Millisecond)))))",
+                        parameters
+                    }
+                };
+            }
+        }
+
+        [Theory]
+        [MemberData(nameof(TimeOnlyFunction_NonNullable_Data))]
+        public void TimeOnlyFunction_NonNullable(IExpressionPart filterBody, string expression, IDictionary<string, ParameterExpression> parameters)
         {
             //act
             var filter = CreateFilter<Product>();

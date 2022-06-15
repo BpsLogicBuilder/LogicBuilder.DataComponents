@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace LogicBuilder.Expressions.Utils
+﻿namespace LogicBuilder.Expressions.Utils
 {
     public struct AttributeNames
     {
@@ -12,5 +8,11 @@ namespace LogicBuilder.Expressions.Utils
         public const string USEFORTOSTRING = "UseForToString";
         public const string PROPERTYSOURCE = "propertySource";
         public const string PROPERTYSOURCEPARAMETER = "propertySourceParameter";
+    }
+
+    public struct NET6OnlyLiteralTypeNames
+    {
+        public const string DATEONLY = "System.DateOnly";
+        public const string TIMEONLY = "System.TimeOnly";
     }
 }

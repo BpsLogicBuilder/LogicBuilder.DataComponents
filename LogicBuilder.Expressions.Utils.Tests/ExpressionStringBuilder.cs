@@ -11,7 +11,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
 {
     public class ExpressionStringBuilder : ExpressionVisitor
     {
-        private StringBuilder _builder = new StringBuilder();
+        private readonly StringBuilder _builder = new();
 
         private ExpressionStringBuilder()
         {
@@ -19,7 +19,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
 
         public static string ToString(Expression expression)
         {
-            ExpressionStringBuilder visitor = new ExpressionStringBuilder();
+            ExpressionStringBuilder visitor = new();
             visitor.Visit(expression);
             return visitor._builder.ToString();
         }
@@ -95,9 +95,19 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     : node.Value;
 
             string GetOutString(object constant)
-                => constant.GetType() == typeof(string)
-                    ? string.Format(CultureInfo.InvariantCulture, "\"{0}\"", constant)
-                    : string.Format(CultureInfo.InvariantCulture, "{0}", constant);
+            {
+                Type constanType = constant.GetType();
+                if (constanType == typeof(string))
+                    return string.Format(CultureInfo.InvariantCulture, "\"{0}\"", constant);
+
+                if (constanType == typeof(Microsoft.OData.Edm.Date) || constanType == typeof(DateOnly))
+                    return string.Format(CultureInfo.InvariantCulture, "{0:yyyy-MM-dd}", constant);
+
+                if (constanType == typeof(Microsoft.OData.Edm.TimeOfDay) || constanType == typeof(TimeOnly))
+                    return string.Format(CultureInfo.InvariantCulture, "{0:HH:mm:ss.fffffff}", constant);
+
+                return string.Format(CultureInfo.InvariantCulture, "{0}", constant);
+            }
         }
 
         protected override Expression VisitUnary(UnaryExpression node)
@@ -163,7 +173,6 @@ namespace LogicBuilder.Expressions.Utils.Tests
 
         protected override Expression VisitMethodCall(MethodCallExpression node)
         {
-            int argindex = 0;
             Visit(node.Object);
 
             IEnumerable<Expression> arguments = node.Arguments;
@@ -171,7 +180,6 @@ namespace LogicBuilder.Expressions.Utils.Tests
             {
                 Visit(arguments.First());
                 arguments = arguments.Skip(1);
-                argindex++;
             }
 
             Out("." + node.Method.Name + "(");
@@ -222,45 +230,27 @@ namespace LogicBuilder.Expressions.Utils.Tests
 
         private static string ToString(ExpressionType type)
         {
-            switch (type)
+            return type switch
             {
-                case ExpressionType.Add:
-                    return "+";
-                case ExpressionType.And:
-                    return "&";
-                case ExpressionType.AndAlso:
-                    return "AndAlso";
-                case ExpressionType.Divide:
-                    return "/";
-                case ExpressionType.Equal:
-                    return "==";
-                case ExpressionType.GreaterThan:
-                    return ">";
-                case ExpressionType.GreaterThanOrEqual:
-                    return ">=";
-                case ExpressionType.LessThan:
-                    return "<";
-                case ExpressionType.LessThanOrEqual:
-                    return "<=";
-                case ExpressionType.Modulo:
-                    return "%";
-                case ExpressionType.Multiply:
-                    return "*";
-                case ExpressionType.Negate:
-                    return "-";
-                case ExpressionType.Not:
-                    return "!";
-                case ExpressionType.NotEqual:
-                    return "!=";
-                case ExpressionType.Or:
-                    return "|";
-                case ExpressionType.OrElse:
-                    return "OrElse";
-                case ExpressionType.Subtract:
-                    return "-";
-                default:
-                    throw new NotImplementedException();
-            }
+                ExpressionType.Add => "+",
+                ExpressionType.And => "&",
+                ExpressionType.AndAlso => "AndAlso",
+                ExpressionType.Divide => "/",
+                ExpressionType.Equal => "==",
+                ExpressionType.GreaterThan => ">",
+                ExpressionType.GreaterThanOrEqual => ">=",
+                ExpressionType.LessThan => "<",
+                ExpressionType.LessThanOrEqual => "<=",
+                ExpressionType.Modulo => "%",
+                ExpressionType.Multiply => "*",
+                ExpressionType.Negate => "-",
+                ExpressionType.Not => "!",
+                ExpressionType.NotEqual => "!=",
+                ExpressionType.Or => "|",
+                ExpressionType.OrElse => "OrElse",
+                ExpressionType.Subtract => "-",
+                _ => throw new NotImplementedException(),
+            };
         }
 
         private void Out(string s)

@@ -19,7 +19,10 @@ namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.DateTimeOperators
         {
             operandExpression = operandExpression.MakeValueSelectorAccessIfNullable();
 
-            if (operandExpression.Type != typeof(DateTimeOffset) && operandExpression.Type != typeof(DateTime) && operandExpression.Type != typeof(Date))
+            if (operandExpression.Type != typeof(DateTimeOffset) 
+                && operandExpression.Type != typeof(DateTime) 
+                && operandExpression.Type != typeof(Date)
+                && operandExpression.Type.FullName != NET6OnlyLiteralTypeNames.DATEONLY)
                 return operandExpression;
 
             return Expression.Add

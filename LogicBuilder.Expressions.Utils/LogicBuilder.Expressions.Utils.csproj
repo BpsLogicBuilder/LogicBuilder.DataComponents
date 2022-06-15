@@ -7,7 +7,7 @@
     <Authors>BlaiseD</Authors>
     <Description>Creates CRUD related LINQ queries from data.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>Minor - getting member infos from declaring type rather than reflected type.</PackageReleaseNotes>
+    <PackageReleaseNotes>Supporting System.DateOnly and System.TimeOnly types.</PackageReleaseNotes>
     <PackageTags>linq expressions</PackageTags>
     <Copyright>Copyright © BPS 2018</Copyright>
     <RepositoryUrl>https://github.com/BlaiseD/LogicBuilder.DataComponents</RepositoryUrl>
@@ -21,7 +21,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="LogicBuilder.Structures" Version="5.0.4" />
+    <PackageReference Include="LogicBuilder.Structures" Version="5.0.5-alpha.0.1" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.14" />
     <PackageReference Include="Microsoft.OData.Edm" Version="7.9.4" />
