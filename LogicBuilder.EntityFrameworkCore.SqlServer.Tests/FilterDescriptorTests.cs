@@ -3130,6 +3130,64 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
                 );
         }
 
+        public static List<object[]> DateOnlyFunctions_Nullable_Data
+            => new List<object[]>
+            {
+                new object[]
+                {
+                    new EqualsBinaryDescriptor
+                    (
+                        new YearDescriptor
+                        (
+                            new MemberSelectorDescriptor("NullableDateOnlyProperty", new ParameterDescriptor(parameterName))
+                        ),
+                        new ConstantDescriptor(2015)
+                    ),
+                    "$it => ($it.NullableDateOnlyProperty.Value.Year == 2015)"
+                },
+                new object[]
+                {
+                    new EqualsBinaryDescriptor
+                    (
+                        new MonthDescriptor
+                        (
+                            new MemberSelectorDescriptor("NullableDateOnlyProperty", new ParameterDescriptor(parameterName))
+                        ),
+                        new ConstantDescriptor(12)
+                    ),
+                    "$it => ($it.NullableDateOnlyProperty.Value.Month == 12)"
+                },
+                new object[]
+                {
+                    new EqualsBinaryDescriptor
+                    (
+                        new DayDescriptor
+                        (
+                            new MemberSelectorDescriptor("NullableDateOnlyProperty", new ParameterDescriptor(parameterName))
+                        ),
+                        new ConstantDescriptor(23)
+                    ),
+                    "$it => ($it.NullableDateOnlyProperty.Value.Day == 23)"
+                },
+            };
+
+        [Theory]
+        [MemberData(nameof(DateOnlyFunctions_Nullable_Data))]
+        public void DateOnlyFunctions_Nullable(IExpressionDescriptor filterBody, string expression)
+        {
+            //act
+            var filter = CreateFilter<Product>();
+
+            //assert
+            AssertFilterStringIsCorrect(filter, expression);
+
+            Expression<Func<T, bool>> CreateFilter<T>()
+                => GetFilter<T>
+                (
+                    filterBody
+                );
+        }
+
         public static List<object[]> DateFunctions_NonNullable_Data 
             => new List<object[]>
             {
@@ -3174,6 +3232,64 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
         [Theory]
         [MemberData(nameof(DateFunctions_NonNullable_Data))]
         public void DateFunctions_NonNullable(IExpressionDescriptor filterBody, string expression)
+        {
+            //act
+            var filter = CreateFilter<Product>();
+
+            //assert
+            AssertFilterStringIsCorrect(filter, expression);
+
+            Expression<Func<T, bool>> CreateFilter<T>()
+                => GetFilter<T>
+                (
+                    filterBody
+                );
+        }
+
+        public static List<object[]> DateOnlyFunctions_NonNullable_Data
+            => new List<object[]>
+            {
+                new object[]
+                {
+                    new EqualsBinaryDescriptor
+                    (
+                        new YearDescriptor
+                        (
+                            new MemberSelectorDescriptor("DateOnlyProperty", new ParameterDescriptor(parameterName))
+                        ),
+                        new ConstantDescriptor(2015)
+                    ),
+                    "$it => ($it.DateOnlyProperty.Year == 2015)"
+                },
+                new object[]
+                {
+                    new EqualsBinaryDescriptor
+                    (
+                        new MonthDescriptor
+                        (
+                            new MemberSelectorDescriptor("DateOnlyProperty", new ParameterDescriptor(parameterName))
+                        ),
+                        new ConstantDescriptor(12)
+                    ),
+                    "$it => ($it.DateOnlyProperty.Month == 12)"
+                },
+                new object[]
+                {
+                    new EqualsBinaryDescriptor
+                    (
+                        new DayDescriptor
+                        (
+                            new MemberSelectorDescriptor("DateOnlyProperty", new ParameterDescriptor(parameterName))
+                        ),
+                        new ConstantDescriptor(23)
+                    ),
+                    "$it => ($it.DateOnlyProperty.Day == 23)"
+                },
+            };
+
+        [Theory]
+        [MemberData(nameof(DateOnlyFunctions_NonNullable_Data))]
+        public void DateOnlyFunctions_NonNullable(IExpressionDescriptor filterBody, string expression)
         {
             //act
             var filter = CreateFilter<Product>();
@@ -3246,6 +3362,64 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
                 );
         }
 
+        public static List<object[]> TimeOnlyFunctions_Nullable_Data
+            => new List<object[]>
+            {
+                new object[]
+                {
+                    new EqualsBinaryDescriptor
+                    (
+                        new HourDescriptor
+                        (
+                            new MemberSelectorDescriptor("NullableTimeOnlyProperty", new ParameterDescriptor(parameterName))
+                        ),
+                        new ConstantDescriptor(10)
+                    ),
+                    "$it => ($it.NullableTimeOnlyProperty.Value.Hour == 10)"
+                },
+                new object[]
+                {
+                    new EqualsBinaryDescriptor
+                    (
+                        new MinuteDescriptor
+                        (
+                            new MemberSelectorDescriptor("NullableTimeOnlyProperty", new ParameterDescriptor(parameterName))
+                        ),
+                        new ConstantDescriptor(20)
+                    ),
+                    "$it => ($it.NullableTimeOnlyProperty.Value.Minute == 20)"
+                },
+                new object[]
+                {
+                    new EqualsBinaryDescriptor
+                    (
+                        new SecondDescriptor
+                        (
+                            new MemberSelectorDescriptor("NullableTimeOnlyProperty", new ParameterDescriptor(parameterName))
+                        ),
+                        new ConstantDescriptor(30)
+                    ),
+                    "$it => ($it.NullableTimeOnlyProperty.Value.Second == 30)"
+                },
+            };
+
+        [Theory]
+        [MemberData(nameof(TimeOnlyFunctions_Nullable_Data))]
+        public void TimeOnlyFunctions_Nullable(IExpressionDescriptor filterBody, string expression)
+        {
+            //act
+            var filter = CreateFilter<Product>();
+
+            //assert
+            AssertFilterStringIsCorrect(filter, expression);
+
+            Expression<Func<T, bool>> CreateFilter<T>()
+                => GetFilter<T>
+                (
+                    filterBody
+                );
+        }
+
         public static List<object[]> TimeOfDayFunctions_NonNullable_Data 
             => new List<object[]>
             {
@@ -3304,6 +3478,64 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
                 );
         }
 
+        public static List<object[]> TimeOnlyFunctions_NonNullable_Data
+            => new List<object[]>
+            {
+                new object[]
+                {
+                    new EqualsBinaryDescriptor
+                    (
+                        new HourDescriptor
+                        (
+                            new MemberSelectorDescriptor("TimeOnlyProperty", new ParameterDescriptor(parameterName))
+                        ),
+                        new ConstantDescriptor(10)
+                    ),
+                    "$it => ($it.TimeOnlyProperty.Hour == 10)"
+                },
+                new object[]
+                {
+                    new EqualsBinaryDescriptor
+                    (
+                        new MinuteDescriptor
+                        (
+                            new MemberSelectorDescriptor("TimeOnlyProperty", new ParameterDescriptor(parameterName))
+                        ),
+                        new ConstantDescriptor(20)
+                    ),
+                    "$it => ($it.TimeOnlyProperty.Minute == 20)"
+                },
+                new object[]
+                {
+                    new EqualsBinaryDescriptor
+                    (
+                        new SecondDescriptor
+                        (
+                            new MemberSelectorDescriptor("TimeOnlyProperty", new ParameterDescriptor(parameterName))
+                        ),
+                        new ConstantDescriptor(30)
+                    ),
+                    "$it => ($it.TimeOnlyProperty.Second == 30)"
+                },
+            };
+
+        [Theory]
+        [MemberData(nameof(TimeOnlyFunctions_NonNullable_Data))]
+        public void TimeOnlyFunctions_NonNullable(IExpressionDescriptor filterBody, string expression)
+        {
+            //act
+            var filter = CreateFilter<Product>();
+
+            //assert
+            AssertFilterStringIsCorrect(filter, expression);
+
+            Expression<Func<T, bool>> CreateFilter<T>()
+                => GetFilter<T>
+                (
+                    filterBody
+                );
+        }
+
         public static List<object[]> FractionalsecondsFunction_Nullable_Data 
             => new List<object[]>
             {
@@ -3330,6 +3562,18 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
                         new ConstantDescriptor(0.2m)
                     ),
                     "$it => ((Convert($it.NullableTimeOfDayProperty.Value.Milliseconds) / 1000) == 0.2)"
+                },
+                new object[]
+                {
+                    new EqualsBinaryDescriptor
+                    (
+                        new FractionalSecondsDescriptor
+                        (
+                            new MemberSelectorDescriptor("NullableTimeOnlyProperty", new ParameterDescriptor(parameterName))
+                        ),
+                        new ConstantDescriptor(0.2m)
+                    ),
+                    "$it => ((Convert($it.NullableTimeOnlyProperty.Value.Millisecond) / 1000) == 0.2)"
                 },
             };
 
@@ -3376,6 +3620,18 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
                         new ConstantDescriptor(0.2m)
                     ),
                     "$it => ((Convert($it.TimeOfDayProperty.Milliseconds) / 1000) == 0.2)"
+                },
+                new object[]
+                {
+                    new EqualsBinaryDescriptor
+                    (
+                        new FractionalSecondsDescriptor
+                        (
+                            new MemberSelectorDescriptor("TimeOnlyProperty", new ParameterDescriptor(parameterName))
+                        ),
+                        new ConstantDescriptor(0.2m)
+                    ),
+                    "$it => ((Convert($it.TimeOnlyProperty.Millisecond) / 1000) == 0.2)"
                 },
             };
 
@@ -3481,6 +3737,91 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
                 );
         }
 
+        public static List<object[]> DateOnlyFunction_Nullable_Data
+            => new List<object[]>
+            {
+                new object[]
+                {
+                    new EqualsBinaryDescriptor
+                    (
+                        new ConvertToNumericDateDescriptor
+                        (
+                            new MemberSelectorDescriptor("DiscontinuedDate", new ParameterDescriptor(parameterName))
+                        ),
+                        new ConvertToNumericDateDescriptor
+                        (
+                            new ConstantDescriptor(new DateOnly(2015, 2, 26))
+                        )
+                    ),
+                    "$it => (((($it.DiscontinuedDate.Value.Year * 10000) + ($it.DiscontinuedDate.Value.Month * 100)) + $it.DiscontinuedDate.Value.Day) == (((2015-02-26.Year * 10000) + (2015-02-26.Month * 100)) + 2015-02-26.Day))"
+                },
+                new object[]
+                {
+                    new LessThanBinaryDescriptor
+                    (
+                        new ConvertToNumericDateDescriptor
+                        (
+                            new MemberSelectorDescriptor("DiscontinuedDate", new ParameterDescriptor(parameterName))
+                        ),
+                        new ConvertToNumericDateDescriptor
+                        (
+                            new ConstantDescriptor(new DateOnly(2016, 2, 26))
+                        )
+                    ),
+                    "$it => (((($it.DiscontinuedDate.Value.Year * 10000) + ($it.DiscontinuedDate.Value.Month * 100)) + $it.DiscontinuedDate.Value.Day) < (((2016-02-26.Year * 10000) + (2016-02-26.Month * 100)) + 2016-02-26.Day))"
+                },
+                new object[]
+                {
+                    new GreaterThanOrEqualsBinaryDescriptor
+                    (
+                        new ConvertToNumericDateDescriptor
+                        (
+                            new ConstantDescriptor(new DateOnly(2015, 2, 26))
+                        ),
+                        new ConvertToNumericDateDescriptor
+                        (
+                            new MemberSelectorDescriptor("DiscontinuedDate", new ParameterDescriptor(parameterName))
+                        )
+                    ),
+                    "$it => ((((2015-02-26.Year * 10000) + (2015-02-26.Month * 100)) + 2015-02-26.Day) >= ((($it.DiscontinuedDate.Value.Year * 10000) + ($it.DiscontinuedDate.Value.Month * 100)) + $it.DiscontinuedDate.Value.Day))"
+                },
+                new object[]
+                {
+                    new NotEqualsBinaryDescriptor
+                    (
+                        new ConstantDescriptor(null),
+                        new MemberSelectorDescriptor("DiscontinuedDate", new ParameterDescriptor(parameterName))
+                    ),
+                    "$it => (null != $it.DiscontinuedDate)"
+                },
+                new object[]
+                {
+                    new EqualsBinaryDescriptor
+                    (
+                        new MemberSelectorDescriptor("DiscontinuedDate", new ParameterDescriptor(parameterName)),
+                        new ConstantDescriptor(null)
+                    ),
+                    "$it => ($it.DiscontinuedDate == null)"
+                },
+            };
+
+        [Theory]
+        [MemberData(nameof(DateOnlyFunction_Nullable_Data))]
+        public void DateOnlyFunction_Nullable(IExpressionDescriptor filterBody, string expression)
+        {
+            //act
+            var filter = CreateFilter<Product>();
+
+            //assert
+            AssertFilterStringIsCorrect(filter, expression);
+
+            Expression<Func<T, bool>> CreateFilter<T>()
+                => GetFilter<T>
+                (
+                    filterBody
+                );
+        }
+
         public static List<object[]> DateFunction_NonNullable_Data 
             => new List<object[]>
             {
@@ -3534,6 +3875,73 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
         [Theory]
         [MemberData(nameof(DateFunction_NonNullable_Data))]
         public void DateFunction_NonNullable(IExpressionDescriptor filterBody, string expression)
+        {
+            //act
+            var filter = CreateFilter<Product>();
+
+            //assert
+            AssertFilterStringIsCorrect(filter, expression);
+
+            Expression<Func<T, bool>> CreateFilter<T>()
+                => GetFilter<T>
+                (
+                    filterBody
+                );
+        }
+
+        public static List<object[]> DateOnlyFunction_NonNullable_Data
+            => new List<object[]>
+            {
+                new object[]
+                {
+                    new EqualsBinaryDescriptor
+                    (
+                        new ConvertToNumericDateDescriptor
+                        (
+                            new MemberSelectorDescriptor("NonNullableDiscontinuedDate", new ParameterDescriptor(parameterName))
+                        ),
+                        new ConvertToNumericDateDescriptor
+                        (
+                            new ConstantDescriptor(new DateOnly(2015, 2, 26))
+                        )
+                    ),
+                    "$it => (((($it.NonNullableDiscontinuedDate.Year * 10000) + ($it.NonNullableDiscontinuedDate.Month * 100)) + $it.NonNullableDiscontinuedDate.Day) == (((2015-02-26.Year * 10000) + (2015-02-26.Month * 100)) + 2015-02-26.Day))"
+                },
+                new object[]
+                {
+                    new LessThanBinaryDescriptor
+                    (
+                        new ConvertToNumericDateDescriptor
+                        (
+                            new MemberSelectorDescriptor("NonNullableDiscontinuedDate", new ParameterDescriptor(parameterName))
+                        ),
+                        new ConvertToNumericDateDescriptor
+                        (
+                            new ConstantDescriptor(new DateOnly(2016, 2, 26))
+                        )
+                    ),
+                    "$it => (((($it.NonNullableDiscontinuedDate.Year * 10000) + ($it.NonNullableDiscontinuedDate.Month * 100)) + $it.NonNullableDiscontinuedDate.Day) < (((2016-02-26.Year * 10000) + (2016-02-26.Month * 100)) + 2016-02-26.Day))"
+                },
+                new object[]
+                {
+                    new GreaterThanOrEqualsBinaryDescriptor
+                    (
+                        new ConvertToNumericDateDescriptor
+                        (
+                            new ConstantDescriptor(new DateOnly(2015, 2, 26))
+                        ),
+                        new ConvertToNumericDateDescriptor
+                        (
+                            new MemberSelectorDescriptor("NonNullableDiscontinuedDate", new ParameterDescriptor(parameterName))
+                        )
+                    ),
+                    "$it => ((((2015-02-26.Year * 10000) + (2015-02-26.Month * 100)) + 2015-02-26.Day) >= ((($it.NonNullableDiscontinuedDate.Year * 10000) + ($it.NonNullableDiscontinuedDate.Month * 100)) + $it.NonNullableDiscontinuedDate.Day))"
+                }
+            };
+
+        [Theory]
+        [MemberData(nameof(DateOnlyFunction_NonNullable_Data))]
+        public void DateOnlyFunction_NonNullable(IExpressionDescriptor filterBody, string expression)
         {
             //act
             var filter = CreateFilter<Product>();
@@ -3633,6 +4041,91 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
                 );
         }
 
+        public static List<object[]> TimeOnlyFunction_Nullable_Data
+            => new List<object[]>
+            {
+                new object[]
+                {
+                    new EqualsBinaryDescriptor
+                    (
+                        new ConvertToNumericTimeDescriptor
+                        (
+                            new MemberSelectorDescriptor("DiscontinuedDate", new ParameterDescriptor(parameterName))
+                        ),
+                        new ConvertToNumericTimeDescriptor
+                        (
+                            new ConstantDescriptor(new TimeOnly(1, 2, 3, 4))
+                        )
+                    ),
+                    "$it => (((Convert($it.DiscontinuedDate.Value.Hour) * 36000000000) + ((Convert($it.DiscontinuedDate.Value.Minute) * 600000000) + ((Convert($it.DiscontinuedDate.Value.Second) * 10000000) + Convert($it.DiscontinuedDate.Value.Millisecond)))) == ((Convert(01:02:03.0040000.Hour) * 36000000000) + ((Convert(01:02:03.0040000.Minute) * 600000000) + ((Convert(01:02:03.0040000.Second) * 10000000) + Convert(01:02:03.0040000.Millisecond)))))"
+                },
+                new object[]
+                {
+                    new GreaterThanOrEqualsBinaryDescriptor
+                    (
+                        new ConvertToNumericTimeDescriptor
+                        (
+                            new MemberSelectorDescriptor("DiscontinuedDate", new ParameterDescriptor(parameterName))
+                        ),
+                        new ConvertToNumericTimeDescriptor
+                        (
+                            new ConstantDescriptor(new TimeOnly(1, 2, 3, 4))
+                        )
+                    ),
+                    "$it => (((Convert($it.DiscontinuedDate.Value.Hour) * 36000000000) + ((Convert($it.DiscontinuedDate.Value.Minute) * 600000000) + ((Convert($it.DiscontinuedDate.Value.Second) * 10000000) + Convert($it.DiscontinuedDate.Value.Millisecond)))) >= ((Convert(01:02:03.0040000.Hour) * 36000000000) + ((Convert(01:02:03.0040000.Minute) * 600000000) + ((Convert(01:02:03.0040000.Second) * 10000000) + Convert(01:02:03.0040000.Millisecond)))))"
+                },
+                new object[]
+                {
+                    new LessThanOrEqualsBinaryDescriptor
+                    (
+                        new ConvertToNumericTimeDescriptor
+                        (
+                            new ConstantDescriptor(new TimeOnly(1, 2, 3, 4))
+                        ),
+                        new ConvertToNumericTimeDescriptor
+                        (
+                            new MemberSelectorDescriptor("DiscontinuedDate", new ParameterDescriptor(parameterName))
+                        )
+                    ),
+                    "$it => (((Convert(01:02:03.0040000.Hour) * 36000000000) + ((Convert(01:02:03.0040000.Minute) * 600000000) + ((Convert(01:02:03.0040000.Second) * 10000000) + Convert(01:02:03.0040000.Millisecond)))) <= ((Convert($it.DiscontinuedDate.Value.Hour) * 36000000000) + ((Convert($it.DiscontinuedDate.Value.Minute) * 600000000) + ((Convert($it.DiscontinuedDate.Value.Second) * 10000000) + Convert($it.DiscontinuedDate.Value.Millisecond)))))"
+                },
+                new object[]
+                {
+                    new NotEqualsBinaryDescriptor
+                    (
+                        new ConstantDescriptor(null),
+                        new MemberSelectorDescriptor("DiscontinuedDate", new ParameterDescriptor(parameterName))
+                    ),
+                    "$it => (null != $it.DiscontinuedDate)"
+                },
+                new object[]
+                {
+                    new EqualsBinaryDescriptor
+                    (
+                        new MemberSelectorDescriptor("DiscontinuedDate", new ParameterDescriptor(parameterName)),
+                        new ConstantDescriptor(null)
+                    ),
+                    "$it => ($it.DiscontinuedDate == null)"
+                }
+            };
+
+        [Theory]
+        [MemberData(nameof(TimeOnlyFunction_Nullable_Data))]
+        public void TimeOnlyFunction_Nullable(IExpressionDescriptor filterBody, string expression)
+        {
+            //act
+            var filter = CreateFilter<Product>();
+
+            //assert
+            AssertFilterStringIsCorrect(filter, expression);
+
+            Expression<Func<T, bool>> CreateFilter<T>()
+                => GetFilter<T>
+                (
+                    filterBody
+                );
+        }
+
         public static List<object[]> TimeFunction_NonNullable_Data 
             => new List<object[]>
             {
@@ -3686,6 +4179,73 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
         [Theory]
         [MemberData(nameof(TimeFunction_NonNullable_Data))]
         public void TimeFunction_NonNullable(IExpressionDescriptor filterBody, string expression)
+        {
+            //act
+            var filter = CreateFilter<Product>();
+
+            //assert
+            AssertFilterStringIsCorrect(filter, expression);
+
+            Expression<Func<T, bool>> CreateFilter<T>()
+                => GetFilter<T>
+                (
+                    filterBody
+                );
+        }
+
+        public static List<object[]> TimeOnlyFunction_NonNullable_Data
+            => new List<object[]>
+            {
+                new object[]
+                {
+                    new EqualsBinaryDescriptor
+                    (
+                        new ConvertToNumericTimeDescriptor
+                        (
+                            new MemberSelectorDescriptor("NonNullableDiscontinuedDate", new ParameterDescriptor(parameterName))
+                        ),
+                        new ConvertToNumericTimeDescriptor
+                        (
+                            new ConstantDescriptor(new TimeOnly(1, 2, 3, 4))
+                        )
+                    ),
+                    "$it => (((Convert($it.NonNullableDiscontinuedDate.Hour) * 36000000000) + ((Convert($it.NonNullableDiscontinuedDate.Minute) * 600000000) + ((Convert($it.NonNullableDiscontinuedDate.Second) * 10000000) + Convert($it.NonNullableDiscontinuedDate.Millisecond)))) == ((Convert(01:02:03.0040000.Hour) * 36000000000) + ((Convert(01:02:03.0040000.Minute) * 600000000) + ((Convert(01:02:03.0040000.Second) * 10000000) + Convert(01:02:03.0040000.Millisecond)))))"
+                },
+                new object[]
+                {
+                    new GreaterThanOrEqualsBinaryDescriptor
+                    (
+                        new ConvertToNumericTimeDescriptor
+                        (
+                            new MemberSelectorDescriptor("NonNullableDiscontinuedDate", new ParameterDescriptor(parameterName))
+                        ),
+                        new ConvertToNumericTimeDescriptor
+                        (
+                            new ConstantDescriptor(new TimeOnly(1, 2, 3, 4))
+                        )
+                    ),
+                    "$it => (((Convert($it.NonNullableDiscontinuedDate.Hour) * 36000000000) + ((Convert($it.NonNullableDiscontinuedDate.Minute) * 600000000) + ((Convert($it.NonNullableDiscontinuedDate.Second) * 10000000) + Convert($it.NonNullableDiscontinuedDate.Millisecond)))) >= ((Convert(01:02:03.0040000.Hour) * 36000000000) + ((Convert(01:02:03.0040000.Minute) * 600000000) + ((Convert(01:02:03.0040000.Second) * 10000000) + Convert(01:02:03.0040000.Millisecond)))))"
+                },
+                new object[]
+                {
+                    new LessThanOrEqualsBinaryDescriptor
+                    (
+                        new ConvertToNumericTimeDescriptor
+                        (
+                            new ConstantDescriptor(new TimeOnly(1, 2, 3, 4))
+                        ),
+                        new ConvertToNumericTimeDescriptor
+                        (
+                            new MemberSelectorDescriptor("NonNullableDiscontinuedDate", new ParameterDescriptor(parameterName))
+                        )
+                    ),
+                    "$it => (((Convert(01:02:03.0040000.Hour) * 36000000000) + ((Convert(01:02:03.0040000.Minute) * 600000000) + ((Convert(01:02:03.0040000.Second) * 10000000) + Convert(01:02:03.0040000.Millisecond)))) <= ((Convert($it.NonNullableDiscontinuedDate.Hour) * 36000000000) + ((Convert($it.NonNullableDiscontinuedDate.Minute) * 600000000) + ((Convert($it.NonNullableDiscontinuedDate.Second) * 10000000) + Convert($it.NonNullableDiscontinuedDate.Millisecond)))))"
+                }
+            };
+
+        [Theory]
+        [MemberData(nameof(TimeOnlyFunction_NonNullable_Data))]
+        public void TimeOnlyFunction_NonNullable(IExpressionDescriptor filterBody, string expression)
         {
             //act
             var filter = CreateFilter<Product>();

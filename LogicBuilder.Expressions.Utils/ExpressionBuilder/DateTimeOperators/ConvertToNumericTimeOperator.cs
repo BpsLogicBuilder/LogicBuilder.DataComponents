@@ -21,9 +21,9 @@ namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.DateTimeOperators
 
             if (operandExpression.Type != typeof(DateTimeOffset) 
                 && operandExpression.Type != typeof(DateTime) 
-                && operandExpression.Type != typeof(Date)
                 && operandExpression.Type != typeof(TimeSpan)
-                && operandExpression.Type != typeof(TimeOfDay))
+                && operandExpression.Type != typeof(TimeOfDay)
+                && operandExpression.Type.FullName != NET6OnlyLiteralTypeNames.TIMEONLY)
                 return operandExpression;
 
             return Expression.Add
@@ -31,7 +31,7 @@ namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.DateTimeOperators
                 Expression.Multiply
                 (
                     Expression.Convert(operandExpression.MakeHourSelector(), typeof(long)),
-                    Expression.Constant(TimeOfDay.TicksPerHour)
+                    Expression.Constant(TimeSpan.TicksPerHour)
                 ),
                 Expression.Add
                 (
@@ -39,14 +39,14 @@ namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.DateTimeOperators
                     Expression.Multiply
                     (
                         Expression.Convert(operandExpression.MakeMinuteSelector(), typeof(long)), 
-                        Expression.Constant(TimeOfDay.TicksPerMinute)
+                        Expression.Constant(TimeSpan.TicksPerMinute)
                     ),
                     Expression.Add
                     (
                         Expression.Multiply
                         (
                             Expression.Convert(operandExpression.MakeSecondSelector(), typeof(long)),
-                            Expression.Constant(TimeOfDay.TicksPerSecond)
+                            Expression.Constant(TimeSpan.TicksPerSecond)
                         ),
                         Expression.Convert(operandExpression.MakeMillisecondSelector(), typeof(long))
                     )

@@ -61,10 +61,18 @@ namespace LogicBuilder.Expressions.Utils
             if (type.IsNullableType())
                 type = Nullable.GetUnderlyingType(type);
 
-            return LiteralTypes.Contains(type) || typeof(Enum).IsAssignableFrom(type);
+            return LiteralTypes.Contains(type) 
+                || Net6OnlyLiteralTypes.Contains(type.FullName) 
+                || typeof(Enum).IsAssignableFrom(type);
         }
 
         private static HashSet<Type> LiteralTypes => new HashSet<Type>(_literalTypes);
+
+        private static readonly HashSet<string> Net6OnlyLiteralTypes = new()
+        {
+            NET6OnlyLiteralTypeNames.DATEONLY,
+            NET6OnlyLiteralTypeNames.TIMEONLY
+        };
 
         private static Type[] _literalTypes => new Type[] {
                 typeof(bool),
