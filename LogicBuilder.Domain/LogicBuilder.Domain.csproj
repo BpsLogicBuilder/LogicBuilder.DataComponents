@@ -7,7 +7,7 @@
     <Authors>BlaiseD</Authors>
     <Description>LogicBuilder.Domain includes the base class for all DTOs in the data stack;</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>Supporting System.DateOnly and System.TimeOnly types.</PackageReleaseNotes>
+    <PackageReleaseNotes>Supporting AutoMapper v12.</PackageReleaseNotes>
     <PackageTags>crud operations logic-builder</PackageTags>
     <Copyright>Copyright © BPS 2017</Copyright>
     <RepositoryUrl>https://github.com/BlaiseD/LogicBuilder.DataComponents</RepositoryUrl>

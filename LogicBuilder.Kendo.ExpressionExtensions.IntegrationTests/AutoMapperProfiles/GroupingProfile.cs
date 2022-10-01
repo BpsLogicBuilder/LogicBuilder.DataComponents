@@ -14,27 +14,33 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests.AutoMapperPro
         {
             CreateMap<AggregateFunctionsGroup, AggregateFunctionsGroupModel<StudentModel>>()
                 .ConstructUsing(ProfileHelpers.Converter<StudentModel>)
-                .ForMember(d => d.Items, opt => opt.Ignore());
+                .ForMember(d => d.Items, opt => opt.Ignore())
+                .ForMember(d => d.Subgroups, opt => opt.Ignore());
 
             CreateMap<AggregateFunctionsGroup, AggregateFunctionsGroupModel<CourseModel>>()
                 .ConstructUsing(ProfileHelpers.Converter<CourseModel>)
-                .ForMember(d => d.Items, opt => opt.Ignore());
+                .ForMember(d => d.Items, opt => opt.Ignore())
+                .ForMember(d => d.Subgroups, opt => opt.Ignore());
 
             CreateMap<AggregateFunctionsGroup, AggregateFunctionsGroupModel<DepartmentModel>>()
                 .ConstructUsing(ProfileHelpers.Converter<DepartmentModel>)
-                .ForMember(d => d.Items, opt => opt.Ignore());
+                .ForMember(d => d.Items, opt => opt.Ignore())
+                .ForMember(d => d.Subgroups, opt => opt.Ignore());
 
             CreateMap<AggregateFunctionsGroup, AggregateFunctionsGroupModel<InstructorModel>>()
                 .ConstructUsing(ProfileHelpers.Converter<InstructorModel>)
-                .ForMember(d => d.Items, opt => opt.Ignore());
+                .ForMember(d => d.Items, opt => opt.Ignore())
+                .ForMember(d => d.Subgroups, opt => opt.Ignore());
 
             CreateMap<AggregateFunctionsGroup, AggregateFunctionsGroupModel<CourseAssignmentModel>>()
                 .ConstructUsing(ProfileHelpers.Converter<CourseAssignmentModel>)
-                .ForMember(d => d.Items, opt => opt.Ignore());
+                .ForMember(d => d.Items, opt => opt.Ignore())
+                .ForMember(d => d.Subgroups, opt => opt.Ignore());
 
             CreateMap<AggregateFunctionsGroup, AggregateFunctionsGroupModel<EnrollmentModel>>()
                 .ConstructUsing(ProfileHelpers.Converter<EnrollmentModel>)
-                .ForMember(d => d.Items, opt => opt.Ignore());
+                .ForMember(d => d.Items, opt => opt.Ignore())
+                .ForMember(d => d.Subgroups, opt => opt.Ignore());
         }
     }
 
