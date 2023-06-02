@@ -573,7 +573,6 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests
                 {
                     cfg.AddExpressionMapping();
                     cfg.AddMaps(typeof(SchoolProfile).GetTypeInfo().Assembly);
-                    cfg.AddMaps(typeof(GroupingProfile).GetTypeInfo().Assembly);
                     cfg.AddProfile<ExpressionOperatorsMappingProfile>();
                 });
             }

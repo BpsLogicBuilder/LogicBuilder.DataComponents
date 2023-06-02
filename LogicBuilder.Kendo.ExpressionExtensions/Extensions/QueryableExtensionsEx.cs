@@ -43,7 +43,46 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.Extensions
         }
 
         /// <summary>
-        /// Allow paging expression to be executed separately from the grouping expression
+        /// Allow the queryable expression to be handled separately from the grouping expression
+        /// </summary>
+        /// <typeparam name="TModel"></typeparam>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public static AggregatesQueryExpressions<TModel> CreateAggregatesQueryExpressions<TModel>(this DataSourceRequest request)
+        {
+            if (request.Aggregates == null || request.Aggregates.Count == 0)
+                throw new ArgumentException("Aggregates are required.");
+
+            ParameterExpression param = Expression.Parameter(typeof(IQueryable<TModel>), "q");
+            Expression ex = param;
+
+            var filters = new List<IFilterDescriptor>();
+            if (request.Filters != null)
+                filters.AddRange(request.Filters);
+
+            var aggregates = new List<AggregateDescriptor>(request.Aggregates);
+
+            if (filters.Any())
+                ex = ex.Where(filters);
+
+            var queryableExpression = Expression.Lambda<Func<IQueryable<TModel>, IQueryable<TModel>>>
+            (
+                ex,
+                param
+            );
+
+            ex = ex.Aggregate(aggregates.SelectMany(a => a.Aggregates));
+            var aggregateExpression = Expression.Lambda<Func<IQueryable<TModel>, AggregateFunctionsGroup>>
+            (
+                Expression.Call(typeof(Queryable), "FirstOrDefault", new Type[] { typeof(AggregateFunctionsGroup) }, ex),
+                param
+            );
+
+            return new AggregatesQueryExpressions<TModel>(queryableExpression, aggregateExpression);
+        }
+
+        /// <summary>
+        /// Allow paging expression to be be handled separately from the grouping expression
         /// </summary>
         /// <typeparam name="TModel"></typeparam>
         /// <param name="request"></param>

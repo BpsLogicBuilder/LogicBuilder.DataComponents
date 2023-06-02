@@ -125,11 +125,17 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests
             {
                 Data = await contextRepository.QueryAsync<TModel, TData, IQueryable<TModel>, IQueryable<TData>>(ungroupedExp, selectExpandDefinition),
                 AggregateResults = getAggregates
-                                    ? (await contextRepository.QueryAsync<TModel, TData, AggregateFunctionsGroup, AggregateFunctionsGroup, AggregateFunctionsGroupModel<TModel>>(aggregatesExp, selectExpandDefinition))
-                                                                ?.GetAggregateResults(request.Aggregates.SelectMany(a => a.Aggregates))
+                                    ? (await GetAggregateFunctionsGroup()).GetAggregateResults(request.Aggregates.SelectMany(a => a.Aggregates))
                                     : null,
                 Total = await contextRepository.QueryAsync<TModel, TData, int, int>(totalExp, selectExpandDefinition)
             };
+
+            async Task<AggregateFunctionsGroup> GetAggregateFunctionsGroup()
+            {
+                var aggrewgatexpressions = request.CreateAggregatesQueryExpressions<TModel>();
+                IQueryable<TModel> pagedQuery = await contextRepository.QueryAsync<TModel, TData, IQueryable<TModel>, IQueryable<TData>>(aggrewgatexpressions.QueryableExpression, selectExpandDefinition);
+                return aggrewgatexpressions.AggregateExpression.Compile()(pagedQuery);
+            }
         }
 
         private static async Task<DataSourceResult> GetGroupedDataSourceResult<TModel, TData>(this DataSourceRequest request, IContextRepository contextRepository, bool getAggregates, SelectExpandDefinition selectExpandDefinition = null, ICollection<Expression<Func<IQueryable<TModel>, IIncludableQueryable<TModel, object>>>> includeProperties = null)
@@ -143,8 +149,7 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests
             {
                 Data = await GetData(),
                 AggregateResults = getAggregates
-                                    ? (await contextRepository.QueryAsync<TModel, TData, AggregateFunctionsGroup, AggregateFunctionsGroup, AggregateFunctionsGroupModel<TModel>>(aggregatesExp, selectExpandDefinition))
-                                                                ?.GetAggregateResults(request.Aggregates.SelectMany(a => a.Aggregates))
+                                    ? (await GetAggregateFunctionsGroup()).GetAggregateResults(request.Aggregates.SelectMany(a => a.Aggregates))
                                     : null,
                 Total = await contextRepository.QueryAsync<TModel, TData, int, int>(totalExp, selectExpandDefinition)
             };
@@ -154,6 +159,13 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests
                 var groupByExpressions = request.CreateGroupedByQueryExpressions<TModel>();
                 IQueryable<TModel> pagedQuery = await contextRepository.QueryAsync<TModel, TData, IQueryable<TModel>, IQueryable<TData>>(groupByExpressions.PagingExpression, selectExpandDefinition, includeProperties);
                 return groupByExpressions.GroupByExpression.Compile()(pagedQuery);
+            }
+
+            async Task<AggregateFunctionsGroup> GetAggregateFunctionsGroup()
+            {
+                var aggrewgatexpressions = request.CreateAggregatesQueryExpressions<TModel>();
+                IQueryable<TModel> pagedQuery = await contextRepository.QueryAsync<TModel, TData, IQueryable<TModel>, IQueryable<TData>>(aggrewgatexpressions.QueryableExpression, selectExpandDefinition, includeProperties);
+                return aggrewgatexpressions.AggregateExpression.Compile()(pagedQuery);
             }
         }
     }
