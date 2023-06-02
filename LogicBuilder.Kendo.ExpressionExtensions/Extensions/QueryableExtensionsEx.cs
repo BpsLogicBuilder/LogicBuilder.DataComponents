@@ -43,7 +43,7 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.Extensions
         }
 
         /// <summary>
-        /// Allow the queryable expression to be handled separately from the grouping expression
+        /// Allow the queryable expression to be handled separately from the aggregates expression
         /// </summary>
         /// <typeparam name="TModel"></typeparam>
         /// <param name="request"></param>
