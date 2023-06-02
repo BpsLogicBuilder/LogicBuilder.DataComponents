@@ -2,7 +2,6 @@
 using Contoso.Domain;
 using Kendo.Mvc;
 using Kendo.Mvc.Infrastructure;
-using Kendo.Mvc.Infrastructure.Implementation.Expressions;
 using Kendo.Mvc.UI;
 using LogicBuilder.Data;
 using LogicBuilder.Domain;
@@ -14,6 +13,7 @@ using LogicBuilder.Kendo.ExpressionExtensions.Extensions;
 using LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests.Models;
 using Microsoft.EntityFrameworkCore.Query;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -138,29 +138,23 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests
         {
             Expression<Func<IQueryable<TModel>, AggregateFunctionsGroup>> aggregatesExp = getAggregates ? QueryableExtensionsEx.CreateAggregatesExpression<TModel>(request) : null;
             Expression<Func<IQueryable<TModel>, int>> totalExp = QueryableExtensionsEx.CreateTotalExpression<TModel>(request);
-            Expression<Func<IQueryable<TModel>, IEnumerable<AggregateFunctionsGroup>>> groupedExp = QueryableExtensionsEx.CreateGroupedDataExpression<TModel>(request);
 
             return new DataSourceResult
             {
-                Data = await contextRepository.QueryAsync<TModel, TData, IEnumerable<AggregateFunctionsGroup>, IEnumerable<AggregateFunctionsGroup>, IEnumerable<AggregateFunctionsGroupModel<TModel>>>(groupedExp, selectExpandDefinition, includeProperties),
+                Data = await GetData(),
                 AggregateResults = getAggregates
                                     ? (await contextRepository.QueryAsync<TModel, TData, AggregateFunctionsGroup, AggregateFunctionsGroup, AggregateFunctionsGroupModel<TModel>>(aggregatesExp, selectExpandDefinition))
                                                                 ?.GetAggregateResults(request.Aggregates.SelectMany(a => a.Aggregates))
                                     : null,
                 Total = await contextRepository.QueryAsync<TModel, TData, int, int>(totalExp, selectExpandDefinition)
             };
-        }
 
-        private static LambdaExpression GetFilter(this string filter, Type type, string parameterName = "i")
-        {
-            if (string.IsNullOrEmpty(filter))
-                return null;
-
-            var parameterExpression = Expression.Parameter(type, parameterName);
-
-            var expressionBuilder = new FilterDescriptorCollectionExpressionBuilder(parameterExpression, FilterDescriptorFactory.Create(filter));
-            expressionBuilder.Options.LiftMemberAccessToNull = false;
-            return expressionBuilder.CreateFilterExpression();
+            async Task<IEnumerable> GetData()
+            {
+                var groupByExpressions = request.CreateGroupedByQueryExpressions<TModel>();
+                IQueryable<TModel> pagedQuery = await contextRepository.QueryAsync<TModel, TData, IQueryable<TModel>, IQueryable<TData>>(groupByExpressions.PagingExpression, selectExpandDefinition, includeProperties);
+                return groupByExpressions.GroupByExpression.Compile()(pagedQuery);
+            }
         }
     }
 }
