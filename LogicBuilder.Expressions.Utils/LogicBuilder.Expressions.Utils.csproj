@@ -7,7 +7,7 @@
     <Authors>BlaiseD</Authors>
     <Description>Creates CRUD related LINQ queries from data.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>Supporting AutoMapper v12.</PackageReleaseNotes>
+    <PackageReleaseNotes>Kendo UI expressions only - Allow paging expression to be executed separately from the grouping expression.</PackageReleaseNotes>
     <PackageTags>linq expressions</PackageTags>
     <Copyright>Copyright © BPS 2018</Copyright>
     <RepositoryUrl>https://github.com/BlaiseD/LogicBuilder.DataComponents</RepositoryUrl>
@@ -21,7 +21,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="LogicBuilder.Structures" Version="5.0.8" />
+    <PackageReference Include="LogicBuilder.Structures" Version="5.0.9-alpha.0.1" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.14" />
     <PackageReference Include="Microsoft.OData.Edm" Version="7.9.4" />

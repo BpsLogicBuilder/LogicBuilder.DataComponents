@@ -4,20 +4,17 @@ using Contoso.Contexts;
 using Contoso.Data.Entities;
 using Contoso.Domain.Entities;
 using Contoso.Repositories;
+using Kendo.Mvc.Infrastructure;
 using Kendo.Mvc.UI;
 using LogicBuilder.EntityFrameworkCore.SqlServer.Mapping;
-using LogicBuilder.Expressions.Utils;
-using LogicBuilder.Expressions.Utils.DataSource;
 using LogicBuilder.Expressions.Utils.Expansions;
 using LogicBuilder.Expressions.Utils.ExpressionBuilder;
 using LogicBuilder.Expressions.Utils.ExpressionBuilder.Lambda;
 using LogicBuilder.Expressions.Utils.ExpressionBuilder.Logical;
 using LogicBuilder.Expressions.Utils.ExpressionBuilder.Operand;
-using LogicBuilder.Expressions.Utils.ExpressionDescriptors;
 using LogicBuilder.Expressions.Utils.Strutures;
 using LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests.AutoMapperProfiles;
 using LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests.Data;
-using LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -95,7 +92,7 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests
             DataSourceResult result = Task.Run(() => request.GetData<StudentModel, Student>(repository)).Result;
 
             Assert.Equal(11, result.Total);
-            Assert.Equal(3, ((IEnumerable<AggregateFunctionsGroupModel<StudentModel>>)result.Data).Count());
+            Assert.Equal(3, ((IEnumerable<AggregateFunctionsGroup>)result.Data).Count());
             Assert.Equal(2, result.AggregateResults.Count());
             Assert.Equal("Count", result.AggregateResults.First().AggregateMethodName);
             Assert.Equal(11, (int)result.AggregateResults.First().Value);
@@ -159,7 +156,7 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests
             DataSourceResult result = Task.Run(() => request.GetData<DepartmentModel, Department>(repository)).Result;
 
             Assert.Equal(4, result.Total);
-            Assert.Equal(2, ((IEnumerable<AggregateFunctionsGroupModel<DepartmentModel>>)result.Data).Count());
+            Assert.Equal(2, ((IEnumerable<AggregateFunctionsGroup>)result.Data).Count());
             Assert.Equal(5, result.AggregateResults.Count());
             Assert.Equal("Count", result.AggregateResults.First().AggregateMethodName);
             //Queryable.Min<TSource, string> throws System.ArgumentException against In-Memory DB
@@ -208,7 +205,7 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests
         }
 
         [Fact]
-        public void Get_instructors_grouped_with_aggregates_and_includes()
+        public void Get_instructors_grouped_with_aggregates_and_expansions()
         {
             DataRequest request = new DataRequest
             {
@@ -221,17 +218,30 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests
                     Sort = null,
                     PageSize = 5
                 },
-                Includes = new string[] { "courses.courseTitle", "officeAssignment" },
+                SelectExpandDefinition = new SelectExpandDefinition
+                {
+                    ExpandedItems = new List<SelectExpandItem>
+                    {
+                        new SelectExpandItem
+                        {
+                            MemberName = "courses"
+                        },
+                        new SelectExpandItem
+                        {
+                            MemberName = "officeAssignment"
+                        }
+                    }
+                },
                 Selects = null,
                 Distinct = false
             };
 
             ISchoolRepository repository = serviceProvider.GetRequiredService<ISchoolRepository>();
             DataSourceResult result = Task.Run(() => request.GetData<InstructorModel, Instructor>(repository)).Result;
-            var obj = ((IEnumerable<AggregateFunctionsGroupModel<InstructorModel>>)result.Data).First().Items.Cast<InstructorModel>().First();
+
             Assert.Equal(5, result.Total);
-            Assert.Equal(5, ((IEnumerable<AggregateFunctionsGroupModel<InstructorModel>>)result.Data).Count());
-            Assert.NotEmpty(((IEnumerable<AggregateFunctionsGroupModel<InstructorModel>>)result.Data).First().Items.Cast<InstructorModel>().First().Courses);
+            Assert.Equal(5, ((IEnumerable<AggregateFunctionsGroup>)result.Data).Count());
+            Assert.NotEmpty(((IEnumerable<AggregateFunctionsGroup>)result.Data).First().Items.Cast<InstructorModel>().First().Courses);
             Assert.Equal(2, result.AggregateResults.Count());
             Assert.Equal("Count", result.AggregateResults.First().AggregateMethodName);
             Assert.Equal(5, (int)result.AggregateResults.First().Value);
@@ -257,11 +267,11 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests
 
             ISchoolRepository repository = serviceProvider.GetRequiredService<ISchoolRepository>();
             DataSourceResult result = Task.Run(() => request.GetData<InstructorModel, Instructor>(repository)).Result;
-            var obj = ((IEnumerable<AggregateFunctionsGroupModel<InstructorModel>>)result.Data).First().Items.Cast<InstructorModel>().First();
+
             Assert.Equal(5, result.Total);
-            Assert.Equal(5, ((IEnumerable<AggregateFunctionsGroupModel<InstructorModel>>)result.Data).Count());
-            Assert.Empty(((IEnumerable<AggregateFunctionsGroupModel<InstructorModel>>)result.Data).First().Items.Cast<InstructorModel>().First().Courses);
-            Assert.Null(((IEnumerable<AggregateFunctionsGroupModel<InstructorModel>>)result.Data).First().Items.Cast<InstructorModel>().First().OfficeAssignment);
+            Assert.Equal(5, ((IEnumerable<AggregateFunctionsGroup>)result.Data).Count());
+            Assert.Null(((IEnumerable<AggregateFunctionsGroup>)result.Data).First().Items.Cast<InstructorModel>().First().Courses);
+            Assert.Null(((IEnumerable<AggregateFunctionsGroup>)result.Data).First().Items.Cast<InstructorModel>().First().OfficeAssignment);
             Assert.Equal(2, result.AggregateResults.Count());
             Assert.Equal("Count", result.AggregateResults.First().AggregateMethodName);
             Assert.Equal(5, (int)result.AggregateResults.First().Value);
@@ -563,7 +573,6 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests
                 {
                     cfg.AddExpressionMapping();
                     cfg.AddMaps(typeof(SchoolProfile).GetTypeInfo().Assembly);
-                    cfg.AddMaps(typeof(GroupingProfile).GetTypeInfo().Assembly);
                     cfg.AddProfile<ExpressionOperatorsMappingProfile>();
                 });
             }
