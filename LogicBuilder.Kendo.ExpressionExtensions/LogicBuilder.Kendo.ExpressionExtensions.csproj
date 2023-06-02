@@ -7,7 +7,7 @@
     <Authors>BlaiseD</Authors>
     <Description>Extensions to create IQueryable expressions from Telerik's DataSourceRequest class.  The expressions can then be executed against an IQueryable.  This package depends on Telerik.UI.for.AspNet.Core but has not been created by Telerik/Progress.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>Supporting AutoMapper v12.</PackageReleaseNotes>
+    <PackageReleaseNotes>Kendo UI expressions only - Allow paging expression to be executed separately from the grouping expression.</PackageReleaseNotes>
     <PackageTags>efcore kendo</PackageTags>
     <Copyright>Copyright © BPS 2018</Copyright>
     <RepositoryUrl>https://github.com/BlaiseD/LogicBuilder.DataComponents</RepositoryUrl>
