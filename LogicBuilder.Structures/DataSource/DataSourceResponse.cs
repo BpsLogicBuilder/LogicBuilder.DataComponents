@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace LogicBuilder.Expressions.Utils.DataSource
 {
+    [System.Obsolete("No longer used.")]
     public class DataSourceResponse
     {
         public IEnumerable Data { get; set; }

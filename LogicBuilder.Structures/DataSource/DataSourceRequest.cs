@@ -2,6 +2,7 @@
 
 namespace LogicBuilder.Expressions.Utils.DataSource
 {
+    [System.Obsolete("No longer used.")]
     public class DataSourceRequest
     {
         public DataSourceRequestOptions Options { get; set; }

@@ -116,6 +116,7 @@ namespace LogicBuilder.Expressions.Utils
         /// <typeparam name="T"></typeparam>
         /// <param name="group"></param>
         /// <returns></returns>
+        [System.Obsolete("No longer used. Use LogicBuilder.Expressions.Utils.ExpressionBuilder.")]
         public static Expression<Func<IQueryable<T>, IQueryable<T>>> BuildWhereExpression<T>(this DataSource.FilterGroup group) where T : class
         {
             if (group == null)
@@ -135,6 +136,7 @@ namespace LogicBuilder.Expressions.Utils
         /// <param name="filterGroup"></param>
         /// <param name="parameterName"></param>
         /// <returns></returns>
+        [System.Obsolete("No longer used. Use LogicBuilder.Expressions.Utils.ExpressionBuilder.")]
         public static MethodCallExpression GetWhere<TSource>(this Expression expression, DataSource.FilterGroup filterGroup) where TSource : class
         {
             LambdaExpression filterExpression = filterGroup.GetFilterExpression<TSource>();
@@ -149,6 +151,7 @@ namespace LogicBuilder.Expressions.Utils
         /// <typeparam name="T"></typeparam>
         /// <param name="filter"></param>
         /// <returns></returns>
+        [System.Obsolete("No longer used. Use LogicBuilder.Expressions.Utils.ExpressionBuilder.")]
         public static Expression<Func<IQueryable<T>, IQueryable<T>>> BuildWhereExpression<T>(this DataSource.Filter filter) where T : class
         {
             if (filter == null)
@@ -168,6 +171,7 @@ namespace LogicBuilder.Expressions.Utils
         /// <param name="filter"></param>
         /// <param name="parameterName"></param>
         /// <returns></returns>
+        [System.Obsolete("No longer used. Use LogicBuilder.Expressions.Utils.ExpressionBuilder.")]
         public static MethodCallExpression GetWhere<TSource>(this Expression expression, DataSource.Filter filter) where TSource : class
         {
             LambdaExpression filterExpression = filter.GetFilterExpression<TSource>();
@@ -562,7 +566,7 @@ namespace LogicBuilder.Expressions.Utils
 
         public static Type CreateAnonymousType(IDictionary<string, Type> memberDetails)
         {
-            AssemblyName dynamicAssemblyName = new AssemblyName("TempAssembly");
+            AssemblyName dynamicAssemblyName = new("TempAssembly");
             AssemblyBuilder dynamicAssembly = AssemblyBuilder.DefineDynamicAssembly(dynamicAssemblyName, AssemblyBuilderAccess.Run);
             ModuleBuilder dynamicModule = dynamicAssembly.DefineDynamicModule("TempAssembly");
             TypeBuilder typeBuilder = dynamicModule.DefineType(GetAnonymousTypeName(), TypeAttributes.Public);
