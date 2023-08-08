@@ -7,6 +7,7 @@ using System.Reflection;
 
 namespace LogicBuilder.Expressions.Utils.DataSource
 {
+    [System.Obsolete("No longer used. Use LogicBuilder.Expressions.Utils.ExpressionBuilder.")]
     public static class AggregateHelpers
     {
         /// <summary>

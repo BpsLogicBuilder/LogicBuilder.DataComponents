@@ -7,6 +7,7 @@ using System.Text;
 
 namespace LogicBuilder.Expressions.Utils.DataSource
 {
+    [System.Obsolete("No longer used. Use LogicBuilder.Expressions.Utils.ExpressionBuilder.")]
     public static class FiltersHelper
     {
         private static readonly IDictionary<string, string> operators = new Dictionary<string, string>
