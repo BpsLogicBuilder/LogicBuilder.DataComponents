@@ -28,7 +28,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
         }
 
         private static readonly string parameterName = "$it";
-        private IDictionary<string, ParameterExpression> parameters;
+        private readonly IDictionary<string, ParameterExpression> parameters;
 
         #region Inequalities
         [Theory]
@@ -5529,7 +5529,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
                     (
                         new CustomMethodOperator
                         (
-                            typeof(FilterTests).GetMethod("PadRightStatic", BindingFlags.NonPublic | BindingFlags.Static),
+                            typeof(FilterTests).GetMethod(nameof(PadRightStatic), BindingFlags.NonPublic | BindingFlags.Static),
                             new IExpressionPart[]
                             {
                                 new MemberSelectorOperator("ProductName", new ParameterOperator(parameters, parameterName)),
@@ -8440,10 +8440,10 @@ namespace LogicBuilder.Expressions.Utils.Tests
         }
         #endregion
 
-        private string PadRightInstance(string str, int number)
-        {
-            return str.PadRight(number);
-        }
+        //private string PadRightInstance(string str, int number)
+        //{
+        //    return str.PadRight(number);
+        //}
 
         // Used by Custom Method binder tests - by reflection
         private static string PadRightStatic(string str, int number)
@@ -8451,7 +8451,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
             return str.PadRight(number);
         }
 
-        private T? ToNullable<T>(object value) where T : struct => 
+        private static T? ToNullable<T>(object value) where T : struct => 
             value == null ? null : (T?)Convert.ChangeType(value, typeof(T));
 
         private static IDictionary<string, ParameterExpression> GetParameters()
@@ -8463,16 +8463,16 @@ namespace LogicBuilder.Expressions.Utils.Tests
         static object[] GetArguments(Func<IDictionary<string, ParameterExpression>, object[]> getList) 
             => GetArguments(GetParameters(), getList);
 
-        private Expression<Func<T, bool>> GetFilter<T>(IExpressionPart filterBody, IDictionary<string, ParameterExpression> parameters, string parameterName = "$it") 
+        private static Expression<Func<T, bool>> GetFilter<T>(IExpressionPart filterBody, IDictionary<string, ParameterExpression> parameters, string parameterName = "$it") 
             => filterBody.GetFilter<T>(parameters, parameterName);
 
-        private void AssertFilterStringIsCorrect(Expression expression, string expected)
+        private static void AssertFilterStringIsCorrect(Expression expression, string expected)
         {
             string resultExpression = ExpressionStringBuilder.ToString(expression);
             Assert.True(expected == resultExpression, string.Format("Expected expression '{0}' but the deserializer produced '{1}'", expected, resultExpression));
         }
 
-        private bool RunFilter<TModel>(Expression<Func<TModel, bool>> filter, TModel instance)
+        private static bool RunFilter<TModel>(Expression<Func<TModel, bool>> filter, TModel instance)
             => filter.Compile().Invoke(instance);
     }
 

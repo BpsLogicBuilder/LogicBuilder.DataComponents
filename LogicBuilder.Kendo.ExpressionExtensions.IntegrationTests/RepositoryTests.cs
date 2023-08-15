@@ -36,14 +36,11 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests
         static MapperConfiguration MapperConfiguration;
         private void Initialize()
         {
-            if (MapperConfiguration == null)
-            {
-                MapperConfiguration = new MapperConfiguration(cfg =>
+            MapperConfiguration ??= new MapperConfiguration(cfg =>
                 {
                     cfg.AddExpressionMapping();
                     cfg.AddMaps(typeof(SchoolProfile).GetTypeInfo().Assembly);
                 });
-            }
 
             serviceProvider = new ServiceCollection()
                 .AddDbContext<SchoolContext>

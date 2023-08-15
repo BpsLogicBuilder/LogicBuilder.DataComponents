@@ -1441,14 +1441,11 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
         static MapperConfiguration MapperConfiguration;
         private void Initialize()
         {
-            if (MapperConfiguration == null)
-            {
-                MapperConfiguration = new MapperConfiguration(cfg =>
+            MapperConfiguration ??= new MapperConfiguration(cfg =>
                 {
                     cfg.AddExpressionMapping();
                     cfg.AddProfile<ExpressionOperatorsMappingProfile>();
                 });
-            }
 
             serviceProvider = new ServiceCollection()
                 .AddSingleton<AutoMapper.IConfigurationProvider>
@@ -1479,10 +1476,10 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
             ).Build();
         }
 
-        private TResult RunExpression<T, TResult>(Expression<Func<T, TResult>> filter, T instance)
+        private static TResult RunExpression<T, TResult>(Expression<Func<T, TResult>> filter, T instance)
             => filter.Compile().Invoke(instance);
 
-        private void AssertFilterStringIsCorrect(Expression expression, string expected)
+        private static void AssertFilterStringIsCorrect(Expression expression, string expected)
         {
             AssertStringIsCorrect(ExpressionStringBuilder.ToString(expression));
 
@@ -1494,7 +1491,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
                 );
         }
 
-        private IQueryable<Category> GetCategories()
+        private static IQueryable<Category> GetCategories()
          => new Category[]
             {
                 new Category
@@ -1533,13 +1530,13 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
                     {
                         new Product
                         {
-                            AlternateAddresses = new Address[0]
+                            AlternateAddresses = Array.Empty<Address>()
                         }
                     }
                 }
             }.AsQueryable();
 
-        private IQueryable<Product> GetProducts()
+        private static IQueryable<Product> GetProducts()
          => new Product[]
          {
              new Product
