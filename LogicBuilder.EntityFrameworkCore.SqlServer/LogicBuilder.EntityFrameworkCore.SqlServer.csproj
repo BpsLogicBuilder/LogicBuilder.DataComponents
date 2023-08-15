@@ -7,7 +7,7 @@
     <Authors>BlaiseD</Authors>
     <Description>Given an EF Core DBContext, LogicBuilder.EntityFrameworkCore.SqlServer uses AutoMapper configurations to support CRUD operations using the DTO objects.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>Kendo UI expressions only - Allow paging expression to be executed separately from the grouping expression.</PackageReleaseNotes>
+    <PackageReleaseNotes>Declaring unused classes obsolete.</PackageReleaseNotes>
     <PackageTags>crud operations efcore</PackageTags>
     <Copyright>Copyright © BPS 2017</Copyright>
     <RepositoryUrl>https://github.com/BlaiseD/LogicBuilder.DataComponents</RepositoryUrl>
@@ -22,9 +22,9 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.ExpressionMapping" Version="[6.0.4,7.0.0)" />
-    <PackageReference Include="LogicBuilder.Data" Version="5.0.10-alpha.0.2" />
-    <PackageReference Include="LogicBuilder.Domain" Version="5.0.10-alpha.0.2" />
-		<PackageReference Include="LogicBuilder.Expressions.Utils" Version="5.0.10-alpha.0.2" />
+    <PackageReference Include="LogicBuilder.Data" Version="5.0.10" />
+    <PackageReference Include="LogicBuilder.Domain" Version="5.0.10" />
+		<PackageReference Include="LogicBuilder.Expressions.Utils" Version="5.0.10" />
     <PackageReference Include="MinVer" Version="2.5.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

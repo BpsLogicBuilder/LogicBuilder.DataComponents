@@ -140,4 +140,4 @@ To use:
 
 `ExpressionOperatorsMappingProfile` is a mapping profile from `LogicBuilder.EntityFrameworkCore.SqlServer`.
 
-For serializable descriptors, replace `cfg.AddProfile<ExpressionOperatorsMappingProfile>();` with a [custom mapping profile](https://github.com/BlaiseD/Contoso.XPlatform/blob/master/Contoso.AutoMapperProfiles/DescriptorToOperatorMappingProfile.cs) with serializable descriptors.
+For serializable descriptors, replace `cfg.AddProfile<ExpressionOperatorsMappingProfile>();` with a [custom mapping profile](https://github.com/BlaiseD/LogicBuilder.Samples/blob/master/Xamarin/Contoso/Contoso.AutoMapperProfiles/DescriptorToOperatorMappingProfile.cs) with serializable descriptors.
