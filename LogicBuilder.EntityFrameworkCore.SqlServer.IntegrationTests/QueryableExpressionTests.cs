@@ -63,8 +63,8 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.IntegrationTests
         #endregion Fields
 
         #region Helpers
-        private SelectDescriptor GetAboutBody()
-            => new SelectDescriptor
+        private static SelectDescriptor GetAboutBody()
+            => new()
             {
                 SourceOperand = new OrderByDescriptor
                 {
@@ -127,8 +127,8 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.IntegrationTests
                 SelectorParameterName = "sel"
             };
 
-        private SelectorLambdaDescriptor GetExpressionDescriptor<T, TResult>(IExpressionDescriptor selectorBody, string parameterName = "$it")
-            => new SelectorLambdaDescriptor
+        private static SelectorLambdaDescriptor GetExpressionDescriptor<T, TResult>(IExpressionDescriptor selectorBody, string parameterName = "$it")
+            => new()
             {
                 Selector = selectorBody,
                 SourceElementType = typeof(T),
@@ -136,7 +136,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.IntegrationTests
                 BodyType = typeof(TResult)
             };
 
-        private Expression<Func<T, TResult>> GetExpression<T, TResult>(SelectorLambdaDescriptor selectorLambdaDescriptor, string parameterName = "q")
+        private Expression<Func<T, TResult>> GetExpression<T, TResult>(SelectorLambdaDescriptor selectorLambdaDescriptor)
         {
             IMapper mapper = serviceProvider.GetRequiredService<IMapper>();
 
@@ -147,7 +147,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.IntegrationTests
             ).Build();
         }
 
-        private void AssertFilterStringIsCorrect(Expression expression, string expected)
+        private static void AssertFilterStringIsCorrect(Expression expression, string expected)
         {
             string resultExpression = ExpressionStringBuilder.ToString(expression);
             Assert.True(expected == resultExpression, string.Format("Expected expression '{0}' but the deserializer produced '{1}'", expected, resultExpression));
@@ -156,16 +156,13 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.IntegrationTests
         static MapperConfiguration MapperConfiguration;
         private void Initialize()
         {
-            if (MapperConfiguration == null)
-            {
-                MapperConfiguration = new MapperConfiguration(cfg =>
+            MapperConfiguration ??= new MapperConfiguration(cfg =>
                 {
                     cfg.AddExpressionMapping();
 
                     cfg.AddProfile<SchoolProfile>();
                     cfg.AddProfile<Mapping.ExpressionOperatorsMappingProfile>();
                 });
-            }
             MapperConfiguration.AssertConfigurationIsValid();
             serviceProvider = new ServiceCollection()
                 .AddDbContext<SchoolContext>

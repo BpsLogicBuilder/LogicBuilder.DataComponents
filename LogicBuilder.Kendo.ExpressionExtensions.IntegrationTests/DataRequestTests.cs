@@ -42,7 +42,7 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests
         [Fact]
         public void Get_students_ungrouped_with_aggregates()
         {
-            DataRequest request = new DataRequest
+            DataRequest request = new()
             {
                 Options = new DataSourceRequestOptions
                 {
@@ -72,7 +72,7 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests
         [Fact]
         public void Get_students_grouped_with_aggregates()
         {
-            DataRequest request = new DataRequest
+            DataRequest request = new()
             {
                 Options = new DataSourceRequestOptions
                 {
@@ -101,7 +101,7 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests
         [Fact]
         public void Get_departments_ungrouped_with_aggregates_and_includes()
         {
-            DataRequest request = new DataRequest
+            DataRequest request = new()
             {
                 Options = new DataSourceRequestOptions
                 {
@@ -134,7 +134,7 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests
         [Fact]
         public void Get_departments_grouped_with_aggregates()
         {
-            DataRequest request = new DataRequest
+            DataRequest request = new()
             {
                 Options = new DataSourceRequestOptions
                 {
@@ -166,7 +166,7 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests
         [Fact]
         public void Get_instructors_ungrouped_with_aggregates()
         {
-            DataRequest request = new DataRequest
+            DataRequest request = new()
             {
                 Options = new DataSourceRequestOptions
                 {
@@ -207,7 +207,7 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests
         [Fact]
         public void Get_instructors_grouped_with_aggregates_and_expansions()
         {
-            DataRequest request = new DataRequest
+            DataRequest request = new()
             {
                 Options = new DataSourceRequestOptions
                 {
@@ -250,7 +250,7 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests
         [Fact]
         public void Get_instructors_grouped_with_aggregates_without_includes()
         {
-            DataRequest request = new DataRequest
+            DataRequest request = new()
             {
                 Options = new DataSourceRequestOptions
                 {
@@ -280,7 +280,7 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests
         [Fact]
         public void Get_single_student_with_navigation_property_of_navigation_property()
         {
-            DataRequest request = new DataRequest
+            DataRequest request = new()
             {
                 Options = new DataSourceRequestOptions
                 {
@@ -315,7 +315,7 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests
         [Fact]
         public void Get_single_department()
         {
-            DataRequest request = new DataRequest
+            DataRequest request = new()
             {
                 Options = new DataSourceRequestOptions
                 {
@@ -340,7 +340,7 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests
         [Fact]
         public void Get_instructor_list_with_select_new()
         {
-            DataRequest request = new DataRequest
+            DataRequest request = new()
             {
                 Options = new DataSourceRequestOptions
                 {
@@ -567,15 +567,12 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests
         static MapperConfiguration MapperConfiguration;
         private void Initialize()
         {
-            if (MapperConfiguration == null)
-            {
-                MapperConfiguration = new MapperConfiguration(cfg =>
+            MapperConfiguration ??= new MapperConfiguration(cfg =>
                 {
                     cfg.AddExpressionMapping();
                     cfg.AddMaps(typeof(SchoolProfile).GetTypeInfo().Assembly);
                     cfg.AddProfile<ExpressionOperatorsMappingProfile>();
                 });
-            }
 
             serviceProvider = new ServiceCollection()
                  .AddDbContext<SchoolContext>

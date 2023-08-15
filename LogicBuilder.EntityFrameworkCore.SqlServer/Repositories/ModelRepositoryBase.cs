@@ -29,9 +29,9 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Repositories
         #endregion Fields
 
         #region Methods
-        public async Task<ICollection<TModel>> GetItemsAsync(Expression<Func<TModel, bool>> filter = null, Expression<Func<IQueryable<TModel>, IQueryable<TModel>>> queryFunc = null, ICollection<Expression<Func<IQueryable<TModel>, IIncludableQueryable<TModel, object>>>> includeProperties = null)
+        public Task<ICollection<TModel>> GetItemsAsync(Expression<Func<TModel, bool>> filter = null, Expression<Func<IQueryable<TModel>, IQueryable<TModel>>> queryFunc = null, ICollection<Expression<Func<IQueryable<TModel>, IIncludableQueryable<TModel, object>>>> includeProperties = null)
         {
-            return await _store.GetItemsAsync<TModel, TData>
+            return _store.GetItemsAsync<TModel, TData>
             (
                 _mapper,
                 filter,
@@ -40,9 +40,9 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Repositories
             );
         }
 
-        public async Task<ICollection<TModel>> GetAsync(Expression<Func<TModel, bool>> filter = null, Expression<Func<IQueryable<TModel>, IQueryable<TModel>>> queryFunc = null, SelectExpandDefinition selectExpandDefinition = null)
+        public Task<ICollection<TModel>> GetAsync(Expression<Func<TModel, bool>> filter = null, Expression<Func<IQueryable<TModel>, IQueryable<TModel>>> queryFunc = null, SelectExpandDefinition selectExpandDefinition = null)
         {
-            return await _store.GetAsync<TModel, TData>
+            return _store.GetAsync<TModel, TData>
             (
                 _mapper,
                 filter,
@@ -51,50 +51,50 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Repositories
             );
         }
 
-        public async Task<int> CountAsync(Expression<Func<TModel, bool>> filter = null)
+        public Task<int> CountAsync(Expression<Func<TModel, bool>> filter = null)
         {
-            return await _store.CountAsync<TModel, TData>(_mapper, filter);
+            return _store.CountAsync<TModel, TData>(_mapper, filter);
         }
 
-        public async Task<TModelReturn> QueryAsync<TModelReturn, TDataReturn>(Expression<Func<IQueryable<TModel>, TModelReturn>> queryFunc, ICollection<Expression<Func<IQueryable<TModel>, IIncludableQueryable<TModel, object>>>> includeProperties = null)
+        public Task<TModelReturn> QueryAsync<TModelReturn, TDataReturn>(Expression<Func<IQueryable<TModel>, TModelReturn>> queryFunc, ICollection<Expression<Func<IQueryable<TModel>, IIncludableQueryable<TModel, object>>>> includeProperties = null)
         {
-            return await _store.QueryAsync<TModel, TData, TModelReturn, TDataReturn>(
+            return _store.QueryAsync<TModel, TData, TModelReturn, TDataReturn>(
                 _mapper,
                 queryFunc,
                 includeProperties);
         }
 
-        public async Task<TReturn> QueryAsync<TModelReturn, TDataReturn, TReturn>(Expression<Func<IQueryable<TModel>, TModelReturn>> queryFunc, ICollection<Expression<Func<IQueryable<TModel>, IIncludableQueryable<TModel, object>>>> includeProperties = null)
+        public Task<TReturn> QueryAsync<TModelReturn, TDataReturn, TReturn>(Expression<Func<IQueryable<TModel>, TModelReturn>> queryFunc, ICollection<Expression<Func<IQueryable<TModel>, IIncludableQueryable<TModel, object>>>> includeProperties = null)
         {
-            return await _store.QueryAsync<TModel, TData, TModelReturn, TDataReturn, TReturn>(
+            return _store.QueryAsync<TModel, TData, TModelReturn, TDataReturn, TReturn>(
                 _mapper,
                 queryFunc,
                 includeProperties);
         }
 
-        public async Task<bool> SaveAsync(TModel entity)
+        public Task<bool> SaveAsync(TModel entity)
         {
-            return await _store.SaveAsync<TModel, TData>(_mapper, new List<TModel> { entity });
+            return _store.SaveAsync<TModel, TData>(_mapper, new List<TModel> { entity });
         }
 
-        public async Task<bool> SaveAsync(ICollection<TModel> entities)
+        public Task<bool> SaveAsync(ICollection<TModel> entities)
         {
-            return await _store.SaveAsync<TModel, TData>(_mapper, entities);
+            return _store.SaveAsync<TModel, TData>(_mapper, entities);
         }
 
-        public async Task<bool> SaveGraphAsync(TModel entity)
+        public Task<bool> SaveGraphAsync(TModel entity)
         {
-            return await _store.SaveGraphsAsync<TModel, TData>(_mapper, new List<TModel> { entity });
+            return _store.SaveGraphsAsync<TModel, TData>(_mapper, new List<TModel> { entity });
         }
 
-        public async Task<bool> SaveGraphsAsync(ICollection<TModel> entities)
+        public Task<bool> SaveGraphsAsync(ICollection<TModel> entities)
         {
-            return await _store.SaveGraphsAsync<TModel, TData>(_mapper, entities);
+            return _store.SaveGraphsAsync<TModel, TData>(_mapper, entities);
         }
 
-        public async Task<bool> DeleteAsync(Expression<Func<TModel, bool>> filter = null)
+        public Task<bool> DeleteAsync(Expression<Func<TModel, bool>> filter = null)
         {
-            return await _store.DeleteAsync<TModel, TData>(_mapper, filter);
+            return _store.DeleteAsync<TModel, TData>(_mapper, filter);
         }
 
         public void AddChange(TModel entity)
@@ -117,9 +117,9 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Repositories
             _store.AddGraphChanges<TModel, TData>(_mapper, entities);
         }
 
-        public async Task<bool> SaveChangesAsync()
+        public Task<bool> SaveChangesAsync()
         {
-            return await _store.SaveChangesAsync();
+            return _store.SaveChangesAsync();
         }
         #endregion Methods
     }

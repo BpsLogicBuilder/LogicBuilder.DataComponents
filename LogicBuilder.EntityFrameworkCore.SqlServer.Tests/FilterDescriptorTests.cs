@@ -228,7 +228,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
         }
 
         public static List<object[]> DateTimeOffsetInequalities_Data 
-            => new List<object[]>
+            => new()
             {
                 new object[]
                 {
@@ -288,7 +288,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
         }
 
         public static List<object[]> DateInEqualities_Data 
-            => new List<object[]>
+            => new()
             {
                 new object[]
                 {
@@ -689,7 +689,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
 
         #region NULL handling
         public static List<object[]> NullHandling_Data 
-            => new List<object[]>
+            => new()
             {
                 new object[]
                 {
@@ -877,7 +877,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
         }
 
         public static List<object[]> NullHandling_LiteralNull_Data 
-            => new List<object[]>
+            => new()
             {
                 new object[]
                 {
@@ -921,7 +921,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
         #endregion NULL handling
 
         public static List<object[]> ComparisonsInvolvingCastsAndNullableValues_Data 
-            => new List<object[]>
+            => new()
             {
                 new object[]
                 {
@@ -1286,7 +1286,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
         }
 
         public static List<object[]> AnyInOnNavigation_Data 
-            => new List<object[]>
+            => new()
             {
                 new object[]
                 {
@@ -1484,7 +1484,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
         }
 
         public static List<object[]> AnyOnNavigation_Contradiction_Data 
-            => new List<object[]>
+            => new()
             {
                 new object[]
                 {
@@ -2876,7 +2876,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
         }
 
         public static List<object[]> DateTimeOffsetFunctions_Data 
-            => new List<object[]>
+            => new()
             {
                 new object[]
                 {
@@ -2979,7 +2979,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
         }
 
         public static List<object[]> DateTimeFunctions_Data 
-            => new List<object[]>
+            => new()
             {
                 new object[]
                 {
@@ -3073,7 +3073,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
         }
 
         public static List<object[]> DateFunctions_Nullable_Data 
-            => new List<object[]>
+            => new()
             {
                 new object[]
                 {
@@ -3131,7 +3131,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
         }
 
         public static List<object[]> DateOnlyFunctions_Nullable_Data
-            => new List<object[]>
+            => new()
             {
                 new object[]
                 {
@@ -3189,7 +3189,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
         }
 
         public static List<object[]> DateFunctions_NonNullable_Data 
-            => new List<object[]>
+            => new()
             {
                 new object[]
                 {
@@ -3247,7 +3247,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
         }
 
         public static List<object[]> DateOnlyFunctions_NonNullable_Data
-            => new List<object[]>
+            => new()
             {
                 new object[]
                 {
@@ -3305,7 +3305,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
         }
 
         public static List<object[]> TimeOfDayFunctions_Nullable_Data 
-            => new List<object[]>
+            => new()
             {
                 new object[]
                 {
@@ -3363,7 +3363,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
         }
 
         public static List<object[]> TimeOnlyFunctions_Nullable_Data
-            => new List<object[]>
+            => new()
             {
                 new object[]
                 {
@@ -3421,7 +3421,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
         }
 
         public static List<object[]> TimeOfDayFunctions_NonNullable_Data 
-            => new List<object[]>
+            => new()
             {
                 new object[]
                 {
@@ -3479,7 +3479,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
         }
 
         public static List<object[]> TimeOnlyFunctions_NonNullable_Data
-            => new List<object[]>
+            => new()
             {
                 new object[]
                 {
@@ -3537,7 +3537,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
         }
 
         public static List<object[]> FractionalsecondsFunction_Nullable_Data 
-            => new List<object[]>
+            => new()
             {
                 new object[]
                 {
@@ -3595,7 +3595,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
         }
 
         public static List<object[]> FractionalsecondsFunction_NonNullable_Data 
-            => new List<object[]>
+            => new()
             {
                 new object[]
                 {
@@ -3653,7 +3653,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
         }
 
         public static List<object[]> DateFunction_Nullable_Data 
-            => new List<object[]>
+            => new()
             {
                 new object[]
                 {
@@ -3738,7 +3738,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
         }
 
         public static List<object[]> DateOnlyFunction_Nullable_Data
-            => new List<object[]>
+            => new()
             {
                 new object[]
                 {
@@ -3823,7 +3823,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
         }
 
         public static List<object[]> DateFunction_NonNullable_Data 
-            => new List<object[]>
+            => new()
             {
                 new object[]
                 {
@@ -3890,7 +3890,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
         }
 
         public static List<object[]> DateOnlyFunction_NonNullable_Data
-            => new List<object[]>
+            => new()
             {
                 new object[]
                 {
@@ -3957,7 +3957,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
         }
 
         public static List<object[]> TimeFunction_Nullable_Data 
-            => new List<object[]>
+            => new()
             {
                 new object[]
                 {
@@ -4042,7 +4042,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
         }
 
         public static List<object[]> TimeOnlyFunction_Nullable_Data
-            => new List<object[]>
+            => new()
             {
                 new object[]
                 {
@@ -4127,7 +4127,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
         }
 
         public static List<object[]> TimeFunction_NonNullable_Data 
-            => new List<object[]>
+            => new()
             {
                 new object[]
                 {
@@ -4194,7 +4194,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
         }
 
         public static List<object[]> TimeOnlyFunction_NonNullable_Data
-            => new List<object[]>
+            => new()
             {
                 new object[]
                 {
@@ -4792,7 +4792,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
         }
 
         public static List<object[]> MathFunctions_VariousTypes_Data 
-            => new List<object[]>
+            => new()
             {
                 new object[]
                 {
@@ -5032,7 +5032,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
                     (
                         new CustomMethodDescriptor
                         (
-                            typeof(FilterDescriptorTests).GetMethod("PadRightStatic", BindingFlags.NonPublic | BindingFlags.Static),
+                            typeof(FilterDescriptorTests).GetMethod(nameof(PadRightStatic), BindingFlags.NonPublic | BindingFlags.Static),
                             new IExpressionDescriptor[]
                             {
                                 new MemberSelectorDescriptor("ProductName", new ParameterDescriptor(parameterName)),
@@ -5079,7 +5079,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
         }
 
         public static List<object[]> DateTimeExpression_Data 
-            => new List<object[]>
+            => new()
             {
                 new object[]
                 {
@@ -5497,7 +5497,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
         }
 
         public static List<object[]> Inheritance_WithDerivedInstance_Data 
-            => new List<object[]>
+            => new()
             {
                 new object[]
                 {
@@ -5596,7 +5596,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
         }
 
         public static List<object[]> Inheritance_WithBaseInstance_Data 
-            => new List<object[]>
+            => new()
             {
                 new object[]
                 {
@@ -5678,7 +5678,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
         }
 
         public static List<object[]> CastMethod_Succeeds_Data 
-            => new List<object[]>
+            => new()
             {
                 new object[]
                 {
@@ -6164,7 +6164,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
 
         #region 'isof' in query option
         public static List<object[]> IsofMethod_Succeeds_Data 
-            => new List<object[]>
+            => new()
             {
                 new object []
                 {
@@ -6240,7 +6240,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
         }
 
         public static List<object[]> IsOfPrimitiveType_Succeeds_WithFalse_Data 
-            => new List<object[]>
+            => new()
             {
                 new object []
                 {
@@ -6730,7 +6730,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
         }
 
         public static List<object[]> IsOfQuotedNonPrimitiveType 
-            => new List<object[]>
+            => new()
             {
                 new object []
                 {
@@ -6784,7 +6784,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
         }
 
         public static List<object[]> IsOfQuotedNonPrimitiveTypeWithNull_Succeeds_WithFalse_Data 
-            => new List<object[]>
+            => new()
             {
                 new object []
                 {
@@ -6832,7 +6832,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
 
         #region
         public static List<object[]> ByteArrayComparisons_Data 
-            => new List<object[]>
+            => new()
             {
                 new object []
                 {
@@ -6963,7 +6963,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
         }
 
         public static List<object[]> DisAllowed_ByteArrayComparisons_Data 
-            => new List<object[]>
+            => new()
             {
                 new object []
                 {
@@ -7013,7 +7013,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
         }
 
         public static List<object[]> Nullable_NonstandardEdmPrimitives_Data 
-            => new List<object[]>
+            => new()
             {
                 new object []
                 {
@@ -7099,7 +7099,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
         }
 
         public static List<object[]> InOnNavigation_Data 
-            => new List<object[]>
+            => new()
                 {
                     new object []
                     {
@@ -7312,14 +7312,11 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
         static MapperConfiguration MapperConfiguration;
         private void Initialize()
         {
-            if (MapperConfiguration == null)
-            {
-                MapperConfiguration = new MapperConfiguration(cfg =>
+            MapperConfiguration ??= new MapperConfiguration(cfg =>
                 {
                     cfg.AddExpressionMapping();
                     cfg.AddProfile<ExpressionOperatorsMappingProfile>();
                 });
-            }
 
             serviceProvider = new ServiceCollection()
                 .AddSingleton<AutoMapper.IConfigurationProvider>
@@ -7330,12 +7327,10 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
                 .BuildServiceProvider();
         }
 
-        
-
-        private string PadRightInstance(string str, int number)
-        {
-            return str.PadRight(number);
-        }
+        //private string PadRightInstance(string str, int number)
+        //{
+        //    return str.PadRight(number);
+        //}
 
         // Used by Custom Method binder tests - by reflection
         private static string PadRightStatic(string str, int number)
@@ -7343,13 +7338,13 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
             return str.PadRight(number);
         }
 
-        private T? ToNullable<T>(object value) where T : struct =>
+        private static T? ToNullable<T>(object value) where T : struct =>
             value == null ? null : (T?)Convert.ChangeType(value, typeof(T));
 
         private static IDictionary<string, ParameterExpression> GetParameters()
             => new Dictionary<string, ParameterExpression>();
 
-        private void AssertFilterStringIsCorrect(Expression expression, string expected)
+        private static void AssertFilterStringIsCorrect(Expression expression, string expected)
         {
             string resultExpression = ExpressionStringBuilder.ToString(expression);
             Assert.True(expected == resultExpression, string.Format("Expected expression '{0}' but the deserializer produced '{1}'", expected, resultExpression));
@@ -7371,7 +7366,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
             ).Build();
         }
 
-        private bool RunFilter<TModel>(Expression<Func<TModel, bool>> filter, TModel instance)
+        private static bool RunFilter<TModel>(Expression<Func<TModel, bool>> filter, TModel instance)
             => filter.Compile().Invoke(instance);
     }
 

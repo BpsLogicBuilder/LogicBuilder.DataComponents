@@ -1,13 +1,11 @@
 ﻿using AutoMapper;
 using AutoMapper.Extensions.ExpressionMapping;
-using AutoMapper.QueryableExtensions;
 using LogicBuilder.Data;
 using LogicBuilder.Domain;
 using LogicBuilder.EntityFrameworkCore.SqlServer.Crud.DataStores;
 using LogicBuilder.EntityFrameworkCore.SqlServer.Visitors;
 using LogicBuilder.Expressions.Utils;
 using LogicBuilder.Expressions.Utils.Expansions;
-using LogicBuilder.Expressions.Utils.Strutures;
 using Microsoft.EntityFrameworkCore.Query;
 using System;
 using System.Collections.Generic;
@@ -72,7 +70,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Repositories
         }
 
         private static Expression<Func<TModel, object>>[] GetIncludes<TModel>(SelectExpandDefinition selectExpandDefinition) where TModel : class
-                => selectExpandDefinition.GetExpansionSelectors<TModel>().ToArray() ?? new Expression<Func<TModel, object>>[] { };
+                => selectExpandDefinition.GetExpansionSelectors<TModel>().ToArray() ?? Array.Empty<Expression<Func<TModel, object>>>();
 
         internal static async Task<TReturn> QueryAsync<TModel, TData, TModelReturn, TDataReturn, TReturn>(this IStore store, IMapper mapper,
             Expression<Func<IQueryable<TModel>, TModelReturn>> queryFunc = null,
@@ -108,39 +106,39 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Repositories
         }
 
         public static IQueryable ProjectTo(this IMapper mapper, IQueryable source, Type destType, SelectExpandDefinition selectExpandDefinition = null)
-            => (IQueryable)"_ProjectTo".GetGenericMethodInfo().MakeGenericMethod
+            => (IQueryable)nameof(ProjectTo).GetGenericMethodInfo().MakeGenericMethod
             (
                 destType
             ).Invoke(null, new object[] { mapper, source, selectExpandDefinition });
 
-        private static IQueryable<TDest> _ProjectTo<TDest>(IMapper mapper, IQueryable source, SelectExpandDefinition selectExpandDefinition = null) where TDest : class
+        private static IQueryable<TDest> ProjectTo<TDest>(IMapper mapper, IQueryable source, SelectExpandDefinition selectExpandDefinition = null) where TDest : class
             => mapper.ProjectTo<TDest>(source, null, GetIncludes<TDest>(selectExpandDefinition));
 
         private static MethodInfo GetGenericMethodInfo(this string methodName)
-           => typeof(StoreHelpers).GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Static);
+           => typeof(StoreHelpers).GetMethods(BindingFlags.NonPublic | BindingFlags.Static).Single(m => m.Name == methodName && m.IsGenericMethod);
 
-        public static async Task<TModelReturn> QueryAsync<TModel, TData, TModelReturn, TDataReturn>(this IStore store, IMapper mapper,
+        public static Task<TModelReturn> QueryAsync<TModel, TData, TModelReturn, TDataReturn>(this IStore store, IMapper mapper,
             Expression<Func<IQueryable<TModel>, TModelReturn>> queryFunc,
             ICollection<Expression<Func<IQueryable<TModel>, IIncludableQueryable<TModel, object>>>> includeProperties = null,
             SelectExpandDefinition selectExpandDefinition = null)
             where TModel : BaseModel
             where TData : BaseData
-            => await store.QueryAsync<TModel, TData, TModelReturn, TDataReturn, TModelReturn>(mapper, queryFunc, includeProperties, selectExpandDefinition);
+            => store.QueryAsync<TModel, TData, TModelReturn, TDataReturn, TModelReturn>(mapper, queryFunc, includeProperties, selectExpandDefinition);
 
-        public static async Task<TModelReturn> QueryAsync<TModel, TData, TModelReturn>(this IStore store, IMapper mapper,
+        public static Task<TModelReturn> QueryAsync<TModel, TData, TModelReturn>(this IStore store, IMapper mapper,
             Expression<Func<IQueryable<TModel>, TModelReturn>> queryFunc,
             ICollection<Expression<Func<IQueryable<TModel>, IIncludableQueryable<TModel, object>>>> includeProperties = null,
             SelectExpandDefinition selectExpandDefinition = null)
             where TModel : BaseModel
             where TData : BaseData
-            => await store.QueryAsync<TModel, TData, TModelReturn, TModelReturn, TModelReturn>(mapper, queryFunc, includeProperties, selectExpandDefinition);
+            => store.QueryAsync<TModel, TData, TModelReturn, TModelReturn, TModelReturn>(mapper, queryFunc, includeProperties, selectExpandDefinition);
 
-        internal static async Task<int> CountAsync<TModel, TData>(this IStore store, IMapper mapper, Expression<Func<TModel, bool>> filter = null)
+        internal static Task<int> CountAsync<TModel, TData>(this IStore store, IMapper mapper, Expression<Func<TModel, bool>> filter = null)
             where TModel : BaseModel
             where TData : BaseData
         {
             Expression<Func<TData, bool>> f = mapper.MapExpression<Expression<Func<TData, bool>>>(filter);
-            return await store.CountAsync(f);
+            return store.CountAsync(f);
         }
 
         internal static async Task<bool> SaveGraphsAsync<TModel, TData>(this IStore store, IMapper mapper, ICollection<TModel> entities)
@@ -196,13 +194,10 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Repositories
         }
 
         internal static IQueryable UpdateQueryable(this IQueryable query, Type modelType, List<List<ExpansionOptions>> expansions, IMapper mapper) 
-            => (IQueryable)"_UpdateQueryable".GetGenericMethodInfo().MakeGenericMethod
+            => (IQueryable)nameof(UpdateQueryable).GetGenericMethodInfo().MakeGenericMethod
             (
                 modelType
             ).Invoke(null, new object[] { query, expansions, mapper });
-
-        private static IQueryable<TModel> _UpdateQueryable<TModel>(this IQueryable<TModel> query, List<List<ExpansionOptions>> expansions, IMapper mapper) 
-            => query.UpdateQueryable(expansions, mapper);
 
         internal static IQueryable<TModel> UpdateQueryable<TModel>(this IQueryable<TModel> query, List<List<ExpansionOptions>> expansions, IMapper mapper)
         {
