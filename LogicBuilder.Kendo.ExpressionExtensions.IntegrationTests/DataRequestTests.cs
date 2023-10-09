@@ -577,11 +577,11 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests
             serviceProvider = new ServiceCollection()
                  .AddDbContext<SchoolContext>
                  (
-                     options =>
-                     {
-                         options.UseInMemoryDatabase("ContosoUniVersity");
-                         options.UseInternalServiceProvider(new ServiceCollection().AddEntityFrameworkInMemoryDatabase().BuildServiceProvider());
-                     },
+                    options => options.UseSqlServer
+                    (
+                        @"Server=(localdb)\mssqllocaldb;Database=DataRequestTests;ConnectRetryCount=0",
+                        options => options.EnableRetryOnFailure()
+                    ),
                     ServiceLifetime.Transient
                  )
                 .AddTransient<ISchoolStore, SchoolStore>()
