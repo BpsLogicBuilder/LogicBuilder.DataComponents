@@ -1,5 +1,4 @@
-﻿using LogicBuilder.Expressions.Utils.DataSource;
-using LogicBuilder.Expressions.Utils.ExpressionBuilder;
+﻿using LogicBuilder.Expressions.Utils.ExpressionBuilder;
 using LogicBuilder.Expressions.Utils.ExpressionBuilder.Lambda;
 using LogicBuilder.Expressions.Utils.Strutures;
 using Microsoft.OData.Edm;
@@ -376,6 +375,9 @@ namespace LogicBuilder.Expressions.Utils
         public static Expression GetDistinctCall(this Expression expression)
             => expression.GetMethodCall("Distinct");
 
+        public static Expression GetExceptCall(this Expression expression, Expression operand)
+            => expression.GetMethodCall("Except", operand);
+
         public static Expression GetFirstCall(this Expression expression, params Expression[] args)
             => expression.GetMethodCall("First", args);
 
@@ -399,6 +401,9 @@ namespace LogicBuilder.Expressions.Utils
 
         public static Expression GetTakeCall(this Expression expression, int take)
             => expression.GetMethodCall("Take", Expression.Constant(take));
+
+        public static Expression GetUnionCall(this Expression expression, Expression operand)
+            => expression.GetMethodCall("Union", operand);
 
         public static Expression GetWhereCall(this Expression expression, params Expression[] args)
             => expression.GetMethodCall("Where", args);

@@ -37,7 +37,18 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests.AutoMapperPro
                 .ForMember(dest => dest.CourseTitle, opts => opts.MapFrom(x => x.Course.Title))
                 .ForMember(dest => dest.StudentName, opts => opts.MapFrom(x => x.Student.FirstName + " " + x.Student.LastName))
                 .ForMember(dest => dest.Grade, opts => opts.MapFrom(x => x.Grade.HasValue ? (Contoso.Domain.Entities.Grade?)(int)x.Grade.Value : null))
-                .ForMember(dest => dest.GradeLetter, opts => opts.MapFrom(x => x.Grade.HasValue ? x.Grade.Value.ToString() : string.Empty))
+                .ForMember
+                (
+                    dest => dest.GradeLetter,
+                    opts => opts.MapFrom
+                    (
+                        x => x.Grade == Contoso.Data.Entities.Grade.A ? "A"
+                            : x.Grade == Contoso.Data.Entities.Grade.B ? "B"
+                            : x.Grade == Contoso.Data.Entities.Grade.C ? "C"
+                            : x.Grade == Contoso.Data.Entities.Grade.D ? "D"
+                            : x.Grade == Contoso.Data.Entities.Grade.F ? "F" : ""
+                    )
+                )
                 .ForAllMembers(o => o.ExplicitExpansion());
 
             CreateMap<InstructorModel, Instructor>()
