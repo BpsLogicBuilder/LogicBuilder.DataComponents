@@ -97,7 +97,8 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Mapping
 			CreateMap<DivideBinaryDescriptor, DivideBinaryOperator>();
 			CreateMap<EndsWithDescriptor, EndsWithOperator>();
 			CreateMap<EqualsBinaryDescriptor, EqualsBinaryOperator>();
-			CreateMap<FilterLambdaDescriptor, FilterLambdaOperator>()
+            CreateMap<ExceptDescriptor, ExceptOperator>();
+            CreateMap<FilterLambdaDescriptor, FilterLambdaOperator>()
 				.ConstructUsing
 				(
 					(src, context) => new FilterLambdaOperator
@@ -371,7 +372,8 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Mapping
 			CreateMap<TotalSecondsDescriptor, TotalSecondsOperator>();
 			CreateMap<ToUpperDescriptor, ToUpperOperator>();
 			CreateMap<TrimDescriptor, TrimOperator>();
-			CreateMap<WhereDescriptor, WhereOperator>()
+            CreateMap<UnionDescriptor, UnionOperator>();
+            CreateMap<WhereDescriptor, WhereOperator>()
 				.ConstructUsing
 				(
 					(src, context) => new WhereOperator
@@ -417,7 +419,8 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Mapping
 				.Include<DivideBinaryDescriptor, DivideBinaryOperator>()
 				.Include<EndsWithDescriptor, EndsWithOperator>()
 				.Include<EqualsBinaryDescriptor, EqualsBinaryOperator>()
-				.Include<FilterLambdaDescriptor, FilterLambdaOperator>()
+                .Include<ExceptDescriptor, ExceptOperator>()
+                .Include<FilterLambdaDescriptor, FilterLambdaOperator>()
 				.Include<FirstDescriptor, FirstOperator>()
 				.Include<FirstOrDefaultDescriptor, FirstOrDefaultOperator>()
 				.Include<FloorDescriptor, FloorOperator>()
@@ -474,7 +477,8 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Mapping
 				.Include<TotalSecondsDescriptor, TotalSecondsOperator>()
 				.Include<ToUpperDescriptor, ToUpperOperator>()
 				.Include<TrimDescriptor, TrimOperator>()
-				.Include<WhereDescriptor, WhereOperator>()
+                .Include<UnionDescriptor, UnionOperator>()
+                .Include<WhereDescriptor, WhereOperator>()
 				.Include<YearDescriptor, YearOperator>();
 		}
 	}
