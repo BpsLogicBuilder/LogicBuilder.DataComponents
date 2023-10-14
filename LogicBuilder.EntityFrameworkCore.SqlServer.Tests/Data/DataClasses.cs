@@ -82,6 +82,27 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests.Data
         public string City { get; set; }
         public string State { get; set; }
         public string ZipCode { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+                return false;
+
+            if (ReferenceEquals(this, obj)) return true;
+
+            if (obj.GetType() != GetType()) return false;
+
+            Address other = (Address)obj;
+            return other.AddressID == AddressID
+                && other.City == City
+                && other.State == State
+                && other.ZipCode == ZipCode;
+        }
+
+        public override int GetHashCode()
+        {
+            return AddressID.GetHashCode();
+        }
     }
 
     public class DataTypes
