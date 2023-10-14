@@ -7,7 +7,7 @@
     <Authors>BlaiseD</Authors>
     <Description>Augments LogicBuilder.Expressions.Utils with LINQ queries specific to EF Core.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>Declaring unused classes obsolete.</PackageReleaseNotes>
+    <PackageReleaseNotes>Supporting Except and Union operators.</PackageReleaseNotes>
     <PackageTags>linq expressions efcore</PackageTags>
     <Copyright>Copyright © BPS 2018</Copyright>
     <RepositoryUrl>https://github.com/BlaiseD/LogicBuilder.DataComponents</RepositoryUrl>

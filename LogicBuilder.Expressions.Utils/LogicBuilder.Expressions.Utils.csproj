@@ -7,7 +7,7 @@
     <Authors>BlaiseD</Authors>
     <Description>Creates CRUD related LINQ queries from data.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>Declaring unused classes obsolete.</PackageReleaseNotes>
+    <PackageReleaseNotes>Supporting Except and Union operators.</PackageReleaseNotes>
     <PackageTags>linq expressions</PackageTags>
     <Copyright>Copyright © BPS 2018</Copyright>
     <RepositoryUrl>https://github.com/BlaiseD/LogicBuilder.DataComponents</RepositoryUrl>
