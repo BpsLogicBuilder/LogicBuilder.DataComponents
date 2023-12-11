@@ -25,11 +25,11 @@
     <PackageReference Include="LogicBuilder.Data" Version="5.0.12" />
     <PackageReference Include="LogicBuilder.Domain" Version="5.0.12" />
 		<PackageReference Include="LogicBuilder.Expressions.Utils" Version="5.0.12" />
-    <PackageReference Include="MinVer" Version="2.5.0">
+    <PackageReference Include="MinVer" Version="4.3.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
   </ItemGroup>
 
 	<ItemGroup Condition=" '$(TargetFramework)' == 'net6.0' ">
