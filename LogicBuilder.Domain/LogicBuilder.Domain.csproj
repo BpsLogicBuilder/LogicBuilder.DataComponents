@@ -7,7 +7,7 @@
     <Authors>BlaiseD</Authors>
     <Description>LogicBuilder.Domain includes the base class for all DTOs in the data stack;</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>Supporting Except and Union operators.</PackageReleaseNotes>
+    <PackageReleaseNotes>Supporting .NET 8.0.</PackageReleaseNotes>
     <PackageTags>crud operations logic-builder</PackageTags>
     <Copyright>Copyright © BPS 2017</Copyright>
     <RepositoryUrl>https://github.com/BlaiseD/LogicBuilder.DataComponents</RepositoryUrl>
