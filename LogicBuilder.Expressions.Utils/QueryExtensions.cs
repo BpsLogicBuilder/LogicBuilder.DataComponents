@@ -1,8 +1,6 @@
-﻿using LogicBuilder.Expressions.Utils.DataSource;
-using LogicBuilder.Expressions.Utils.Strutures;
+﻿using LogicBuilder.Expressions.Utils.Strutures;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -108,76 +106,6 @@ namespace LogicBuilder.Expressions.Utils
             Type[] genericArgumentsForMethod = new Type[] { typeof(TSource), typeof(object) };
 
             return Expression.Call(typeof(Queryable), "GroupBy", genericArgumentsForMethod, expression, selectorExpression);
-        }
-
-        /// <summary>
-        /// Creates a Where lambda expression from a filter group
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="group"></param>
-        /// <returns></returns>
-        [System.Obsolete("No longer used. Use LogicBuilder.Expressions.Utils.ExpressionBuilder.")]
-        public static Expression<Func<IQueryable<T>, IQueryable<T>>> BuildWhereExpression<T>(this DataSource.FilterGroup group) where T : class
-        {
-            if (group == null)
-                return null;
-
-            ParameterExpression param = Expression.Parameter(typeof(IQueryable<T>), "q");
-            MethodCallExpression mce = param.GetWhere<T>(group);
-
-            return Expression.Lambda<Func<IQueryable<T>, IQueryable<T>>>(mce, param);
-        }
-
-        /// <summary>
-        /// Creates a Where method call expression to be invoked on an expression e.g. (parameter, member, method call) of type IQueryable<T>.
-        /// </summary>
-        /// <typeparam name="TSource"></typeparam>
-        /// <param name="expression"></param>
-        /// <param name="filterGroup"></param>
-        /// <param name="parameterName"></param>
-        /// <returns></returns>
-        [System.Obsolete("No longer used. Use LogicBuilder.Expressions.Utils.ExpressionBuilder.")]
-        public static MethodCallExpression GetWhere<TSource>(this Expression expression, DataSource.FilterGroup filterGroup) where TSource : class
-        {
-            LambdaExpression filterExpression = filterGroup.GetFilterExpression<TSource>();
-            Type[] genericArgumentsForMethod = new Type[] { typeof(TSource) };
-
-            return Expression.Call(typeof(Queryable), "Where", genericArgumentsForMethod, expression, filterExpression);
-        }
-
-        /// <summary>
-        /// Creates a Where lambda expression from a filter
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="filter"></param>
-        /// <returns></returns>
-        [System.Obsolete("No longer used. Use LogicBuilder.Expressions.Utils.ExpressionBuilder.")]
-        public static Expression<Func<IQueryable<T>, IQueryable<T>>> BuildWhereExpression<T>(this DataSource.Filter filter) where T : class
-        {
-            if (filter == null)
-                return null;
-
-            ParameterExpression param = Expression.Parameter(typeof(IQueryable<T>), "q");
-            MethodCallExpression mce = param.GetWhere<T>(filter);
-
-            return Expression.Lambda<Func<IQueryable<T>, IQueryable<T>>>(mce, param);
-        }
-
-        /// <summary>
-        /// Creates a Where method call expression to be invoked on an expression e.g. (parameter, member, method call) of type IQueryable<T>.
-        /// </summary>
-        /// <typeparam name="TSource"></typeparam>
-        /// <param name="expression"></param>
-        /// <param name="filter"></param>
-        /// <param name="parameterName"></param>
-        /// <returns></returns>
-        [System.Obsolete("No longer used. Use LogicBuilder.Expressions.Utils.ExpressionBuilder.")]
-        public static MethodCallExpression GetWhere<TSource>(this Expression expression, DataSource.Filter filter) where TSource : class
-        {
-            LambdaExpression filterExpression = filter.GetFilterExpression<TSource>();
-            Type[] genericArgumentsForMethod = new Type[] { typeof(TSource) };
-
-            return Expression.Call(typeof(Queryable), "Where", genericArgumentsForMethod, expression, filterExpression);
         }
 
         /// <summary>
