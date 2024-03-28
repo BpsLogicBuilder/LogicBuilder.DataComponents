@@ -7,7 +7,7 @@
     <Authors>BlaiseD</Authors>
     <Description>Given an EF Core DBContext, LogicBuilder.EntityFrameworkCore.SqlServer uses AutoMapper configurations to support CRUD operations using the DTO objects.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>Supporting .NET 8.0.</PackageReleaseNotes>
+    <PackageReleaseNotes>Supporting AutoMapper v13.</PackageReleaseNotes>
     <PackageTags>crud operations efcore</PackageTags>
     <Copyright>Copyright © BPS 2017</Copyright>
     <RepositoryUrl>https://github.com/BlaiseD/LogicBuilder.DataComponents</RepositoryUrl>
@@ -21,10 +21,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper.Extensions.ExpressionMapping" Version="[6.0.4,7.0.0)" />
-    <PackageReference Include="LogicBuilder.Data" Version="6.0.0" />
-    <PackageReference Include="LogicBuilder.Domain" Version="6.0.0" />
-		<PackageReference Include="LogicBuilder.Expressions.Utils" Version="6.0.0" />
+    <PackageReference Include="AutoMapper.Extensions.ExpressionMapping" Version="[7.0.0,8.0.0)" />
+    <PackageReference Include="LogicBuilder.Data" Version="6.0.1-alpha.0.1" />
+    <PackageReference Include="LogicBuilder.Domain" Version="6.0.1-alpha.0.1" />
+		<PackageReference Include="LogicBuilder.Expressions.Utils" Version="6.0.1-alpha.0.1" />
     <PackageReference Include="MinVer" Version="4.3.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
