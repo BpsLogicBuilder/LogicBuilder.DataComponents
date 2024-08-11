@@ -1,5 +1,4 @@
 ﻿using LogicBuilder.Data;
-using LogicBuilder.Expressions.Utils.Strutures;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 using System;
@@ -76,6 +75,19 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Crud.DataStores
         public async Task<bool> SaveChangesAsync()
         {
             return await _unitOfWork.SaveChangesAsync();
+        }
+
+        public void ClearChangeTracker()
+        {
+            _unitOfWork.Context.ChangeTracker.Clear();
+        }
+
+        public void DetachAllEntries()
+        {
+            _unitOfWork.Context.ChangeTracker
+                .Entries()
+                .ToList()
+                .ForEach(e => e.State = EntityState.Detached);
         }
         #endregion Methods
     }

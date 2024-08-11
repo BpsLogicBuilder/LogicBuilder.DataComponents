@@ -150,6 +150,16 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Repositories
         {
             return await _store.SaveChangesAsync();
         }
+
+        public void ClearChangeTracker()
+        {
+            _store.ClearChangeTracker();
+        }
+
+        public void DetachAllEntries()
+        {
+            _store.DetachAllEntries();
+        }
         #endregion Methods
     }
 }
