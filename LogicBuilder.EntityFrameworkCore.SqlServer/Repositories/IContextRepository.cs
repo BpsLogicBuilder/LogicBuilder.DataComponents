@@ -71,5 +71,9 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Repositories
             where TData : BaseData;
 
         Task<bool> SaveChangesAsync();
+
+        void ClearChangeTracker();
+
+        void DetachAllEntries();
     }
 }

@@ -3,7 +3,6 @@ using LogicBuilder.Data;
 using LogicBuilder.Domain;
 using LogicBuilder.EntityFrameworkCore.SqlServer.Crud.DataStores;
 using LogicBuilder.Expressions.Utils.Expansions;
-using LogicBuilder.Expressions.Utils.Strutures;
 using Microsoft.EntityFrameworkCore.Query;
 using System;
 using System.Collections.Generic;
@@ -120,6 +119,16 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Repositories
         public Task<bool> SaveChangesAsync()
         {
             return _store.SaveChangesAsync();
+        }
+
+        public void ClearChangeTracker()
+        {
+            _store.ClearChangeTracker();
+        }
+
+        public void DetachAllEntries()
+        {
+            _store.DetachAllEntries();
         }
         #endregion Methods
     }

@@ -105,9 +105,8 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Crud
         /// <param name="t"></param>
         public virtual void Delete(T t)
         {
-            if (this.context.Entry(t).State == EntityState.Detached)
-                this.dbSet.Attach(t);
-
+            this.context.DetachMatchingKeyEntries(t);
+            this.dbSet.Attach(t);
             this.dbSet.Remove(t);
         }
 
@@ -117,6 +116,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Crud
         /// <param name="t"></param>
         public virtual void DeleteGraph(T t)
         {
+            this.context.DetachMatchingKeyEntries(t);
             this.dbSet.Add(t);
             this.context.SetStates(EntityState.Deleted);
         }

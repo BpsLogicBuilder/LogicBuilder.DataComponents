@@ -20,5 +20,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Crud.DataStores
         void AddChanges<T>(ICollection<T> entities) where T : BaseData;
         void AddGraphChanges<T>(ICollection<T> entities) where T : BaseData;
         Task<bool> SaveChangesAsync();
+        void ClearChangeTracker();
+        void DetachAllEntries();
     }
 }

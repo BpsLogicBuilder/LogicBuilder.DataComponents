@@ -44,5 +44,9 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Repositories
         void AddGraphChanges(ICollection<TModel> entities);
 
         Task<bool> SaveChangesAsync();
+
+        void ClearChangeTracker();
+
+        void DetachAllEntries();
     }
 }
