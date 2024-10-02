@@ -11,8 +11,8 @@ Write-Host "Package Path ${NUGET_PACKAGE_PATH}"
 
 dotnet build $PROJECT_PATH --configuration Release
 
-if ($Env:REPO_OWNER -ne "BlaiseD") {
-    Write-Host "${scriptName}: Only create packages on BlaiseD repositories."
+if ($Env:REPO_OWNER -ne "BpsLogicBuilder") {
+    Write-Host "${scriptName}: Only create packages on BpsLogicBuilder repositories."
 } else {
     dotnet pack $PROJECT_PATH -c Release -o .\artifacts --no-build
     dotnet nuget push $NUGET_PACKAGE_PATH --skip-duplicate --api-key $Env:GITHUB_NUGET_AUTH_TOKEN

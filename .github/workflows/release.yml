@@ -4,6 +4,10 @@ on:
   release:
     types: [published]
 
+permissions:
+    contents: read
+    packages: write
+
 jobs:
   build:
 
@@ -18,7 +22,7 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 8.0.100
-        source-url: https://nuget.pkg.github.com/blaised/index.json
+        source-url: https://nuget.pkg.github.com/bpslogicbuilder/index.json
       env:
         NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
