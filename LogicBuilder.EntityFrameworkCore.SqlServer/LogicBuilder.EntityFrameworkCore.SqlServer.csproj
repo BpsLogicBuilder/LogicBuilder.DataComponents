@@ -10,7 +10,7 @@
     <PackageReleaseNotes>Bug fix: Allow delete after updating an entity.</PackageReleaseNotes>
     <PackageTags>crud operations efcore</PackageTags>
     <Copyright>Copyright © BPS 2017</Copyright>
-    <RepositoryUrl>https://github.com/BlaiseD/LogicBuilder.DataComponents</RepositoryUrl>
+    <RepositoryUrl>https://github.com/BpsLogicBuilder/LogicBuilder.DataComponents</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/BlaiseD/LogicBuilder</PackageProjectUrl>
     <AssemblyOriginatorKeyFile>..\LogicBuilder.Rules.snk</AssemblyOriginatorKeyFile>
