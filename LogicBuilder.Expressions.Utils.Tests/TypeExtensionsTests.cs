@@ -11,6 +11,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
         [Theory]
         [InlineData(nameof(DerivedThing.Id), typeof(DerivedThing))]
         [InlineData(nameof(DerivedThing.Name), typeof(BaseThing))]
+        [InlineData(nameof(DerivedThing.DataInBytes), typeof(BaseThing))]
         [InlineData(nameof(DerivedThing.Description), typeof(DerivedThing))]
         public void MemberInfoReflectedTypeMustMatchTheDeclaringType(string propertyName, Type reflectedType)
         {
@@ -24,6 +25,7 @@ namespace LogicBuilder.Expressions.Utils.Tests
         [Theory]
         [InlineData(nameof(DerivedThing.Id), typeof(DerivedThing))]
         [InlineData(nameof(DerivedThing.Name), typeof(BaseThing))]
+        [InlineData(nameof(DerivedThing.DataInBytes), typeof(BaseThing))]
         [InlineData(nameof(DerivedThing.Description), typeof(DerivedThing))]
         public void MemberInfoReflectedTypeMustMatchTheDeclaringTypeForGetSelectedMembers(string propertyName,
             Type reflectedType)
@@ -67,6 +69,17 @@ namespace LogicBuilder.Expressions.Utils.Tests
         private abstract class BaseThing
         {
             public string Name { get; set; }
+            public byte[] DataInBytes { get; set; }
+            public string[] ParametersArray { get; set; }
+            public ICollection<string> Strings { get; set; }
+            public List<string> ParametersList { get; set; }
+            public List<bool> Booleans { get; set; }
+            public ISet<DateTime> DateTimes { get; set; }
+            public ISet<DateOnly> Dates { get; set; }
+            public HashSet<Guid> Guides { get; set; }
+            public uint[] UnsignedInts { get; set; }
+            public IEnumerable<int> Ints { get; set; }
+            public List<object> Objects { get; set; }
         }
 
         private class DerivedThing : BaseThing, IDerivedThing
