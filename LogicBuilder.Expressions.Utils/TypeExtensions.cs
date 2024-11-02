@@ -204,9 +204,12 @@ namespace LogicBuilder.Expressions.Utils
             return parentType.GetMemberInfos().Where
             (
                 info => (info.MemberType == MemberTypes.Field || info.MemberType == MemberTypes.Property)
-                && (info.GetMemberType().IsLiteralType() || info.GetMemberType() == typeof(byte[]))//Need typeof(byte[]) for SQL Server timestamp column
+                && (info.GetMemberType().IsLiteralType() || info.GetMemberType().IsLiteralList())
             ).ToArray();
         }
+
+        private static bool IsLiteralList(this Type type) 
+            => type.IsList() && type.GetUnderlyingElementType().IsLiteralType();
 
         private static MemberInfo[] GetMemberInfos(this Type parentType) 
             => parentType.GetMembers(instanceBindingFlags).Select
