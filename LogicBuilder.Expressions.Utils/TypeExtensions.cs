@@ -207,19 +207,9 @@ namespace LogicBuilder.Expressions.Utils
                 && (info.GetMemberType().IsLiteralType() || info.GetMemberType().IsLiteralList())
             ).ToArray();
         }
-        
-        private static bool IsLiteralList(this Type type)
-        {
-            // Check if type is a List
-            if (!type.IsList()) return false;
 
-            // If not generic, check if it's a literal type (i.e. string[])
-            if (!type.IsGenericType) return type.GetElementType().IsLiteralType();
-
-            // Extract the type T from List<T> and check if it's a literal type
-            var firstGenericArgument = type.GetGenericArguments().First();
-            return firstGenericArgument.IsLiteralType();
-        }
+        private static bool IsLiteralList(this Type type) 
+            => type.IsList() && type.GetUnderlyingElementType().IsLiteralType();
 
         private static bool IsLiteralList(this Type type) 
             => type.IsList() && type.GetUnderlyingElementType().IsLiteralType();
