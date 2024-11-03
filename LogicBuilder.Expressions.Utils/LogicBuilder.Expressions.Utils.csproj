@@ -7,12 +7,13 @@
     <Authors>BlaiseD</Authors>
     <Description>Creates CRUD related LINQ queries from data.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>Supporting .NET 8.0.</PackageReleaseNotes>
+    <PackageReleaseNotes>Expanding primitive lists by default.</PackageReleaseNotes>
     <PackageTags>linq expressions</PackageTags>
     <Copyright>Copyright © BPS 2018</Copyright>
     <RepositoryUrl>https://github.com/BpsLogicBuilder/LogicBuilder.DataComponents</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/BlaiseD/LogicBuilder</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/BpsLogicBuilder/LogicBuilder</PackageProjectUrl>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
     <AssemblyOriginatorKeyFile>..\LogicBuilder.Rules.snk</AssemblyOriginatorKeyFile>
     <SignAssembly>true</SignAssembly>
     <MinVerTagPrefix>v</MinVerTagPrefix>
@@ -20,8 +21,12 @@
     <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
   </PropertyGroup>
 
+	<ItemGroup>
+		<None Include="docs\README.md" Pack="true" PackagePath="\"/>
+	</ItemGroup>
+
   <ItemGroup>
-    <PackageReference Include="LogicBuilder.Structures" Version="6.0.2" />
+    <PackageReference Include="LogicBuilder.Structures" Version="6.0.3-alpha.0.1" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="Microsoft.OData.Edm" Version="7.9.4" />
     <PackageReference Include="MinVer" Version="4.3.0">

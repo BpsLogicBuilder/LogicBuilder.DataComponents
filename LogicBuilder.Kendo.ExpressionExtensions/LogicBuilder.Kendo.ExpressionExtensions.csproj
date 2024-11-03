@@ -12,13 +12,18 @@
     <Copyright>Copyright © BPS 2018</Copyright>
     <RepositoryUrl>https://github.com/BpsLogicBuilder/LogicBuilder.DataComponents</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/BlaiseD/LogicBuilder</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/BpsLogicBuilder/LogicBuilder</PackageProjectUrl>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
     <AssemblyOriginatorKeyFile>..\LogicBuilder.Rules.snk</AssemblyOriginatorKeyFile>
     <SignAssembly>true</SignAssembly>
     <MinVerTagPrefix>v</MinVerTagPrefix>
     <Deterministic>true</Deterministic>
     <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
   </PropertyGroup>
+
+	<ItemGroup>
+		<None Include="docs\README.md" Pack="true" PackagePath="\"/>
+	</ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Telerik.UI.for.AspNet.Core" Version="2018.3.911" />
