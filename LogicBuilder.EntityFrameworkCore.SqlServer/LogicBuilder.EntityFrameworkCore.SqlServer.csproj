@@ -27,9 +27,9 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.ExpressionMapping" Version="[7.0.0,8.0.0)" />
-    <PackageReference Include="LogicBuilder.Data" Version="6.0.3-alpha.0.1" />
-    <PackageReference Include="LogicBuilder.Domain" Version="6.0.3-alpha.0.1" />
-		<PackageReference Include="LogicBuilder.Expressions.Utils" Version="6.0.3-alpha.0.1" />
+    <PackageReference Include="LogicBuilder.Data" Version="6.0.3" />
+    <PackageReference Include="LogicBuilder.Domain" Version="6.0.3" />
+		<PackageReference Include="LogicBuilder.Expressions.Utils" Version="6.0.3" />
     <PackageReference Include="MinVer" Version="4.3.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
