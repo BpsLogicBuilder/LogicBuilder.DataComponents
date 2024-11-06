@@ -204,12 +204,21 @@ namespace LogicBuilder.Expressions.Utils
             return parentType.GetMemberInfos().Where
             (
                 info => (info.MemberType == MemberTypes.Field || info.MemberType == MemberTypes.Property)
-                && (info.GetMemberType().IsLiteralType() || info.GetMemberType().IsLiteralList())
+                && info.GetMemberType().AnyLiteralTypes()
             ).ToArray();
         }
 
-        private static bool IsLiteralList(this Type type) 
-            => type.IsList() && type.GetUnderlyingElementType().IsLiteralType();
+        private static bool AnyLiteralTypes(this Type type) =>
+            type.UnderlyingElementTypes().All(t => t.IsLiteralType());
+        
+        private static IEnumerable<Type> UnderlyingElementTypes(this Type type)
+        {
+            if (type.IsArray) return type.GetElementType().UnderlyingElementTypes();
+            
+            return type.IsGenericType
+                ? type.GetGenericArguments().SelectMany(t => t.UnderlyingElementTypes()) 
+                : new[] { type };
+        }
 
         private static MemberInfo[] GetMemberInfos(this Type parentType) 
             => parentType.GetMembers(instanceBindingFlags).Select
