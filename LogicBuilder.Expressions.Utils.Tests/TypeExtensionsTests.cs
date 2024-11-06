@@ -46,9 +46,9 @@ namespace LogicBuilder.Expressions.Utils.Tests
             Assert.Multiple(() =>
             {
                 var names = memberInfos.Select(mi => mi.Name).ToList();
-                
+
                 Assert.DoesNotContain(memberInfos, name => name.Name == nameof(Thing.Objects));
-                
+
                 Assert.Contains(names, name => name == nameof(Thing.ParametersArray));
                 Assert.Contains(names, name => name == nameof(Thing.ParametersList));
                 Assert.Contains(names, name => name == nameof(Thing.Ints));
@@ -61,6 +61,30 @@ namespace LogicBuilder.Expressions.Utils.Tests
                 Assert.Contains(names, name => name == nameof(Thing.Name));
                 Assert.Contains(names, name => name == nameof(Thing.Id));
                 Assert.Contains(names, name => name == nameof(Thing.Description));
+            });
+        }
+
+        [Fact]
+        public void GetSelectedMembers_WhenSelectIsEmpty_MustReturnAllLiteralAndLiteralDictionaries()
+        {
+            // Act
+            var memberInfos = typeof(Dictionaries).GetSelectedMembers(Enumerable.Empty<string>().ToList());
+
+            // Assert
+            Assert.Multiple(() =>
+            {
+                var names = memberInfos.Select(mi => mi.Name).ToList();
+
+                Assert.DoesNotContain(memberInfos, name => name.Name == nameof(Dictionaries.ObjectDictionary));
+
+                Assert.Contains(names, name => name == nameof(Dictionaries.InnerDictionary));
+                Assert.Contains(names, name => name == nameof(Dictionaries.InnerDictionary2));
+                Assert.Contains(names, name => name == nameof(Dictionaries.ListIntStringDictionary));
+                Assert.Contains(names, name => name == nameof(Dictionaries.IntStringDictionary));
+                Assert.Contains(names, name => name == nameof(Dictionaries.ListStringDictionary));
+                Assert.Contains(names, name => name == nameof(Dictionaries.ListOfDictionaries));
+                Assert.Contains(names, name => name == nameof(Dictionaries.ArrayOfDictionaries));
+                Assert.Contains(names, name => name == nameof(Dictionaries.ArrayOfLookups));
             });
         }
 
@@ -96,6 +120,19 @@ namespace LogicBuilder.Expressions.Utils.Tests
             public uint[] UnsignedInts { get; set; }
             public IEnumerable<int> Ints { get; set; }
             public List<object> Objects { get; set; }
+        }
+
+        private sealed class Dictionaries
+        {
+            public Dictionary<int, string> IntStringDictionary { get; set; }
+            public Dictionary<List<int>, string> ListIntStringDictionary { get; set; }
+            public Dictionary<string, List<string>> ListStringDictionary { get; set; }
+            public Dictionary<Dictionary<string, int>, List<string>> InnerDictionary { get; set; }
+            public Dictionary<List<string>, Dictionary<string, int>> InnerDictionary2 { get; set; }
+            public Dictionary<List<object>, Dictionary<string, int>> ObjectDictionary { get; set; }
+            public List<Dictionary<List<int>, string[]>> ListOfDictionaries { get; set; }
+            public Dictionary<int, string>[] ArrayOfDictionaries { get; set; }
+            public Lookup<int, string>[] ArrayOfLookups { get; set; }
         }
     }
 }
