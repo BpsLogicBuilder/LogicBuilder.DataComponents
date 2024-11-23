@@ -1,7 +1,6 @@
 ﻿using LogicBuilder.Expressions.Utils.ExpressionBuilder;
 using LogicBuilder.Expressions.Utils.ExpressionBuilder.Lambda;
 using LogicBuilder.Expressions.Utils.Strutures;
-using Microsoft.OData.Edm;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -214,8 +213,8 @@ namespace LogicBuilder.Expressions.Utils
 
             if (operandExpression.Type == typeof(DateTime)
                             || operandExpression.Type == typeof(DateTimeOffset)
-                            || operandExpression.Type == typeof(Date)
-                            || operandExpression.Type.FullName == NET6OnlyLiteralTypeNames.DATEONLY)
+                            || operandExpression.Type.FullName == UnreferencedLiteralTypeNames.DATE
+                            || operandExpression.Type.FullName == UnreferencedLiteralTypeNames.DATEONLY)
                 return operandExpression.MakeSelector("Day");
             else
                 throw new ArgumentException(nameof(operandExpression));
@@ -227,8 +226,8 @@ namespace LogicBuilder.Expressions.Utils
 
             if (operandExpression.Type == typeof(DateTime)
                             || operandExpression.Type == typeof(DateTimeOffset)
-                            || operandExpression.Type == typeof(Date)
-                            || operandExpression.Type.FullName == NET6OnlyLiteralTypeNames.DATEONLY)
+                            || operandExpression.Type.FullName == UnreferencedLiteralTypeNames.DATE
+                            || operandExpression.Type.FullName == UnreferencedLiteralTypeNames.DATEONLY)
                 return operandExpression.MakeSelector("Month");
             else
                 throw new ArgumentException(nameof(operandExpression));
@@ -240,8 +239,8 @@ namespace LogicBuilder.Expressions.Utils
 
             if (operandExpression.Type == typeof(DateTime)
                             || operandExpression.Type == typeof(DateTimeOffset)
-                            || operandExpression.Type == typeof(Date)
-                            || operandExpression.Type.FullName == NET6OnlyLiteralTypeNames.DATEONLY)
+                            || operandExpression.Type.FullName == UnreferencedLiteralTypeNames.DATE
+                            || operandExpression.Type.FullName == UnreferencedLiteralTypeNames.DATEONLY)
                 return operandExpression.MakeSelector("Year");
             else
                 throw new ArgumentException(nameof(operandExpression));
@@ -253,12 +252,12 @@ namespace LogicBuilder.Expressions.Utils
 
             if (operandExpression.Type == typeof(DateTimeOffset)
                             || operandExpression.Type == typeof(DateTime)
-                            || operandExpression.Type.FullName == NET6OnlyLiteralTypeNames.TIMEONLY)
+                            || operandExpression.Type.FullName == UnreferencedLiteralTypeNames.TIMEONLY)
             {
                 return operandExpression.MakeSelector("Hour");
             }
             else if (operandExpression.Type == typeof(TimeSpan)
-                || operandExpression.Type == typeof(TimeOfDay))
+                || operandExpression.Type.FullName == UnreferencedLiteralTypeNames.TIMEOFDAY)
             {
                 return operandExpression.MakeSelector("Hours");
             }
@@ -272,12 +271,12 @@ namespace LogicBuilder.Expressions.Utils
 
             if (operandExpression.Type == typeof(DateTimeOffset)
                             || operandExpression.Type == typeof(DateTime)
-                            || operandExpression.Type.FullName == NET6OnlyLiteralTypeNames.TIMEONLY)
+                            || operandExpression.Type.FullName == UnreferencedLiteralTypeNames.TIMEONLY)
             {
                 return operandExpression.MakeSelector("Minute");
             }
             else if (operandExpression.Type == typeof(TimeSpan)
-                || operandExpression.Type == typeof(TimeOfDay))
+                || operandExpression.Type.FullName == UnreferencedLiteralTypeNames.TIMEOFDAY)
             {
                 return operandExpression.MakeSelector("Minutes");
             }
@@ -291,12 +290,12 @@ namespace LogicBuilder.Expressions.Utils
 
             if (operandExpression.Type == typeof(DateTimeOffset)
                             || operandExpression.Type == typeof(DateTime)
-                            || operandExpression.Type.FullName == NET6OnlyLiteralTypeNames.TIMEONLY)
+                            || operandExpression.Type.FullName == UnreferencedLiteralTypeNames.TIMEONLY)
             {
                 return operandExpression.MakeSelector("Second");
             }
             else if (operandExpression.Type == typeof(TimeSpan)
-                || operandExpression.Type == typeof(TimeOfDay))
+                || operandExpression.Type.FullName == UnreferencedLiteralTypeNames.TIMEOFDAY)
             {
                 return operandExpression.MakeSelector("Seconds");
             }
@@ -310,12 +309,12 @@ namespace LogicBuilder.Expressions.Utils
 
             if (operandExpression.Type == typeof(DateTimeOffset)
                             || operandExpression.Type == typeof(DateTime)
-                            || operandExpression.Type.FullName == NET6OnlyLiteralTypeNames.TIMEONLY)
+                            || operandExpression.Type.FullName == UnreferencedLiteralTypeNames.TIMEONLY)
             {
                 return operandExpression.MakeSelector("Millisecond");
             }
             else if (operandExpression.Type == typeof(TimeSpan)
-                || operandExpression.Type == typeof(TimeOfDay))
+                || operandExpression.Type.FullName == UnreferencedLiteralTypeNames.TIMEOFDAY)
             {
                 return operandExpression.MakeSelector("Milliseconds");
             }
