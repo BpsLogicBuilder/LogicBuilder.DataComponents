@@ -64,11 +64,11 @@ jobs:
       run: ./CI_Build_Push.ps1
       shell: pwsh
 
-    - name: Build and push LogicBuilder.Kendo.ExpressionExtensions
-      env:
-        PROJECT_NAME: LogicBuilder.Kendo.ExpressionExtensions
-      run: ./CI_Build_Push.ps1
-      shell: pwsh
+    #- name: Build and push LogicBuilder.Kendo.ExpressionExtensions
+    #  env:
+    #    PROJECT_NAME: LogicBuilder.Kendo.ExpressionExtensions
+    #  run: ./CI_Build_Push.ps1
+    #  shell: pwsh
 
     - name: Build and push LogicBuilder.Expressions.EntityFrameworkCore
       env:
