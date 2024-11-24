@@ -8,4 +8,5 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer
     {
         public const string PARAMETERS_KEY = "parameters";
     }
+
 }
