@@ -26,8 +26,8 @@ jobs:
       env:
         NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    #- name: Add Telerik Nuget source
-    #  run: dotnet nuget add source https://nuget.telerik.com/nuget -n telerik -u ${{ secrets.TELERIK_USERNAME }} -p ${{ secrets.TELERIK_PASSWORD }}
+    - name: Add Telerik Nuget source
+      run: dotnet nuget add source https://nuget.telerik.com/v3/index.json -n telerik -u ${{ secrets.TELERIK_USERNAME }} -p ${{ secrets.TELERIK_PASSWORD }}
 
     - name: Set Variables
       run: |
@@ -61,11 +61,11 @@ jobs:
       run: ./Release_Build_Push.ps1
       shell: pwsh
 
-    #- name: Pack and push LogicBuilder.Kendo.ExpressionExtensions
-    #  env:
-    #    PROJECT_NAME: LogicBuilder.Kendo.ExpressionExtensions
-    #  run: ./Release_Build_Push.ps1
-    #  shell: pwsh
+    - name: Pack and push LogicBuilder.Kendo.ExpressionExtensions
+      env:
+        PROJECT_NAME: LogicBuilder.Kendo.ExpressionExtensions
+      run: ./Release_Build_Push.ps1
+      shell: pwsh
 
     - name: Pack and push LogicBuilder.Expressions.EntityFrameworkCore
       env:
