@@ -22,14 +22,13 @@
   </PropertyGroup>
 
 	<ItemGroup>
-		<None Include="docs\README.md" Pack="true" PackagePath="\"/>
+		<None Include="docs\README.md" Pack="true" PackagePath="\" />
 	</ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="LogicBuilder.Structures" Version="6.0.3" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-    <PackageReference Include="Microsoft.OData.Edm" Version="7.9.4" />
-    <PackageReference Include="MinVer" Version="4.3.0">
+    <PackageReference Include="MinVer" Version="6.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>

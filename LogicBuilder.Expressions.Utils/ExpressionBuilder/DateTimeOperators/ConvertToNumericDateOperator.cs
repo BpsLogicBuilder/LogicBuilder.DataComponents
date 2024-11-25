@@ -1,5 +1,4 @@
-﻿using Microsoft.OData.Edm;
-using System;
+﻿using System;
 using System.Linq.Expressions;
 
 namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.DateTimeOperators
@@ -21,8 +20,8 @@ namespace LogicBuilder.Expressions.Utils.ExpressionBuilder.DateTimeOperators
 
             if (operandExpression.Type != typeof(DateTimeOffset) 
                 && operandExpression.Type != typeof(DateTime) 
-                && operandExpression.Type != typeof(Date)
-                && operandExpression.Type.FullName != NET6OnlyLiteralTypeNames.DATEONLY)
+                && operandExpression.Type.FullName != UnreferencedLiteralTypeNames.DATE
+                && operandExpression.Type.FullName != UnreferencedLiteralTypeNames.DATEONLY)
                 return operandExpression;
 
             return Expression.Add

@@ -23,13 +23,13 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 8.0.100
+        dotnet-version: 9.x
         source-url: https://nuget.pkg.github.com/bpslogicbuilder/index.json
       env:
         NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Add Telerik Nuget source
-      run: dotnet nuget add source https://nuget.telerik.com/nuget -n telerik -u ${{ secrets.TELERIK_USERNAME }} -p ${{ secrets.TELERIK_PASSWORD }}
+      run: dotnet nuget add source https://nuget.telerik.com/v3/index.json -n telerik -u ${{ secrets.TELERIK_USERNAME }} -p ${{ secrets.TELERIK_PASSWORD }}
 
     - name: Add AutoMapper Myget Source
       run: dotnet nuget add source https://www.myget.org/F/automapperdev/api/v3/index.json -n automappermyget

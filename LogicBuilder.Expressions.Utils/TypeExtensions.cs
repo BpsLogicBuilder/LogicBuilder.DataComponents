@@ -1,5 +1,4 @@
 ﻿using LogicBuilder.Expressions.Utils.Properties;
-using Microsoft.OData.Edm;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -62,25 +61,25 @@ namespace LogicBuilder.Expressions.Utils
                 type = Nullable.GetUnderlyingType(type);
 
             return LiteralTypes.Contains(type) 
-                || Net6OnlyLiteralTypes.Contains(type.FullName) 
+                || UneferencedLiteralTypes.Contains(type.FullName) 
                 || typeof(Enum).IsAssignableFrom(type);
         }
 
         private static HashSet<Type> LiteralTypes => new HashSet<Type>(_literalTypes);
 
-        private static readonly HashSet<string> Net6OnlyLiteralTypes = new()
-        {
-            NET6OnlyLiteralTypeNames.DATEONLY,
-            NET6OnlyLiteralTypeNames.TIMEONLY
-        };
+        private static readonly HashSet<string> UneferencedLiteralTypes =
+        [
+            UnreferencedLiteralTypeNames.DATEONLY,
+            UnreferencedLiteralTypeNames.TIMEONLY,
+            UnreferencedLiteralTypeNames.DATE,
+            UnreferencedLiteralTypeNames.TIMEOFDAY
+        ];
 
-        private static Type[] _literalTypes => new Type[] {
+        private static Type[] _literalTypes => [
                 typeof(bool),
                 typeof(DateTime),
                 typeof(DateTimeOffset),
-                typeof(Date),
                 typeof(TimeSpan),
-                typeof(TimeOfDay),
                 typeof(Guid),
                 typeof(decimal),
                 typeof(byte),
@@ -95,7 +94,7 @@ namespace LogicBuilder.Expressions.Utils
                 typeof(uint),
                 typeof(ulong),
                 typeof(string)
-            };
+            ];
 
         public static Type GetMemberType(this MemberExpression me)
             => me.Member.GetMemberType();

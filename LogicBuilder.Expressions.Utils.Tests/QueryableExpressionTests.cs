@@ -1,6 +1,5 @@
 using Contoso.Data.Entities;
 using LogicBuilder.Expressions.Utils.ExpressionBuilder;
-using LogicBuilder.Expressions.Utils.ExpressionBuilder.Arithmetic;
 using LogicBuilder.Expressions.Utils.ExpressionBuilder.Cacnonical;
 using LogicBuilder.Expressions.Utils.ExpressionBuilder.Collection;
 using LogicBuilder.Expressions.Utils.ExpressionBuilder.Lambda;
@@ -9,7 +8,6 @@ using LogicBuilder.Expressions.Utils.ExpressionBuilder.Operand;
 using LogicBuilder.Expressions.Utils.Tests.Data;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
 using Xunit;
