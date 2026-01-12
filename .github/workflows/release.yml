@@ -7,6 +7,7 @@ on:
 permissions:
     contents: read
     packages: write
+    id-token: write  # enable GitHub OIDC token issuance for this job
 
 jobs:
   build:
@@ -21,10 +22,16 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 9.x
+        dotnet-version: 10.x
         source-url: https://nuget.pkg.github.com/bpslogicbuilder/index.json
       env:
         NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: NuGet login
+      uses: NuGet/login@v1
+      id: nuget_login
+      with:
+        user: ${{ secrets.NUGET_USER }}
 
     - name: Add Telerik Nuget source
       run: dotnet nuget add source https://nuget.telerik.com/v3/index.json -n telerik -u ${{ secrets.TELERIK_USERNAME }} -p ${{ secrets.TELERIK_PASSWORD }}
@@ -33,7 +40,7 @@ jobs:
       run: |
         echo "GITHUB_NUGET_AUTH_TOKEN=${{ secrets.GITHUB_TOKEN }}" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
         echo "NUGET_URL=https://api.nuget.org/v3/index.json" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
-        echo "NUGET_API_KEY=${{ secrets.NUGET_API_KEY }}" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
+        echo "NUGET_API_KEY=${{ steps.nuget_login.outputs.NUGET_API_KEY }}" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
         echo "REPO=${{ github.repository }}" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
         echo "REPO_OWNER=${{ github.repository_owner }}" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
 
