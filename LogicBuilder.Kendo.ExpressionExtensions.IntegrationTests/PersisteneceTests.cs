@@ -106,7 +106,7 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests
 
         private void Initialize()
         {
-            MapperConfiguration ??= new MapperConfiguration(cfg =>
+            MapperConfiguration ??= ConfigurationHelper.GetMapperConfiguration(cfg =>
                 {
                     cfg.AddExpressionMapping();
 

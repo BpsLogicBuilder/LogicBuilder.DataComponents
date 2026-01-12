@@ -567,7 +567,7 @@ namespace LogicBuilder.Kendo.ExpressionExtensions.IntegrationTests
         static MapperConfiguration MapperConfiguration;
         private void Initialize()
         {
-            MapperConfiguration ??= new MapperConfiguration(cfg =>
+            MapperConfiguration ??= ConfigurationHelper.GetMapperConfiguration(cfg =>
                 {
                     cfg.AddExpressionMapping();
                     cfg.AddMaps(typeof(SchoolProfile).GetTypeInfo().Assembly);

@@ -89,7 +89,7 @@ namespace LogicBuilder.EntityFrameworkCore.SqlServer.Tests
         static MapperConfiguration MapperConfiguration;
         private void Initialize()
         {
-            MapperConfiguration ??= new MapperConfiguration(cfg =>
+            MapperConfiguration ??= ConfigurationHelper.GetMapperConfiguration(cfg =>
             {
                 cfg.AddExpressionMapping();
                 cfg.AddProfile<ExpressionOperatorsMappingProfile>();
